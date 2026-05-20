@@ -2,7 +2,7 @@
 ## Frontend with Tailwind CSS and DevContainer Environment
 Frontend Courses Landing Pages Website to Ivana Academy using Tailwind CSS in a DevContainer environment.
 
-<img width="800" height="600" alt="homepage" src="https://github.com/leonardodg/ivana-courses-landing-pages/blob/main/src/images/courses.ivana.academy.png?raw=true">
+<img width="800" height="600" alt="homepage" src="https://github.com/leonardodg/ivana-courses-landing-pages/blob/main/src/images/homepage.png?raw=true">
 
 
 ## 📋 Features
@@ -39,7 +39,6 @@ Frontend Courses Landing Pages Website to Ivana Academy using Tailwind CSS in a 
 ```bash
    npm install
    npm run build
-   npm start
 ```
 
 5. Access the website in your browser:
@@ -75,12 +74,13 @@ courses-landing-pages/
 │   └── Dockerfile
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # GitHub Actions para deploy automático
-├── public/                      # Código fonte (development)
+│       └── deploy.yml          # GitHub Actions to deploy automation
+├── scr/                        # Code in Developmennt
+├── public/                     # Code final - Published 
 │   ├── index.html
-│   ├── velas/
+│   ├── candles/
 │   │   └── index.html
-│   ├── saboaria/
+│   ├── soap/
 │   │   └── index.html
 │   ├── assets/
 │   │   ├── css/
@@ -94,7 +94,6 @@ courses-landing-pages/
 │       ├── pt.json
 │       ├── es.json
 │       └── en.json
-├── docker-compose.yml
 ├── .gitignore
 ├── README.md               # This file
 ├── package.json            # Dependencies and npm scripts and TailwindCSS CLI (build)
@@ -104,7 +103,7 @@ courses-landing-pages/
  
  ## 📦 Available Scripts
 - ```npm run build``` - Compiles HTML and CSS files for production 
-- ```npm run start``` - Starts - the local HTTP server serving the public folder
+- ```npm run dev``` - Watch files HTML, CSS and JS
  
  ## 🤝 Contributing
  
