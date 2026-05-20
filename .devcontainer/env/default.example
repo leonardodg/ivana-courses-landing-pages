@@ -1,0 +1,14 @@
+# =============================================================================
+# DEFAULTS — Valores compartilhados entre dev e prod (não-sensíveis)
+# Sobrescrito por development.env ou production.env
+# =============================================================================
+
+WEBSITE_URL=http://localhost:8080
+DOCKER_WWWROOT=/var/www/html
+
+# Apache
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+
+# Timezone
+TZ=America/Sao_Paulo

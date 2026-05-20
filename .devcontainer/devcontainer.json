@@ -1,0 +1,78 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "Website Courses Landing pages to Ivana Academy By LeoDG",
+	"dockerComposeFile": [
+        "./compose/dev.yml",
+        "./compose/build-dev.yml"
+    ],
+	"service": "web",
+	"runServices": [
+		"web"
+	],
+	"workspaceFolder": "/usr/share/nginx/html",
+    "remoteUser": "vscode",
+	"forwardPorts": [
+		8080
+	],
+	"portsAttributes": {
+		"8080": {
+			"visibility": "public"
+		}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {}
+	},
+
+	// Mounts are used to share configuration files and SSH keys between the host and the container.
+	"mounts": [
+				{
+					"source": "${localEnv:HOME}/.gitconfig",
+					"target": "/root/.gitconfig",
+					"type": "bind"
+				},
+				{
+					"source": "${localEnv:HOME}/.ssh",
+					"target": "/root/.ssh",
+					"type": "bind"
+				},
+				{
+					"source": "${localEnv:HOME}/.ssh/known_hosts",
+					"target": "/root/.ssh/known_hosts",
+					"type": "bind"
+				}
+			],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			// Add the IDs of extensions you want to install.
+			"extensions": [
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"ms-vscode-remote.remote-containers",
+				"formulahendry.auto-close-tag",
+				"formulahendry.auto-rename-tag",
+				"xabikos.JavaScriptSnippets",
+				"jock.svg",
+				"Cardinal90.multi-cursor-case-preserve",
+				"shd101wyy.markdown-preview-enhanced",
+				"ZainChen.json",
+				"bradgashler.htmltagwrap",
+				"ecmel.vscode-html-css",
+				"pranaygp.vscode-css-peek",
+				"naumovs.color-highlight",
+				"streetsidesoftware.code-spell-checker"
+			],
+			// Add custom VS Code settings.
+			"settings": {
+				"terminal.integrated.shell.linux": "/bin/bash",
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,39 @@
+# =============================================================================
+# DEVELOPMENT - Local development with hot-reload
+# =============================================================================
+# Usage:
+#     docker compose -f .devcontainer/compose/dev.yml up -d
+# =============================================================================
+
+services:
+  web:
+    image: nginx:1.25-alpine
+    container_name: courses-nginx
+    restart: no
+    environment:
+      - WEBSITE_URL=http://localhost:8080
+      - ENVIRONMENT=development
+    networks:
+      - ivana_network
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    volumes:
+      - ../../:/usr/share/nginx/html:rw
+      
+      # Configuração customizada
+      - ../../.devcontainer/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../.devcontainer/nginx/conf.d:/etc/nginx/conf.d:ro
+      
+      # Logs
+      - ../../logs:/var/log/nginx
+
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  ivana_network:
+    external: true

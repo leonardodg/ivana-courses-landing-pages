@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursos de Velas - Ivana Academy</title>
+<meta name="description" content="Aprenda a criar velas artesanais com qualidade profissional. Imersão, workshops, cursos online e formações com certificado. Mais de 2.000 alunas formadas.">
+<meta property="og:title" content="Cursos de Velas - Ivana Academy">
+<meta property="og:description" content="Transforme sua paixão por velas em uma profissão rentável. Presencial em Florianópolis e online.">
+<meta property="og:image" content="../assets/images/og-velas.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/velas.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="../index.html" class="logo">
+      <svg class="logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="19" cy="19" r="18" fill="#E8D5C0"/>
+        <path d="M19 8 C19 8 24 14 24 20 C24 23.3 21.8 26 19 26 C16.2 26 14 23.3 14 20 C14 14 19 8 19 8Z" fill="#C4956A"/>
+        <line x1="19" y1="26" x2="19" y2="30" stroke="#8B5E3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Ivana Academy
+    </a>
+    <div class="nav-links">
+      <a href="#cursos" data-lang="pt" class="active-lang">Cursos</a>
+      <a href="#cursos" data-lang="es">Cursos</a>
+      <a href="#cursos" data-lang="en">Courses</a>
+      <a href="#sobre" data-lang="pt" class="active-lang">Sobre Ivana</a>
+      <a href="#sobre" data-lang="es">Sobre Ivana</a>
+      <a href="#sobre" data-lang="en">About Ivana</a>
+      <a href="../index.html" data-lang="pt" class="active-lang">Todos os Cursos</a>
+      <a href="../index.html" data-lang="es">Todos los Cursos</a>
+      <a href="../index.html" data-lang="en">All Courses</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="lang-selector">
+        <button class="lang-btn active" onclick="setLang('pt')">PT</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/ivana.lerea/" target="_blank" class="social-link" title="Instagram Brasil">📸</a>
+        <a href="https://wa.me/5548991234567" target="_blank" class="social-link" title="WhatsApp">💬</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">
+          <span>🕯</span>
+          <span data-i18n="hero.badge">Cursos de Velas Artesanais</span>
+        </div>
+        <h1>
+          <span data-lang="pt" class="active-lang">Transforme sua <em>paixão por velas</em> em uma profissão rentável</span>
+          <span data-lang="es">Convierte tu <em>pasión por velas</em> en una profesión rentable</span>
+          <span data-lang="en">Turn your <em>candle passion</em> into a profitable career</span>
+        </h1>
+        <p class="hero-sub">
+          <span data-lang="pt" class="active-lang">Aprenda a criar velas com qualidade profissional e saia pronta para vender, conquistar clientes e abrir seu próprio negócio.</span>
+          <span data-lang="es">Aprende a crear velas con calidad profesional y sal lista para vender, conquistar clientes y abrir tu propio negocio.</span>
+          <span data-lang="en">Learn to create professional-quality candles and leave ready to sell, attract customers and open your own business.</span>
+        </p>
+        <div class="hero-ctas">
+          <a href="#cursos" class="btn btn-primary btn-lg">
+            <span data-lang="pt" class="active-lang">Ver Cursos Disponíveis →</span>
+            <span data-lang="es">Ver Cursos Disponibles →</span>
+            <span data-lang="en">See Available Courses →</span>
+          </a>
+          <a href="https://wa.me/5548991234567" class="btn btn-whatsapp">
+            <span>💬</span>
+            <span data-lang="pt" class="active-lang">Falar no WhatsApp</span>
+            <span data-lang="es">Hablar por WhatsApp</span>
+            <span data-lang="en">Chat on WhatsApp</span>
+          </a>
+        </div>
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <div class="number">2.000+</div>
+            <div class="label" data-lang="pt" class="active-lang">Alunas Certificadas</div>
+            <div class="label" data-lang="es">Alumnas Certificadas</div>
+            <div class="label" data-lang="en">Certified Students</div>
+          </div>
+          <div class="trust-badge">
+            <div class="number">5+</div>
+            <div class="label" data-lang="pt" class="active-lang">Anos de Experiência</div>
+            <div class="label" data-lang="es">Años de Experiencia</div>
+            <div class="label" data-lang="en">Years Experience</div>
+          </div>
+          <div class="trust-badge">
+            <div class="number">2</div>
+            <div class="label" data-lang="pt" class="active-lang">Países - BR & AR</div>
+            <div class="label" data-lang="es">Países - BR & AR</div>
+            <div class="label" data-lang="en">Countries - BR & AR</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <div class="hero-img-placeholder">
+          <span>🕯</span>
+          <p>Professora Ivana Lerea</p>
+        </div>
+        <div class="hero-tag">
+          <strong>🇧🇷 Florianópolis + Online</strong>
+          <span data-lang="pt" class="active-lang">Próximas turmas disponíveis</span>
+          <span data-lang="es">Próximas clases disponibles</span>
+          <span data-lang="en">Next classes available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE IVANA -->
+<section class="about" id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="about-img-placeholder">Ivana Lerea 🕯</div>
+      </div>
+      <div>
+        <p class="section-label" data-lang="pt" class="active-lang">Quem é Ivana</p>
+        <p class="section-label" data-lang="es">Quién es Ivana</p>
+        <p class="section-label" data-lang="en">Who is Ivana</p>
+        <h2 class="section-title">
+          <span data-lang="pt" class="active-lang">Professora Ivana Lerea</span>
+          <span data-lang="es">Profesora Ivana Lerea</span>
+          <span data-lang="en">Professor Ivana Lerea</span>
+        </h2>
+        <p style="color:var(--color-text-muted);margin-top:1rem;line-height:1.8;font-size:1rem;">
+          <span data-lang="pt" class="active-lang">Artesã, educadora e empreendedora com mais de 5 anos dedicados ao mundo das artes manuais. Ivana não ensina apenas a técnica - ela prepara cada aluna para conquistar sua independência financeira, abrir seu próprio negócio e vender com confiança.</span>
+          <span data-lang="es">Artesana, educadora y emprendedora con más de 5 años dedicados al mundo de las artes manuales. Ivana no solo enseña la técnica - prepara a cada alumna para conquistar su independencia financiera, abrir su propio negocio y vender con confianza.</span>
+          <span data-lang="en">Artisan, educator and entrepreneur with over 5 years dedicated to the world of handmade arts. Ivana doesn't just teach technique - she prepares every student to gain financial independence, open their own business and sell with confidence.</span>
+        </p>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="n">2.000+</div><div class="l" data-lang="pt" class="active-lang">Alunas certificadas</div><div class="l" data-lang="es">Alumnas certificadas</div><div class="l" data-lang="en">Certified students</div></div>
+          <div class="stat-card"><div class="n">5+</div><div class="l" data-lang="pt" class="active-lang">Anos de experiência</div><div class="l" data-lang="es">Años de experiencia</div><div class="l" data-lang="en">Years experience</div></div>
+          <div class="stat-card"><div class="n">🇧🇷🇦🇷</div><div class="l" data-lang="pt" class="active-lang">Brasil e Argentina</div><div class="l" data-lang="es">Brasil y Argentina</div><div class="l" data-lang="en">Brazil and Argentina</div></div>
+          <div class="stat-card"><div class="n">2x</div><div class="l" data-lang="pt" class="active-lang">Idiomas - PT e ES</div><div class="l" data-lang="es">Idiomas - PT y ES</div><div class="l" data-lang="en">Languages - PT & ES</div></div>
+        </div>
+        <div class="differentials">
+          <div class="diff-item">
+            <div class="diff-icon">🎓</div>
+            <div class="diff-text">
+              <strong data-lang="pt" class="active-lang">Formação profissional completa</strong>
+              <strong data-lang="es">Formación profesional completa</strong>
+              <strong data-lang="en">Complete professional training</strong>
+              <span data-lang="pt" class="active-lang">Do zero até montar e gerir seu próprio negócio</span>
+              <span data-lang="es">Desde cero hasta montar y gestionar tu propio negocio</span>
+              <span data-lang="en">From zero to running your own business</span>
+            </div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon">📜</div>
+            <div class="diff-text">
+              <strong data-lang="pt" class="active-lang">Certificados reconhecidos</strong>
+              <strong data-lang="es">Certificados reconocidos</strong>
+              <strong data-lang="en">Recognized certificates</strong>
+              <span data-lang="pt" class="active-lang">Parcerias com o Conservatório Grassi (Argentina)</span>
+              <span data-lang="es">Alianzas con el Conservatorio Grassi (Argentina)</span>
+              <span data-lang="en">Partnerships with Conservatorio Grassi (Argentina)</span>
+            </div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon">🌎</div>
+            <div class="diff-text">
+              <strong data-lang="pt" class="active-lang">Presença internacional</strong>
+              <strong data-lang="es">Presencia internacional</strong>
+              <strong data-lang="en">International presence</strong>
+              <span data-lang="pt" class="active-lang">Workshops em Florianópolis, Rio de Janeiro, Curitiba, Buenos Aires e mais</span>
+              <span data-lang="es">Workshops en Florianópolis, Río de Janeiro, Curitiba, Buenos Aires y más</span>
+              <span data-lang="en">Workshops in Florianópolis, Rio de Janeiro, Curitiba, Buenos Aires and more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section class="courses" id="cursos">
+  <div class="container">
+    <div class="courses-intro">
+      <p class="section-label" data-lang="pt" class="active-lang">Nossos Cursos</p>
+      <p class="section-label" data-lang="es">Nuestros Cursos</p>
+      <p class="section-label" data-lang="en">Our Courses</p>
+      <h2 class="section-title">
+        <span data-lang="pt" class="active-lang">Escolha o curso ideal para você</span>
+        <span data-lang="es">Elige el curso ideal para ti</span>
+        <span data-lang="en">Choose the ideal course for you</span>
+      </h2>
+      <p class="section-subtitle" id="courses-dynamic-note">
+        <span data-lang="pt" class="active-lang">Do primeiro contato com o artesanato até a formação profissional completa. Encontre o formato que encaixa na sua vida.</span>
+        <span data-lang="es">Desde el primer contacto con la artesanía hasta la formación profesional completa.</span>
+        <span data-lang="en">From your first contact with the craft to complete professional training.</span>
+      </p>
+    </div>
+    <div class="courses-grid" id="courses-container">
+      <!-- Card 1: Imersão Presencial -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#E8D5C0,#C4956A)">
+          <span>🕯</span>
+          <div class="course-tag" data-lang="pt" class="active-lang">Presencial</div>
+          <div class="course-tag" data-lang="es">Presencial</div>
+          <div class="course-tag" data-lang="en">In-person</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Imersão - 2 dias completos</div>
+          <div class="course-type" data-lang="es">Inmersión - 2 días completos</div>
+          <div class="course-type" data-lang="en">Immersion - 2 full days</div>
+          <h3 class="course-title">
+            <span data-lang="pt" class="active-lang">Imersão de Velas</span>
+            <span data-lang="es">Inmersión de Velas</span>
+            <span data-lang="en">Candle Immersion</span>
+          </h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">Curso presencial intensivo de 2 dias onde você aprende tudo sobre velas do zero até a comercialização. Materiais incluídos, leve tudo para casa.</span>
+            <span data-lang="es">Curso presencial intensivo de 2 días donde aprendes todo sobre velas desde cero hasta la comercialización. Materiales incluidos.</span>
+            <span data-lang="en">Intensive 2-day in-person course where you learn everything about candles from scratch to commercialization. Materials included.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">📍</span> Florianópolis, SC</span>
+            <span class="meta-item"><span class="meta-icon">⏱</span> 9h30 às 17h</span>
+            <span class="meta-item"><span class="meta-icon">🧱</span><span data-lang="pt" class="active-lang">Materiais incluídos</span><span data-lang="es">Materiales incluidos</span><span data-lang="en">Materials included</span></span>
+          </div>
+          <div class="course-learn">
+            <strong data-lang="pt" class="active-lang">Você vai aprender:</strong>
+            <strong data-lang="es">Vas a aprender:</strong>
+            <strong data-lang="en">You will learn:</strong>
+            <ul>
+              <li data-lang="pt" class="active-lang">Velas aromáticas e terapêuticas</li><li data-lang="es">Velas aromáticas y terapéuticas</li><li data-lang="en">Aromatic and therapeutic candles</li>
+              <li data-lang="pt" class="active-lang">Velas para massagem e gourmet</li><li data-lang="es">Velas para masajes y gourmet</li><li data-lang="en">Massage and gourmet candles</li>
+              <li data-lang="pt" class="active-lang">Velas com moldes e wax melts</li><li data-lang="es">Velas con moldes y wax melts</li><li data-lang="en">Molded candles and wax melts</li>
+              <li data-lang="pt" class="active-lang">Como precificar e vender</li><li data-lang="es">Cómo fijar precios y vender</li><li data-lang="en">How to price and sell</li>
+            </ul>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://wa.me/5548991234567?text=Olá! Tenho interesse na Imersão de Velas" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Quero me inscrever</span>
+              <span data-lang="es">Quiero inscribirme</span>
+              <span data-lang="en">I want to enroll</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Workshop Presencial -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#D4B896,#A0724A)">
+          <span>✨</span>
+          <div class="course-tag" data-lang="pt" class="active-lang">Presencial</div>
+          <div class="course-tag" data-lang="es">Presencial</div>
+          <div class="course-tag" data-lang="en">In-person</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Workshop - Intensivo</div>
+          <div class="course-type" data-lang="es">Workshop - Intensivo</div>
+          <div class="course-type" data-lang="en">Workshop - Intensive</div>
+          <h3 class="course-title">
+            <span data-lang="pt" class="active-lang">Workshop de Velas</span>
+            <span data-lang="es">Workshop de Velas</span>
+            <span data-lang="en">Candle Workshop</span>
+          </h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">Primeiro contato com a arte das velas. Em um único dia você aprende as técnicas essenciais e já sai com suas próprias criações em mãos.</span>
+            <span data-lang="es">Primer contacto con el arte de las velas. En un solo día aprendes las técnicas esenciales y ya sales con tus propias creaciones.</span>
+            <span data-lang="en">First contact with the art of candle making. In a single day you learn essential techniques and leave with your own creations.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">📍</span> Florianópolis, SC</span>
+            <span class="meta-item"><span class="meta-icon">⏱</span> 9h30 às 15h30</span>
+            <span class="meta-item"><span class="meta-icon">👥</span><span data-lang="pt" class="active-lang">Grupos reduzidos</span><span data-lang="es">Grupos reducidos</span><span data-lang="en">Small groups</span></span>
+          </div>
+          <div class="course-learn">
+            <strong data-lang="pt" class="active-lang">Você vai aprender:</strong>
+            <strong data-lang="es">Vas a aprender:</strong>
+            <strong data-lang="en">You will learn:</strong>
+            <ul>
+              <li data-lang="pt" class="active-lang">Criação de moldes exclusivos</li><li data-lang="es">Creación de moldes exclusivos</li><li data-lang="en">Creating exclusive molds</li>
+              <li data-lang="pt" class="active-lang">Trabalho com resina e pedras</li><li data-lang="es">Trabajo con resina y piedras</li><li data-lang="en">Work with resin and stones</li>
+              <li data-lang="pt" class="active-lang">Misturas com cimento e acabamentos</li><li data-lang="es">Mezclas con cemento y acabados</li><li data-lang="en">Cement mixes and finishings</li>
+            </ul>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://wa.me/5548991234567?text=Olá! Tenho interesse no Workshop de Velas" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Quero me inscrever</span>
+              <span data-lang="es">Quiero inscribirme</span>
+              <span data-lang="en">I want to enroll</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Profesorado Argentina -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#BFA78A,#7A5230)">
+          <span>🎓</span>
+          <div class="course-tag">🇦🇷 Argentina</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Online - Formação Avançada</div>
+          <div class="course-type" data-lang="es">Online - Formación Avanzada</div>
+          <div class="course-type" data-lang="en">Online - Advanced Training</div>
+          <h3 class="course-title">Profesorado en Velas</h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">A formação mais completa para quem já fez a Tecnicatura e quer se tornar uma professora de velas certificada. Aprofunde técnicas e receba título reconhecido pelo Conservatório Grassi.</span>
+            <span data-lang="es">La formación más completa para quienes ya hicieron la Tecnicatura y quieren convertirse en profesoras de velas certificadas. Título otorgado por el Conservatorio Grassi.</span>
+            <span data-lang="en">The most complete training for those who completed the Tecnicatura and want to become certified candle teachers. Title awarded by Conservatorio Grassi.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">🌐</span> Online - Plataforma</span>
+            <span class="meta-item"><span class="meta-icon">📅</span><span data-lang="pt" class="active-lang">1 a 2 anos</span><span data-lang="es">1 a 2 años</span><span data-lang="en">1 to 2 years</span></span>
+            <span class="meta-item"><span class="meta-icon">🎬</span><span data-lang="pt" class="active-lang">Vídeo mensal (2h)</span><span data-lang="es">Video mensual (2h)</span><span data-lang="en">Monthly video (2h)</span></span>
+          </div>
+          <div class="course-learn">
+            <strong data-lang="pt" class="active-lang">Inclui:</strong>
+            <strong data-lang="es">Incluye:</strong>
+            <strong data-lang="en">Includes:</strong>
+            <ul>
+              <li data-lang="pt" class="active-lang">Técnicas avançadas de velas</li><li data-lang="es">Técnicas avanzadas de velas</li><li data-lang="en">Advanced candle techniques</li>
+              <li data-lang="pt" class="active-lang">Provas e projetos práticos</li><li data-lang="es">Exámenes y proyectos prácticos</li><li data-lang="en">Exams and practical projects</li>
+              <li data-lang="pt" class="active-lang">Certificado - Conservatório Grassi</li><li data-lang="es">Certificado - Conservatorio Grassi</li><li data-lang="en">Certificate - Conservatorio Grassi</li>
+            </ul>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://ivana.academy/course/view.php?id=21" target="_blank" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Acessar Plataforma →</span>
+              <span data-lang="es">Acceder a la Plataforma →</span>
+              <span data-lang="en">Access Platform →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Tecnicatura Argentina -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#C8A882,#8B5E3C)">
+          <span>📜</span>
+          <div class="course-tag">🇦🇷 Argentina</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Online - Formação Técnica</div>
+          <div class="course-type" data-lang="es">Online - Formación Técnica</div>
+          <div class="course-type" data-lang="en">Online - Technical Training</div>
+          <h3 class="course-title">Tecnicatura en Arte y Diseño de Velas</h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">Formação técnica completa em arte e design de velas. 9 módulos mensais com todos os tipos: aromáticas, terapêuticas, gourmet, com moldes, coreanas, gel e mais.</span>
+            <span data-lang="es">Formación técnica completa en arte y diseño de velas. 9 módulos mensuales con todo tipo: aromáticas, terapéuticas, gourmet, con moldes, coreanas, gel y más.</span>
+            <span data-lang="en">Complete technical training in candle art and design. 9 monthly modules covering: aromatic, therapeutic, gourmet, molded, Korean, gel and more.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">🌐</span> Online</span>
+            <span class="meta-item"><span class="meta-icon">📦</span> 9 módulos</span>
+            <span class="meta-item"><span class="meta-icon">💰</span> $40.000/mês</span>
+          </div>
+          <div class="course-learn">
+            <strong data-lang="pt" class="active-lang">Conteúdo:</strong>
+            <strong data-lang="es">Contenido:</strong>
+            <strong data-lang="en">Content:</strong>
+            <ul>
+              <li data-lang="pt" class="active-lang">Velas aromáticas, terapêuticas e veganas</li><li data-lang="es">Velas aromáticas, terapéuticas y veganas</li><li data-lang="en">Aromatic, therapeutic and vegan candles</li>
+              <li data-lang="pt" class="active-lang">Wax melts, gel, técnica coreana</li><li data-lang="es">Wax melts, gel, técnica coreana</li><li data-lang="en">Wax melts, gel, Korean technique</li>
+              <li data-lang="pt" class="active-lang">Título avalado - Conservatório Grassi</li><li data-lang="es">Título avalado - Conservatorio Grassi</li><li data-lang="en">Title endorsed - Conservatorio Grassi</li>
+            </ul>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://ivana.academy/course/view.php?id=4" target="_blank" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Acessar Plataforma →</span>
+              <span data-lang="es">Acceder a la Plataforma →</span>
+              <span data-lang="en">Access Platform →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Curso Online BR -->
+      <div class="course-card" style="border-color:var(--color-primary);box-shadow:0 0 0 2px var(--color-primary-light)">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#F5E6D3,#D4A574)">
+          <span>🌟</span>
+          <div class="course-tag" style="background:#D4A574" data-lang="pt" class="active-lang">🔥 Lançamento</div>
+          <div class="course-tag" style="background:#D4A574" data-lang="es">🔥 Lanzamiento</div>
+          <div class="course-tag" style="background:#D4A574" data-lang="en">🔥 Launch</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Online - Curso Completo 🇧🇷</div>
+          <div class="course-type" data-lang="es">Online - Curso Completo 🇧🇷</div>
+          <div class="course-type" data-lang="en">Online - Complete Course 🇧🇷</div>
+          <h3 class="course-title">
+            <span data-lang="pt" class="active-lang">Velas Aromáticas e Terapêuticas</span>
+            <span data-lang="es">Velas Aromáticas y Terapéuticas</span>
+            <span data-lang="en">Aromatic and Therapeutic Candles</span>
+          </h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">Curso completo em português! Do zero à produção profissional de velas aromáticas. Inclui bônus: velas terapêuticas e 100% veganas.</span>
+            <span data-lang="es">¡Curso completo en portugués! De cero a la producción profesional de velas aromáticas. Incluye bonus: velas terapéuticas y 100% veganas.</span>
+            <span data-lang="en">Complete course in Portuguese! From zero to professional aromatic candle production. Includes bonus: therapeutic and 100% vegan candles.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">🌐</span> Online - PT-BR</span>
+            <span class="meta-item"><span class="meta-icon">🎬</span><span data-lang="pt" class="active-lang">Vídeo-aulas</span><span data-lang="es">Videoclases</span><span data-lang="en">Video lessons</span></span>
+            <span class="meta-item"><span class="meta-icon">♾</span><span data-lang="pt" class="active-lang">Acesso vitalício</span><span data-lang="es">Acceso vitalicio</span><span data-lang="en">Lifetime access</span></span>
+          </div>
+          <div class="course-learn">
+            <strong data-lang="pt" class="active-lang">O que você aprende:</strong>
+            <strong data-lang="es">Lo que aprendes:</strong>
+            <strong data-lang="en">What you learn:</strong>
+            <ul>
+              <li data-lang="pt" class="active-lang">Ceras, pavios, essências e coloração</li><li data-lang="es">Ceras, mechas, esencias y coloración</li><li data-lang="en">Waxes, wicks, fragrances and coloring</li>
+              <li data-lang="pt" class="active-lang">Técnicas de derretimento e temperatura</li><li data-lang="es">Técnicas de fundido y temperatura</li><li data-lang="en">Melting and temperature techniques</li>
+              <li data-lang="pt" class="active-lang">Acabamentos profissionais</li><li data-lang="es">Acabados profesionales</li><li data-lang="en">Professional finishings</li>
+              <li data-lang="pt" class="active-lang">BÔNUS: Velas terapêuticas veganas</li><li data-lang="es">BONUS: Velas terapéuticas veganas</li><li data-lang="en">BONUS: Vegan therapeutic candles</li>
+            </ul>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://ivana.academy/course/view.php?id=16" target="_blank" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Começar Agora →</span>
+              <span data-lang="es">Empezar Ahora →</span>
+              <span data-lang="en">Start Now →</span>
+            </a>
+            <a href="https://wa.me/5548991234567" class="btn btn-outline">
+              <span data-lang="pt" class="active-lang">Saber mais</span>
+              <span data-lang="es">Saber más</span>
+              <span data-lang="en">Learn more</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Formação em Velas Autorais -->
+      <div class="course-card">
+        <div class="course-card-img" style="background:linear-gradient(135deg,#E5D0BC,#B07840)">
+          <span>🖌</span>
+          <div class="course-tag" data-lang="pt" class="active-lang">Online Profissional</div>
+          <div class="course-tag" data-lang="es">Online Profesional</div>
+          <div class="course-tag" data-lang="en">Online Professional</div>
+        </div>
+        <div class="course-body">
+          <div class="course-type" data-lang="pt" class="active-lang">Online - Design e Identidade</div>
+          <div class="course-type" data-lang="es">Online - Diseño e Identidad</div>
+          <div class="course-type" data-lang="en">Online - Design and Identity</div>
+          <h3 class="course-title">
+            <span data-lang="pt" class="active-lang">Formação em Velas Autorais</span>
+            <span data-lang="es">Formación en Velas de Autor</span>
+            <span data-lang="en">Signature Candles Training</span>
+          </h3>
+          <p class="course-desc">
+            <span data-lang="pt" class="active-lang">Crie velas com design, técnica e identidade própria. Para quem quer se diferenciar no mercado com criações únicas e uma marca pessoal forte.</span>
+            <span data-lang="es">Crea velas con diseño, técnica e identidad propia. Para quienes quieren diferenciarse en el mercado con creaciones únicas.</span>
+            <span data-lang="en">Create candles with design, technique and your own identity. For those who want to stand out in the market with unique creations.</span>
+          </p>
+          <div class="course-meta">
+            <span class="meta-item"><span class="meta-icon">🌐</span> Online</span>
+            <span class="meta-item"><span class="meta-icon">🎨</span><span data-lang="pt" class="active-lang">Design + Técnica</span><span data-lang="es">Diseño + Técnica</span><span data-lang="en">Design + Technique</span></span>
+          </div>
+          <div class="course-cta-row">
+            <a href="https://wa.me/5548991234567?text=Olá! Tenho interesse na Formação em Velas Autorais" class="btn btn-primary">
+              <span data-lang="pt" class="active-lang">Quero saber mais</span>
+              <span data-lang="es">Quiero saber más</span>
+              <span data-lang="en">I want to know more</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE IVANA ACADEMY -->
+<section class="why">
+  <div class="container">
+    <div class="why-inner">
+      <p class="section-label" data-lang="pt" class="active-lang">Nossos Diferenciais</p>
+      <p class="section-label" data-lang="es">Nuestros Diferenciales</p>
+      <p class="section-label" data-lang="en">Why Choose Us</p>
+      <h2 class="section-title">
+        <span data-lang="pt" class="active-lang">Por que escolher a Ivana Academy?</span>
+        <span data-lang="es">¿Por qué elegir Ivana Academy?</span>
+        <span data-lang="en">Why choose Ivana Academy?</span>
+      </h2>
+      <p class="section-subtitle" style="margin:0.75rem auto 0">
+        <span data-lang="pt" class="active-lang">Mais do que técnicas, você aprende a empreender.</span>
+        <span data-lang="es">Más que técnicas, aprendes a emprender.</span>
+        <span data-lang="en">More than techniques, you learn to entrepreneur.</span>
+      </p>
+      <div class="why-grid">
+        <div class="why-card"><span class="why-icon">💼</span><h3 data-lang="pt" class="active-lang">Foco no negócio</h3><h3 data-lang="es">Foco en el negocio</h3><h3 data-lang="en">Business focus</h3><p data-lang="pt" class="active-lang">Saiu do curso? Já pode começar a vender e faturar imediatamente.</p><p data-lang="es">¿Terminaste el curso? Ya puedes empezar a vender y facturar de inmediato.</p><p data-lang="en">Finished the course? You can start selling and earning right away.</p></div>
+        <div class="why-card"><span class="why-icon">🌍</span><h3 data-lang="pt" class="active-lang">Presença internacional</h3><h3 data-lang="es">Presencia internacional</h3><h3 data-lang="en">International presence</h3><p data-lang="pt" class="active-lang">Atuamos no Brasil, Argentina e demais países da América do Sul.</p><p data-lang="es">Actuamos en Brasil, Argentina y otros países de Sudamérica.</p><p data-lang="en">We operate in Brazil, Argentina and other South American countries.</p></div>
+        <div class="why-card"><span class="why-icon">🗣</span><h3 data-lang="pt" class="active-lang">Português e espanhol</h3><h3 data-lang="es">Portugués y español</h3><h3 data-lang="en">Portuguese and Spanish</h3><p data-lang="pt" class="active-lang">Cursos disponíveis nos dois idiomas para atender toda a América.</p><p data-lang="es">Cursos disponibles en ambos idiomas para atender a toda América.</p><p data-lang="en">Courses available in both languages to serve all of the Americas.</p></div>
+        <div class="why-card"><span class="why-icon">📜</span><h3 data-lang="pt" class="active-lang">Certificação reconhecida</h3><h3 data-lang="es">Certificación reconocida</h3><h3 data-lang="en">Recognized certification</h3><p data-lang="pt" class="active-lang">Parcerias com o Conservatório Grassi (Argentina) para titulação oficial.</p><p data-lang="es">Alianzas con el Conservatorio Grassi para titulación oficial.</p><p data-lang="en">Partnerships with Conservatorio Grassi for official certification.</p></div>
+        <div class="why-card"><span class="why-icon">👩🎨</span><h3 data-lang="pt" class="active-lang">Atendimento humano</h3><h3 data-lang="es">Atención humana</h3><h3 data-lang="en">Human support</h3><p data-lang="pt" class="active-lang">Turmas reduzidas com atenção personalizada a cada aluna.</p><p data-lang="es">Grupos reducidos con atención personalizada a cada alumna.</p><p data-lang="en">Small groups with personalized attention for each student.</p></div>
+        <div class="why-card"><span class="why-icon">🧱</span><h3 data-lang="pt" class="active-lang">Materiais incluídos</h3><h3 data-lang="es">Materiales incluidos</h3><h3 data-lang="en">Materials included</h3><p data-lang="pt" class="active-lang">Nos cursos presenciais, todos os materiais já estão incluídos no valor.</p><p data-lang="es">En los cursos presenciales, todos los materiales están incluidos en el precio.</p><p data-lang="en">In in-person courses, all materials are already included in the price.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="testimonials-intro">
+      <p class="section-label" data-lang="pt" class="active-lang">Depoimentos</p>
+      <p class="section-label" data-lang="es">Testimonios</p>
+      <p class="section-label" data-lang="en">Testimonials</p>
+      <h2 class="section-title">
+        <span data-lang="pt" class="active-lang">O que nossas alunas dizem</span>
+        <span data-lang="es">Lo que dicen nuestras alumnas</span>
+        <span data-lang="en">What our students say</span>
+      </h2>
+      <p class="section-subtitle" style="margin:0.75rem auto 0">
+        <span data-lang="pt" class="active-lang">Mais de 2.000 histórias de transformação.</span>
+        <span data-lang="es">Más de 2.000 historias de transformación.</span>
+        <span data-lang="en">Over 2,000 stories of transformation.</span>
+      </p>
+    </div>
+    <div class="swiper testiswiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"A Imersão de Velas mudou completamente a minha vida. Em menos de 3 meses após o curso já estava faturando mais de R$ 4.000 por mês com as minhas velas. A Ivana não ensina só a técnica, ensina você a montar um negócio de verdade."</p>
+          <div class="testi-author"><div class="testi-avatar">MS</div><div><div class="testi-name">Maria Silva</div><div class="testi-location">📍 Florianópolis, SC</div></div></div>
+        </div>
+        <div class="swiper-slide">
+          <p class="testi-text" style="font-family:var(--font-serif);font-size:1.15rem;color:var(--color-text);line-height:1.7;font-style:italic;margin-bottom:1.5rem">"Empecé la Tecnicatura sin saber nada de velas y hoy tengo mi propio emprendimiento que vende para toda Argentina. La Ivana es una profesora increíble, paciente y muy dedicada."</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-author"><div class="testi-avatar">LC</div><div><div class="testi-name">Laura Cazón</div><div class="testi-location">📍 Buenos Aires, Argentina</div></div></div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Fiz o Workshop como presente para mim mesma e saí completamente apaixonada. Os materiais são de altíssima qualidade e a Ivana explica tudo com muita paciência. Já me inscrevi para a Imersão do próximo mês!"</p>
+          <div class="testi-author"><div class="testi-avatar">AC</div><div><div class="testi-name">Ana Carolina</div><div class="testi-location">📍 Curitiba, PR</div></div></div>
+        </div>
+        <div class="swiper-slide">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"O Curso Online de Velas Aromáticas é completo demais! Aprendi desde a escolha das ceras e essências até como embalar e precificar os meus produtos. Hoje vendo pelo Instagram e marketplace. Recomendo de olhos fechados."</p>
+          <div class="testi-author"><div class="testi-avatar">FR</div><div><div class="testi-name">Fernanda Rocha</div><div class="testi-location">📍 São Paulo, SP</div></div></div>
+        </div>
+      </div>
+      <div class="swiper-pagination" style="position:relative;margin-top:2rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-header">
+        <p class="section-label" data-lang="pt" class="active-lang">Dúvidas Frequentes</p>
+        <p class="section-label" data-lang="es">Preguntas Frecuentes</p>
+        <p class="section-label" data-lang="en">Frequently Asked Questions</p>
+        <h2 class="section-title" style="text-align:center">
+          <span data-lang="pt" class="active-lang">Perguntas frequentes</span>
+          <span data-lang="es">Preguntas frecuentes</span>
+          <span data-lang="en">Frequently asked questions</span>
+        </h2>
+      </div>
+      <div id="faq-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <div class="cta-final-inner">
+      <h2>
+        <span data-lang="pt" class="active-lang">Pronta para transformar sua paixão em negócio?</span>
+        <span data-lang="es">¿Lista para transformar tu pasión en negocio?</span>
+        <span data-lang="en">Ready to turn your passion into a business?</span>
+      </h2>
+      <p>
+        <span data-lang="pt" class="active-lang">Junte-se às mais de 2.000 alunas que já mudaram suas vidas com a Ivana Academy.</span>
+        <span data-lang="es">Únete a las más de 2.000 alumnas que ya cambiaron sus vidas con Ivana Academy.</span>
+        <span data-lang="en">Join over 2,000 students who have already changed their lives with Ivana Academy.</span>
+      </p>
+      <div class="lead-form">
+        <h3 data-lang="pt" class="active-lang">Quero me inscrever</h3>
+        <h3 data-lang="es">Quiero inscribirme</h3>
+        <h3 data-lang="en">I want to enroll</h3>
+        <p data-lang="pt" class="active-lang">Nossa equipe entrará em contato em breve com todas as informações.</p>
+        <p data-lang="es">Nuestro equipo se pondrá en contacto pronto con toda la información.</p>
+        <p data-lang="en">Our team will get in touch soon with all the information.</p>
+        <form id="lead-form" onsubmit="submitLead(event)">
+          <div class="form-group">
+            <label data-lang="pt" class="active-lang">Seu nome *</label>
+            <label data-lang="es">Tu nombre *</label>
+            <label data-lang="en">Your name *</label>
+            <input type="text" name="name" required placeholder="Nome completo">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp *</label>
+            <input type="tel" name="phone" required placeholder="+55 (48) 99999-9999">
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="seuemail@exemplo.com">
+          </div>
+          <div class="form-group">
+            <label data-lang="pt" class="active-lang">Qual curso te interessa?</label>
+            <label data-lang="es">¿Qué curso te interesa?</label>
+            <label data-lang="en">Which course interests you?</label>
+            <select name="course">
+              <option value="">Selecione...</option>
+              <option value="imersao" data-lang="pt" class="active-lang">Imersão Presencial (2 dias)</option>
+              <option value="imersao" data-lang="es">Inmersión Presencial (2 días)</option>
+              <option value="workshop" data-lang="pt" class="active-lang">Workshop Intensivo</option>
+              <option value="workshop" data-lang="es">Workshop Intensivo</option>
+              <option value="profesorado">Profesorado en Velas (Argentina)</option>
+              <option value="tecnicatura">Tecnicatura en Arte y Diseño (Argentina)</option>
+              <option value="online" data-lang="pt" class="active-lang">Curso Online Completo (Brasil)</option>
+              <option value="online" data-lang="es">Curso Online Completo (Brasil)</option>
+              <option value="autorais" data-lang="pt" class="active-lang">Formação Velas Autorais</option>
+              <option value="autorais" data-lang="es">Formación Velas de Autor</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit" data-lang="pt" style="display:block" class="active-lang">Quero me inscrever →</button>
+          <button type="submit" class="form-submit" data-lang="es" style="display:none">Quiero inscribirme →</button>
+          <button type="submit" class="form-submit" data-lang="en" style="display:none">Enroll me →</button>
+          <p class="form-disclaimer" data-lang="pt" class="active-lang">🔒 Seus dados estão seguros. Sem spam.</p>
+          <p class="form-disclaimer" data-lang="es">🔒 Tus datos están seguros. Sin spam.</p>
+          <p class="form-disclaimer" data-lang="en">🔒 Your data is safe. No spam.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo" style="color:var(--color-primary-light)">🕯 Ivana Academy</a>
+      <p data-lang="pt" class="active-lang">Transformando paixão em profissão desde 2019. Cursos de artes manuais para mulheres empreendedoras.</p>
+      <p data-lang="es">Transformando pasión en profesión desde 2019. Cursos de artes manuales para mujeres emprendedoras.</p>
+      <p data-lang="en">Transforming passion into profession since 2019. Handmade arts courses for entrepreneurial women.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/ivana.lerea/" target="_blank" title="Instagram Brasil">📸</a>
+        <a href="https://www.instagram.com/ivanalerea.argentina" target="_blank" title="Instagram Argentina">📸🇦🇷</a>
+        <a href="https://www.youtube.com/@ivanalerea" target="_blank" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@ivana.lerea" target="_blank" title="TikTok 🇧🇷">🎵</a>
+        <a href="https://wa.me/5548991234567" target="_blank" title="WhatsApp Brasil">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 data-lang="pt" class="active-lang">Cursos de Velas</h4>
+      <h4 data-lang="es">Cursos de Velas</h4>
+      <h4 data-lang="en">Candle Courses</h4>
+      <ul>
+        <li><a href="#cursos" data-lang="pt" class="active-lang">Imersão Presencial</a><a href="#cursos" data-lang="es">Inmersión Presencial</a><a href="#cursos" data-lang="en">In-Person Immersion</a></li>
+        <li><a href="#cursos" data-lang="pt" class="active-lang">Workshop Intensivo</a><a href="#cursos" data-lang="es">Workshop Intensivo</a><a href="#cursos" data-lang="en">Intensive Workshop</a></li>
+        <li><a href="https://ivana.academy/course/view.php?id=21">Profesorado en Velas</a></li>
+        <li><a href="https://ivana.academy/course/view.php?id=4">Tecnicatura en Velas</a></li>
+        <li><a href="https://ivana.academy/course/view.php?id=16" data-lang="pt" class="active-lang">Curso Online BR</a><a href="https://ivana.academy/course/view.php?id=16" data-lang="es">Curso Online BR</a><a href="https://ivana.academy/course/view.php?id=16" data-lang="en">Online Course BR</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-lang="pt" class="active-lang">Outros Cursos</h4>
+      <h4 data-lang="es">Otros Cursos</h4>
+      <h4 data-lang="en">Other Courses</h4>
+      <ul>
+        <li><a href="../saboaria/" data-lang="pt" class="active-lang">Saboaria</a><a href="../saboaria/" data-lang="es">Jabonería</a><a href="../saboaria/" data-lang="en">Soap Making</a></li>
+        <li><a href="../resina/" data-lang="pt" class="active-lang">Resina</a><a href="../resina/" data-lang="es">Resina</a><a href="../resina/" data-lang="en">Resin Art</a></li>
+        <li><a href="../macrame/" data-lang="pt" class="active-lang">Macramê</a><a href="../macrame/" data-lang="es">Macramé</a><a href="../macrame/" data-lang="en">Macramé</a></li>
+        <li><a href="https://ivana.academy" target="_blank" data-lang="pt" class="active-lang">Plataforma de Cursos</a><a href="https://ivana.academy" target="_blank" data-lang="es">Plataforma de Cursos</a><a href="https://ivana.academy" target="_blank" data-lang="en">Course Platform</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Ivana Academy - Ivana Lerea. 
+    <span data-lang="pt" class="active-lang">Todos os direitos reservados.</span>
+    <span data-lang="es">Todos los derechos reservados.</span>
+    <span data-lang="en">All rights reserved.</span>
+    | 🇧🇷 Florianópolis, SC, Brasil
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<div class="whatsapp-float">
+  <a href="https://wa.me/5548991234567?text=Olá! Vi os cursos de velas da Ivana Academy e quero saber mais." target="_blank">
+    <span>💬</span>
+    <span data-lang="pt" class="active-lang">Falar com a equipe</span>
+    <span data-lang="es">Hablar con el equipo</span>
+    <span data-lang="en">Talk to us</span>
+  </a>
+</div>
+
+<!-- Swiper JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Compiled JS -->
+<script src="../js/main.js"></script>
+<script src="../js/velas.js"></script>
+</body>
+</html>

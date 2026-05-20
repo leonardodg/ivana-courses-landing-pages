@@ -1,0 +1,33 @@
+# =============================================================================
+# PRODUCTION - Optimized for production deployment
+# =============================================================================
+# Usage:
+#     docker compose -f .devcontainer/compose/prod.yml up -d
+# =============================================================================
+
+services:
+  web:
+    image: nginx:1.25-alpine
+    container_name: courses-nginx
+    restart: unless-stopped
+    environment:
+      - WEBSITE_URL=https://courses.ivana.academy
+      - ENVIRONMENT=production
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - moodle_network
+    volumes:
+      - /var/www/html/.devcontainer  # no show folder
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f https://courses.ivana.academy || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+networks:
+  ivana_network:
+    external: true

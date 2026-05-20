@@ -1,0 +1,108 @@
+#!/bin/bash
+# entrypoint: This script is an example of entrypoint for a Docker container WEBSITE.
+
+# Site: https://courses.ivana.academy
+# Author: LeoDG
+# Issue: #1 - Initial version
+
+# ----------------------------------------------------
+# This script print status and information and load secrets from Docker secrets if available,
+# if all secrets are loaded correctly,
+# then it configures Apache and starts the main entrypoint for Website in Nginx.
+# The result output in default STDOUT.
+#
+# USE IN DOCKERFILE:
+#    FROM nginx:1.25-alpine
+#    COPY .devcontainer/bin/my-entrypoint /usr/local/bin/my-entrypoint
+#    RUN chmod +x /usr/local/bin/my-entrypoint
+#    ENTRYPOINT ["my-entrypoint"]
+# ----------------------------------------------------
+#
+# History:
+#   2026-18-05: Initial version
+#
+# License: MIT License
+
+set -euo pipefail
+
+echo ""
+echo "🚀 WebSite in Docker Nginx Container Starting..."
+echo "🥷 Current User: $(whoami) (whoami)"
+echo "🌍 Environment: ${ENVIRONMENT:-development}"
+
+
+if [ -f "/run/secrets/ssl_cert" ] && [ -f "/run/secrets/ssl_key" ]; then
+    CERT_PATH="/run/secrets/ssl_cert"
+    KEY_PATH="/run/secrets/ssl_key"
+else
+    CERT_PATH="/etc/ssl/certs/develop-local.crt"
+    KEY_PATH="/etc/ssl/certs/develop-local.key"
+fi
+
+# ======================== CLEAN WEBSITE_URL ========================
+WEBSITE_URL_CLEAN="${WEBSITE_URL#http://}"
+WEBSITE_URL_CLEAN="${WEBSITE_URL_CLEAN#https://}"
+WEBSITE_URL_CLEAN="${WEBSITE_URL_CLEAN%%/*}"
+
+# ======================== DEVELOPMENT MODE ========================
+# Check if SSL certs exist, if not generate self-signed certs for development
+if [[ "${ENVIRONMENT}" =~ ^(development|dev)$ ]]; then
+    if [ ! -f "${CERT_PATH}" ] || [ ! -f "${KEY_PATH}" ]; then
+        echo "🔐 Generating self-signed SSL certificate for development..."
+
+        mkdir -p /etc/ssl/certs
+        chown nginx:nginx /etc/ssl/certs 2>/dev/null || true
+        chmod 755 /etc/ssl/certs
+
+    openssl req -x509 \
+        -out "$CERT_PATH" \
+        -keyout "$KEY_PATH" \
+        -days 1024 \
+        -newkey rsa:2048 \
+        -nodes \
+        -sha256 \
+        -subj "/CN=${WEBSITE_URL_CLEAN}" \
+        -extensions EXT \
+        -config <(printf "[dn]\nCN=${WEBSITE_URL_CLEAN}\n[req]\ndistinguished_name=dn\n[EXT]\nsubjectAltName=DNS:${WEBSITE_URL_CLEAN}\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth") \
+        2>/dev/null
+        chmod 644 "${CERT_PATH}"
+        chmod 600 "${KEY_PATH}"
+        chown nginx:nginx "${CERT_PATH}" "${KEY_PATH}" 2>/dev/null || true
+
+        echo "✅ Self-signed certificate generated for ${WEBSITE_URL_CLEAN}"
+    else
+        echo "✅ SSL certificate found: ${CERT_PATH} and ${KEY_PATH}"
+    fi
+fi
+
+# ======================== EXPORT ENVIRONMENT VARIABLES ========================
+echo "🔧 Configuring Environment Variables..."
+
+export WEBSITE_URL WEBSITE_URL_CLEAN CERT_PATH KEY_PATH
+
+
+# ======================== PERMISSIONS ========================
+echo "🔧 Adjusting file permissions..."
+
+if [ "$(stat -c '%U' /var/www/html)" != "nginx" ]; then
+    chown -R nginx:nginx /var/www/html  2>/dev/null || true
+    echo "✅ Adjusted permissions CHOWN!"
+fi
+
+
+# ======================== PRINT INFO ========================
+echo "+-============================================================-+"
+echo "|           🚀 Running in ${ENVIRONMENT} mode                   |"
+echo "+-============================================================-+"
+echo "🔗 MOODLE_URL          = ${MOODLE_URL}"
+echo "🔗 ServerName          = ${MOODLE_URL_CLEAN}"
+echo "🔐 CERT_PATH           = ${CERT_PATH}"
+echo "🔑 KEY_PATH            = ${KEY_PATH}"
+echo "================================================================"
+
+
+# ======================== START APACHE ========================
+echo "✅ Handing off to NGINX..."
+echo ""
+
+exec "$@"

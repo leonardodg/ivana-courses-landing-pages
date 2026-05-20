@@ -1,0 +1,17 @@
+# =============================================================================
+# DEVELOPMENT OVERRIDE - Local development with hot-reload
+# =============================================================================
+# Usage:
+#     docker compose -f .devcontainer/compose/dev.yml -f .devcontainer/compose/build-dev.yml up --build -d
+# =============================================================================
+
+services:
+  web:
+    build:
+      context: ../../
+      dockerfile: .devcontainer/build/nginx.Dockerfile
+      target: development
+      args:
+        - ENVIRONMENT=development
+    environment:
+      WEBSITE_URL: https://courses.local

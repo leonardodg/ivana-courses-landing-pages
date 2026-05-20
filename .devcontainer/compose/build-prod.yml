@@ -1,0 +1,19 @@
+# =============================================================================
+# PRODUCTION OVERRIDE - Optimized for production deployment
+# =============================================================================
+# Usage:
+#     docker compose -f .devcontainer/compose/prod.yml -f .devcontainer/compose/build-prod.yml up --build -d
+# =============================================================================
+
+services:
+  web:
+    build:
+      context: ../../
+      dockerfile: .devcontainer/build/nginx.Dockerfile
+      target: production
+      args:
+        - ENVIRONMENT=production
+      environment:
+        WEBSITE_URL: https://courses.ivana.academy
+      volumes:
+        - /usr/share/nginx/html/.devcontainer
