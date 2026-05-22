@@ -11,22 +11,12 @@ services:
     container_name: courses-nginx
     restart: unless-stopped
     environment:
-      - WEBSITE_URL=https://courses.ivana.academy
-      - ENVIRONMENT=production
+      - APP_URL=https://courses.ivana.academy
+      - APP_ENV=production
     ports:
-      - "80:80"
-      - "443:443"
+      - "8088:80"
     networks:
-      - moodle_network
-    volumes:
-      - /var/www/html/.devcontainer  # no show folder
-
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f https://courses.ivana.academy || exit 1"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 20s
+      - ivana_network
 
 networks:
   ivana_network:

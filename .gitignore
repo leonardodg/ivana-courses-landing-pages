@@ -135,5 +135,13 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-public/
 .claude/settings.local.json
+
+
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example

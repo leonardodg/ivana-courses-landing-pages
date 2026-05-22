@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Libre Caslon Text", serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom "Artisanal Elegance" Color Palette Variables */
+  --color-primary: #805252;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #d9a1a0;
+  --color-on-primary-container: #603737;
+  --color-inverse-primary: #f3b8b7;
+
+  --color-secondary: #635e55;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e6dfd4;
+  --color-on-secondary-container: #676259;
+
+  --color-tertiary: #805533;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #daa47d;
+  --color-on-tertiary-container: #60391a;
+
+  --color-surface-cream: #fcf9f5;
+  --color-surface-dim: #dcdad6;
+  --color-surface-bright: #fcf9f5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3ef;
+  --color-surface-container: #f0ede9;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-container-highest: #e5e2de;
+
+  --color-on-surface: #1c1c1a;
+  --color-on-surface-variant: #514443;
+  --color-inverse-surface: #31302e;
+  --color-inverse-on-surface: #f3f0ec;
+
+  --color-outline: #837373;
+  --color-outline-variant: #d5c2c1;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+}
+
+/* Custom Tailwind CSS v4 Component & Typography Utilities */
+
+@utility display-lg {
+  font-family: var(--font-serif);
+  font-size: 3rem; /* 48px */
+  font-weight: 400;
+  line-height: 3.5rem; /* 56px */
+  letter-spacing: -0.02em;
+}
+
+@utility headline-lg {
+  font-family: var(--font-serif);
+  font-size: 2rem; /* 32px */
+  font-weight: 400;
+  line-height: 2.5rem; /* 40px */
+}
+
+@utility headline-lg-mobile {
+  font-family: var(--font-serif);
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  line-height: 2.25rem; /* 36px */
+}
+
+@utility headline-md {
+  font-family: var(--font-serif);
+  font-size: 1.5rem; /* 24px */
+  font-weight: 400;
+  line-height: 2rem; /* 32px */
+}
+
+@utility body-lg {
+  font-family: var(--font-sans);
+  font-size: 1.125rem; /* 18px */
+  font-weight: 400;
+  line-height: 1.75rem; /* 28px */
+}
+
+@utility body-md {
+  font-family: var(--font-sans);
+  font-size: 1rem; /* 16px */
+  font-weight: 400;
+  line-height: 1.5rem; /* 24px */
+}
+
+@utility label-sm {
+  font-family: var(--font-sans);
+  font-size: 0.75rem; /* 12px */
+  font-weight: 600;
+  line-height: 1rem; /* 16px */
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@utility brand-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1rem 2.25rem;
+  border-radius: 9999px; /* Pill shapes */
+  box-shadow: 0px 4px 10px rgba(128, 82, 82, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 20px rgba(128, 82, 82, 0.25);
+  }
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+}
+
+@utility brand-btn-secondary {
+  border: 1px solid var(--color-outline);
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: var(--color-surface-container-high);
+    border-color: var(--color-primary);
+  }
+}
+
+@utility brand-card {
+  background-color: var(--color-surface-container-low);
+  border: 1px solid var(--color-surface-container-highest);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.02);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@utility brand-bento {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  background-color: var(--color-surface-container-low);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-surface-container-high);
+}
+
+@utility input-minimal {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  font-size: 0.875rem;
+  color: var(--color-on-surface);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+    background-color: var(--color-surface-container-lowest);
+  }
+}
+
+/* Base custom classes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-gradient {
+  background: linear-gradient(to bottom, rgba(252, 249, 245, 0) 0%, rgba(252, 249, 245, 1) 90%);
+}

@@ -1,3 +1,9 @@
 # =============================================================================
 #                           Development Environment
 # =============================================================================
+
+APP_URL=https://course.local
+DOCKER_WWWROOT=/usr/share/nginx/html/dist/
+
+APP_ENV=development
+NODE_ENV=development

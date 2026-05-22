@@ -12,8 +12,8 @@ services:
       dockerfile: .devcontainer/build/nginx.Dockerfile
       target: production
       args:
-        - ENVIRONMENT=production
+        - APP_ENV=production
       environment:
-        WEBSITE_URL: https://courses.ivana.academy
+        APP_URL: https://courses.ivana.academy
       volumes:
         - /usr/share/nginx/html/.devcontainer

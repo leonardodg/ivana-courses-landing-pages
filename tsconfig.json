@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    // skipLibCheck: ignora erros em .d.ts de libs externas (recomendado)
+    "skipLibCheck": true,
+    // bundler: ideal para projetos Vite (não resolve node_modules manualmente)
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    // Alias "@" → aponta para "src/" (espelha o alias do vite.config.ts)
+    // baseUrl é obrigatório quando se usa paths
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    // Permite importar .ts/.tsx sem omitir a extensão (útil em dev)
+    "allowImportingTsExtensions": true,
+    // noEmit: TypeScript não gera .js — quem faz o transpile é o Vite/esbuild
+    "noEmit": true,
+    // Recomendado: erros de tipo mais rigorosos
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  // Quais arquivos o TypeScript analisa
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.ts"
+  ],
+  // Exclui node_modules e o dist gerado
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
