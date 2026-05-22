@@ -27,7 +27,7 @@
     },
     // Permite importar .ts/.tsx sem omitir a extensão (útil em dev)
     "allowImportingTsExtensions": true,
-    // noEmit: TypeScript não gera .js — quem faz o transpile é o Vite/esbuild
+    // noEmit: TypeScript não gera .js - quem faz o transpile é o Vite/esbuild
     "noEmit": true,
     // Recomendado: erros de tipo mais rigorosos
     "strict": true,

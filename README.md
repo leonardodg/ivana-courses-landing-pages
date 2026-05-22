@@ -157,10 +157,10 @@ npm run dev                          # Vite HMR em http://localhost:3003
 # Build local para inspecionar o dist/
 npm run build                        # Preview em http://localhost:8088
 
-# Docker — desenvolvimento
+# Docker - desenvolvimento
 docker compose up
 
-# Docker — produção
+# Docker - produção
 docker compose --profile production up -d
 
 # Ver logs

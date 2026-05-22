@@ -53,7 +53,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
             {/* Elegant Caption Overlay */}
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">
               <span className="text-[10px] uppercase font-mono tracking-widest text-[#d9a1a0] font-semibold">Ivana Lerea</span>
-              <p className="text-xs text-white/90 mt-1 font-serif italic">“A arte é o transbordo da nossa melhor energia moldada à mão.”</p>
+              <p className="text-xs text-white/90 mt-1 font-serif italic">"A arte é o transbordo da nossa melhor energia moldada à mão."</p>
             </div>
           </div>
           {/* Subtle Backdrops to simulate paper layered effect */}

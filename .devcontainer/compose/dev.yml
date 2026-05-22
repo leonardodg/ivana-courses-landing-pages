@@ -1,5 +1,5 @@
 # =============================================================================
-# DEVELOPMENT — Local development with hot-reload
+# DEVELOPMENT - Local development with hot-reload
 # =============================================================================
 # Usage:
 #     docker compose -f .devcontainer/compose/dev.yml up -d

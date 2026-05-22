@@ -1,5 +1,5 @@
 # =============================================================================
-# DEFAULTS — Valores compartilhados entre dev e prod (não-sensíveis)
+# DEFAULTS - Valores compartilhados entre dev e prod (não-sensíveis)
 # Sobrescrito por development.env ou production.env
 # =============================================================================
 

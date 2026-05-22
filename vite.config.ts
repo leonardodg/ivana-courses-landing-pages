@@ -1,5 +1,5 @@
 // =============================================================================
-// vite.config.ts — Courses Landing Pages - Ivana Academy (Multi-Page Application)
+// vite.config.ts - Courses Landing Pages - Ivana Academy (Multi-Page Application)
 // Stack: React 19 + Vite 6 + Tailwind CSS v4 + TypeScript
 //
 // Estrutura de source → build:
