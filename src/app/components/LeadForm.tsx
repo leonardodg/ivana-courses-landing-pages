@@ -94,24 +94,24 @@ export default function LeadForm({
   };
 
   return (
-    <section id="contato" className="py-16 md:py-24 bg-[#f0ede9] border-t border-[#e1deda]">
+    <section id="contato" className="py-16 md:py-24 bg-surface-form border-t border-subtle">
       <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         {/* Narratives of registration */}
         <div className="lg:col-span-5 space-y-6">
-          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-500 bg-[#e5e2de] px-3 py-1 rounded-full">
+          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-500 bg-surface-tag px-3 py-1 rounded-full">
             Inscripciones Abiertas / Inscrições Abertas
           </span>
           <h2 className="text-2xl md:text-3.5xl font-serif text-gray-950 font-bold leading-tight">
             {lead_text.headline}
           </h2>
-          <p className="text-xs md:text-sm text-[#514443] leading-relaxed">
+          <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">
             {lead_text.subtitle}
           </p>
 
-          <div className="p-5 bg-white rounded-xl border border-[#eae8e4] text-xs text-[#514443] space-y-4">
+          <div className="p-5 bg-white rounded-xl border border-muted text-xs text-on-surface-variant space-y-4">
             <div className="flex gap-3 leading-relaxed items-start">
-              <Shield className="w-5 h-5 text-[#805252] shrink-0 mt-0.5" />
+              <Shield className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-gray-900 block mb-0.5">Atendimento Direto</span>
                 <span>As dúvidas são enviadas diretamente para a mesa de Ivana Lerea, que responde em formato de consultoria gratuita de admissão.</span>
@@ -128,7 +128,7 @@ export default function LeadForm({
         </div>
 
         {/* Lead Form */}
-        <div className="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-[#eae8e4] p-6 md:p-8">
+        <div className="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-muted p-6 md:p-8">
           {success ? (
             <div className="bg-emerald-50 text-emerald-900 rounded-xl p-6 border border-emerald-100 flex flex-col items-center text-center space-y-4">
               <span className="text-3xl">🎉</span>
