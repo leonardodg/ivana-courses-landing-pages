@@ -1,0 +1,38 @@
+export const courses_text = {
+  pt: {
+    headline: "Formações & Workshops",
+    description:
+      "Estrutura premium em turmas reduzidas ou suporte individual garantido. Escolha sua modalidade:",
+    badgePresencial: "Presencial Físico",
+    badgeOnline: "Plataforma Moodle",
+    duration: "Duração:",
+    location: "Localidade:",
+    materials: "Materiais:",
+    learnMore: "Ver Conteúdo Programático",
+    enrollNow: "Garantir Minha Vaga",
+    officialSite: "Visitar Plataforma do Curso",
+    syllabusTitle: "Programa de Estudo Detalhado",
+    materialsLabel: "Insumos / Apoio:",
+    model: "Modalidade:",
+    close: "Fechar",
+    applyPre: "Se inscrever no",
+  },
+  es: {
+    headline: "Formaciones & Talleres",
+    description:
+      "Estructura académica de primer nivel con mentorías personalizadas. Elige tu modalidad:",
+    badgePresencial: "Presencial Físico",
+    badgeOnline: "Plataforma Moodle",
+    duration: "Duración:",
+    location: "Ubicación:",
+    materials: "Materiales:",
+    learnMore: "Ver Programa de Estudios",
+    enrollNow: "Inscribirme / Reservar Vacante",
+    officialSite: "Ir al Aula Virtual (Moodle)",
+    syllabusTitle: "Programa de Estudio Detallado",
+    materialsLabel: "Insumos / Soporte:",
+    model: "Modalidad:",
+    close: "Cerrar",
+    applyPre: "Inscribirme en el",
+  },
+};

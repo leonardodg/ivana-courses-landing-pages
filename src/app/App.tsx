@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { Course, Language, CategoryId } from './types';
-import { CATEGORIES, COURSES, REVIEWS, FAQS } from './data';
+import { Course, CategorySpec, Review, Language, CategoryId, FAQItem } from './classes/types';
+import { categories_data } from './data/categories';
+import { courses_list } from './data/courses';
+import { reviews_list } from './data/reviews';
+import { faqs_list } from './data/faqs';
+import { home_text as text } from './lang/homepage';
 import Navbar from './components/Navbar';
 import AboutSection from './components/AboutSection';
 import CourseGrid from './components/CourseGrid';
@@ -15,6 +19,11 @@ export default function App() {
   const [language, setLanguage] = useState<Language>('pt');
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>('velas');
   const [selectedCourseForForm, setSelectedCourseForForm] = useState<Course | null>(null);
+
+  const CATEGORIES: Record<string, CategorySpec> = categories_data;
+  const REVIEWS: Review[] = reviews_list;
+  const FAQS: FAQItem[] = faqs_list;
+  const COURSES: Course[] = courses_list;
 
   const activeCategory = CATEGORIES[activeCategoryId];
 
@@ -82,36 +91,7 @@ export default function App() {
     // Smooth scroll is also handled inside the useEffect in LeadForm
   };
 
-  const t = {
-    pt: {
-      statsAlunas: 'Alunas Certificadas',
-      statsExp: 'Anos de Ensino',
-      statsPort: 'Validação Internacional',
-      tagBadge: 'Formação Reconhecida',
-      btnHero: 'Explorar Catálogo de Turmas',
-      footerAbout: 'Ivana Academy é focada na profissionalização feminina através do artesanato de alto padrão, capacitando milhares de mulheres a mudarem suas realidades financeiras.',
-      footerLinks: 'Links do Portal',
-      footerContact: 'Inscrições & WhatsApp',
-      footerRights: '© 2026 Ivana Academy. Todos os direitos reservados. Projetado bilingue Brasil & Argentina.',
-      coursesLabel: 'Cursos',
-      aboutLabel: 'Sobre Mim',
-      contactLabel: 'Contato',
-    },
-    es: {
-      statsAlunas: 'Alumnas Certificadas',
-      statsExp: 'Años de Docencia',
-      statsPort: 'Validez Internacional',
-      tagBadge: 'Formación Homologada',
-      btnHero: 'Ver Clases Disponibles',
-      footerAbout: 'Ivana Academy está enfocada en el empoderamiento e independencia financiera de las mujeres mediante manualidades de alta gama y diseño contemporáneo.',
-      footerLinks: 'Enlaces Clave',
-      footerContact: 'Inscripciones & Soporte',
-      footerRights: '© 2026 Ivana Academy. Reservados todos los derechos. Mapeo internacional de clases en Argentina y Brasil.',
-      coursesLabel: 'Cursos',
-      aboutLabel: 'Sobre Mí',
-      contactLabel: 'Contacto',
-    }
-  }[language];
+  const courses_text = text[language];
 
   return (
     <div className="min-h-screen bg-[#fcf9f5] text-gray-900 font-sans selection:bg-[#ffdad9] flex flex-col justify-between">
@@ -145,7 +125,7 @@ export default function App() {
               {/* Floating micro banner */}
               <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-[#e1deda] px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
                 <span className="text-sm">{activeCategory.badgeLogo}</span>
-                <span className="text-[10px] uppercase font-mono tracking-widest text-[#805252]">{t.tagBadge}</span>
+                <span className="text-[10px] uppercase font-mono tracking-widest text-[#805252]">{courses_text.tagBadge}</span>
               </div>
 
               {/* Display Headline */}
@@ -164,7 +144,7 @@ export default function App() {
                   href="#cursos"
                   className="bg-[#805252] hover:bg-opacity-95 text-white font-semibold font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer"
                 >
-                  {t.btnHero}
+                  {courses_text.btnHero}
                 </a>
               </div>
             </div>
@@ -178,21 +158,21 @@ export default function App() {
             <div className="space-y-1">
               <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">2.000+</span>
               <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
-                {t.statsAlunas}
+                {courses_text.statsAlunas}
               </span>
             </div>
 
             <div className="space-y-1 border-y md:border-y-0 md:border-x border-[#e1deda] py-4 md:py-0">
               <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">6+ {language === 'pt' ? 'Anos' : 'Años'}</span>
               <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
-                {t.statsExp}
+                {courses_text.statsExp}
               </span>
             </div>
 
             <div className="space-y-1">
               <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">BR &amp; AR</span>
               <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
-                {t.statsPort}
+                {courses_text.statsPort}
               </span>
             </div>
 
@@ -216,13 +196,6 @@ export default function App() {
         {/* Dynamic reviews matching testimonials requirement */}
         <ReviewsCarousel language={language} reviews={REVIEWS} />
 
-        {/* PostgreSQL & Redis interactive Blueprint. Solves user query of structuring DB & routing caching system. */}
-        <section className="py-16 bg-[#0f172a] text-[#f8fafc]">
-          <div className="max-w-[1280px] mx-auto px-6">
-            <TechDashboard language={language} activeCategoryId={activeCategoryId} />
-          </div>
-        </section>
-
         {/* Flexible lead capture form */}
         <LeadForm
           language={language}
@@ -245,25 +218,25 @@ export default function App() {
             <img
               alt="Ivana Academy"
               className="h-10 w-auto object-contain"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEq7hSIxNmxkfIHSubsBA9DnhiKGTjQQtxNMhvbshwJhMuv1EZE3QMJML0icL9KynPAOtrkehG7GTZftH3q1VhQRN1shY6MlSG56jIeaPGo10RfWbGhr7-3eg9fUucE7nG-rw5SBMcgKMZIG2YEtF-Z-oCHIgixUP_g9n0ETXDIqA5oFqKZ21QuntZ4wjhtP65scaDq4DVn3eo0JYaYLgs2fSe9siJWDLJiTSd6e1HQ_7ybfV2nWWZZhlgMDvxuLBItTmNaOU0nqVe"
+              src="/images/logo-square.svg"
             />
             <p className="max-w-md leading-relaxed">
-              {t.footerAbout}
+              {courses_text.footerAbout}
             </p>
           </div>
 
           {/* Card 2: Links */}
           <div className="md:col-span-3 space-y-3">
-            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{t.footerLinks}</span>
+            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{courses_text.footerLinks}</span>
             <ul className="space-y-2">
               <li>
-                <a href="#cursos" className="hover:text-[#805252] transition-colors">{t.coursesLabel}</a>
+                <a href="#cursos" className="hover:text-[#805252] transition-colors">{courses_text.coursesLabel}</a>
               </li>
               <li>
-                <a href="#sobre" className="hover:text-[#805252] transition-colors">{t.aboutLabel}</a>
+                <a href="#sobre" className="hover:text-[#805252] transition-colors">{courses_text.aboutLabel}</a>
               </li>
               <li>
-                <a href="#contato" className="hover:text-[#805252] transition-colors">{t.contactLabel}</a>
+                <a href="#contato" className="hover:text-[#805252] transition-colors">{courses_text.contactLabel}</a>
               </li>
               <li>
                 <a href="#tech-blueprint" className="hover:text-[#805252] transition-colors">Developer Blueprint</a>
@@ -273,7 +246,7 @@ export default function App() {
 
           {/* Card 3: Contact */}
           <div className="md:col-span-3 space-y-3">
-            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{t.footerContact}</span>
+            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{courses_text.footerContact}</span>
             <p className="leading-relaxed">
               Florianópolis, SC, Brasil <br />
               Buenos Aires, Argentina <br />
@@ -284,7 +257,7 @@ export default function App() {
         </div>
 
         <div className="max-w-[1280px] mx-auto px-6 border-t border-[#eae8e4] mt-12 pt-6 text-center text-gray-500 text-[11px]">
-          <span>{t.footerRights}</span>
+          <span>{courses_text.footerRights}</span>
         </div>
       </footer>
 

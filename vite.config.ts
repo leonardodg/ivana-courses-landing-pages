@@ -76,8 +76,8 @@ export default defineConfig(({ mode }) => ({
       output: {
         // Hash no nome → cache de 1 ano no Nginx é seguro porque o hash
         // muda automaticamente a cada build quando o conteúdo muda.
-        entryFileNames: "scripts/[name].[hash].js",
-        chunkFileNames: "scripts/[name].[hash].js",
+        entryFileNames: "app/[name].[hash].js",
+        chunkFileNames: "app/[name].[hash].js",
         assetFileNames: (assetInfo) => {
           // CSS → styles/
           if (assetInfo.name?.endsWith(".css")) {

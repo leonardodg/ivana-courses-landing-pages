@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Database, Cpu, Layers, Play, RefreshCw, CheckCircle2, Terminal, Shield, ArrowRight } from 'lucide-react';
-import { Language, CategoryId } from '../types';
+import { Language, CategoryId } from '../classes/types';
 
 interface TechDashboardProps {
   language: Language;
