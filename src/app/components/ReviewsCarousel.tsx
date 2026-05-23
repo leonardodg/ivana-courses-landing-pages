@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Review, Language } from '../types';
+import { Review, Language } from '../classes/types';
 import { Star, ChevronLeft, ChevronRight, MessageSquareQuote } from 'lucide-react';
+import { reviews_header as text } from '../lang/reviews';
 
 interface ReviewsCarouselProps {
   language: Language;
@@ -20,16 +21,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
 
   const r = reviews[index];
 
-  const t = {
-    pt: {
-      title: 'Transbordando Histórias de Sucesso',
-      subtitle: 'Mais do que produzir peças artesanais, nossas alunas criam negócios autossuficientes.',
-    },
-    es: {
-      title: 'Historias que nos Inspiran',
-      subtitle: 'Más allá de fabricar piezas hermosas, nuestras alumnas construyen emprendimientos rentables.',
-    }
-  }[language];
+  const reviews_text = text[language];
 
   return (
     <section className="py-16 md:py-24 bg-[#FAF6F0] border-t border-[#e2dfda] relative overflow-hidden">
@@ -46,10 +38,10 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
             Social Proof
           </span>
           <h2 className="text-2xl md:text-3xl font-serif text-[#1c1c1a] leading-tight">
-            {t.title}
+            {reviews_text.title}
           </h2>
           <p className="text-xs md:text-sm text-gray-600 mt-2">
-            {t.subtitle}
+            {reviews_text.subtitle}
           </p>
         </div>
 

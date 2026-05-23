@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FAQItem, Language } from '../types';
+import { FAQItem, Language } from '../classes/types';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import { faqs_text as text } from '../lang/faqs_section';
 
 interface FAQSectionProps {
   language: Language;
@@ -10,16 +11,7 @@ interface FAQSectionProps {
 export default function FAQSection({ language, faqs }: FAQSectionProps) {
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const t = {
-    pt: {
-      title: 'Perguntas Frequentes',
-      subtitle: 'Tudo o que você precisa saber sobre as aulas, materiais e certificação.',
-    },
-    es: {
-      title: 'Preguntas Frecuentes',
-      subtitle: 'Todo lo que necesitas saber antes de iniciar tus clases y talleres.',
-    }
-  }[language];
+  const faqs_text = text[language];
 
   const toggleFaq = (id: string) => {
     setOpenId(openId === id ? null : id);
@@ -33,10 +25,10 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
         <div className="text-center mb-16">
           <HelpCircle className="w-8 h-8 mx-auto text-[#805252] mb-3" />
           <h2 className="text-2xl md:text-3xl font-serif text-gray-900 leading-tight">
-            {t.title}
+            {faqs_text.title}
           </h2>
           <p className="text-xs md:text-sm text-[#514443] mt-2 leading-relaxed max-w-xl mx-auto">
-            {t.subtitle}
+            {faqs_text.subtitle}
           </p>
         </div>
 
