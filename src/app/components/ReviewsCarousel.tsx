@@ -24,7 +24,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
   const reviews_text = text[language];
 
   return (
-    <section className="py-16 md:py-24 bg-[#FAF6F0] border-t border-[#e2dfda] relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-surface-hero border-t border-review relative overflow-hidden">
       {/* Decorative quotes background graphic */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-200/40 select-none pointer-events-none pr-8">
         <MessageSquareQuote className="w-64 h-64 opacity-5 stroke-[0.3]" />
@@ -34,10 +34,10 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
         
         {/* Title */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono font-bold tracking-widest text-[#805252] uppercase bg-[#ffdad9] px-3.5 py-1.5 rounded-full inline-block mb-3">
+          <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
             Social Proof
           </span>
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1c1c1a] leading-tight">
+          <h2 className="text-2xl md:text-3xl font-serif text-on-surface leading-tight">
             {reviews_text.title}
           </h2>
           <p className="text-xs md:text-sm text-gray-600 mt-2">
@@ -46,12 +46,12 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
         </div>
 
         {/* Carousel Container */}
-        <div className="max-w-[750px] mx-auto bg-white rounded-2xl shadow-sm border border-[#eae8e4] p-8 md:p-12 relative">
+        <div className="max-w-[750px] mx-auto bg-white rounded-2xl shadow-sm border border-muted p-8 md:p-12 relative">
           
           <div className="flex flex-col md:flex-row gap-6 md:items-center">
             
             {/* Student Photo */}
-            <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-full overflow-hidden border-2 border-[#805252]/30 bg-[#FAF6F0]">
+            <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-full overflow-hidden border-2 border-primary/30 bg-surface-hero">
               <img
                 alt={r.name}
                 className="w-full h-full object-cover select-none"
@@ -76,7 +76,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
               <div className="pt-2 border-t border-gray-100 mt-4">
                 <span className="font-bold text-gray-900 text-xs md:text-sm tracking-wide block">{r.name}</span>
                 <span className="text-xs text-gray-500 block">{r.location}</span>
-                <span className="text-[10px] font-mono tracking-wider font-bold text-[#805252] uppercase bg-[#ffdad9]/40 px-2 py-0.5 rounded inline-block mt-1">
+                <span className="text-micro font-mono tracking-wider font-bold text-primary uppercase bg-velas-accent/40 px-2 py-0.5 rounded inline-block mt-1">
                   {r.courseName[language]}
                 </span>
               </div>
@@ -86,7 +86,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
           {/* Nav arrows overlay */}
           <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-100">
             <div className="flex gap-1.5 text-xs text-gray-400 font-mono">
-              <span className="font-bold text-[#805252]">{index + 1}</span>
+              <span className="font-bold text-primary">{index + 1}</span>
               <span>/</span>
               <span>{reviews.length}</span>
             </div>

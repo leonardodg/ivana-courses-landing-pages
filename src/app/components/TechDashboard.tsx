@@ -318,7 +318,7 @@ export async function getCoursesByCategoryId(categoryId: string) {
             </h4>
 
             {/* Simulated Server Screen */}
-            <div className="aspect-[16/9] bg-black text-[#4AF626] font-mono text-xs rounded-lg p-4 overflow-y-auto border border-slate-850 flex flex-col justify-between">
+            <div className="aspect-[16/9] bg-black text-terminal-green font-mono text-xs rounded-lg p-4 overflow-y-auto border border-slate-850 flex flex-col justify-between">
               <div className="space-y-1">
                 <p className="text-slate-500"># System Listening. Press trigger button below.</p>
                 <p className="text-slate-400">GET /api/courses/{activeCategoryId} HTTP/1.1</p>
@@ -341,7 +341,7 @@ export async function getCoursesByCategoryId(categoryId: string) {
                     <p className="text-slate-500 mt-2">&gt;&gt; [REDIS KEY] courses:category:{activeCategoryId} NOT FOUND</p>
                     <p className="text-amber-400 font-bold">&gt;&gt; REDIS CACHE MISS 💾</p>
                     <p className="text-blue-400">&gt;&gt; Executed PostgreSQL: SELECT * FROM courses WHERE category_id = &apos;{activeCategoryId}&apos;</p>
-                    <p className="text-[#4AF626]">&gt;&gt; PostgreSQL Row count: {activeCategoryId === 'velas' ? 5 : activeCategoryId === 'saboaria' ? 2 : activeCategoryId === 'resinas' ? 1 : activeCategoryId === 'macrame' ? 1 : 3}</p>
+                    <p className="text-terminal-green">&gt;&gt; PostgreSQL Row count: {activeCategoryId === 'velas' ? 5 : activeCategoryId === 'saboaria' ? 2 : activeCategoryId === 'resinas' ? 1 : activeCategoryId === 'macrame' ? 1 : 3}</p>
                     <p className="text-purple-400">&gt;&gt; REDIS SETEX courses:category:{activeCategoryId} 86400 [DATA]</p>
                     <p className="text-slate-200"># Data requested, stored in Redis & delivered in {latency}ms.</p>
                   </>

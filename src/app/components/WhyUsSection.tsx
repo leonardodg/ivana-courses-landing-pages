@@ -18,7 +18,7 @@ export default function WhyUsSection({ language }: WhyUsSectionProps) {
           <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">
             {why_section_text.headline}
           </h2>
-          <p className="text-sm md:text-base text-[#514443] mt-3 leading-relaxed">
+          <p className="text-sm md:text-base text-on-surface-variant mt-3 leading-relaxed">
             {why_section_text.subtitle}
           </p>
         </div>
@@ -27,12 +27,12 @@ export default function WhyUsSection({ language }: WhyUsSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           
           <div className="brand-bento md:p-8">
-            <div className="w-12 h-12 bg-[#ffdad9] text-[#805252] rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 bg-velas-accent text-primary rounded-xl flex items-center justify-center shrink-0">
               <Award className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-lg font-serif font-bold text-gray-950 mb-2">{why_section_text.point1Title}</h3>
-              <p className="text-xs md:text-sm text-[#514443] leading-relaxed">{why_section_text.point1Desc}</p>
+              <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{why_section_text.point1Desc}</p>
             </div>
           </div>
 
@@ -42,27 +42,27 @@ export default function WhyUsSection({ language }: WhyUsSectionProps) {
             </div>
             <div>
               <h3 className="text-lg font-serif font-bold text-gray-950 mb-2">{why_section_text.point2Title}</h3>
-              <p className="text-xs md:text-sm text-[#514443] leading-relaxed">{why_section_text.point2Desc}</p>
+              <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{why_section_text.point2Desc}</p>
             </div>
           </div>
 
           <div className="brand-bento md:p-8">
-            <div className="w-12 h-12 bg-[#D2E7D6] text-[#324536] rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 bg-saboaria-accent text-saboaria-accent rounded-xl flex items-center justify-center shrink-0">
               <HeartHandshake className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-lg font-serif font-bold text-gray-950 mb-2">{why_section_text.point3Title}</h3>
-              <p className="text-xs md:text-sm text-[#514443] leading-relaxed">{why_section_text.point3Desc}</p>
+              <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{why_section_text.point3Desc}</p>
             </div>
           </div>
 
           <div className="brand-bento md:p-8">
-            <div className="w-12 h-12 bg-[#FFDFD2] text-[#5C2B11] rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 bg-macrame-accent text-macrame-accent rounded-xl flex items-center justify-center shrink-0">
               <CheckCircle className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-lg font-serif font-bold text-gray-950 mb-2">{why_section_text.point4Title}</h3>
-              <p className="text-xs md:text-sm text-[#514443] leading-relaxed">{why_section_text.point4Desc}</p>
+              <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{why_section_text.point4Desc}</p>
             </div>
           </div>
 

@@ -94,7 +94,7 @@ export default function App() {
   const courses_text = text[language];
 
   return (
-    <div className="min-h-screen bg-[#fcf9f5] text-gray-900 font-sans selection:bg-[#ffdad9] flex flex-col justify-between">
+    <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
       {/* Sticky Navigation Bar */}
       <Navbar
         language={language}
@@ -116,16 +116,16 @@ export default function App() {
               src={heroContent.imageUrl}
             />
             {/* Soft gradient fading background picture to clear layout */}
-            <div className="absolute inset-0 hero-gradient bg-gradient-to-t from-[#FAF6F0] via-[#FAF6F0]/70 to-[#FAF6F0]/20" />
+            <div className="absolute inset-0 hero-gradient bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
           </div>
 
           <div className="relative z-10 px-6 max-w-[1280px] mx-auto w-full">
             <div className="md:w-3/4 lg:w-1/2 space-y-4 md:space-y-6">
               
               {/* Floating micro banner */}
-              <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-[#e1deda] px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-subtle px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
                 <span className="text-sm">{activeCategory.badgeLogo}</span>
-                <span className="text-[10px] uppercase font-mono tracking-widest text-[#805252]">{courses_text.tagBadge}</span>
+                <span className="text-micro uppercase font-mono tracking-widest text-primary">{courses_text.tagBadge}</span>
               </div>
 
               {/* Display Headline */}
@@ -142,7 +142,7 @@ export default function App() {
               <div className="pt-2 flex flex-wrap gap-4 items-center">
                 <a
                   href="#cursos"
-                  className="bg-[#805252] hover:bg-opacity-95 text-white font-semibold font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer"
+                  className="bg-primary hover:bg-opacity-95 text-white font-semibold font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer"
                 >
                   {courses_text.btnHero}
                 </a>
@@ -152,26 +152,26 @@ export default function App() {
         </section>
 
         {/* Dynamic Trust Stats Bar */}
-        <section className="bg-white border-y border-[#e1deda] py-8">
+        <section className="bg-white border-y border-subtle py-8">
           <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center items-center">
             
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">2.000+</span>
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">2.000+</span>
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsAlunas}
               </span>
             </div>
 
-            <div className="space-y-1 border-y md:border-y-0 md:border-x border-[#e1deda] py-4 md:py-0">
-              <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">6+ {language === 'pt' ? 'Anos' : 'Años'}</span>
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
+            <div className="space-y-1 border-y md:border-y-0 md:border-x border-subtle py-4 md:py-0">
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">6+ {language === 'pt' ? 'Anos' : 'Años'}</span>
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsExp}
               </span>
             </div>
 
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-[#805252] font-black block">BR &amp; AR</span>
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">BR &amp; AR</span>
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsPort}
               </span>
             </div>
@@ -210,7 +210,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#FAF6F0] border-t border-[#e1deda] py-12 md:py-16 text-xs text-[#514443]">
+      <footer className="bg-surface-hero border-t border-subtle py-12 md:py-16 text-xs text-on-surface-variant">
         <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Card 1: Description */}
@@ -230,16 +230,16 @@ export default function App() {
             <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{courses_text.footerLinks}</span>
             <ul className="space-y-2">
               <li>
-                <a href="#cursos" className="hover:text-[#805252] transition-colors">{courses_text.coursesLabel}</a>
+                <a href="#cursos" className="hover:text-primary transition-colors">{courses_text.coursesLabel}</a>
               </li>
               <li>
-                <a href="#sobre" className="hover:text-[#805252] transition-colors">{courses_text.aboutLabel}</a>
+                <a href="#sobre" className="hover:text-primary transition-colors">{courses_text.aboutLabel}</a>
               </li>
               <li>
-                <a href="#contato" className="hover:text-[#805252] transition-colors">{courses_text.contactLabel}</a>
+                <a href="#contato" className="hover:text-primary transition-colors">{courses_text.contactLabel}</a>
               </li>
               <li>
-                <a href="#tech-blueprint" className="hover:text-[#805252] transition-colors">Developer Blueprint</a>
+                <a href="#tech-blueprint" className="hover:text-primary transition-colors">Developer Blueprint</a>
               </li>
             </ul>
           </div>
@@ -250,13 +250,13 @@ export default function App() {
             <p className="leading-relaxed">
               Florianópolis, SC, Brasil <br />
               Buenos Aires, Argentina <br />
-              <span className="font-bold text-[#805252] mt-1 block">Moodle Platform: ivana.academy</span>
+              <span className="font-bold text-primary mt-1 block">Moodle Platform: ivana.academy</span>
             </p>
           </div>
 
         </div>
 
-        <div className="max-w-[1280px] mx-auto px-6 border-t border-[#eae8e4] mt-12 pt-6 text-center text-gray-500 text-[11px]">
+        <div className="max-w-[1280px] mx-auto px-6 border-t border-muted mt-12 pt-6 text-center text-gray-500 text-[11px]">
           <span>{courses_text.footerRights}</span>
         </div>
       </footer>

@@ -5,46 +5,46 @@ export const categories_data: Record<string, CategorySpec> = {
   velas: {
     id: "velas",
     name: categories_text.candle.name,
-    themeColor: "from-[#805252] to-[#B27D7C]", // Elegant Dusty Rose transition
-    accentBg: "bg-[#ffdad9]",
-    accentText: "text-[#805252]",
-    heroBgClass: "from-[#FAF6F0] via-[#FAF6F0] to-[#EBC2C1]",
+    themeColor: "from-velas-start to-velas-end", // Elegant Dusty Rose transition
+    accentBg: "bg-velas-accent",
+    accentText: "text-velas-accent",
+    heroBgClass: "from-hero-bg via-hero-bg to-velas-hero",
     badgeLogo: "✨",
   },
   saboaria: {
     id: "saboaria",
     name: categories_text.soap.name,
-    themeColor: "from-[#4D6551] to-[#76917A]", // Soft Sage Green
-    accentBg: "bg-[#D2E7D6]",
-    accentText: "text-[#324536]",
-    heroBgClass: "from-[#FAF6F0] via-[#FAF6F0] to-[#C9DACD]",
+    themeColor: "from-saboaria-start to-saboaria-end", // Soft Sage Green
+    accentBg: "bg-saboaria-accent",
+    accentText: "text-saboaria-accent",
+    heroBgClass: "from-hero-bg via-hero-bg to-saboaria-hero",
     badgeLogo: "🌿",
   },
   resinas: {
     id: "resinas",
     name: categories_text.resin.name,
-    themeColor: "from-[#3A6073] to-[#4F8CA3]", // Ocean Blue/Teal
-    accentBg: "bg-[#D5E6EE]",
-    accentText: "text-[#1B3E4F]",
-    heroBgClass: "from-[#FAF6F0] via-[#FAF6F0] to-[#BDD8E4]",
+    themeColor: "from-resinas-start to-resinas-end", // Ocean Blue/Teal
+    accentBg: "bg-resinas-accent",
+    accentText: "text-resinas-accent",
+    heroBgClass: "from-hero-bg via-hero-bg to-resinas-hero",
     badgeLogo: "💎",
   },
   macrame: {
     id: "macrame",
     name: categories_text.macrame.name,
-    themeColor: "from-[#8A5134] to-[#B3795C]", // Terracotta earthy
-    accentBg: "bg-[#FFDFD2]",
-    accentText: "text-[#5C2B11]",
-    heroBgClass: "from-[#FAF6F0] via-[#FAF6F0] to-[#FFECD5]",
+    themeColor: "from-macrame-start to-macrame-end", // Terracotta earthy
+    accentBg: "bg-macrame-accent",
+    accentText: "text-macrame-accent",
+    heroBgClass: "from-hero-bg via-hero-bg to-macrame-hero",
     badgeLogo: "🧶",
   },
   aromas_incensos: {
     id: "aromas_incensos",
     name: categories_text.incense.name,
-    themeColor: "from-[#6E4B6E] to-[#9B6F9B]", // Deep Amethyst / Purple Rose
-    accentBg: "bg-[#F2DDF2]",
-    accentText: "text-[#441D44]",
-    heroBgClass: "from-[#FAF6F0] via-[#FAF6F0] to-[#ECCDEB]",
+    themeColor: "from-incenso-start to-incenso-end", // Deep Amethyst / Purple Rose
+    accentBg: "bg-incenso-accent",
+    accentText: "text-incenso-accent",
+    heroBgClass: "from-hero-bg via-hero-bg to-incenso-hero",
     badgeLogo: "🔮",
   },
 };

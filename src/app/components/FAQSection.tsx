@@ -23,11 +23,11 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
         
         {/* Title */}
         <div className="text-center mb-16">
-          <HelpCircle className="w-8 h-8 mx-auto text-[#805252] mb-3" />
+          <HelpCircle className="w-8 h-8 mx-auto text-primary mb-3" />
           <h2 className="text-2xl md:text-3xl font-serif text-gray-900 leading-tight">
             {faqs_text.title}
           </h2>
-          <p className="text-xs md:text-sm text-[#514443] mt-2 leading-relaxed max-w-xl mx-auto">
+          <p className="text-xs md:text-sm text-on-surface-variant mt-2 leading-relaxed max-w-xl mx-auto">
             {faqs_text.subtitle}
           </p>
         </div>
@@ -39,22 +39,22 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
             return (
               <div
                 key={f.id}
-                className="bg-[#FAF6F0] rounded-xl overflow-hidden border border-[#eae8e4] transition-all"
+                className="bg-surface-hero rounded-xl overflow-hidden border border-muted transition-all"
               >
                 <button
                   onClick={() => toggleFaq(f.id)}
-                  className="w-full text-left p-5 md:p-6 flex items-center justify-between gap-4 font-serif font-bold text-gray-950 text-sm md:text-base cursor-pointer hover:bg-[#FAF6F0]/70 transition-colors"
+                  className="w-full text-left p-5 md:p-6 flex items-center justify-between gap-4 font-serif font-bold text-gray-950 text-sm md:text-base cursor-pointer hover:bg-surface-hero/70 transition-colors"
                 >
                   <span>{f.question[language]}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#805252] shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-[#514443] leading-relaxed border-t border-[#eae8e4]/60 pt-4 animate-fade-in bg-white">
+                  <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-on-surface-variant leading-relaxed border-t border-muted/60 pt-4 animate-fade-in bg-white">
                     {f.answer[language]}
                   </div>
                 )}

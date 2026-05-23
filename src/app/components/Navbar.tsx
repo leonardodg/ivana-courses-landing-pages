@@ -50,7 +50,7 @@ export default function Navbar({
   const navbar_text = text[language];
 
   return (
-    <header className="bg-[#fcf9f5]/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-[#e1deda] transition-all">
+    <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export default function Navbar({
         </div>
 
         {/* Categories Quick Switcher (Desktop) */}
-        <div className="hidden md:flex items-center gap-2 bg-[#f0ede9] p-1 rounded-full border border-[#e1deda]">
+        <div className="hidden md:flex items-center gap-2 bg-surface-form p-1 rounded-full border border-subtle">
           {Object.values(CATEGORIES).map((cat) => {
             const isActive = activeCategoryId === cat.id;
             return (
@@ -71,8 +71,8 @@ export default function Navbar({
                 onClick={() => setActiveCategoryId(cat.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#805252] text-white shadow-sm'
-                    : 'text-[#514443] hover:bg-[#eae8e4]'
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-on-surface-variant hover:bg-surface-container-high'
                 }`}
               >
                 <span>{cat.badgeLogo}</span>
@@ -86,11 +86,11 @@ export default function Navbar({
         <div className="flex items-center gap-4">
 
           {/* Language Switch with Desaturated/Saturated Country Flags */}
-          <div className="flex items-center gap-1.5 bg-[#f0ede9] p-1.5 rounded-full border border-[#e1deda]">
+          <div className="flex items-center gap-1.5 bg-surface-form p-1.5 rounded-full border border-subtle">
             <button
               onClick={() => setLanguage('pt')}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'pt' ? 'bg-[#805252] text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === 'pt' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
               }`}
               title="Português (Brasil)"
             >
@@ -100,7 +100,7 @@ export default function Navbar({
             <button
               onClick={() => setLanguage('es')}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'es' ? 'bg-[#805252] text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === 'es' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
               }`}
               title="Español (Argentina)"
             >
@@ -112,7 +112,7 @@ export default function Navbar({
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-gray-700 hover:text-[#805252] p-1"
+            className="md:hidden text-gray-700 hover:text-primary p-1"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -121,8 +121,8 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {menuOpen && (
-        <div className="md:hidden bg-[#FAF6F0] w-full border-t border-[#e1deda] py-4 px-6 shadow-inner animate-fade-in">
-          <p className="text-[10px] uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">{navbar_text.allCategories}</p>
+        <div className="md:hidden bg-surface-hero w-full border-t border-subtle py-4 px-6 shadow-inner animate-fade-in">
+          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">{navbar_text.allCategories}</p>
           <div className="flex flex-col gap-2">
             {Object.values(CATEGORIES).map((cat) => {
               const isActive = activeCategoryId === cat.id;
@@ -135,8 +135,8 @@ export default function Navbar({
                   }}
                   className={`w-full p-2.5 rounded-lg text-left text-sm font-semibold tracking-wide flex items-center gap-2.5 transition-all ${
                     isActive
-                      ? 'bg-[#805252] text-white'
-                      : 'text-[#514443] bg-[#f5f1eb] hover:bg-[#eae8e4]'
+                      ? 'bg-primary text-white'
+                      : 'text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high'
                   }`}
                 >
                   <span className="text-base">{cat.badgeLogo}</span>
@@ -146,7 +146,7 @@ export default function Navbar({
             })}
           </div>
 
-          <div className="border-t border-[#e1deda] mt-4 pt-3 flex flex-col gap-2">
+          <div className="border-t border-subtle mt-4 pt-3 flex flex-col gap-2">
             <a
               href="#tech-blueprint"
               onClick={() => setMenuOpen(false)}
@@ -161,7 +161,7 @@ export default function Navbar({
               className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >
               <span>{navbar_text.contact}</span>
-              <PhoneCall className="w-4 h-4 text-[#805252]" />
+              <PhoneCall className="w-4 h-4 text-primary" />
             </a>
           </div>
         </div>
