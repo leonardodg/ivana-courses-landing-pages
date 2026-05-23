@@ -1,6 +1,6 @@
 export const reviews_text = {
   review1: {
-    courseName: {
+    course_name: {
       pt: "Imersão de Velas Presencial",
       es: "Inmersión de Velas Presencial",
     },
@@ -10,7 +10,7 @@ export const reviews_text = {
     },
   },
   review2: {
-    courseName: {
+    course_name: {
       pt: "Profesorado en Velas (Conservatório Grassi)",
       es: "Profesorado en Velas (Conservatorio Grassi)",
     },
@@ -20,7 +20,7 @@ export const reviews_text = {
     },
   },
   review3: {
-    courseName: {
+    course_name: {
       pt: "Workshop de Velas Presencial",
       es: "Workshop de Velas Presencial",
     },
