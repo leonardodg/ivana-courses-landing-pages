@@ -4,7 +4,7 @@ export const courses_text = {
       pt: "Imersão de Velas Presencial",
       es: "Inmersión de Velas Presencial",
     },
-    duracao: { pt: "2 dias Intensivos", es: "2 días Intensivos" },
+    duration: { pt: "2 dias Intensivos", es: "2 días Intensivos" },
     location: {
       pt: "Brasil (Florianópolis / Curitiba / Rio de Janeiro)",
       es: "Brasil (Florianópolis / Curitiba / Río de Janeiro)",
@@ -37,7 +37,7 @@ export const courses_text = {
       pt: "Workshop de Velas Presencial",
       es: "Workshop de Velas Presencial",
     },
-    duracao: { pt: "1 dia (4 horas)", es: "1 día (4 horas)" },
+    duration: { pt: "1 dia (4 horas)", es: "1 día (4 horas)" },
     location: {
       pt: "Brasil (Florianópolis / Curitiba)",
       es: "Brasil (Florianópolis / Curitiba)",
@@ -68,7 +68,7 @@ export const courses_text = {
       pt: "Profesorado en Velas (Conservatório Grassi)",
       es: "Profesorado en Velas (Conservatorio Grassi)",
     },
-    duracao: {
+    duration: {
       pt: "1 a 2 anos (Prático + Teórico)",
       es: "1 a 2 años (Teórico + Práctico)",
     },
@@ -105,7 +105,7 @@ export const courses_text = {
       pt: "Tecnicatura en Arte y Diseño de Velas",
       es: "Tecnicatura en Arte y Diseño de Velas",
     },
-    duracao: { pt: "9 meses (Modular)", es: "9 meses (Nueve módulos)" },
+    duration: { pt: "9 meses (Modular)", es: "9 meses (Nueve módulos)" },
     location: {
       pt: "Online via Moodle (Comunidade de Alunas)",
       es: "Moodle online con Comunidad de Estudiantes",
@@ -139,7 +139,7 @@ export const courses_text = {
       pt: "Curso de Velas Aromáticas & Terapêuticas (Digital)",
       es: "Curso Virtual de Velas Aromáticas y Terapéuticas",
     },
-    duracao: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
+    duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
       pt: "Vídeo-Aulas (Acesso imediato) + WhatsApp suporte",
       es: "Video-Clases (Acceso inmediato) + Soporte WhatsApp",
@@ -173,7 +173,7 @@ export const courses_text = {
       pt: "Curso de Saboaria Natural Presencial",
       es: "Curso Presencial de Jabonería Natural",
     },
-    duracao: { pt: "4 horas Intensivo", es: "4 horas Intensivo" },
+    duration: { pt: "4 horas Intensivo", es: "4 horas Intensivo" },
     location: { pt: "Florianópolis / SC", es: "Florianópolis, SC, Brasil" },
     materials: {
       pt: "Todos os insumos Premium inclusos",
@@ -204,7 +204,7 @@ export const courses_text = {
       pt: "Curso de Saboaria Terapêutica (Virtual)",
       es: "Curso Virtual de Jabonería Terapéutica",
     },
-    duracao: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
+    duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
       pt: "Video-Aulas Gravadas + Plataforma Moodle",
       es: "Vídeo Clases Grabadas + Moodle",
@@ -238,7 +238,7 @@ export const courses_text = {
       pt: "Curso de Resina Epóxi e Encapsulados (Presencial)",
       es: "Curso Presencial de Resina Epoxi y Encapsulados",
     },
-    duracao: { pt: "5 horas Intensivas", es: "5 horas Intensivas" },
+    duration: { pt: "5 horas Intensivas", es: "5 horas Intensivas" },
     location: {
       pt: "Florianópolis, SC, Brasil",
       es: "Florianópolis, SC, Brasil",
@@ -272,7 +272,7 @@ export const courses_text = {
       pt: "Curso de Macramê Criativo (Presencial)",
       es: "Curso Presencial de Macramé Creativo",
     },
-    duracao: { pt: "4 horas com Mentoria", es: "4 horas Personalizadas" },
+    duration: { pt: "4 horas com Mentoria", es: "4 horas Personalizadas" },
     location: {
       pt: "Florianópolis (Ateliê Central)",
       es: "Florianópolis (Atelier Central)",
@@ -306,7 +306,7 @@ export const courses_text = {
       pt: "Curso de Incensaria Natural Seca (Presencial)",
       es: "Curso Presencial de Incensaria Natural Seca",
     },
-    duracao: { pt: "3 horas de Prática", es: "3 horas de Taller" },
+    duration: { pt: "3 horas de Prática", es: "3 horas de Taller" },
     location: { pt: "Florianópolis, SC", es: "Florianópolis, SC, Brasil" },
     materials: {
       pt: "Ervas finas aromáticas inclusas",
@@ -337,7 +337,7 @@ export const courses_text = {
       pt: "Curso de Aromatizantes de Ambientes (Presencial)",
       es: "Curso Presencial de Perfumería Hogar",
     },
-    duracao: { pt: "4 horas Práticas", es: "4 horas Prácticas" },
+    duration: { pt: "4 horas Práticas", es: "4 horas Prácticas" },
     location: {
       pt: "Florianópolis, SC, Brasil",
       es: "Florianópolis, SC, Brasil",
@@ -371,7 +371,7 @@ export const courses_text = {
       pt: "Curso de Aromatizantes de Ambientes (Virtual)",
       es: "Curso Virtual de Aromas del Hogar",
     },
-    duracao: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
+    duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
       pt: "Plataforma Moodle e Suporte VIP",
       es: "Plataforma Moodle Múltiples Dispositivos",
