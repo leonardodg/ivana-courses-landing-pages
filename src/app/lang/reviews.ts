@@ -1,8 +1,8 @@
 export const reviews_text = {
   review1: {
     course_name: {
-      pt: "Imersão de Velas Presencial",
-      es: "Inmersión de Velas Presencial",
+      pt: "Curso online Imersão de Velas Presencial",
+      es: "Curso online Inmersión de Velas Presencial",
     },
     text: {
       pt: "O curso de velas mudou completamente meus finais de semana e abriu um novo negócio. Trabalho na minha mesa de jantar e hoje faturo mais de 4 mil reais por mês vendendo para lojas de decoração locais!",
@@ -11,8 +11,8 @@ export const reviews_text = {
   },
   review2: {
     course_name: {
-      pt: "Profesorado en Velas (Conservatório Grassi)",
-      es: "Profesorado en Velas (Conservatorio Grassi)",
+      pt: "Professorado Online em Velas (Conservatório Grassi)",
+      es: "Profesorado Online en Velas (Conservatorio Grassi)",
     },
     text: {
       pt: "La doble certificación con el Conservatorio Grassi me habilitó a abrir mi propio taller educativo de jabonería y velas en mi provincia. La paciencia de Ivana para enseñar es incomparable, te da todas las recetas sin esconder nada.",
@@ -33,11 +33,13 @@ export const reviews_text = {
 
 export const reviews_header = {
   pt: {
+    badge: "Depoimentos em Redes Sociais",
     title: "Transbordando Histórias de Sucesso",
     subtitle:
       "Mais do que produzir peças artesanais, nossas alunas criam negócios autossuficientes.",
   },
   es: {
+    badge: "Testimonios en redes sociales",
     title: "Historias que nos Inspiran",
     subtitle:
       "Más allá de fabricar piezas hermosas, nuestras alumnas construyen emprendimientos rentables.",

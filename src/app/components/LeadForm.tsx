@@ -100,7 +100,7 @@ export default function LeadForm({
         {/* Narratives of registration */}
         <div className="lg:col-span-5 space-y-6">
           <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-500 bg-surface-tag px-3 py-1 rounded-full">
-            Inscripciones Abiertas / Inscrições Abertas
+            {lead_text.contactBadge}
           </span>
           <h2 className="text-2xl md:text-3.5xl font-serif text-gray-950 font-bold leading-tight">
             {lead_text.headline}
@@ -166,7 +166,7 @@ export default function LeadForm({
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
-                    {language === 'pt' ? 'Número WhatsApp / Celular' : 'Número WhatsApp / Celular'}
+                    {language === 'pt' ? 'Número WhatsApp / Celular' : 'Número WhatsApp / Celular'} <span className="text-rose-600">*</span>
                   </label>
                   <input
                     type="tel"
@@ -180,9 +180,9 @@ export default function LeadForm({
 
               <div>
                 <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
-                  {lead_text.courseLabel}
+                  {lead_text.textLabel} <span className="text-rose-600">*</span>
                 </label>
-                <select
+                {/* <select
                   value={chosenCourseId}
                   onChange={(e) => setChosenCourseId(e.target.value)}
                   className="input-minimal font-sans text-gray-805"
@@ -192,10 +192,16 @@ export default function LeadForm({
                     .filter(c => c.categoryId === activeCategoryId)
                     .map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.title[language]} ({c.modalidade === 'presencial' ? 'Presencial' : 'Moodle'})
+                        {c.title[language]} ({c.modalidade === 'presencial' ? 'Presencial' : 'Online'})
                       </option>
                     ))}
-                </select>
+                </select> */}
+
+                <textarea rows="6" cols="6" placeholder={lead_text.textDesc}
+                  className="input-minimal font-sans text-gray-805"
+                  required>
+              
+                  </textarea>
               </div>
 
               <button

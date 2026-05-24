@@ -5,6 +5,7 @@ import { courses_list } from './data/courses';
 import { reviews_list } from './data/reviews';
 import { faqs_list } from './data/faqs';
 import { home_text as text } from './lang/homepage';
+import { heroContent as hero_content } from './data/home';
 import Navbar from './components/Navbar';
 import AboutSection from './components/AboutSection';
 import CourseGrid from './components/CourseGrid';
@@ -12,8 +13,6 @@ import WhyUsSection from './components/WhyUsSection';
 import ReviewsCarousel from './components/ReviewsCarousel';
 import FAQSection from './components/FAQSection';
 import LeadForm from './components/LeadForm';
-import TechDashboard from './components/TechDashboard';
-import { Flame, Sparkles, Sliders, ChevronDown, Award, Globe, Heart } from 'lucide-react';
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('pt');
@@ -28,63 +27,7 @@ export default function App() {
   const activeCategory = CATEGORIES[activeCategoryId];
 
   // Specific hero definitions to make switching incredible
-  const heroContent = {
-    velas: {
-      title: {
-        pt: 'Transforme sua Paixão por Velas em um Negócio Lucrativo',
-        es: 'Transforma tu Pasión por las Velas en un Negocio Lucrativo'
-      },
-      desc: {
-        pt: 'Aprenda do zero com a especialista bilingue Ivana Lerea. Cursos presenciais e online (Moodle) com certificação oficial internacional e foco total em vendas e marca.',
-        es: 'Descubre el arte de las velas de cera de autor de la mano de Ivana Lerea. Clases prácticas presenciales y módulos virtuales con certificación oficial y bases comerciales sólidas.'
-      },
-      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCXD6quv9NV3ROSL92x-Ihw0kK1uuXJkKjINniM1HCQVBSm5m5UpkiS4_kniACldLhNS3LFBoEEt4HSqsvetlxXeVe6qTO8mQeSQbnhbzHHByL1RPGvS__c7VI8ucysmvHuLQKEaAKLGyyAs2awYipwryj2A8gw0W72aQjMsFamGcyHtta27yg1SrwuOTITGXDNBhI2fVXQ1KlicKvJekV1ZOt5q4ftbsJQBW0M9Bz-vwDwE6smtwrR-lVUKkFIMabtAD-bOKkbgEJs'
-    },
-    saboaria: {
-      title: {
-        pt: 'A Arte da Saboaria Natural & Fitoterápica Saudável',
-        es: 'Aprende Jabonería Natural con Métodos Seguros'
-      },
-      desc: {
-        pt: 'Descubra a formulação inteligente de sabonetes com glicerinas vegetais puras, enriquecidos com argilas, extratos herbais e tinturas curativas para encantar suas clientes.',
-        es: 'Elabora cosmética sólida limpia y terapéutica. Domina el vaciado tradicional glicerinado "Melt & Pour" y fórmulas equilibradas con aceites fito-botánicos locales.'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1607006342445-470fc7db6e8a?auto=format&fit=crop&q=80&w=1200'
-    },
-    resinas: {
-      title: {
-        pt: 'Criações Lindas e Eternizadas com Resina Epóxi',
-        es: 'Diseños de Lujo y Encapsulados de Resina Epoxi'
-      },
-      desc: {
-        pt: 'Aprenda a verter resinas de alta proteção UV com segurança profissionalizante. Ideal para chaveiros exclusivos, canetas decorativas decoradas e bandejas rústicas de flores de cura.',
-        es: 'Eterniza flores naturales y crea productos con acabados vidriados perfectos. Domina proporciones precisas, desgasificación térmica de burbujas y técnicas de encargo.'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1200'
-    },
-    macrame: {
-      title: {
-        pt: 'Macramê Expressivo: Do Primeiro Ponto ao Design de Parede',
-        es: 'Macramé de Autor: Da tus Primeros Nudos de Diseño Táctil'
-      },
-      desc: {
-        pt: 'Tire do papel aquele lindo projeto de cabeceira, vaso ou painel de parede. Mentoria prática próxima da professora em turmas carinhosas e aconchegantes.',
-        es: 'Teje tapices orgánicos, soportes de macramé y complementos textiles. Trae tu modelo favorito y yo te guiaré nudo a nudo hasta dar forma a tu pieza exclusiva.'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&q=80&w=1200'
-    },
-    aromas_incensos: {
-      title: {
-        pt: 'Defumação e Spray de Ambientes: Crie Notas Marcantes',
-        es: 'Inciensos Botánicos Secos y Marketing Olfativo en Casa'
-      },
-      desc: {
-        pt: 'Domine a pirâmide aromática e o processo de maceração de essências duradouras. Fabrique home spray, sachês aromáticos perfumados e incensos de alta pureza.',
-        es: 'Crea sensaciones inolvidables para locales comerciales y hogares. Brinda fórmulas exactas de home spray persistentes, difusores rústicos de varitas e inciensos conos.'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=1200'
-    }
-  }[activeCategoryId];
+  const heroContent = hero_content[activeCategoryId];
 
   const handleEnrollClick = (course: Course) => {
     setSelectedCourseForForm(course);
@@ -238,9 +181,6 @@ export default function App() {
               <li>
                 <a href="#contato" className="hover:text-primary transition-colors">{courses_text.contactLabel}</a>
               </li>
-              <li>
-                <a href="#tech-blueprint" className="hover:text-primary transition-colors">Developer Blueprint</a>
-              </li>
             </ul>
           </div>
 
@@ -250,7 +190,7 @@ export default function App() {
             <p className="leading-relaxed">
               Florianópolis, SC, Brasil <br />
               Buenos Aires, Argentina <br />
-              <span className="font-bold text-primary mt-1 block">Moodle Platform: ivana.academy</span>
+              <span className="font-bold text-primary mt-1 block">Platforma: <a href="https://ivana.academy" target="_blank">ivana.academy</a></span>
             </p>
           </div>
 

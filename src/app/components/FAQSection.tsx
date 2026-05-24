@@ -54,7 +54,7 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-on-surface-variant leading-relaxed border-t border-muted/60 pt-4 animate-fade-in bg-white">
+                  <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-on-surface-variant leading-relaxed border-t border-muted pt-4 animate-fade-in bg-white">
                     {f.answer[language]}
                   </div>
                 )}

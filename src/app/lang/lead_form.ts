@@ -1,14 +1,17 @@
 export const lead_text = {
   pt: {
-    headline: "Cadastre-se para Receber Inscrições e Novidades",
+    contactBadge: "Contato Comercial",
+    headline: "Enviar sua mensagem para reservar vaga ou tirar dúvidas",
     subtitle:
       "Insira seus dados abaixo para tirar dúvidas diretamente conosco ou iniciar sua matricular.",
     placeholderName: "Seu nome completo",
     placeholderEmail: "Seu melhor e-mail",
     placeholderPhone: "Telefone com DDD / WhatsApp",
     courseLabel: "Curso / Workshop desejado:",
+    textLabel: "Escrever mensagem:",
+    textDesc: "Digite aqui sua dúvida ou mensagem para nosso time comercial",
     selectOption: "Selecione uma turma / curso livre",
-    btnSubmit: "Solicitar Atendimento & Vagas",
+    btnSubmit: "Solicitar Atendimento",
     successMsg:
       "Obrigado! Sua solicitação foi recebida com sucesso. Entraremos em contato via WhatsApp em menos de 24h.",
     adminTitle:
@@ -23,13 +26,17 @@ export const lead_text = {
     requiredField: "Campo Obrigatório",
   },
   es: {
-    headline: "Inscríbete para Reservar Cupo o Consultar Dudas",
+    contactBadge: "Contacto Comercial",
+    headline: "Envía tu mensaje para reservar un lugar o hacer preguntas",
     subtitle:
       "Ingresa tus datos a continuación y nos contactaremos contigo por WhatsApp en menos de 24 horas.",
     placeholderName: "Tu nombre completo",
     placeholderEmail: "Tu correo electrónico principal",
     placeholderPhone: "Número de Teléfono / WhatsApp",
     courseLabel: "Curso / Taller elegido:",
+    textLabel: "Escribe un mensaje:",
+    textDesc:
+      "Escribe aquí tu pregunta o mensaje para nuestro equipo de ventas",
     selectOption: "Selecciona una clase / curso libre",
     btnSubmit: "Enviar Solicitud de Información",
     successMsg:

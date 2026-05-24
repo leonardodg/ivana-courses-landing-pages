@@ -35,7 +35,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
         {/* Title */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
-            Social Proof
+            {reviews_text.badge}
           </span>
           <h2 className="text-2xl md:text-3xl font-serif text-on-surface leading-tight">
             {reviews_text.title}
