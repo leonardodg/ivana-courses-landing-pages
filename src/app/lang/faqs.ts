@@ -25,8 +25,8 @@ export const faqs_text = {
       es: "¿Cómo recibo el certificado de aprobación y la firma del Conservatorio Grassi?",
     },
     answer: {
-      pt: "Para o Curso Virtual do Brasil e os Workshops práticos, fornecemos um certificado oficial da Ivana Academy após conclusão. Para a Tecnicatura e Profesorado da Argentina, o envio do portfólio de atividades prontas é corrigido mensalmente e, ao término de todos os exames exigidos, o Conservatório emite o certificado autenticado internacionalmente.",
-      es: "Para los cursos libres y talleres presenciales entregamos certificado oficial de la Academia Ivana Lerea. Para la Tecnicatura y Profesorado, tus trabajos se envían por correo/plataforma Moodle para corrección y, al completar todos los exámenes obligatorios, el Conservatorio Grassi emite el diploma oficial con validez internacional.",
+      pt: "Para o Curso Online do Brasil e os Workshops práticos, fornecemos um certificado oficial da Ivana Academy após conclusão. Para a Tecnicatura e Profesorado da Argentina, o envio do portfólio de atividades prontas é corrigido mensalmente e, ao término de todos os exames exigidos, o Conservatório emite o certificado autenticado internacionalmente.",
+      es: "Para los cursos libres y talleres presenciales entregamos certificado oficial de la Academia Ivana Lerea. Para la Tecnicatura y Profesorado, tus trabajos se envían por correo/plataforma de aprendizaje para corrección y, al completar todos los exámenes obligatorios, el Conservatorio Grassi emite el diploma oficial con validez internacional.",
     },
   },
   faq4: {

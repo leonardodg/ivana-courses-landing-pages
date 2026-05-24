@@ -1,13 +1,13 @@
 export const courses_text = {
   candle_immersion_br: {
     title: {
-      pt: "Imersão de Velas Presencial",
-      es: "Inmersión de Velas Presencial",
+      pt: "Curso Presencial Imersão de Velas",
+      es: "Curso Presencial Inmersión de Velas",
     },
     duration: { pt: "2 dias Intensivos", es: "2 días Intensivos" },
     location: {
-      pt: "Brasil (Florianópolis / Curitiba / Rio de Janeiro)",
-      es: "Brasil (Florianópolis / Curitiba / Río de Janeiro)",
+      pt: "*Florianópolis, SC, Brasil (Atelier Central)",
+      es: "*Florianópolis, SC, Brasil (Taller Central)",
     },
     materials: { pt: "Inclusos no valor", es: "Incluidos en el precio" },
     description: {
@@ -34,13 +34,13 @@ export const courses_text = {
 
   candle_workshop_br: {
     title: {
-      pt: "Workshop de Velas Presencial",
-      es: "Workshop de Velas Presencial",
+      pt: "Workshop Presencial de Velas",
+      es: "Workshop Presencial de Velas",
     },
     duration: { pt: "1 dia (4 horas)", es: "1 día (4 horas)" },
     location: {
-      pt: "Brasil (Florianópolis / Curitiba)",
-      es: "Brasil (Florianópolis / Curitiba)",
+      pt: "*Florianópolis, SC, Brasil (Atelier Central)",
+      es: "*Florianópolis, SC, Brasil (Taller Central)",
     },
     materials: { pt: "Inclusos no valor", es: "Incluidos en el precio" },
     description: {
@@ -65,16 +65,16 @@ export const courses_text = {
 
   candle_professorship_ar: {
     title: {
-      pt: "Profesorado en Velas (Conservatório Grassi)",
-      es: "Profesorado en Velas (Conservatorio Grassi)",
+      pt: "Profesorado en Velas Online - Conservatório Grassi",
+      es: "Profesorado en Velas Online - Conservatorio Grassi",
     },
     duration: {
       pt: "1 a 2 anos (Prático + Teórico)",
       es: "1 a 2 años (Teórico + Práctico)",
     },
     location: {
-      pt: "Argentina (Plataforma Moodle)",
-      es: "Argentina / Online (Plataforma Moodle)",
+      pt: "Online - Plataforma De Ensino",
+      es: "Online -  a través de la Plataforma de Aprendizaje",
     },
     materials: {
       pt: "Material didático mensal e vídeos de apoio",
@@ -102,13 +102,13 @@ export const courses_text = {
 
   candle_technique_ar: {
     title: {
-      pt: "Tecnicatura en Arte y Diseño de Velas",
-      es: "Tecnicatura en Arte y Diseño de Velas",
+      pt: "Tecnicatura en Arte y Diseño de Velas Online - Conservatório Grassi",
+      es: "Tecnicatura en Arte y Diseño de Velas Online - Conservatorio Grassi",
     },
     duration: { pt: "9 meses (Modular)", es: "9 meses (Nueve módulos)" },
     location: {
-      pt: "Online via Moodle (Comunidade de Alunas)",
-      es: "Moodle online con Comunidad de Estudiantes",
+      pt: " Online - Plataforma de Ensino (Comunidade de Alunas)",
+      es: " Online - a través de la Plataforma de Aprendizaje con Comunidad de Estudiantes",
     },
     materials: {
       pt: "Dossiês técnicos completos e fornecedores AR/BR",
@@ -136,13 +136,13 @@ export const courses_text = {
 
   candle_course_online_br: {
     title: {
-      pt: "Curso de Velas Aromáticas & Terapêuticas (Digital)",
-      es: "Curso Virtual de Velas Aromáticas y Terapéuticas",
+      pt: "Curso Online de Velas Aromáticas & Terapêuticas",
+      es: "Curso Online de Velas Aromáticas y Terapéuticas",
     },
     duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
-      pt: "Vídeo-Aulas (Acesso imediato) + WhatsApp suporte",
-      es: "Video-Clases (Acceso inmediato) + Soporte WhatsApp",
+      pt: " Online - Vídeo-Aulas (Acesso imediato) + WhatsApp suporte",
+      es: " Online - Video-Clases (Acceso inmediato) + Soporte WhatsApp",
     },
     materials: {
       pt: "Lista de fornecedores de confiança no Brasil",
@@ -170,11 +170,14 @@ export const courses_text = {
 
   soap_in_person_br: {
     title: {
-      pt: "Curso de Saboaria Natural Presencial",
+      pt: "Curso Presencial de Saboaria Natural",
       es: "Curso Presencial de Jabonería Natural",
     },
     duration: { pt: "4 horas Intensivo", es: "4 horas Intensivo" },
-    location: { pt: "Florianópolis / SC", es: "Florianópolis, SC, Brasil" },
+    location: {
+      pt: "*Florianópolis, SC, Brasil (Atelier Central)",
+      es: "*Florianópolis, SC, Brasil (Taller Central)",
+    },
     materials: {
       pt: "Todos os insumos Premium inclusos",
       es: "Todos los materiales incluidos",
@@ -201,13 +204,13 @@ export const courses_text = {
 
   soap_online_br: {
     title: {
-      pt: "Curso de Saboaria Terapêutica (Virtual)",
-      es: "Curso Virtual de Jabonería Terapéutica",
+      pt: "Curso Online de Saboaria Terapêutica",
+      es: "Curso Online de Jabonería Terapéutica",
     },
     duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
-      pt: "Video-Aulas Gravadas + Plataforma Moodle",
-      es: "Vídeo Clases Grabadas + Moodle",
+      pt: " Online - Video-Aulas Gravadas + Plataforma de Ensino",
+      es: " Online - Vídeo Clases Grabadas + Plataforma de Aprendizaje",
     },
     materials: {
       pt: "E-book completo de receitas e fornecedores",
@@ -235,13 +238,13 @@ export const courses_text = {
 
   resin_in_personal_br: {
     title: {
-      pt: "Curso de Resina Epóxi e Encapsulados (Presencial)",
+      pt: "Curso Presencial de Resina Epóxi e Encapsulados",
       es: "Curso Presencial de Resina Epoxi y Encapsulados",
     },
     duration: { pt: "5 horas Intensivas", es: "5 horas Intensivas" },
     location: {
-      pt: "Florianópolis, SC, Brasil",
-      es: "Florianópolis, SC, Brasil",
+      pt: "*Florianópolis, SC, Brasil (Atelier Central)",
+      es: "*Florianópolis, SC, Brasil (Taller Central)",
     },
     materials: {
       pt: "Resinas com proteção UV e moldes inclusos",
@@ -269,13 +272,13 @@ export const courses_text = {
 
   macrame_in_personal_br: {
     title: {
-      pt: "Curso de Macramê Criativo (Presencial)",
+      pt: "Curso Presencial de Macramê Criativo",
       es: "Curso Presencial de Macramé Creativo",
     },
     duration: { pt: "4 horas com Mentoria", es: "4 horas Personalizadas" },
     location: {
-      pt: "Florianópolis (Ateliê Central)",
-      es: "Florianópolis (Atelier Central)",
+      pt: "*Florianópolis - SC - Brasil (Atelier Central)",
+      es: "*Florianópolis - SC - Brasil (Taller Central)",
     },
     materials: {
       pt: "Cordões de algodão ecológico inclusos",
@@ -303,11 +306,14 @@ export const courses_text = {
 
   incense_in_personal_br: {
     title: {
-      pt: "Curso de Incensaria Natural Seca (Presencial)",
+      pt: "Curso Presencial de Incensaria Natural Seca",
       es: "Curso Presencial de Incensaria Natural Seca",
     },
     duration: { pt: "3 horas de Prática", es: "3 horas de Taller" },
-    location: { pt: "Florianópolis, SC", es: "Florianópolis, SC, Brasil" },
+    location: {
+      pt: "*Florianópolis - SC - Brasil (Atelier Central)",
+      es: "*Florianópolis - SC - Brasil (Taller Central)",
+    },
     materials: {
       pt: "Ervas finas aromáticas inclusas",
       es: "Hierbas y resinas naturales incluidas",
@@ -334,13 +340,13 @@ export const courses_text = {
 
   air_fresheners_in_personal_br: {
     title: {
-      pt: "Curso de Aromatizantes de Ambientes (Presencial)",
+      pt: "Curso Presencial de Aromatizantes de Ambientes",
       es: "Curso Presencial de Perfumería Hogar",
     },
     duration: { pt: "4 horas Práticas", es: "4 horas Prácticas" },
     location: {
-      pt: "Florianópolis, SC, Brasil",
-      es: "Florianópolis, SC, Brasil",
+      pt: "*Florianópolis - SC - Brasil (Atelier Central)",
+      es: "*Florianópolis - SC - Brasil (Taller Central)",
     },
     materials: {
       pt: "Todas as essências e embalagens inclusas",
@@ -368,13 +374,13 @@ export const courses_text = {
 
   air_fresheners_online_br: {
     title: {
-      pt: "Curso de Aromatizantes de Ambientes (Virtual)",
-      es: "Curso Virtual de Aromas del Hogar",
+      pt: "Curso Online de Aromatizantes de Ambientes",
+      es: "Curso Online de Aromas del Hogar",
     },
     duration: { pt: "Acesso Vitalício", es: "Acceso de por vida" },
     location: {
-      pt: "Plataforma Moodle e Suporte VIP",
-      es: "Plataforma Moodle Múltiples Dispositivos",
+      pt: "Online - Plataforma de Ensino e Suporte VIP",
+      es: "Online - Plataforma de aprendizaje Múltiples Dispositivos",
     },
     materials: {
       pt: "Apostilas em PDF + Contato de Fornecedores",

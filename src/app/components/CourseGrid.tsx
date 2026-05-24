@@ -121,7 +121,7 @@ export default function CourseGrid({
                   </div>
 
                   {/* Action row */}
-                  <div className="space-y-3 pt-4 border-t border-muted/80">
+                  <div className="space-y-3 pt-4 border-t border-muted">
                     <button
                       onClick={() => setSelectedCourse(course)}
                       className="brand-btn-secondary w-full py-3 text-xs"

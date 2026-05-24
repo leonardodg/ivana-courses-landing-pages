@@ -17,7 +17,7 @@ export interface Course {
   categoryId: CategoryId;
   title: { pt: string; es: string };
   duracao: { pt: string; es: string };
-  modalidade: 'presencial' | 'virtual' | 'hibrido';
+  modalidade: 'presencial' | 'online' | 'hibrido';
   location: { pt: string; es: string };
   materials: { pt: string; es: string };
   description: { pt: string; es: string };

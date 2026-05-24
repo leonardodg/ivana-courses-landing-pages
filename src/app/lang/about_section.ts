@@ -15,6 +15,8 @@ export const about_text = {
     boxDTitle: "Pronto para o Negócio",
     boxDDesc:
       "Aprenda a precificar, embalar e conquistar clientes locais de imediato.",
+    imageFrase:
+      '"A arte é o transbordo da nossa melhor energia moldada à mão."',
   },
   es: {
     tag: "La Especialista Detrás de las Artes",
@@ -34,5 +36,7 @@ export const about_text = {
     boxDTitle: "Foco en Negocios",
     boxDDesc:
       "Aprende a calcular costos, diseñar empaques de lujo y ganar dinero rápido.",
+    imageFrase:
+      '"El arte es el desbordamiento de nuestra mejor energía, moldeada a mano."',
   },
 };

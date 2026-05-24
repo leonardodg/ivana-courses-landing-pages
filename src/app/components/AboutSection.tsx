@@ -18,12 +18,12 @@ export default function AboutSection({ language }: AboutSectionProps) {
             <img
               alt="Ivana Lerea - Mentora"
               className="w-full h-full object-cover select-none"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpcPZQg6dT0JFv_K5x3xi_r78DtbLTYarPxDKlwuOMEmLTzK2gxoJE5Hh8snL8pK5Q3a_6gmi0iqj9s8wMjB5J1hzE-DFiaPCI4hlCI-NZ-7EswoIlB7W-bQANk8DHiszlIxnY6YeuoW6iXAY3qyBWqn_HsxRbTLyqgB5V4ODehOyusTDucCbCuY3yp2z2nPuUdf-XYfIHoSS9GS4EQaXyqdEFGIDyuTw0vxBpb6x8w_TP3hKYDDwVYGNTLDuB4prJ8T9khdfYHqN3"
+              src="/images/portfolio/ivana_home.png"
             />
             {/* Elegant Caption Overlay */}
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">
               <span className="text-micro uppercase font-mono tracking-widest text-primary-container font-semibold">Ivana Lerea</span>
-              <p className="text-xs text-white/90 mt-1 font-serif italic">"A arte é o transbordo da nossa melhor energia moldada à mão."</p>
+              <p className="text-xs text-white/90 mt-1 font-serif italic">{about_text.imageFrase}</p>
             </div>
           </div>
           {/* Subtle Backdrops to simulate paper layered effect */}
