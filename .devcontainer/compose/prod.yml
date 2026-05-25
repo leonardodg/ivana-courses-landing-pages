@@ -14,8 +14,6 @@ services:
     image: leodg/courses-landing-pages:main
     container_name: courses-nginx
     restart: unless-stopped
-    container_name: courses-nginx
-    restart: unless-stopped
     environment:
       - APP_URL=https://courses.ivana.academy
       - APP_ENV=production
