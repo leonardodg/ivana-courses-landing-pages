@@ -7,17 +7,31 @@
 
 services:
   web:
-    image: nginx:1.25-alpine
+    build:
+      context: ../../
+      dockerfile: .devcontainer/build/nginx.Dockerfile
+      target: production
+    image: leodg/courses-landing-pages:main
+    container_name: courses-nginx
+    restart: unless-stopped
     container_name: courses-nginx
     restart: unless-stopped
     environment:
       - APP_URL=https://courses.ivana.academy
       - APP_ENV=production
+      - ENVIRONMENT=production
+    volumes:
+      - ./logs_nginx:/var/log/nginx
     ports:
       - "8088:80"
     networks:
-      - ivana_network
+      - global-network
+
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
 
 networks:
-  ivana_network:
+  global-network:
     external: true

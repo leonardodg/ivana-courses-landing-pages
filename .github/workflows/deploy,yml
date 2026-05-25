@@ -1,0 +1,110 @@
+name: Deploy MAIN → Oracle VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # ────────────────────────────────────────────────────────────────
+  # JOB 1 — Build estático com Vite + verificação rápida
+  # ────────────────────────────────────────────────────────────────
+  build-check:
+    name: Build & Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Vite)
+        run: npm run build
+
+      - name: Verify dist output
+        run: |
+          echo "Verificando artefatos do build..."
+          ls -lah dist/
+          [ -f dist/index.html ] || (echo "ERRO: dist/index.html não encontrado!" && exit 1)
+          echo "Build OK ✔"
+
+  # ────────────────────────────────────────────────────────────────
+  # JOB 2 — Deploy na Oracle VPS via SSH
+  # ────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to Oracle VPS
+    needs: [build-check]
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Validate VPS connection secrets
+        run: |
+          if [ -z "${{ secrets.VPS_HOST }}" ]; then
+            echo "ERRO: Secret VPS_HOST está vazio!" && exit 1
+          fi
+          if [ -z "${{ secrets.VPS_USER }}" ]; then
+            echo "ERRO: Secret VPS_USER está vazio!" && exit 1
+          fi
+          if [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
+            echo "ERRO: Secret SSH_PRIVATE_KEY está vazio!" && exit 1
+          fi
+          echo "Secrets validados ✔"
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          script: |
+            set -e
+
+            REPO_DIR="${{ vars.REPO_PATH || '/home/ubuntu/pages-courses' }}"
+            COMPOSE_FILE=".devcontainer/compose/prod.yml"
+
+            echo "===== [1/4] Atualizando repositório ====="
+            if [ ! -d "$REPO_DIR/.git" ]; then
+              echo "Repositório não encontrado. Clonando..."
+              mkdir -p "$REPO_DIR"
+              git clone https://github.com/leonardodg/ivana-courses-landing-pages.git "$REPO_DIR"
+            fi
+
+            cd "$REPO_DIR"
+            git fetch origin main
+            echo "Git pull concluído. Commit: $(git rev-parse --short HEAD)"
+
+            echo "===== [2/4] Parando container anterior ====="
+            docker compose -f "$COMPOSE_FILE" down --remove-orphans || true
+
+            echo "===== [3/4] Build e subindo container ====="
+            docker compose -f "$COMPOSE_FILE" build --no-cache
+            docker compose -f "$COMPOSE_FILE" up -d
+
+            echo "===== [4/4] Verificando health check ====="
+            sleep 5
+            echo "Container status: $CONTAINER_STATUS"
+            docker ps --filter name=courses-nginx --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            echo "Deploy concluído com sucesso ✔"
+
+      - name: Notify deploy summary
+        if: always()
+        run: |
+          echo "### Deploy Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** develop" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Actor:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL:** https://courses.ivana.academy" >> $GITHUB_STEP_SUMMARY
