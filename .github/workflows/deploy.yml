@@ -84,7 +84,8 @@ jobs:
 
             cd "$REPO_DIR"
             git fetch origin main
-            echo "Git pull concluído. Commit: $(git rev-parse --short HEAD)"
+            git reset --hard origin/main 
+            echo "Git pull e reset concluídos. Commit: $(git rev-parse --short HEAD)"
 
             echo "===== [2/4] Parando container anterior ====="
             docker compose -f "$COMPOSE_FILE" down --remove-orphans || true
