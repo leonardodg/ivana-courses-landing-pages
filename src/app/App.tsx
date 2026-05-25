@@ -82,7 +82,7 @@ export default function App() {
               </p>
 
               {/* Call to action trigger */}
-              <div className="pt-2 flex flex-wrap gap-4 items-center">
+              <div className="pt-2 pb-4 flex flex-wrap gap-4 items-center">
                 <a
                   href="#cursos"
                   className="bg-primary hover:bg-opacity-95 text-white font-semibold font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer"
@@ -91,7 +91,34 @@ export default function App() {
                 </a>
               </div>
             </div>
+
+            <div className="md:absolute md:bottom-12 md:right-8 md:left-auto md:w-auto md:transform md:translate-x-0 left-auto w-[90%] mx-auto opacity-90 mb-6 md:mb-0">
+              {/* imagem: direita em desktop, centralizada no mobile */}
+              <div className="relative group md:w-[560px] w-full">
+                <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 -z-10" />
+                  {/* <img
+                    alt="Vela artesanal Ivana Academy"
+                    className="w-full h-[320px] md:h-[500px] object-cover rounded-xl shadow-xl transform group-hover:scale-[1.01] transition-transform duration-500"
+                    data-alt="A macro photograph of a luxury handmade candle in a frosted glass container with a wooden wick subtly smoking. The candle is surrounded by sprigs of dried lavender, eucalyptus leaves, and dried orange slices on a textured linen cloth. The lighting is soft, warm, and natural, creating a serene and artisanal atmosphere that matches the beige and dusty rose color palette of Ivana Academy."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwRD1B5ICYfFTb-4GsJSQhSzgEHoRHca3niIXJTcDNnnjKKsowegd-iDlWgAebU1lMUu9vUxl7ZXFknkc0XV89lFKDj2TLKNTAi6-e7GwJXciCdGxlwsx2okDFr-Uknnn6lrubv6PbxZoP3UVzbKgakR5H2csp8rInrQx6exlOITewIQU3Uu0yHI1IA8ODNxHHQZyLXrw6_bDMdXtuLoV8OfNLxh52d56n--4Dn_SaVnM3Hsk8bwvbdnkz3fPo4n0iP_hW1V6iu2Kf"
+                  /> */}
+
+
+                  <video 
+                    className="w-full h-[320px] md:h-[500px] rounded-xl shadow-lg border border-slate-200"
+                    controls 
+                    poster="https://lh3.googleusercontent.com/aida-public/AB6AXuCwRD1B5ICYfFTb-4GsJSQhSzgEHoRHca3niIXJTcDNnnjKKsowegd-iDlWgAebU1lMUu9vUxl7ZXFknkc0XV89lFKDj2TLKNTAi6-e7GwJXciCdGxlwsx2okDFr-Uknnn6lrubv6PbxZoP3UVzbKgakR5H2csp8rInrQx6exlOITewIQU3Uu0yHI1IA8ODNxHHQZyLXrw6_bDMdXtuLoV8OfNLxh52d56n--4Dn_SaVnM3Hsk8bwvbdnkz3fPo4n0iP_hW1V6iu2Kf"
+                  >
+                    <source src="videos/home.mov"/>
+                  </video>
+                  
+                {/* <div className="absolute bottom-6 left-2 bg-surface p-6 rounded-xl shadow-lg border border-outline-variant hidden md:block max-w-xs">
+                  <p className="font-headline text-lg text-white italic">"La técnica es el puente entre la idea y la maestría."</p>
+                </div> */}
+              </div>
+            </div>
           </div>
+
         </section>
 
         {/* Dynamic Trust Stats Bar */}
