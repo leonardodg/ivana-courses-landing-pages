@@ -44,9 +44,61 @@
   --color-on-error: #ffffff;
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
+
+  /* Brand border / separator color */
+  --color-border-subtle: #e1deda;
+  --color-border-muted: #eae8e4;
+  --color-border-faint: #e5e1db;
+  --color-border-review: #e2dfda;
+
+  /* Hero / surface background */
+  --color-surface-hero: #FAF6F0;
+  --color-surface-form: #f0ede9;
+  --color-surface-tag: #e5e2de;
+
+  /* Accent / category palette: Dusty Rose (velas) */
+  --color-velas-from: #805252;
+  --color-velas-to: #B27D7C;
+  --color-velas-accent-bg: #ffdad9;
+  --color-velas-accent-text: #805252;
+  --color-velas-hero-to: #EBC2C1;
+
+  /* Accent / category palette: Sage Green (saboaria) */
+  --color-saboaria-from: #4D6551;
+  --color-saboaria-to: #76917A;
+  --color-saboaria-accent-bg: #D2E7D6;
+  --color-saboaria-accent-text: #324536;
+  --color-saboaria-hero-to: #C9DACD;
+
+  /* Accent / category palette: Ocean Blue/Teal (resinas) */
+  --color-resinas-from: #3A6073;
+  --color-resinas-to: #4F8CA3;
+  --color-resinas-accent-bg: #D5E6EE;
+  --color-resinas-accent-text: #1B3E4F;
+  --color-resinas-hero-to: #BDD8E4;
+
+  /* Accent / category palette: Terracotta (macrame) */
+  --color-macrame-from: #8A5134;
+  --color-macrame-to: #B3795C;
+  --color-macrame-accent-bg: #FFDFD2;
+  --color-macrame-accent-text: #5C2B11;
+  --color-macrame-hero-to: #FFECD5;
+
+  /* Accent / category palette: Amethyst (aromas_incensos) */
+  --color-incenso-from: #6E4B6E;
+  --color-incenso-to: #9B6F9B;
+  --color-incenso-accent-bg: #F2DDF2;
+  --color-incenso-accent-text: #441D44;
+  --color-incenso-hero-to: #ECCDEB;
+
+  /* Shared hero gradient start/via (same cream for all categories) */
+  --color-hero-bg: #FAF6F0;
+
+  /* Special: terminal green for TechDashboard */
+  --color-terminal-green: #4AF626;
 }
 
-/* Custom Tailwind CSS v4 Component & Typography Utilities */
+/* ─── Typography Utilities ─────────────────────────────────────────── */
 
 @utility display-lg {
   font-family: var(--font-serif);
@@ -100,6 +152,19 @@
   text-transform: uppercase;
 }
 
+/* Micro text sizes - replaces text-[10px] and text-[11px] */
+@utility text-micro {
+  font-size: 0.625rem; /* 10px */
+  line-height: 1rem;
+}
+
+@utility text-mini {
+  font-size: 0.6875rem; /* 11px */
+  line-height: 1rem;
+}
+
+/* ─── Brand Component Utilities ────────────────────────────────────── */
+
 @utility brand-btn-primary {
   background-color: var(--color-primary);
   color: var(--color-on-primary);
@@ -109,7 +174,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 1rem 2.25rem;
-  border-radius: 9999px; /* Pill shapes */
+  border-radius: 9999px;
   box-shadow: 0px 4px 10px rgba(128, 82, 82, 0.15);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
@@ -194,7 +259,8 @@
   }
 }
 
-/* Base custom classes */
+/* ─── Animations ───────────────────────────────────────────────────── */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -215,4 +281,72 @@
 
 .hero-gradient {
   background: linear-gradient(to bottom, rgba(252, 249, 245, 0) 0%, rgba(252, 249, 245, 1) 90%);
+}
+
+/* ─── Custom Color Utility Classes (replaces all [#hex] arbitrary values) ─ */
+
+@layer components {
+
+  /* ── Base surface & text ── */
+  .bg-surface-cream    { background-color: var(--color-surface-cream); }
+  .text-on-surface-variant { color: var(--color-on-surface-variant); }
+  .text-on-surface     { color: var(--color-on-surface); }
+  .bg-surface-form     { background-color: var(--color-surface-form); }
+  .bg-surface-hero     { background-color: var(--color-surface-hero); }
+  .bg-surface-tag      { background-color: var(--color-surface-tag); }
+
+  /* ── Border helpers ── */
+  .border-subtle       { border-color: var(--color-border-subtle); }
+  .border-muted        { border-color: var(--color-border-muted); }
+  .border-faint        { border-color: var(--color-border-faint); }
+  .border-review       { border-color: var(--color-border-review); }
+
+  /* ── Primary brand ── */
+  .bg-primary          { background-color: var(--color-primary); }
+  .text-primary        { color: var(--color-primary); }
+  .text-inverse-primary { color: var(--color-inverse-primary); }
+  .bg-primary-container { background-color: var(--color-primary-container); }
+  .text-primary-container { color: var(--color-primary-container); }
+
+  /* ── Gradient helpers: shared hero start/via (cream) ── */
+  .from-hero-bg        { --tw-gradient-from: var(--color-hero-bg); }
+  .via-hero-bg         { --tw-gradient-via: var(--color-hero-bg); }
+
+  /* ── Velas (Dusty Rose) ── */
+  .from-velas-start    { --tw-gradient-from: var(--color-velas-from); }
+  .to-velas-end        { --tw-gradient-to: var(--color-velas-to); }
+  .bg-velas-accent     { background-color: var(--color-velas-accent-bg); }
+  .text-velas-accent   { color: var(--color-velas-accent-text); }
+  .to-velas-hero       { --tw-gradient-to: var(--color-velas-hero-to); }
+
+  /* ── Saboaria (Sage Green) ── */
+  .from-saboaria-start { --tw-gradient-from: var(--color-saboaria-from); }
+  .to-saboaria-end     { --tw-gradient-to: var(--color-saboaria-to); }
+  .bg-saboaria-accent  { background-color: var(--color-saboaria-accent-bg); }
+  .text-saboaria-accent { color: var(--color-saboaria-accent-text); }
+  .to-saboaria-hero    { --tw-gradient-to: var(--color-saboaria-hero-to); }
+
+  /* ── Resinas (Ocean Blue/Teal) ── */
+  .from-resinas-start  { --tw-gradient-from: var(--color-resinas-from); }
+  .to-resinas-end      { --tw-gradient-to: var(--color-resinas-to); }
+  .bg-resinas-accent   { background-color: var(--color-resinas-accent-bg); }
+  .text-resinas-accent { color: var(--color-resinas-accent-text); }
+  .to-resinas-hero     { --tw-gradient-to: var(--color-resinas-hero-to); }
+
+  /* ── Macramê (Terracotta) ── */
+  .from-macrame-start  { --tw-gradient-from: var(--color-macrame-from); }
+  .to-macrame-end      { --tw-gradient-to: var(--color-macrame-to); }
+  .bg-macrame-accent   { background-color: var(--color-macrame-accent-bg); }
+  .text-macrame-accent { color: var(--color-macrame-accent-text); }
+  .to-macrame-hero     { --tw-gradient-to: var(--color-macrame-hero-to); }
+
+  /* ── Aromas / Incensos (Amethyst) ── */
+  .from-incenso-start  { --tw-gradient-from: var(--color-incenso-from); }
+  .to-incenso-end      { --tw-gradient-to: var(--color-incenso-to); }
+  .bg-incenso-accent   { background-color: var(--color-incenso-accent-bg); }
+  .text-incenso-accent { color: var(--color-incenso-accent-text); }
+  .to-incenso-hero     { --tw-gradient-to: var(--color-incenso-hero-to); }
+
+  /* ── TechDashboard terminal ── */
+  .text-terminal-green { color: var(--color-terminal-green); }
 }

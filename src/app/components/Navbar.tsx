@@ -1,7 +1,8 @@
-import { Language, CategoryId } from '../types';
-import { CATEGORIES } from '../data';
-import { Languages, PhoneCall, ChevronRight, Menu, X, Flame, Sparkles, Sliders } from 'lucide-react';
+import { CategorySpec, Language, CategoryId } from '../classes/types';
+import { categories_data } from '../data/categories';
+import { Languages, PhoneCall, ChevronRight, Menu, X, Flame, Sparkles, Sliders, Link2 } from 'lucide-react';
 import { useState } from 'react';
+import { navbar_text as text } from '../lang/navbar';
 
 interface NavbarProps {
   language: Language;
@@ -44,37 +45,24 @@ export default function Navbar({
 }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const t = {
-    pt: {
-      allCategories: 'Segmentos',
-      contact: 'Fale Conosco',
-      devHub: 'Engenharia / Cache',
-    },
-    es: {
-      allCategories: 'Segmentos',
-      contact: 'Contacto',
-      devHub: 'Ingeniería / Caché',
-    }
-  }[language];
+  const CATEGORIES: Record<string, CategorySpec> = categories_data;
+
+  const navbar_text = text[language];
 
   return (
-    <header className="bg-[#fcf9f5]/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-[#e1deda] transition-all">
+    <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo and Brand */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEq7hSIxNmxkfIHSubsBA9DnhiKGTjQQtxNMhvbshwJhMuv1EZE3QMJML0icL9KynPAOtrkehG7GTZftH3q1VhQRN1shY6MlSG56jIeaPGo10RfWbGhr7-3eg9fUucE7nG-rw5SBMcgKMZIG2YEtF-Z-oCHIgixUP_g9n0ETXDIqA5oFqKZ21QuntZ4wjhtP65scaDq4DVn3eo0JYaYLgs2fSe9siJWDLJiTSd6e1HQ_7ybfV2nWWZZhlgMDvxuLBItTmNaOU0nqVe"
+            src="/images/logo.svg"
           />
-          <div className="hidden lg:block">
-            <span className="font-serif font-bold text-gray-850 text-sm tracking-wide block">IVANA ACADEMY</span>
-            <span className="text-[10px] uppercase font-mono tracking-widest text-[#805252] font-semibold block">Artisanal Excellence</span>
-          </div>
         </div>
 
         {/* Categories Quick Switcher (Desktop) */}
-        <div className="hidden md:flex items-center gap-2 bg-[#f0ede9] p-1 rounded-full border border-[#e1deda]">
+        <div className="hidden md:flex items-center gap-2 bg-surface-form p-1 rounded-full border border-subtle">
           {Object.values(CATEGORIES).map((cat) => {
             const isActive = activeCategoryId === cat.id;
             return (
@@ -83,8 +71,8 @@ export default function Navbar({
                 onClick={() => setActiveCategoryId(cat.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#805252] text-white shadow-sm'
-                    : 'text-[#514443] hover:bg-[#eae8e4]'
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-on-surface-variant hover:bg-surface-container-high'
                 }`}
               >
                 <span>{cat.badgeLogo}</span>
@@ -96,21 +84,13 @@ export default function Navbar({
 
         {/* Global Controls & Social */}
         <div className="flex items-center gap-4">
-          {/* Quick link to Tech Blueprint */}
-          <a
-            href="#tech-blueprint"
-            className="hidden xl:flex items-center gap-1 bg-slate-900 border border-slate-800 text-rose-300 text-xs px-3 py-1.5 rounded-full font-mono hover:bg-slate-850"
-          >
-            <Sliders className="w-3.5 h-3.5 fill-current" />
-            <span>Postgres/Redis Plan</span>
-          </a>
 
           {/* Language Switch with Desaturated/Saturated Country Flags */}
-          <div className="flex items-center gap-1.5 bg-[#f0ede9] p-1.5 rounded-full border border-[#e1deda]">
+          <div className="flex items-center gap-1.5 bg-surface-form p-1.5 rounded-full border border-subtle">
             <button
               onClick={() => setLanguage('pt')}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'pt' ? 'bg-[#805252] text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === 'pt' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
               }`}
               title="Português (Brasil)"
             >
@@ -120,7 +100,7 @@ export default function Navbar({
             <button
               onClick={() => setLanguage('es')}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'es' ? 'bg-[#805252] text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === 'es' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
               }`}
               title="Español (Argentina)"
             >
@@ -132,7 +112,7 @@ export default function Navbar({
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-gray-700 hover:text-[#805252] p-1"
+            className="md:hidden text-gray-700 hover:text-primary p-1"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -141,8 +121,8 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {menuOpen && (
-        <div className="md:hidden bg-[#FAF6F0] w-full border-t border-[#e1deda] py-4 px-6 shadow-inner animate-fade-in">
-          <p className="text-[10px] uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">{t.allCategories}</p>
+        <div className="md:hidden bg-surface-hero w-full border-t border-subtle py-4 px-6 shadow-inner animate-fade-in">
+          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">{navbar_text.allCategories}</p>
           <div className="flex flex-col gap-2">
             {Object.values(CATEGORIES).map((cat) => {
               const isActive = activeCategoryId === cat.id;
@@ -155,8 +135,8 @@ export default function Navbar({
                   }}
                   className={`w-full p-2.5 rounded-lg text-left text-sm font-semibold tracking-wide flex items-center gap-2.5 transition-all ${
                     isActive
-                      ? 'bg-[#805252] text-white'
-                      : 'text-[#514443] bg-[#f5f1eb] hover:bg-[#eae8e4]'
+                      ? 'bg-primary text-white'
+                      : 'text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high'
                   }`}
                 >
                   <span className="text-base">{cat.badgeLogo}</span>
@@ -166,23 +146,25 @@ export default function Navbar({
             })}
           </div>
 
-          <div className="border-t border-[#e1deda] mt-4 pt-3 flex flex-col gap-2">
-            <a
-              href="#tech-blueprint"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between text-xs text-rose-800 bg-rose-50 p-2.5 rounded-lg border border-rose-100 font-semibold"
-            >
-              <span className="font-mono">{t.devHub}</span>
-              <ChevronRight className="w-4 h-4" />
-            </a>
+          <div className="border-t border-subtle mt-4 pt-3 flex flex-col gap-2">
             <a
               href="#contato"
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >
-              <span>{t.contact}</span>
-              <PhoneCall className="w-4 h-4 text-[#805252]" />
+              <span>{navbar_text.contact}</span>
+              <PhoneCall className="w-4 h-4 text-primary" />
             </a>
+
+            <a
+              href="https://ivana.academy" target="_blank"
+               onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
+            >
+              <span>{navbar_text.platform}</span>
+              <Link2 className="w-4 h-4 text-primary" />
+            </a>
+
           </div>
         </div>
       )}
