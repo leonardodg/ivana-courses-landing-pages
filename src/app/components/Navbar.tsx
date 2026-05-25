@@ -1,6 +1,6 @@
 import { CategorySpec, Language, CategoryId } from '../classes/types';
 import { categories_data } from '../data/categories';
-import { Languages, PhoneCall, ChevronRight, Menu, X, Flame, Sparkles, Sliders } from 'lucide-react';
+import { Languages, PhoneCall, ChevronRight, Menu, X, Flame, Sparkles, Sliders, Link2 } from 'lucide-react';
 import { useState } from 'react';
 import { navbar_text as text } from '../lang/navbar';
 
@@ -53,7 +53,7 @@ export default function Navbar({
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo and Brand */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
@@ -148,14 +148,6 @@ export default function Navbar({
 
           <div className="border-t border-subtle mt-4 pt-3 flex flex-col gap-2">
             <a
-              href="#tech-blueprint"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between text-xs text-rose-800 bg-rose-50 p-2.5 rounded-lg border border-rose-100 font-semibold"
-            >
-              <span className="font-mono">{navbar_text.devHub}</span>
-              <ChevronRight className="w-4 h-4" />
-            </a>
-            <a
               href="#contato"
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
@@ -163,6 +155,16 @@ export default function Navbar({
               <span>{navbar_text.contact}</span>
               <PhoneCall className="w-4 h-4 text-primary" />
             </a>
+
+            <a
+              href="https://ivana.academy" target="_blank"
+               onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
+            >
+              <span>{navbar_text.platform}</span>
+              <Link2 className="w-4 h-4 text-primary" />
+            </a>
+
           </div>
         </div>
       )}
