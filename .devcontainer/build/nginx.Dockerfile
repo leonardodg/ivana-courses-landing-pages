@@ -31,6 +31,13 @@ RUN npm ci
 
 # Copy source and build
 COPY . .
+
+# Variáveis passadas como build args
+ARG VITE_WEBHOOK_URL
+ARG VITE_WEBHOOK_SECRET
+ENV VITE_WEBHOOK_URL=$VITE_WEBHOOK_URL
+ENV VITE_WEBHOOK_SECRET=$VITE_WEBHOOK_SECRET
+
 RUN npm run build
 # Output is at /app/dist/
 

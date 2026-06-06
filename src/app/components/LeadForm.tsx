@@ -135,7 +135,7 @@ export default function LeadForm({
               <p className="text-sm font-semibold leading-relaxed max-w-md">{lead_text.successMsg}</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5" action="https://webhook.ivana.academy/webhook-test/contact" method="POST">
               <div>
                 <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
                   {language === 'pt' ? 'Seu Nome completo' : 'Nombre Completo'} <span className="text-rose-600">*</span>
@@ -182,7 +182,7 @@ export default function LeadForm({
                 <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
                   {lead_text.textLabel} <span className="text-rose-600">*</span>
                 </label>
-                {/* <select
+                 <select
                   value={chosenCourseId}
                   onChange={(e) => setChosenCourseId(e.target.value)}
                   className="input-minimal font-sans text-gray-805"
@@ -195,13 +195,7 @@ export default function LeadForm({
                         {c.title[language]} ({c.modalidade === 'presencial' ? 'Presencial' : 'Online'})
                       </option>
                     ))}
-                </select> */}
-
-                <textarea rows="6" cols="6" placeholder={lead_text.textDesc}
-                  className="input-minimal font-sans text-gray-805"
-                  required>
-              
-                  </textarea>
+                </select>
               </div>
 
               <button

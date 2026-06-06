@@ -13,6 +13,8 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import fs from 'fs';
+import * as dotenv from 'dotenv';
 import { defineConfig } from "vite";
 
 // ---------------------------------------------------------------------------
@@ -34,10 +36,57 @@ const pages: Record<string, string> = {
   // resin:          "src/resin/index.html",
 };
 
-export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss()],
+export default defineConfig(({ mode }) => {
+  const envDir = path.resolve(__dirname, "src");
+  const envFiles = [
+    ".env",
+    ".env.local",
+    `.env.${mode}`,
+    `.env.${mode}.local`,
+  ];
 
-  root: "src",
+  const loadedFileEnv = Object.fromEntries(
+    envFiles.flatMap((filename) => {
+      const filePath = path.resolve(envDir, filename);
+      if (!fs.existsSync(filePath)) return [];
+      return Object.entries(dotenv.parse(fs.readFileSync(filePath, "utf8")));
+    }),
+  );
+
+  const clientEnv = {
+    VITE_WEBHOOK_URL: loadedFileEnv.VITE_WEBHOOK_URL ?? "",
+    VITE_WEBHOOK_SECRET: loadedFileEnv.VITE_WEBHOOK_SECRET ?? "",
+  };
+
+  for (const [key, value] of Object.entries(process.env)) {
+    if (!key.startsWith("VITE_")) continue;
+    if (typeof value === "string" && value.length > 0) {
+      clientEnv[key as keyof typeof clientEnv] = value;
+    }
+  }
+
+  if (mode === "development") {
+    // eslint-disable-next-line no-console
+    console.log("Vite envDir:", envDir);
+    // eslint-disable-next-line no-console
+    console.log("Vite loaded env files:", loadedFileEnv);
+    // eslint-disable-next-line no-console
+    console.log("Vite clientEnv:", {
+      VITE_WEBHOOK_URL: clientEnv.VITE_WEBHOOK_URL,
+      VITE_WEBHOOK_SECRET: clientEnv.VITE_WEBHOOK_SECRET ? "[redacted]" : "",
+    });
+  }
+
+  return {
+    plugins: [react(), tailwindcss()],
+    envDir,
+    root: "src",
+    define: Object.fromEntries(
+      Object.entries(clientEnv).map(([key, value]) => [
+        `import.meta.env.${key}`,
+        JSON.stringify(value),
+      ]),
+    ),
 
   // ---------------------------------------------------------------------------
   // Public dir:
@@ -138,4 +187,5 @@ export default defineConfig(({ mode }) => ({
   //   port: 4173,
   //   host: "0.0.0.0",
   // },
-}));
+    };
+  });

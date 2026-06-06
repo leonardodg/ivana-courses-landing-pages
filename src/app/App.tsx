@@ -13,6 +13,7 @@ import WhyUsSection from './components/WhyUsSection';
 import ReviewsCarousel from './components/ReviewsCarousel';
 import FAQSection from './components/FAQSection';
 import LeadForm from './components/LeadForm';
+import ContactForm from './components/ContactForm';
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('pt');
@@ -167,11 +168,9 @@ export default function App() {
         <ReviewsCarousel language={language} reviews={REVIEWS} />
 
         {/* Flexible lead capture form */}
-        <LeadForm
+        <ContactForm
           language={language}
-          selectedCourseForForm={selectedCourseForForm}
-          courses={COURSES}
-          activeCategoryId={activeCategoryId}
+          coursePage='homepage'
         />
 
         {/* Detailed FAQ */}
