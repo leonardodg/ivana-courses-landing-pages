@@ -5,6 +5,9 @@ export const home_text = {
     statsPort: "Validação Internacional",
     tagBadge: "Formação Reconhecida",
     btnHero: "Catálogo de Cursos",
+    btnCourses: "Catálogo de Cursos",
+    btnInterest: "Registrar Interesse",
+    btnContact: "Entrar em Contato",
     footerAbout:
       "Ivana Academy é focada na profissionalização feminina através do artesanato de alto padrão, capacitando milhares de mulheres a mudarem suas realidades financeiras.",
     footerLinks: "Links do Portal",
@@ -21,6 +24,9 @@ export const home_text = {
     statsPort: "Validez Internacional",
     tagBadge: "Formación Homologada",
     btnHero: "Ver Clases Disponibles",
+    btnCourses: "Ver Clases Disponibles",
+    btnInterest: "Registre su interés",
+    btnContact: "Contáctanos",
     footerAbout:
       "Ivana Academy está enfocada en el empoderamiento e independencia financiera de las mujeres mediante manualidades de alta gama y diseño contemporáneo.",
     footerLinks: "Enlaces Clave",

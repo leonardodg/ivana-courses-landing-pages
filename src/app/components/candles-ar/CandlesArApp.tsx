@@ -1,18 +1,5 @@
-// src/app/components/candles-ar/CandlesArApp.tsx
-//
-// Página de ventas dedicada de Velas — ES-AR.
-// Rota: /es_ar/candles (https://courses.ivana.academy/es_ar/candles)
-//
-// Estructura basada en el protótipo AI Studio argentino:
-//   Navbar → Hero (2 columnas con imagen lateral + quote) → Stats →
-//   Sobre Ivana → Formaciones Online (Profesorado + Tecnicatura) →
-//   Waitlist Talleres Presenciales BA → Testimonios → FAQ → CTA → Footer
-//
-// Los 2 cursos online (profesorado-velas-ar, tecnicatura-velas-ar)
-// vienen del data/courses.ts real del proyecto con URLs Moodle reales.
-
 import { useState } from 'react';
-import { Course } from '../../classes/types';
+import { Course, Language } from "../../classes/types";
 import { courses_list } from '../../data/courses';
 import { faqs_list } from '../../data/faqs';
 
@@ -26,11 +13,29 @@ import CandlesArStudentPortal  from './CandlesArStudentPortal';
 import FAQSection              from '../FAQSection';
 import AboutSection            from '../AboutSection';
 
+import { heroContent as hero_content } from '../../data/home';
+
+import Footer from "../../components/Footer";
+
 const LANGUAGE = 'es' as const;
 const CATEGORY_ID = 'velas' as const;
 
+const heroContent = hero_content[CATEGORY_ID];
+
+const ArgentinaFlag = () => (
+  <svg
+    viewBox="0 0 3 2"
+    className="w-4.5 h-3 opacity-95 rounded-[1px] transition-all duration-300 grayscale-0 scale-105"
+  >
+    <rect width="3" height="2" fill="#74ACDF" />
+    <rect y="0.66" width="3" height="0.66" fill="#FFFFFF" />
+    <circle cx="1.5" cy="1" r="0.18" fill="#FFAF36" />
+  </svg>
+);
+
 export default function CandlesArApp() {
   const [portalOpen, setPortalOpen] = useState(false);
+  const [language, setLanguage] = useState<Language>("es");
 
   const courses: Course[] = courses_list.filter(
     c => c.categoryId === CATEGORY_ID && c.modalidade === 'online'
@@ -59,12 +64,12 @@ export default function CandlesArApp() {
         {/* ── HERO ── */}
         <section
           id="inicio"
-          className="relative overflow-hidden px-6 md:px-12 pt-28 md:pt-40 pb-20 max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          className="relative overflow-hidden px-6 md:px-12 pt-28 md:pt-24 pb-20 max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         >
           {/* Left content */}
           <div className="space-y-6 md:space-y-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full border border-primary/20">
-              <Award className="w-3.5 h-3.5 text-primary shrink-0 animate-pulse" />
+               <ArgentinaFlag />
               <span className="text-[10px] font-bold uppercase tracking-wider">Certificación Internacional</span>
             </div>
 
@@ -241,41 +246,10 @@ export default function CandlesArApp() {
 
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className="bg-secondary-container/80 border-t border-muted">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-6 md:px-12 py-16 max-w-[1280px] mx-auto">
-
-          <div className="space-y-4">
-            <img alt="Ivana Academy" className="h-10 w-auto object-contain" src="/images/logo-square.svg" />
-            <p className="text-on-secondary-container/80 text-xs leading-relaxed max-w-xs">
-              Excelencia artesanal y certificación internacional en artes manuales desde Argentina.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4 text-xs tracking-wider uppercase">Cursos</h4>
-            <ul className="space-y-2.5 text-xs font-medium text-on-surface-variant">
-              <li><a href="#formaciones" className="hover:text-primary transition-colors">Profesorado en Velas</a></li>
-              <li><a href="#formaciones" className="hover:text-primary transition-colors">Tecnicatura en Arte y Diseño</a></li>
-              <li><a href="#interes"     className="hover:text-primary transition-colors">Lista de Espera Presenciales</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4 text-xs tracking-wider uppercase">Institucional</h4>
-            <ul className="space-y-2.5 text-xs font-medium text-on-surface-variant">
-              <li><a href="#sobre-ivana" className="hover:text-primary transition-colors">Sobre la Academia</a></li>
-              <li><a href="https://ivana.academy" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors font-bold text-primary">Plataforma: ivana.academy</a></li>
-              <li className="pt-1 text-[11px] font-semibold">Buenos Aires, Argentina</li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div className="border-t border-muted py-6 text-center text-on-surface-variant text-xs font-semibold">
-          © {new Date().getFullYear()} Ivana Academy. Excelencia Artesanal &amp; Certificación Internacional.
-        </div>
-      </footer>
+      <Footer
+        language={language}
+        setLanguage={setLanguage}
+      />
 
       {/* ── PORTAL DEL ALUMNO ── */}
       {portalOpen && (
