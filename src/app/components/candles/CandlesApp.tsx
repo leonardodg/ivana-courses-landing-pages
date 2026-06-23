@@ -1,23 +1,6 @@
-// src/app/components/candles/CandlesApp.tsx
-//
-// Página de vendas dedicada de Velas — PT-BR.
-// Rota final: /pt_br/candles (https://courses.ivana.academy/pt_br/candles)
-//
-// Reaproveita os componentes reais e os dados reais de cursos de velas
-// do projeto (Navbar, CourseGrid, AboutSection, WhyUsSection,
-// ReviewsCarousel, FAQSection, Footer), filtrando sempre categoryId
-// 'velas'. Sem toggle de idioma — a página é fixa em PT, seguindo o
-// padrão de URL /pt_br/... (a futura versão argentina ficará em
-// /es_ar/candles, reaproveitando os mesmos componentes com language='es').
-//
-// Camada extra trazida do protótipo de vendas (mantida por decisão do
-// time): CandlesLeadForm (captura de lead com cupom de boas-vindas),
-// CandlesCheckoutModal (reserva de vaga para cursos presenciais) e
-// CandlesStudentPortal (vitrine da área do aluno). O detalhe/programa de
-// cada curso já é coberto pelo modal embutido no CourseGrid real.
-
 import { useState, useEffect } from 'react';
-import { Course } from '../../classes/types';
+import { Course, Language } from '../../classes/types';
+
 import { categories_data } from '../../data/categories';
 import { courses_list } from '../../data/courses';
 import { reviews_list } from '../../data/reviews';
@@ -37,10 +20,15 @@ import CandlesLeadForm from './CandlesLeadForm';
 import CandlesCheckoutModal from './CandlesCheckoutModal';
 import CandlesStudentPortal from './CandlesStudentPortal';
 
+import Footer from "../../components/Footer";
+
+import { Menu, SquarePen } from "lucide-react";
+
 const LANGUAGE = 'pt' as const;
 const CATEGORY_ID = 'velas' as const;
 
 export default function CandlesApp() {
+  const [language, setLanguage] = useState<Language>("pt");
   const [checkoutCourse, setCheckoutCourse] = useState<Course | null>(null);
   const [checkoutCoupon, setCheckoutCoupon] = useState('');
   const [portalOpen, setPortalOpen] = useState(false);
@@ -64,6 +52,17 @@ export default function CandlesApp() {
     setCheckoutCoupon(coupon);
   };
 
+  const BrazilFlag = () => (
+    <svg
+      viewBox="0 0 720 500"
+      className="w-4.5 h-3 opacity-95 rounded-[1px] transition-all duration-300 grayscale-0 scale-105"
+    >
+      <rect width="720" height="500" fill="#009c3b" />
+      <polygon points="360,60 60,250 360,440 660,250" fill="#ffdf00" />
+      <circle cx="360" cy="250" r="120" fill="#002776" />
+    </svg>
+  );
+
   useEffect(() => {
     const handler = () => setPortalOpen(true);
     window.addEventListener('candles:openPortal', handler);
@@ -72,15 +71,15 @@ export default function CandlesApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
-
       {/* Navbar fixa — sem seletor de idioma, sem troca de categoria
           (a página é dedicada exclusivamente a velas PT-BR) */}
       <CandlesNavbar />
 
       <main className="grow">
-
         {/* Hero */}
-        <section className={`relative min-h-[90vh] md:min-h-[85vh] flex items-end pt-24 pb-12 overflow-hidden transition-all duration-700 bg-gradient-to-b ${activeCategory.heroBgClass}`}>
+        <section
+          className={`relative min-h-[90vh] md:min-h-[85vh] flex items-end overflow-hidden transition-all duration-700 bg-gradient-to-b ${activeCategory.heroBgClass}`}
+        >
           <div className="absolute inset-0 z-0">
             <img
               alt={heroContent.title[LANGUAGE]}
@@ -90,12 +89,16 @@ export default function CandlesApp() {
             <div className="absolute inset-0 hero-gradient bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
           </div>
 
-          <div className="relative z-10 px-6 max-w-[1280px] mx-auto w-full">
-            <div className="md:w-3/4 lg:w-1/2 space-y-4 md:space-y-6">
-
+          {/* Content Grid - Left: Info, Right: Video */}
+          <div className="relative z-10 px-6 md:px-12 pt-24 md:pt-28 pb-12 max-w-[1280px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="space-y-4 md:space-y-6">
               <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-subtle px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
-                <span className="text-sm">{activeCategory.badgeLogo}</span>
-                <span className="text-micro uppercase font-mono tracking-widest text-primary">{courses_text.tagBadge}</span>
+                <span className="text-sm">
+                  <BrazilFlag />
+                </span>
+                <span className="text-micro uppercase font-mono tracking-widest text-primary">
+                  Cursos Velas Artesanais do Brasil
+                </span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-950 font-bold leading-tight tracking-tight">
@@ -109,17 +112,37 @@ export default function CandlesApp() {
               <div className="pt-2 pb-4 flex flex-wrap gap-4 items-center">
                 <a
                   href="#cursos"
-                  className="bg-primary hover:bg-opacity-95 text-white font-semibold font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer"
+                  className="bg-primary hover:bg-opacity-95 text-white font-semibold font-mono text-xs tracking-widest uppercase inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer hover:bg-primary-container hover:text-on-primary-container"
                 >
-                  {courses_text.btnHero}
+                  <Menu className="w-3.5 h-3.5" /> {courses_text.btnCourses}
                 </a>
-                <button
-                  onClick={() => setPortalOpen(true)}
-                  className="text-xs font-mono uppercase tracking-widest text-gray-800 hover:text-primary underline underline-offset-4 cursor-pointer"
+
+                <a
+                  href="#contato"
+                  className="sm:flex items-center gap-2 inline-flex  text-on-surface-variant hover:text-primary border border-subtle bg-white/80 hover:bg-white  text-xs font-bold font-mono uppercase tracking-wider px-8 py-4 rounded-full transition-all"
                 >
-                  Já sou aluna — acessar portal
-                </button>
+                  <SquarePen className="w-3.5 h-3.5" />{" "}
+                  {courses_text.btnContact}
+                </a>
               </div>
+            </div>
+
+            {/* Right: Video Frame */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
+              <video
+                className="relative z-10 w-full h-[320px] md:h-[500px] rounded-xl shadow-xl border border-slate-200 object-cover"
+                controls
+                controlsList="nodownload"
+                playsInline
+                preload="metadata"
+                crossOrigin="anonymous"
+                poster="https://lh3.googleusercontent.com/aida-public/AB6AXuCwRD1B5ICYfFTb-4GsJSQhSzgEHoRHca3niIXJTcDNnnjKKsowegd-iDlWgAebU1lMUu9vUxl7ZXFknkc0XV89lFKDj2TLKNTAi6-e7GwJXciCdGxlwsx2okDFr-Uknnn6lrubv6PbxZoP3UVzbKgakR5H2csp8rInrQx6exlOITewIQU3Uu0yHI1IA8ODNxHHQZyLXrw6_bDMdXtuLoV8OfNLxh52d56n--4Dn_SaVnM3Hsk8bwvbdnkz3fPo4n0iP_hW1V6iu2Kf"
+              >
+                <source src="/videos/home.webm" type="video/webm" />
+                <source src="/videos/home.mp4" type="video/mp4" />
+                Seu navegador não suporta este formato de vídeo.
+              </video>
             </div>
           </div>
         </section>
@@ -128,19 +151,25 @@ export default function CandlesApp() {
         <section className="bg-white border-y border-subtle py-8">
           <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center items-center">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">2.000+</span>
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
+                2.000+
+              </span>
               <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsAlunas}
               </span>
             </div>
             <div className="space-y-1 border-y md:border-y-0 md:border-x border-subtle py-4 md:py-0">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">6+ Anos</span>
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
+                6+ Anos
+              </span>
               <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsExp}
               </span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">BR &amp; AR</span>
+              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
+                BR &amp; AR
+              </span>
               <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
                 {courses_text.statsPort}
               </span>
@@ -154,15 +183,12 @@ export default function CandlesApp() {
           onEnroll={handleSelectEnroll}
         />
 
+        {/* Cursos online — cards horizontais com link Moodle */}
+        <CandlesOnlineSection courses={courses} onEnroll={handleSelectEnroll} />
+
         <AboutSection language={LANGUAGE} />
 
         <WhyUsSection language={LANGUAGE} />
-
-        {/* Cursos online — cards horizontais com link Moodle */}
-        <CandlesOnlineSection
-          courses={courses}
-          onEnroll={handleSelectEnroll}
-        />
 
         <ReviewsCarousel language={LANGUAGE} reviews={reviews_list} />
 
@@ -170,50 +196,10 @@ export default function CandlesApp() {
         <CandlesLeadForm onCouponAwarded={handleCouponAwarded} />
 
         <FAQSection language={LANGUAGE} faqs={faqs_list} />
-
       </main>
 
       {/* Footer */}
-      <footer className="bg-surface-hero border-t border-subtle py-12 md:py-16 text-xs text-on-surface-variant">
-        <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-
-          <div className="md:col-span-6 space-y-4">
-            <img
-              alt="Ivana Academy"
-              className="h-10 w-auto object-contain"
-              src="/images/logo-square.svg"
-            />
-            <p className="max-w-md leading-relaxed">
-              {courses_text.footerAbout}
-            </p>
-          </div>
-
-          <div className="md:col-span-3 space-y-3">
-            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{courses_text.footerLinks}</span>
-            <ul className="space-y-2">
-              <li><a href="#cursos" className="hover:text-primary transition-colors">{courses_text.coursesLabel}</a></li>
-              <li><a href="#sobre" className="hover:text-primary transition-colors">{courses_text.aboutLabel}</a></li>
-              <li><a href="#contato" className="hover:text-primary transition-colors">{courses_text.contactLabel}</a></li>
-            </ul>
-          </div>
-
-          <div className="md:col-span-3 space-y-3">
-            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">{courses_text.footerContact}</span>
-            <p className="leading-relaxed">
-              Florianópolis, SC, Brasil <br />
-              Buenos Aires, Argentina <br />
-              <span className="font-bold text-primary mt-1 block">
-                Plataforma: <a href="https://ivana.academy" target="_blank" rel="noreferrer">ivana.academy</a>
-              </span>
-            </p>
-          </div>
-
-        </div>
-
-        <div className="max-w-[1280px] mx-auto px-6 border-t border-muted mt-12 pt-6 text-center text-gray-500 text-[11px]">
-          <span>{courses_text.footerRights}</span>
-        </div>
-      </footer>
+      <Footer language={LANGUAGE} setLanguage={setLanguage} />
 
       {/* Modais */}
       {checkoutCourse && (
@@ -227,7 +213,6 @@ export default function CandlesApp() {
       {portalOpen && (
         <CandlesStudentPortal onClose={() => setPortalOpen(false)} />
       )}
-
     </div>
   );
 }

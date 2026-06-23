@@ -71,8 +71,8 @@ export default function Navbar({
                 onClick={() => setActiveCategoryId(cat.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-on-surface-variant hover:bg-surface-container-high'
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-on-surface-variant hover:bg-surface-container-high"
                 }`}
               >
                 <span>{cat.badgeLogo}</span>
@@ -84,27 +84,30 @@ export default function Navbar({
 
         {/* Global Controls & Social */}
         <div className="flex items-center gap-4">
-
           {/* Language Switch with Desaturated/Saturated Country Flags */}
           <div className="flex items-center gap-1.5 bg-surface-form p-1.5 rounded-full border border-subtle">
             <button
-              onClick={() => setLanguage('pt')}
+              onClick={() => setLanguage("pt")}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'pt' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === "pt"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-gray-500 hover:bg-gray-200/50"
               }`}
               title="Português (Brasil)"
             >
-              <BrazilFlag isSelected={language === 'pt'} />
+              <BrazilFlag isSelected={language === "pt"} />
               <span>PT</span>
             </button>
             <button
-              onClick={() => setLanguage('es')}
+              onClick={() => setLanguage("es")}
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                language === 'es' ? 'bg-primary text-white shadow-xs' : 'text-gray-500 hover:bg-gray-200/50'
+                language === "es"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-gray-500 hover:bg-gray-200/50"
               }`}
               title="Español (Argentina)"
             >
-              <ArgentinaFlag isSelected={language === 'es'} />
+              <ArgentinaFlag isSelected={language === "es"} />
               <span>ES</span>
             </button>
           </div>
@@ -114,7 +117,11 @@ export default function Navbar({
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-gray-700 hover:text-primary p-1"
           >
-            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -122,7 +129,9 @@ export default function Navbar({
       {/* Mobile Drawer */}
       {menuOpen && (
         <div className="md:hidden bg-surface-hero w-full border-t border-subtle py-4 px-6 shadow-inner animate-fade-in">
-          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">{navbar_text.allCategories}</p>
+          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">
+            {navbar_text.allCategories}
+          </p>
           <div className="flex flex-col gap-2">
             {Object.values(CATEGORIES).map((cat) => {
               const isActive = activeCategoryId === cat.id;
@@ -135,8 +144,8 @@ export default function Navbar({
                   }}
                   className={`w-full p-2.5 rounded-lg text-left text-sm font-semibold tracking-wide flex items-center gap-2.5 transition-all ${
                     isActive
-                      ? 'bg-primary text-white'
-                      : 'text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high'
+                      ? "bg-primary text-white"
+                      : "text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high"
                   }`}
                 >
                   <span className="text-base">{cat.badgeLogo}</span>
@@ -148,6 +157,15 @@ export default function Navbar({
 
           <div className="border-t border-subtle mt-4 pt-3 flex flex-col gap-2">
             <a
+              href="#cursos"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
+            >
+              <span>{navbar_text.courses}</span>
+              <Menu className="w-4 h-4 text-primary" />
+            </a>
+
+            <a
               href="#contato"
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
@@ -157,14 +175,14 @@ export default function Navbar({
             </a>
 
             <a
-              href="https://ivana.academy" target="_blank"
-               onClick={() => setMenuOpen(false)}
+              href="https://ivana.academy"
+              target="_blank"
+              onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >
               <span>{navbar_text.platform}</span>
               <Link2 className="w-4 h-4 text-primary" />
             </a>
-
           </div>
         </div>
       )}

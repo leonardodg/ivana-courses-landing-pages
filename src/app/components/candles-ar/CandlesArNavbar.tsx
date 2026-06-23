@@ -12,39 +12,17 @@ interface CandlesArNavbarProps {
 export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const links = [
-    { href: '#inicio',      label: 'Inicio' },
-    { href: '#formaciones', label: 'Formaciones' },
-    { href: '#sobre-ivana', label: 'Sobre la Academia' },
-    { href: '#faq',         label: 'Preguntas' },
-  ];
-
   return (
     <header className="fixed top-0 w-full z-50 bg-surface-cream/95 backdrop-blur-md border-b border-subtle shadow-xs transition-all">
       <nav className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
 
-        {/* Logo */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-            <School className="w-5 h-5 text-primary" />
-          </div>
-          <div>
-            <span className="font-serif text-lg font-bold text-primary leading-none block">Ivana Academy</span>
-            <span className="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant block">Argentina · Velas</span>
-          </div>
-        </div>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7">
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+        {/* Logo and Brand */}
+        <div className="flex items-center gap-3 px-2">
+          <img
+            alt="Ivana Academy Logo"
+            className="h-10 md:h-12 w-auto object-contain"
+            src="/images/logo.svg"
+          />
         </div>
 
         {/* Right actions */}
@@ -74,16 +52,6 @@ export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) 
       {/* Mobile drawer */}
       {menuOpen && (
         <div className="md:hidden bg-surface-cream border-t border-subtle py-4 px-6 shadow-inner space-y-2">
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              className="block p-2.5 rounded-lg text-sm font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
           <button
             onClick={() => { setMenuOpen(false); onOpenPortal(); }}
             className="w-full text-left p-2.5 rounded-lg text-sm font-semibold text-primary border border-primary/30"

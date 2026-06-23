@@ -7,7 +7,7 @@
 // o visitante. Mantém o link de contato e o link para a plataforma.
 
 import { useState } from 'react';
-import { Menu, X, PhoneCall, Link2, Award, GraduationCap } from 'lucide-react';
+import { Menu, X, PhoneCall, Link2, Award, GraduationCap, SquarePen } from 'lucide-react';
 
 export default function CandlesNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,40 +24,28 @@ export default function CandlesNavbar() {
           />
         </div>
 
-        {/* Category badge (fixo, somente leitura) */}
-        <div className="hidden md:flex items-center gap-2 bg-surface-form px-4 py-2 rounded-full border border-subtle">
-          <span className="text-sm">✨</span>
-          <span className="px-1 text-xs font-semibold tracking-wide text-primary">
-            Curso de Velas Artesanais
-          </span>
-        </div>
-
         {/* Right controls */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
               // Dispatch event para o CandlesApp abrir o portal
-              window.dispatchEvent(new CustomEvent('candles:openPortal'));
+              window.dispatchEvent(new CustomEvent("candles:openPortal"));
             }}
             className="hidden sm:flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-on-surface-variant hover:text-primary border border-subtle bg-white/80 hover:bg-white px-3.5 py-2.5 rounded-full transition-all cursor-pointer"
           >
-            <Award className="w-3.5 h-3.5" />
+            <GraduationCap className="w-3.5 h-3.5" />
             Portal do Aluno
           </button>
-
-          <a
-            href="#contato"
-            className="hidden sm:flex items-center gap-2 bg-primary text-white text-xs font-bold font-mono uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-primary-container hover:text-on-primary-container transition-all"
-          >
-            <GraduationCap className="w-3.5 h-3.5" />
-            Garantir Vaga
-          </a>
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-gray-700 hover:text-primary p-1"
           >
-            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -69,14 +57,15 @@ export default function CandlesNavbar() {
             <a
               href="#cursos"
               onClick={() => setMenuOpen(false)}
-              className="w-full p-2.5 rounded-lg text-left text-sm font-semibold tracking-wide bg-surface-container-low text-on-surface-variant"
+              className="flex items-center justify-between text-xs w-full p-2.5 rounded-lg text-left font-semibold tracking-wide bg-white border-gray-200 text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all"
             >
               Cursos
+              <Menu className="w-4 h-4 text-primary" />
             </a>
             <a
               href="#contato"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
+              className="flex items-center justify-between text-xs text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >
               <span>Fale Conosco</span>
               <PhoneCall className="w-4 h-4 text-primary" />
@@ -86,7 +75,7 @@ export default function CandlesNavbar() {
               target="_blank"
               rel="noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-between text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
+              className="flex items-center justify-between text-xs text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >
               <span>Plataforma de Ensino</span>
               <Link2 className="w-4 h-4 text-primary" />
