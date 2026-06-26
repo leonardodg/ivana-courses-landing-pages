@@ -8,10 +8,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, CheckCircle, Copy, Sparkles, Mail, Phone, MapPin } from 'lucide-react';
-import { submitContact } from '../../hooks/useSubmitContact';
-import type { SubmitStatus } from '../../hooks/useSubmitContact';
-import { sanitize } from '../../hooks/useContactForm';
-import { candles_lead_text as t } from '../../lang/candles_lead_form';
+import { submitContact } from '../hooks/useSubmitContact';
+import type { SubmitStatus } from '../hooks/useSubmitContact';
+import { sanitize } from '../hooks/useContactForm';
+import { candles_lead_text as t } from '../lang/candles_lead_form';
 
 interface CandlesLeadFormProps {
   onCouponAwarded?: (coupon: string) => void;

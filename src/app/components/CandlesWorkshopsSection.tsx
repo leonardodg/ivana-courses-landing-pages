@@ -6,7 +6,7 @@
 // Filtra apenas cursos presenciais de velas.
 
 import { useState } from 'react';
-import { Course } from '../../classes/types';
+import { Course } from '../classes/types';
 import { MapPin, Clock, ArrowRight, GraduationCap, Star, CheckSquare, X } from 'lucide-react';
 
 interface CandlesWorkshopsSectionProps {

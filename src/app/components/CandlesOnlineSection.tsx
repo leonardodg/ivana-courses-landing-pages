@@ -6,7 +6,7 @@
 // Filtra apenas cursos online de velas.
 
 import { useState } from 'react';
-import { Course } from '../../classes/types';
+import { Course } from '../classes/types';
 import { ExternalLink, BookOpen, Clock, CheckSquare, X, Star, Sparkles } from 'lucide-react';
 
 interface CandlesOnlineSectionProps {

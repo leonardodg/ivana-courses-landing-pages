@@ -3,7 +3,7 @@
 // Cards grandes com imagem, badge, descrição, módulos e CTA para Moodle.
 
 import { useState } from 'react';
-import { Course } from '../../classes/types';
+import { Course } from '../classes/types';
 import { ExternalLink, CheckSquare, Clock, X, BookOpen, Star } from 'lucide-react';
 
 interface CandlesArCoursesSectionProps {
