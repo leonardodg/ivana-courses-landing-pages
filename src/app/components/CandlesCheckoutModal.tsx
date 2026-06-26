@@ -10,11 +10,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CreditCard, Tag, Check, X, GraduationCap } from 'lucide-react';
-import { Course } from '../../classes/types';
-import { submitContact } from '../../hooks/useSubmitContact';
-import type { SubmitStatus } from '../../hooks/useSubmitContact';
-import { sanitize } from '../../hooks/useContactForm';
-import { candle_images } from '../../data/candle_images';
+import { Course } from '../classes/types';
+import { submitContact } from '../hooks/useSubmitContact';
+import type { SubmitStatus } from '../hooks/useSubmitContact';
+import { sanitize } from '../hooks/useContactForm';
+import { candle_images } from '../data/candle_images';
 
 interface CandlesCheckoutModalProps {
   course: Course;

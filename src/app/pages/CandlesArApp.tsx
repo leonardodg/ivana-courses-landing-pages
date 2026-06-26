@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { Course, Language } from "../../classes/types";
-import { courses_list } from '../../data/courses';
-import { faqs_list } from '../../data/faqs';
+import { Course, Language } from "../classes/types";
+import { courses_list } from '../data/courses';
+import { faqs_list } from '../data/faqs';
 
 import { Award, ArrowRight, CheckCircle, Globe, Clock, Medal, Users } from 'lucide-react';
 
-import CandlesArNavbar         from './CandlesArNavbar';
-import CandlesArCoursesSection from './CandlesArCoursesSection';
-import CandlesArWaitlistSection from './CandlesArWaitlistSection';
-import CandlesArTestimonialsSection from './CandlesArTestimonialsSection';
-import CandlesArStudentPortal  from './CandlesArStudentPortal';
-import FAQSection              from '../FAQSection';
-import AboutSection            from '../AboutSection';
+import CandlesArNavbar         from '../components/courses/CandlesArNavbar';
+import CandlesArCoursesSection from '../components/CandlesArCoursesSection';
+import CandlesArStudentPortal  from '../components/CandlesArStudentPortal';
+import FAQSection              from '../components/FAQSection';
 
-import { heroContent as hero_content } from '../../data/home';
+import { heroContent as hero_content } from '../data/home';
 
-import Footer from "../../components/Footer";
+import Footer from "../components/Footer";
 
 const LANGUAGE = 'es' as const;
 const CATEGORY_ID = 'velas' as const;
@@ -204,12 +201,6 @@ export default function CandlesArApp() {
             ))}
           </div>
         </section>
-
-        {/* ── WAITLIST TALLERES PRESENCIALES ── */}
-        <CandlesArWaitlistSection />
-
-        {/* ── TESTIMONIOS ── */}
-        <CandlesArTestimonialsSection />
 
         {/* ── FAQ ── */}
         <FAQSection language={LANGUAGE} faqs={faqs_list} />
