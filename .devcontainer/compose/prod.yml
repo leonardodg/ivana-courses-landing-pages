@@ -11,6 +11,9 @@ services:
       context: ../../
       dockerfile: .devcontainer/build/nginx.Dockerfile
       target: production
+      args:
+        - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
+        - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
     image: leodg/courses-landing-pages:main
     container_name: courses-nginx
     restart: unless-stopped
