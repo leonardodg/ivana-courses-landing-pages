@@ -1,0 +1,52 @@
+[
+ {
+  "date": "2026-10-03",
+  "time": "9h30",
+  "title": "Saboaria e Extratos Naturais",
+  "place": "Ingleses, Florianópolis"
+ },
+ {
+  "date": "2026-10-04",
+  "time": "14h",
+  "title": "Macramé na Praia",
+  "place": "Santo Antônio de Lisboa, Florianópolis",
+  "free": true
+ },
+ {
+  "date": "2026-10-10",
+  "time": "9h",
+  "title": "Velas Aromáticas e de Moldes",
+  "place": "Balneário Camboriú"
+ },
+ {
+  "date": "2026-10-10",
+  "time": "14h",
+  "title": "Saboaria e Extratos Naturais",
+  "place": "Balneário Camboriú"
+ },
+ {
+  "date": "2026-10-17",
+  "time": "9h30",
+  "title": "Imersão de Velas",
+  "place": "Ingleses, Florianópolis"
+ },
+ {
+  "date": "2026-10-18",
+  "time": "14h",
+  "title": "Macramé na Praia",
+  "place": "Santo Antônio de Lisboa, Florianópolis",
+  "free": true
+ },
+ {
+  "date": "2026-10-24",
+  "time": "9h",
+  "title": "Aromatizantes e Perfumes",
+  "place": "Ingleses, Florianópolis"
+ },
+ {
+  "date": "2026-10-24",
+  "time": "14h30",
+  "title": "Incensaria Natural",
+  "place": "Ingleses, Florianópolis"
+ }
+]
