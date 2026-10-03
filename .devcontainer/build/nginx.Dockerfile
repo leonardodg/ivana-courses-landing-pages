@@ -81,6 +81,10 @@ FROM base AS production
 ENV ENVIRONMENT=production \
     DEBUG=false
 
+# O default.conf usa root /usr/share/nginx/html/dist (layout do estágio development).
+# Na produção o build só era copiado para /usr/share/nginx/html, o que dava 404 em tudo.
+COPY --from=node-builder /app/dist /usr/share/nginx/html/dist
+
 # Nothing extra to install - Alpine base is already minimal (~25 MB).
 # Built assets are already copied in the base stage above.
 
