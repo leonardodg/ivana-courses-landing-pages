@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ivana Academy - Registration of interest in courses</title>
+
+    <!-- Favicon -->
+    <link rel="icon"             type="image/x-icon"   href="/images/favicon.ico" />
+    <link rel="icon"             type="image/svg+xml"  href="/images/favicon.svg" />
+    <link rel="apple-touch-icon"                       href="/images/favicon-192.png" />
+
+    <!-- SEO / Open Graph -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="description" content="Aprenda a criar velas, sabonetes e resinas com a Ivana Academy." />
+    <meta property="og:title"       content="Ivana Academy" />
+    <meta property="og:description" content="Cursos de Velas, Saboaria e Resinas" />
+    <meta property="og:image"       content="/images/favicon-512.png" />
+    <meta property="og:type"        content="website" />
+    <link rel="canonical" href="https://courses.ivana.academy/interest" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Ivana Academy" />
+    <meta name="twitter:description" content="Cursos de Velas, Saboaria e Resinas" />
+    <meta name="twitter:image"       content="/images/favicon-512.png" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://courses.ivana.academy/#organization",
+          "name": "Ivana Academy",
+          "legalName": "Ivana Lerea LTDA",
+          "url": "https://ivana.academy",
+          "logo": "https://courses.ivana.academy/images/logo.svg",
+          "sameAs": ["https://wa.me/5548999990000"],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+55 48 99999-0000",
+              "email": "contato@ivana.academy",
+              "areaServed": ["BR", "AR"],
+              "contactType": "customer support"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://courses.ivana.academy/#website",
+          "url": "https://courses.ivana.academy/",
+          "name": "Ivana Academy",
+          "publisher": { "@id": "https://courses.ivana.academy/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://courses.ivana.academy/interest#webpage",
+          "url": "https://courses.ivana.academy/interest",
+          "name": "Ivana Academy - Registration of interest in courses",
+          "description": "Aprenda a criar velas, sabonetes e resinas com a Ivana Academy.",
+          "inLanguage": "pt-BR",
+          "isPartOf": { "@id": "https://courses.ivana.academy/#website" }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/app/instrest.tsx"></script>
+  </body>
+</html>

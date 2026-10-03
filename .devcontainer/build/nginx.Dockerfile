@@ -31,6 +31,13 @@ RUN npm ci
 
 # Copy source and build
 COPY . .
+
+# Variáveis passadas como build args
+ARG VITE_WEBHOOK_URL
+ARG VITE_WEBHOOK_SECRET
+ENV VITE_WEBHOOK_URL=$VITE_WEBHOOK_URL
+ENV VITE_WEBHOOK_SECRET=$VITE_WEBHOOK_SECRET
+
 RUN npm run build
 # Output is at /app/dist/
 
@@ -69,7 +76,7 @@ EXPOSE 80
 
 # Healthcheck - curl is available in alpine by default
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -qO- http://localhost/ || exit 1
+    CMD wget -qO- http://127.0.0.1/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
 

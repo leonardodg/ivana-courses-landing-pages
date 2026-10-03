@@ -13,6 +13,8 @@ services:
       target: development
       args:
         - APP_ENV=development
+        - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
+        - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
     env_file:
       - ../env/default.env
     environment:

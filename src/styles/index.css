@@ -23,6 +23,11 @@
   --color-tertiary-container: #daa47d;
   --color-on-tertiary-container: #60391a;
 
+  /* Alias "surface" → mesmo valor de surface-cream.
+     Adicionado para compatibilizar componentes que usam bg-surface / text-on-surface
+     (página /pt_br/candles), sem alterar nenhum token existente. */
+  --color-surface: #fcf9f5;
+
   --color-surface-cream: #fcf9f5;
   --color-surface-dim: #dcdad6;
   --color-surface-bright: #fcf9f5;
@@ -288,6 +293,7 @@
 @layer components {
 
   /* ── Base surface & text ── */
+  .bg-surface          { background-color: var(--color-surface); }
   .bg-surface-cream    { background-color: var(--color-surface-cream); }
   .text-on-surface-variant { color: var(--color-on-surface-variant); }
   .text-on-surface     { color: var(--color-on-surface); }
