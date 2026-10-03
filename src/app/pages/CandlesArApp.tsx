@@ -9,6 +9,7 @@ import CandlesArNavbar         from '../components/CandlesArNavbar';
 import CandlesArCoursesSection from '../components/CandlesArCoursesSection';
 import CandlesArStudentPortal  from '../components/CandlesArStudentPortal';
 import FAQSection              from '../components/FAQSection';
+import CandlesLeadForm         from '../components/CandlesLeadForm';
 
 import { heroContent as hero_content } from '../data/home';
 
@@ -201,6 +202,9 @@ export default function CandlesArApp() {
             ))}
           </div>
         </section>
+
+        {/* ── CAPTURA DE LEAD ── */}
+        <CandlesLeadForm country="AR" />
 
         {/* ── FAQ ── */}
         <FAQSection language={LANGUAGE} faqs={faqs_list} />
