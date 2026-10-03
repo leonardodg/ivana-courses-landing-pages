@@ -10,6 +10,7 @@ import {
 import { categories_data } from "../data/categories";
 import { reviews_list } from "../data/reviews";
 import { faqs_list } from "../data/faqs";
+import { courses_list } from "../data/courses";
 import { home_text as text } from "../lang/homepage";
 import { heroContent as hero_content } from "../data/home";
 import Navbar from "../components/Navbar";
@@ -17,7 +18,7 @@ import AboutSection from "../components/AboutSection";
 import WhyUsSection from "../components/WhyUsSection";
 import ReviewsCarousel from "../components/ReviewsCarousel";
 import Footer from "../components/Footer";
-import CandlesLeadForm from "../components/CandlesLeadForm";
+import LeadForm from "../components/LeadForm";
 
 import { Menu, SquarePen } from "lucide-react";
 
@@ -31,6 +32,7 @@ export default function InstrestApp() {
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
   const REVIEWS: Review[] = reviews_list;
   const FAQS: FAQItem[] = faqs_list;
+  const COURSES: Course[] = courses_list;
 
   const activeCategory = CATEGORIES[activeCategoryId];
 
@@ -167,7 +169,12 @@ export default function InstrestApp() {
         </section>
 
         {/* Flexible lead capture form */}
-        <CandlesLeadForm onCouponAwarded={handleCouponAwarded} />
+        <LeadForm
+          language={language}
+          courses={COURSES}
+          selectedCourseForForm={selectedCourseForForm}
+          formSource="homepage"
+        />
 
         {/* Narrative / About Mentora */}
         <AboutSection language={language} />

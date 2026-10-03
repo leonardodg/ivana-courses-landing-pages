@@ -13,7 +13,7 @@ import WhyUsSection from '../components/WhyUsSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 
-import CandlesNavbar from '../components/courses/CandlesNavbar';
+import CandlesNavbar from '../components/CandlesNavbar';
 import CandlesWorkshopsSection from '../components/CandlesWorkshopsSection';
 import CandlesOnlineSection from '../components/CandlesOnlineSection';
 import CandlesLeadForm from '../components/CandlesLeadForm';
