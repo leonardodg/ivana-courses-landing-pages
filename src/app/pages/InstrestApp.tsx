@@ -173,7 +173,7 @@ export default function InstrestApp() {
           language={language}
           courses={COURSES}
           selectedCourseForForm={selectedCourseForForm}
-          formSource="homepage"
+          formSource="interest"
         />
 
         {/* Narrative / About Mentora */}

@@ -43,4 +43,53 @@ export const candles_lead_text = {
     'Não foi possível enviar após algumas tentativas. Tente novamente ou nos contate pelo WhatsApp.',
   rateLimitMsg: 'Muitas tentativas. Aguarde',
   rateLimitSuffix: 's antes de tentar novamente.',
+
+  formPhone: 'WhatsApp / Celular',
+  formPhonePlaceholder: 'Número com DDD',
+  errPhoneShort: 'Número muito curto',
+};
+
+// Textos da mesma secao para /es_ar/candles — mesma estrutura, mercado AR.
+export const candles_lead_text_es = {
+  tagLabel: 'CONTÁCTANOS',
+  title: 'Asegurá tu Cupón de Bienvenida',
+  subtitle:
+    'Dejanos tus datos y recibí el calendario completo de clases, el catálogo de cursos y un cupón exclusivo del 10% de descuento para tu inscripción.',
+  whatsappLabel: 'WhatsApp / Llamada',
+  emailLabel: 'Email',
+  locationLabel: 'Talleres',
+  contactPhoneDisplay: '+54 11 0000-0000',
+  contactEmailDisplay: 'contacto@ivana.academy',
+  contactLocationDisplay: 'Buenos Aires, Argentina',
+
+  formName: 'Nombre completo',
+  formNamePlaceholder: 'Tu nombre completo',
+  formEmail: 'Correo electrónico',
+  formEmailPlaceholder: 'Tu mejor correo',
+  formPhone: 'WhatsApp / Celular',
+  formPhonePlaceholder: 'Número con código de área',
+  formInterest: 'Curso de interés',
+  formInterestOptions: [
+    'Profesorado en Velas',
+    'Tecnicatura en Arte y Diseño de Velas',
+    'Certificación Internacional Conservatorio Grassi',
+    'Aún no decidí',
+  ],
+  formBtnSubmit: 'Quiero mi cupón',
+  formBtnSubmitting: 'Generando cupón...',
+
+  successTitle: '¡Inscripción Realizada!',
+  successDescPrefix: 'Enviamos el calendario completo y catálogo al correo:',
+  successDescSuffix: 'Usá tu cupón de 10% de descuento:',
+  couponLabel: 'CUPÓN DE BIENVENIDA',
+  copyLabel: 'Copiar',
+  copiedLabel: 'Copiado',
+  couponHint: '¡Podés aplicar este cupón en el checkout de los cursos online!',
+  resetCta: 'Enviar otro contacto',
+
+  errorMsg:
+    'No se pudo enviar después de varios intentos. Intentá de nuevo o contactanos por WhatsApp.',
+  rateLimitMsg: 'Demasiados intentos. Esperá',
+  rateLimitSuffix: 's antes de volver a intentar.',
+  errPhoneShort: 'Número muy corto',
 };

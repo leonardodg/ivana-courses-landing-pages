@@ -11,27 +11,39 @@ import { Send, CheckCircle, Copy, Sparkles, Mail, Phone, MapPin } from 'lucide-r
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
 import { sanitize } from '../hooks/useContactForm';
-import { candles_lead_text as t } from '../lang/candles_lead_form';
+import { applyPhoneMask, DDI_OPTIONS } from '../hooks/usePhoneMask';
+import { candles_lead_text, candles_lead_text_es } from '../lang/candles_lead_form';
 
 interface CandlesLeadFormProps {
   onCouponAwarded?: (coupon: string) => void;
+  /** Mercado atendido por esta instancia do form — define idioma, DDI padrao e form_source. */
+  country?: 'BR' | 'AR';
 }
 
-export default function CandlesLeadForm({ onCouponAwarded }: CandlesLeadFormProps) {
+export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: CandlesLeadFormProps) {
+  const t = country === 'AR' ? candles_lead_text_es : candles_lead_text;
+  const defaultDdi = country === 'AR' ? '+54' : '+55';
+  const formSource = country === 'AR' ? 'candles_ar' : 'candles';
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [ddi, setDdi] = useState(defaultDdi);
+  const [phone, setPhone] = useState('');
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const [interest, setInterest] = useState(t.formInterestOptions[0]);
   const [status, setStatus] = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
   const [generatedCoupon, setGeneratedCoupon] = useState('');
   const [copied, setCopied] = useState(false);
 
+  const phoneDigits = phone.replace(/\D/g, '');
+  const phoneError = phoneDigits.length < 7 ? t.errPhoneShort : undefined;
   const submitting = status === 'loading';
   const success = status === 'success';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || submitting) return;
+    if (!name || !email || phoneError || submitting) return;
 
     setStatus('loading');
 
@@ -40,10 +52,10 @@ export default function CandlesLeadForm({ onCouponAwarded }: CandlesLeadFormProp
     const result = await submitContact({
       full_name: sanitize(name, 150),
       email: sanitize(email, 254).toLowerCase(),
-      phone: '',
+      phone: `${ddi} ${phoneDigits}`,
       subject: `Lead — cupom de boas-vindas (${interest})`,
-      message: `Lead capturado na página de velas PT-BR. Interesse: ${interest}. Cupom gerado: ${couponCode}.`,
-      form_source: 'candles',
+      message: `Lead capturado na página de velas ${country}. Interesse: ${interest}. Cupom gerado: ${couponCode}.`,
+      form_source: formSource,
     });
 
     if (result.status === 'success') {
@@ -168,6 +180,37 @@ export default function CandlesLeadForm({ onCouponAwarded }: CandlesLeadFormProp
                     </div>
 
                     <div>
+                      <label htmlFor="lead-phone" className="block text-xs font-semibold text-on-surface uppercase tracking-wider font-label mb-2">
+                        {t.formPhone}
+                      </label>
+                      <div className="flex gap-2">
+                        <select
+                          value={ddi}
+                          onChange={(e) => { setDdi(e.target.value); setPhone(''); }}
+                          className="bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface w-28 shrink-0 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
+                        >
+                          {DDI_OPTIONS.map((o) => (
+                            <option key={o.value} value={o.value}>{o.value}</option>
+                          ))}
+                        </select>
+                        <input
+                          id="lead-phone"
+                          type="tel"
+                          required
+                          maxLength={20}
+                          value={phone}
+                          onChange={(e) => setPhone(applyPhoneMask(e.target.value, ddi))}
+                          onBlur={() => setPhoneTouched(true)}
+                          placeholder={t.formPhonePlaceholder}
+                          className="flex-1 bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
+                        />
+                      </div>
+                      {phoneTouched && phoneError && (
+                        <p className="text-xs text-error mt-1">{phoneError}</p>
+                      )}
+                    </div>
+
+                    <div>
                       <label htmlFor="lead-select" className="block text-xs font-semibold text-on-surface uppercase tracking-wider font-label mb-2">
                         {t.formInterest}
                       </label>
@@ -194,7 +237,7 @@ export default function CandlesLeadForm({ onCouponAwarded }: CandlesLeadFormProp
 
                     <button
                       type="submit"
-                      disabled={submitting || status === 'rate_limited'}
+                      disabled={submitting || status === 'rate_limited' || !!phoneError}
                       className="w-full bg-primary hover:bg-primary/95 text-on-primary py-4 rounded-xl text-sm uppercase tracking-wider font-label font-bold shadow-md shadow-primary/10 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-75 disabled:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
                     >
                       <Send className="w-4.5 h-4.5" />
@@ -254,7 +297,7 @@ export default function CandlesLeadForm({ onCouponAwarded }: CandlesLeadFormProp
                     </div>
 
                     <button
-                      onClick={() => { setStatus('idle'); setName(''); setEmail(''); }}
+                      onClick={() => { setStatus('idle'); setName(''); setEmail(''); setPhone(''); setPhoneTouched(false); }}
                       className="text-xs font-label uppercase font-bold text-primary underline hover:text-primary/80 transition-colors cursor-pointer"
                     >
                       {t.resetCta}
