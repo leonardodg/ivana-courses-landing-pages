@@ -43,6 +43,11 @@ export default function Footer({ language, setLanguage }: FooterProps) {
               </a>
             </li>
             <li>
+              <a href="/interest" className="hover:text-primary transition-colors">
+                {footer_text.interestLabel}
+              </a>
+            </li>
+            <li>
               <a
                 href="#contato"
                 className="hover:text-primary transition-colors"
