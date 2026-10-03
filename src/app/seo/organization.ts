@@ -15,7 +15,8 @@ export const cnpj = "63.991.300/0001-08";
 export const logoUrl = `${baseUrl}/images/logo.svg`;
 
 export const contactBR = {
-  telephone: "+55 48 99999-0000",
+  telephone: "+55 48 99167-1659",
+  whatsapp: "https://wa.me/5548991671659",
   email: "contato@ivana.academy",
   addressLocality: "Florianópolis",
   addressRegion: "SC",
@@ -23,10 +24,11 @@ export const contactBR = {
 };
 
 export const contactAR = {
+  telephone: "+54 3757 20-1014",
+  whatsapp: "https://wa.me/543757201014",
   email: "contacto@ivana.academy",
   addressLocality: "Buenos Aires",
   addressCountry: "AR",
 };
 
-// Unico link social real confirmado no codigo (src/app/components/LeadForm.tsx).
-export const sameAs = ["https://wa.me/5548999990000"];
+export const sameAs = [contactBR.whatsapp, contactAR.whatsapp];

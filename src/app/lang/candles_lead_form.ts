@@ -10,7 +10,7 @@ export const candles_lead_text = {
   whatsappLabel: 'WhatsApp / Ligação',
   emailLabel: 'Email',
   locationLabel: 'Ateliês',
-  contactPhoneDisplay: '+55 48 99999-0000',
+  contactPhoneDisplay: '+55 48 99167-1659',
   contactEmailDisplay: 'contato@ivana.academy',
   contactLocationDisplay: 'Florianópolis, SC — Brasil',
 
@@ -58,7 +58,7 @@ export const candles_lead_text_es = {
   whatsappLabel: 'WhatsApp / Llamada',
   emailLabel: 'Email',
   locationLabel: 'Talleres',
-  contactPhoneDisplay: '+54 11 0000-0000',
+  contactPhoneDisplay: '+54 3757 20-1014',
   contactEmailDisplay: 'contacto@ivana.academy',
   contactLocationDisplay: 'Buenos Aires, Argentina',
 

@@ -1,7 +1,7 @@
 // src/app/components/ContactForm.tsx
-import { useState, useEffect }               from 'react';
+import { useState }                          from 'react';
 import { Send, MessageCircle, Clock }        from 'lucide-react';
-import { Language, Course }                  from '../classes/types';
+import { Language }                          from '../classes/types';
 import { useContactForm, sanitize }          from '../hooks/useContactForm';
 import { applyPhoneMask, DDI_OPTIONS }       from '../hooks/usePhoneMask';
 import { submitContact }                     from '../hooks/useSubmitContact';
@@ -13,8 +13,6 @@ import { contact_form_text as text }         from '../lang/contact_form';
 interface ContactFormProps {
   language:   Language;
   coursePage: 'candles' | 'soap' | 'resins' | 'homepage';
-  /** Curso clicado em "Garantir Minha Vaga" no CourseGrid — pre-preenche assunto/mensagem e rola a tela até aqui. */
-  selectedCourse?: Course | null;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -55,26 +53,12 @@ function Field({ label, required, error, hint, children }: FieldProps) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function ContactForm({ language, coursePage, selectedCourse }: ContactFormProps) {
+export default function ContactForm({ language, coursePage }: ContactFormProps) {
   const t = text[language];
   const { form, errors, touched, setField, blurField, isValid } = useContactForm();
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus]     = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
-
-  // ── Pre-preenche assunto/mensagem e rola até o form quando um curso é selecionado externamente ──
-  useEffect(() => {
-    if (!selectedCourse) return;
-    const title = selectedCourse.title[language];
-    setField('subject', language === 'pt' ? `Interesse: ${title}` : `Interés: ${title}`);
-    setField(
-      'message',
-      language === 'pt'
-        ? `Gostaria de mais informações sobre o curso "${title}".`
-        : `Me gustaría más información sobre el curso "${title}".`,
-    );
-    document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
-  }, [selectedCourse, language, setField]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
