@@ -14,6 +14,7 @@ import { Course } from '../classes/types';
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
 import { sanitize } from '../hooks/useContactForm';
+import { applyPhoneMask, DDI_OPTIONS } from '../hooks/usePhoneMask';
 import { candle_images } from '../data/candle_images';
 
 interface CandlesCheckoutModalProps {
@@ -25,6 +26,9 @@ interface CandlesCheckoutModalProps {
 export default function CandlesCheckoutModal({ course, initialCoupon = '', onClose }: CandlesCheckoutModalProps) {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [ddi, setDdi] = useState('+55');
+  const [userPhone, setUserPhone] = useState('');
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const [coupon, setCoupon] = useState(initialCoupon);
   const [couponApplied, setCouponApplied] = useState(Boolean(initialCoupon));
   const [status, setStatus] = useState<SubmitStatus>('idle');
@@ -42,9 +46,12 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
     }
   };
 
+  const phoneDigits = userPhone.replace(/\D/g, '');
+  const phoneError = phoneDigits.length < 7 ? 'Número muito curto' : undefined;
+
   const handleEnrollSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userName || !userEmail || submitting) return;
+    if (!userName || !userEmail || phoneError || submitting) return;
 
     setStatus('loading');
 
@@ -53,7 +60,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
     const result = await submitContact({
       full_name: sanitize(userName, 150),
       email: sanitize(userEmail, 254).toLowerCase(),
-      phone: '',
+      phone: `${ddi} ${phoneDigits}`,
       subject: `Reserva de vaga — ${course.title.pt}`,
       message: `Reserva de vaga solicitada via página de velas. Curso: ${course.title.pt} (id: ${course.id}). Protocolo: ${protocol}.${couponApplied ? ` Cupom informado: ${coupon}.` : ''}`,
       form_source: 'candles',
@@ -146,6 +153,37 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                   />
                 </div>
 
+                <div>
+                  <label htmlFor="user-phone" className="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest font-label mb-1.5">
+                    WhatsApp / Celular
+                  </label>
+                  <div className="flex gap-2">
+                    <select
+                      value={ddi}
+                      onChange={(e) => { setDdi(e.target.value); setUserPhone(''); }}
+                      className="bg-surface-container-low border border-outline-variant/50 rounded-lg p-3 text-sm text-on-surface w-24 shrink-0 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    >
+                      {DDI_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>{o.value}</option>
+                      ))}
+                    </select>
+                    <input
+                      id="user-phone"
+                      type="tel"
+                      required
+                      maxLength={20}
+                      value={userPhone}
+                      onChange={(e) => setUserPhone(applyPhoneMask(e.target.value, ddi))}
+                      onBlur={() => setPhoneTouched(true)}
+                      placeholder="Número com DDD"
+                      className="flex-1 bg-surface-container-low border border-outline-variant/50 rounded-lg p-3 text-sm text-on-surface focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    />
+                  </div>
+                  {phoneTouched && phoneError && (
+                    <p className="text-xs text-error mt-1">{phoneError}</p>
+                  )}
+                </div>
+
                 {/* Cupom */}
                 <div>
                   <label htmlFor="user-coupon" className="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest font-label mb-1.5">
@@ -195,7 +233,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
 
               <button
                 type="submit"
-                disabled={submitting || status === 'rate_limited'}
+                disabled={submitting || status === 'rate_limited' || !!phoneError}
                 className="w-full bg-primary hover:bg-primary/95 text-on-primary py-4 rounded-xl text-sm uppercase tracking-wider font-label font-bold shadow-md shadow-primary/10 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
               >
                 <GraduationCap className="w-4.5 h-4.5" />

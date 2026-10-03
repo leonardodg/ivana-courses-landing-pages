@@ -184,7 +184,7 @@ export default function App() {
         <ReviewsCarousel language={language} reviews={REVIEWS} />
 
         {/* Flexible lead capture form */}
-        <ContactForm language={language} coursePage="homepage" />
+        <ContactForm language={language} coursePage="homepage" selectedCourse={selectedCourseForForm} />
 
         {/* Detailed FAQ */}
         <FAQSection language={language} faqs={FAQS} />
