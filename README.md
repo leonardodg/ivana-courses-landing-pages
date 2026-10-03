@@ -154,6 +154,9 @@ courses-landing-pages/
 npm install
 npm run dev                          # Vite HMR em http://localhost:3003
 
+# CREATE DOCKER NETWORK
+docker network create ivana_network
+
 # Build local para inspecionar o dist/
 npm run build                        # Preview em http://localhost:8088
 

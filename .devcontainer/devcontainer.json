@@ -78,5 +78,10 @@
 				}
 			}
 		}
+	},
+
+	"remoteEnv": {
+		"VITE_WEBHOOK_URL": "${localEnv:VITE_WEBHOOK_URL}",
+		"VITE_WEBHOOK_SECRET": "${localEnv:VITE_WEBHOOK_SECRET}"
 	}
 }

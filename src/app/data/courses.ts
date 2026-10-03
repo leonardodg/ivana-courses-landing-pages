@@ -1,6 +1,7 @@
 import { courses_text } from "../lang/courses";
+import { Course } from "../classes/types";
 
-export const courses_list = [
+export const courses_list: Course[] = [
   {
     id: "imersao-velas-br",
     categoryId: "velas",
