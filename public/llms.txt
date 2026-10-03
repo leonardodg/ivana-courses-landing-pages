@@ -4,8 +4,8 @@
 > Brasil) e online, e parceria internacional com o Conservatório Grassi (Buenos Aires, Argentina).
 
 - [Home](https://courses.ivana.academy/): página institucional da Ivana Academy
-- [Curso de Velas Artesanais (Brasil)](https://courses.ivana.academy/pt_br/candles): formação em
+- [Curso de Velas Artesanais (Brasil)](https://courses.ivana.academy/pt_br/candles/): formação em
   velas aromáticas, terapêuticas e gourmet, presencial e online
-- [Curso de Velas Artesanales (Argentina)](https://courses.ivana.academy/es_ar/candles):
+- [Curso de Velas Artesanales (Argentina)](https://courses.ivana.academy/es_ar/candles/):
   Profesorado e Tecnicatura certificados pelo Conservatório Grassi
 - [Cadastro de interesse](https://courses.ivana.academy/interest): formulário para novos cursos
