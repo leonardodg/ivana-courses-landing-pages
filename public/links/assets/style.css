@@ -1,0 +1,167 @@
+/* Página de links: Ivana Lerea. Design system "Artisanal Elegance" (kit-de-marca/brand/tokens.json).
+   Decisões: uma ação principal (rosa, com brilho), uma secundária (contorno), conteúdo em cards "papel";
+   sombras tingidas de rosa, entrada em cascata, tudo respeitando prefers-reduced-motion. */
+@font-face { font-family: "Libre Caslon Text"; src: url("fonts/LibreCaslonText-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Libre Caslon Text"; src: url("fonts/LibreCaslonText-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Plus Jakarta Sans"; src: url("fonts/PlusJakartaSans-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plus Jakarta Sans"; src: url("fonts/PlusJakartaSans-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Plus Jakarta Sans"; src: url("fonts/PlusJakartaSans-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+
+:root {
+  --cream: #F7EFE4;
+  --paper: #FCF9F5;
+  --rose: #D9A1A0;
+  --rose-deep: #805252;
+  --rose-soft: #F3B8B7;
+  --terracotta: #8B5E3C;
+  --ink: #1C1C1A;
+  --ink-soft: #514443;
+  --gold: #E6B980;
+  --on-rose: #603737;            /* texto sobre Dusty Rose: 4,6:1 (terracota daria 2,5:1) */
+  --line: #E9E0D3;
+  --shadow-soft: 0 10px 30px rgba(96, 55, 55, 0.07);
+  --shadow-rose: 0 12px 28px -8px rgba(217, 161, 160, 0.75);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh; overflow-x: hidden;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 16px; line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+/* fundo: luz de vela (dourado) e rosé, bem suaves */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(60% 40% at 50% -5%, rgba(230, 185, 128, .35), transparent 70%),
+    radial-gradient(50% 35% at 100% 30%, rgba(243, 184, 183, .35), transparent 70%),
+    radial-gradient(50% 35% at 0% 75%, rgba(243, 184, 183, .22), transparent 70%),
+    linear-gradient(180deg, var(--paper), var(--cream) 60%);
+}
+
+.page { max-width: 480px; margin: 0 auto; padding: 40px 24px 56px; }
+
+/* entrada em cascata */
+.rise { opacity: 0; transform: translateY(12px); animation: rise .7s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 80ms); }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* cabeçalho */
+.head { text-align: center; }
+.mark {
+  width: 132px; height: 132px; margin: 0 auto 20px; border-radius: 9999px;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 35%, #fff, var(--paper) 70%);
+  border: 1px solid var(--line);
+  box-shadow: 0 0 0 8px rgba(230, 185, 128, .16), 0 18px 40px -12px rgba(139, 94, 60, .35);
+}
+.mark img { width: 84px; height: auto; display: block; }
+h1 {
+  font-family: "Libre Caslon Text", Georgia, serif; font-weight: 400;
+  font-size: 34px; line-height: 40px; letter-spacing: -0.02em; margin: 0 0 12px;
+}
+h1 em { color: var(--rose-deep); font-style: italic; }
+.sub { margin: 0 auto; max-width: 320px; color: var(--ink-soft); }
+.proof {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 6px 14px;
+  border-radius: 9999px; background: rgba(252, 249, 245, .85); border: 1px solid var(--line);
+  color: var(--ink-soft); font-size: 12px; line-height: 16px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+}
+.proof::before { content: ""; width: 6px; height: 6px; border-radius: 9999px; background: var(--gold); box-shadow: 0 0 0 3px rgba(230, 185, 128, .3); }
+
+.links { display: grid; gap: 14px; margin-top: 32px; }
+
+/* botões */
+.btn {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 60px; padding: 14px 24px; border-radius: 9999px; text-decoration: none; text-align: center;
+  font-weight: 700; font-size: 16px; line-height: 22px;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background-color .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
+.btn .arrow { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; margin-left: auto; transition: transform .2s var(--ease); }
+.btn:hover .arrow { transform: translateX(3px); }
+.btn:active { transform: scale(.98); }
+.btn:focus-visible, .social a:focus-visible, .event:focus-visible, .more:focus-visible { outline: 3px solid var(--rose-deep); outline-offset: 3px; }
+
+.btn-primary {
+  justify-content: flex-start; padding-left: 22px;
+  background: linear-gradient(180deg, #E3B1B0, var(--rose));
+  color: var(--on-rose);
+  box-shadow: var(--shadow-rose), inset 0 1px 0 rgba(255, 255, 255, .55);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -8px rgba(217, 161, 160, .9), inset 0 1px 0 rgba(255, 255, 255, .55); }
+.btn-primary span { text-align: left; }
+
+.btn-secondary {
+  background: rgba(252, 249, 245, .7); color: var(--terracotta);
+  border: 1.5px solid rgba(139, 94, 60, .55);
+}
+.btn-secondary:hover { background: var(--paper); border-color: var(--terracotta); box-shadow: var(--shadow-soft); transform: translateY(-1px); }
+
+/* card da agenda */
+.card {
+  background: rgba(252, 249, 245, .92); border: 1px solid var(--line); border-radius: 28px;
+  padding: 8px; box-shadow: var(--shadow-soft);
+}
+.card-head { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 12px 6px; }
+.card-head h2 { margin: 0; font-family: "Libre Caslon Text", Georgia, serif; font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.01em; }
+.card-head h2 em { color: var(--rose-deep); }
+.kicker { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
+
+/* evento em destaque */
+.feature {
+  display: block; margin: 6px 4px 4px; padding: 18px; border-radius: 22px; text-decoration: none; color: inherit;
+  background: linear-gradient(145deg, #FBE6E4, #F6DAD8 55%, #F4D3B0);
+  border: 1px solid rgba(217, 161, 160, .55);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.feature:hover { transform: translateY(-2px); box-shadow: var(--shadow-rose); }
+.feature:active { transform: scale(.985); }
+.when {
+  display: inline-block; padding: 3px 12px; border-radius: 9999px; background: var(--paper); color: var(--rose-deep);
+  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+}
+.feature h3 { margin: 12px 0 4px; font-family: "Libre Caslon Text", Georgia, serif; font-weight: 400; font-size: 26px; line-height: 32px; letter-spacing: -0.01em; color: var(--on-rose); }
+.feature p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
+.feature .go {
+  margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 9999px;
+  background: var(--on-rose); color: #fff; font-weight: 700; font-size: 14px; line-height: 20px;
+}
+.feature .go svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* demais eventos */
+.events { list-style: none; margin: 4px 0 0; padding: 0; }
+.event { display: grid; grid-template-columns: 52px 1fr 20px; gap: 14px; align-items: center; padding: 12px; margin: 0 4px; border-radius: 16px; text-decoration: none; color: inherit; transition: background-color .2s; }
+.event:hover { background: rgba(247, 239, 228, .8); }
+.events li + li .event { border-top: 1px solid transparent; }
+.date { text-align: center; border-radius: 14px; padding: 6px 0; background: var(--cream); color: var(--rose-deep); font-family: "Libre Caslon Text", Georgia, serif; font-size: 22px; line-height: 24px; }
+.date small { display: block; font-family: "Plus Jakarta Sans", sans-serif; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.ev-title { font-weight: 700; display: block; line-height: 22px; }
+.ev-meta { color: var(--ink-soft); font-size: 14px; line-height: 20px; display: block; }
+.event .chev { width: 18px; height: 18px; fill: none; stroke: var(--rose-deep); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+.tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 9999px; background: #F6E3C8; color: #60391A; font-size: 11px; line-height: 18px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; vertical-align: 1px; }
+.more { display: block; margin: 4px 4px 8px; padding: 12px; text-align: center; color: var(--rose-deep); font-weight: 600; font-size: 14px; text-decoration: none; border-radius: 14px; }
+.more:hover { background: rgba(247, 239, 228, .8); }
+
+/* redes */
+.social { display: flex; justify-content: center; gap: 12px; margin-top: 36px; }
+.social a { width: 52px; height: 52px; border-radius: 9999px; display: grid; place-items: center; background: rgba(252, 249, 245, .85); border: 1px solid var(--line); color: var(--terracotta); transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+.social a:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+.social svg { width: 22px; height: 22px; fill: currentColor; }
+
+footer { margin-top: 28px; text-align: center; color: var(--ink-soft); font-size: 12px; line-height: 16px; letter-spacing: .05em; text-transform: uppercase; font-weight: 600; }
+.leaf { display: block; width: 28px; height: auto; margin: 0 auto 10px; opacity: .8; }
+
+@media (max-width: 360px) { h1 { font-size: 30px; line-height: 36px; } .page { padding-inline: 16px; } }
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; opacity: 1; transform: none; }
+  .btn, .feature, .social a, .btn .arrow { transition: none; }
+  .btn:hover, .feature:hover, .social a:hover { transform: none; }
+}
