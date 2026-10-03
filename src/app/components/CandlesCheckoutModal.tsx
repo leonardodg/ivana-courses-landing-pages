@@ -1,21 +1,19 @@
 // src/app/components/candles/CandlesCheckoutModal.tsx
 //
 // Modal de "Reserva de Vaga" para cursos sem link externo de matrícula
-// (cursos presenciais). Adaptado do protótipo de checkout: removemos a
-// simulação de pagamento/preço (o tipo Course real não tem preço — os
-// valores são tratados comercialmente fora do site) e usamos o webhook
-// real (useSubmitContact) para registrar o pedido. O cupom funciona como
-// um código de desconto a ser validado pela equipe comercial no contato.
+// (cursos presenciais). O tipo Course real não tem preço — os valores são
+// tratados comercialmente fora do site, então a reserva não grava lead no
+// banco: ela coleta nome/e-mail/telefone/cupom e abre o WhatsApp com esses
+// dados, para a venda ser fechada direto com a equipe comercial.
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CreditCard, Tag, Check, X, GraduationCap } from 'lucide-react';
 import { Course } from '../classes/types';
-import { submitContact } from '../hooks/useSubmitContact';
-import type { SubmitStatus } from '../hooks/useSubmitContact';
-import { sanitize } from '../hooks/useContactForm';
 import { applyPhoneMask, DDI_OPTIONS } from '../hooks/usePhoneMask';
 import { candle_images } from '../data/candle_images';
+
+const WHATSAPP_NUMBER = '5548991671659';
 
 interface CandlesCheckoutModalProps {
   course: Course;
@@ -31,13 +29,10 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
   const [phoneTouched, setPhoneTouched] = useState(false);
   const [coupon, setCoupon] = useState(initialCoupon);
   const [couponApplied, setCouponApplied] = useState(Boolean(initialCoupon));
-  const [status, setStatus] = useState<SubmitStatus>('idle');
-  const [cooldown, setCooldown] = useState(0);
+  const [success, setSuccess] = useState(false);
   const [protocolNumber, setProtocolNumber] = useState('');
 
   const imgUrl = (candle_images as Record<string, string>)[course.id] ?? '/images/courses/hero_candle.png';
-  const submitting = status === 'loading';
-  const success = status === 'success';
 
   const handleApplyCoupon = () => {
     if (!coupon.trim()) return;
@@ -49,28 +44,28 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
   const phoneDigits = userPhone.replace(/\D/g, '');
   const phoneError = phoneDigits.length < 7 ? 'Número muito curto' : undefined;
 
-  const handleEnrollSubmit = async (e: React.FormEvent) => {
+  const handleEnrollSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userName || !userEmail || phoneError || submitting) return;
-
-    setStatus('loading');
+    if (!userName || !userEmail || phoneError) return;
 
     const protocol = `RES-${Math.floor(100000 + Math.random() * 900000)}`;
+    const message = [
+      `Olá! Quero garantir minha vaga no curso "${course.title.pt}".`,
+      `Nome: ${userName}`,
+      `E-mail: ${userEmail}`,
+      `Telefone: ${ddi} ${phoneDigits}`,
+      couponApplied ? `Cupom: ${coupon}` : '',
+      `Protocolo: ${protocol}`,
+    ].filter(Boolean).join('\n');
 
-    const result = await submitContact({
-      full_name: sanitize(userName, 150),
-      email: sanitize(userEmail, 254).toLowerCase(),
-      phone: `${ddi} ${phoneDigits}`,
-      subject: `Reserva de vaga — ${course.title.pt}`,
-      message: `Reserva de vaga solicitada via página de velas. Curso: ${course.title.pt} (id: ${course.id}). Protocolo: ${protocol}.${couponApplied ? ` Cupom informado: ${coupon}.` : ''}`,
-      form_source: 'candles',
-    });
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noreferrer',
+    );
 
-    if (result.status === 'success') {
-      setProtocolNumber(protocol);
-    }
-    setStatus(result.status);
-    if (result.status === 'rate_limited') setCooldown(result.cooldown);
+    setProtocolNumber(protocol);
+    setSuccess(true);
   };
 
   return (
@@ -217,27 +212,16 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
 
               <p className="text-[11px] text-on-surface-variant leading-relaxed">
                 Valores e formas de pagamento são confirmados diretamente com nossa equipe comercial
-                após o envio deste formulário, via e-mail ou WhatsApp.
+                pelo WhatsApp, logo após o envio deste formulário.
               </p>
-
-              {status === 'error' && (
-                <p className="text-xs text-error text-center leading-relaxed">
-                  Não foi possível enviar sua reserva agora. Tente novamente ou fale conosco pelo WhatsApp.
-                </p>
-              )}
-              {status === 'rate_limited' && (
-                <p className="text-xs text-amber-700 text-center">
-                  Muitas tentativas. Aguarde {cooldown}s antes de tentar novamente.
-                </p>
-              )}
 
               <button
                 type="submit"
-                disabled={submitting || status === 'rate_limited' || !!phoneError}
+                disabled={!!phoneError}
                 className="w-full bg-primary hover:bg-primary/95 text-on-primary py-4 rounded-xl text-sm uppercase tracking-wider font-label font-bold shadow-md shadow-primary/10 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
               >
                 <GraduationCap className="w-4.5 h-4.5" />
-                {submitting ? 'Enviando...' : 'Confirmar Reserva de Vaga'}
+                Confirmar Reserva de Vaga
               </button>
 
             </motion.form>
@@ -254,11 +238,11 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
 
               <div className="space-y-2">
                 <h3 className="font-display text-2xl font-bold text-primary">
-                  Reserva Recebida!
+                  Falta só o WhatsApp!
                 </h3>
                 <p className="text-on-surface-variant text-xs max-w-sm mx-auto font-body">
-                  Obrigado, {userName}! Sua reserva foi registrada. Nossa equipe vai confirmar sua vaga
-                  e os detalhes de pagamento pelo e-mail {userEmail} em até 24h úteis.
+                  Obrigado, {userName}! Abrimos o WhatsApp com seus dados para você enviar a
+                  mensagem e confirmar sua vaga diretamente com nossa equipe.
                 </p>
               </div>
 

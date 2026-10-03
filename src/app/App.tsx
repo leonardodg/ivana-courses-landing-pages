@@ -19,7 +19,6 @@ import CourseGrid from "./components/CourseGrid";
 import WhyUsSection from "./components/WhyUsSection";
 import ReviewsCarousel from "./components/ReviewsCarousel";
 import FAQSection from "./components/FAQSection";
-import LeadForm from "./components/LeadForm";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 
@@ -28,8 +27,6 @@ import { Menu, SquarePen } from "lucide-react";
 export default function App() {
   const [language, setLanguage] = useState<Language>("pt");
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("velas");
-  const [selectedCourseForForm, setSelectedCourseForForm] =
-    useState<Course | null>(null);
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
   const REVIEWS: Review[] = reviews_list;
@@ -42,8 +39,16 @@ export default function App() {
   const heroContent = hero_content[activeCategoryId];
 
   const handleEnrollClick = (course: Course) => {
-    setSelectedCourseForForm(course);
-    // Smooth scroll is also handled inside the useEffect in LeadForm
+    const title = course.title[language];
+    const message =
+      language === "pt"
+        ? `Olá! Quero garantir minha vaga no curso "${title}".`
+        : `¡Hola! Quiero asegurar mi lugar en el curso "${title}".`;
+    window.open(
+      `https://wa.me/5548991671659?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noreferrer",
+    );
   };
 
   const courses_text = text[language];
@@ -184,7 +189,7 @@ export default function App() {
         <ReviewsCarousel language={language} reviews={REVIEWS} />
 
         {/* Flexible lead capture form */}
-        <ContactForm language={language} coursePage="homepage" selectedCourse={selectedCourseForForm} />
+        <ContactForm language={language} coursePage="homepage" />
 
         {/* Detailed FAQ */}
         <FAQSection language={language} faqs={FAQS} />

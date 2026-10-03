@@ -335,12 +335,12 @@ export default function LeadForm({
                     {t.whatsappLabel}
                   </span>
                   <a
-                    href="https://wa.me/5548999990000"
+                    href="https://wa.me/5548991671659"
                     target="_blank"
                     referrerPolicy="no-referrer"
                     className="font-sans text-lg font-bold text-brand-dark hover:text-brand-primary transition-colors duration-200 block"
                   >
-                    +55 48 99999-0000
+                    +55 48 99167-1659
                   </a>
                 </div>
               </div>
