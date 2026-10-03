@@ -61,7 +61,6 @@ const AGENDA = [
   { date: "2026-10-24", time: "14h30", title: "Incensaria Natural",       place: "Ingleses, Florianópolis" },
   { date: "2026-10-31", time: "",      title: "Imersão de Velas",         place: "" }
 ];
-const WA = "https://wa.me/5548991671659?text=";
 const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 const SP = { timeZone: "America/Sao_Paulo" };
 const today = new Date().toLocaleDateString("en-CA", SP);
@@ -73,16 +72,11 @@ function when(e) {
   const d = Math.round((day(e.date) - day(today)) / 864e5);
   return d === 0 ? "Hoje" : d === 1 ? "Amanhã" : "Em " + d + " dias";
 }
-function wa(e) {
-  const [, m, d] = e.date.split("-");
-  return WA + encodeURIComponent("Oi! Vim do Instagram e quero saber da oficina " + e.title + " (" + d + "/" + m + ").");
-}
-
 if (next.length) {
   const [first, ...rest] = next;
   const [, fm, fd] = first.date.split("-");
 
-  const f = el("a", "feature"); f.href = wa(first);
+  const f = el("a", "feature"); f.href = "/interest";
   f.append(el("span", "when", when(first)));
   const t = el("h3", "", first.title); f.append(t);
   f.append(el("p", "", fd + " de " + ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"][+fm - 1]
@@ -95,7 +89,7 @@ if (next.length) {
   const ul = document.getElementById("events");
   rest.forEach(e => {
     const [, m, d] = e.date.split("-");
-    const li = el("li"); const a = el("a", "event"); a.href = wa(e);
+    const li = el("li"); const a = el("a", "event"); a.href = "/interest";
     const dt = el("span", "date", String(+d)); dt.append(el("small", "", MESES[+m - 1]));
     const tx = el("span"); const ti = el("span", "ev-title", e.title);
     if (e.free) ti.append(el("span", "tag", "grátis"));
@@ -104,7 +98,7 @@ if (next.length) {
     a.insertAdjacentHTML("beforeend", '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>');
     li.append(a); ul.append(li);
   });
-  document.getElementById("agenda-more").href = WA + encodeURIComponent("Oi! Vim do Instagram e quero saber as próximas datas das oficinas.");
+  document.getElementById("agenda-more").href = "/interest";
   document.getElementById("agenda").hidden = false;
 }
 </script>
