@@ -5,7 +5,7 @@ import { faqs_list } from '../data/faqs';
 
 import { Award, ArrowRight, CheckCircle, Globe, Clock, Medal, Users } from 'lucide-react';
 
-import CandlesArNavbar         from '../components/courses/CandlesArNavbar';
+import CandlesArNavbar         from '../components/CandlesArNavbar';
 import CandlesArCoursesSection from '../components/CandlesArCoursesSection';
 import CandlesArStudentPortal  from '../components/CandlesArStudentPortal';
 import FAQSection              from '../components/FAQSection';
