@@ -14,7 +14,7 @@ export const heroContent = {
   resinas: {
     title: hero_text.resin.title,
     desc: hero_text.resin.desc,
-    imageUrl: "/images/courses/resin.png",
+    imageUrl: "/images/courses/resina-bandeja-flores.jpg",
   },
   macrame: {
     title: hero_text.macrame.title,
