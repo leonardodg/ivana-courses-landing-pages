@@ -4,7 +4,7 @@ export const courses_text = {
       pt: "Curso Presencial Imersão de Velas",
       es: "Curso Presencial Inmersión de Velas",
     },
-    duration: { pt: "2 dias Intensivos", es: "2 días Intensivos" },
+    duration: { pt: "1 dia (9h30 às 16h30)", es: "1 día (9:30 a 16:30 h)" },
     location: {
       pt: "*Florianópolis, SC, Brasil (Atelier Central)",
       es: "*Florianópolis, SC, Brasil (Taller Central)",

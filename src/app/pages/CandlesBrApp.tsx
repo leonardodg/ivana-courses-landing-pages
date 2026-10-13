@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Course, Language } from '../classes/types';
 
 import { categories_data } from '../data/categories';
-import { courses_list } from '../data/courses';
+import { courses_list_br } from '../data/courses';
 import { reviews_list } from '../data/reviews';
 import { faqs_list } from '../data/faqs';
 import { heroContent as hero_content } from '../data/home';
@@ -33,7 +33,7 @@ export default function CandlesBrApp() {
   const [checkoutCoupon, setCheckoutCoupon] = useState('');
   const [portalOpen, setPortalOpen] = useState(false);
 
-  const courses: Course[] = courses_list.filter((c) => c.categoryId === CATEGORY_ID) as Course[];
+  const courses: Course[] = courses_list_br.filter((c) => c.categoryId === CATEGORY_ID) as Course[];
   const heroContent = hero_content[CATEGORY_ID];
   const activeCategory = categories_data[CATEGORY_ID];
   const courses_text = home_text[LANGUAGE];
