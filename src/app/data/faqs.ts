@@ -1,4 +1,4 @@
-import { faqs_text } from "../lang/faqs";
+import { faqs_text, faqs_text_br } from "../lang/faqs";
 
 export const faqs_list = [
   {
@@ -27,3 +27,12 @@ export const faqs_list = [
     answer: faqs_text.faq5.answer,
   },
 ];
+
+// Páginas brasileiras: mesmas perguntas, sem as menções ao Conservatório Grassi.
+export const faqs_list_br = faqs_list.map((faq) =>
+  faq.id === "faq-3"
+    ? { ...faq, question: faqs_text_br.faq3.question, answer: faqs_text_br.faq3.answer }
+    : faq.id === "faq-5"
+      ? { ...faq, question: faqs_text_br.faq5.question, answer: faqs_text_br.faq5.answer }
+      : faq,
+);
