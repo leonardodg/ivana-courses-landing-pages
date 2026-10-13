@@ -18,7 +18,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
             <img
               alt="Ivana Lerea - Mentora"
               className="w-full h-full object-cover select-none"
-              src="/images/portfolio/ivana_home.png"
+              src="/images/portfolio/ivana-servindo-cera.jpg"
             />
             {/* Elegant Caption Overlay */}
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">
