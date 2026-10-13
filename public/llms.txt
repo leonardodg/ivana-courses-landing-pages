@@ -1,7 +1,7 @@
 # Ivana Academy
 
 > Cursos de velas artesanais, saboaria e resinas, com formação presencial (Florianópolis,
-> Brasil) e online, e parceria internacional com o Conservatório Grassi (Buenos Aires, Argentina).
+> Brasil) e online, com turmas também na Argentina.
 
 - [Home](https://courses.ivana.academy/): página institucional da Ivana Academy
 - [Curso de Velas Artesanais (Brasil)](https://courses.ivana.academy/pt_br/candles/): formação em

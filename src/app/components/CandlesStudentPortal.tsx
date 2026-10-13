@@ -52,7 +52,7 @@ const forumPosts = [
   {
     author: 'Estanislao Perez',
     avatarLetters: 'EP',
-    courseName: 'Profesorado de Velas',
+    courseName: 'Curso Online de Velas',
     time: '1d atrás',
     title: 'Dúvida com a exalação olfativa em velas de gel cristal',
     content: 'Olá colegas, alguém já testou incorporar perfume puro ao gel? Fiz a aproximadamente 80 graus mas notei que custa ligar por completo. Recomendam subir para 90 graus?',

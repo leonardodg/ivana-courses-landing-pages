@@ -9,8 +9,8 @@ import {
 } from "./classes/types";
 import { categories_data } from "./data/categories";
 import { courses_list_br } from "./data/courses";
-import { reviews_list } from "./data/reviews";
-import { faqs_list } from "./data/faqs";
+import { reviews_list_br } from "./data/reviews";
+import { faqs_list_br } from "./data/faqs";
 import { home_text as text } from "./lang/homepage";
 import { heroContent as hero_content } from "./data/home";
 import Navbar from "./components/Navbar";
@@ -29,8 +29,8 @@ export default function App() {
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("velas");
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
-  const REVIEWS: Review[] = reviews_list;
-  const FAQS: FAQItem[] = faqs_list;
+  const REVIEWS: Review[] = reviews_list_br;
+  const FAQS: FAQItem[] = faqs_list_br;
   const COURSES: Course[] = courses_list_br;
 
   const activeCategory = CATEGORIES[activeCategoryId];

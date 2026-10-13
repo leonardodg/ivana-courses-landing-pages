@@ -8,8 +8,8 @@ import {
   FAQItem,
 } from "../classes/types";
 import { categories_data } from "../data/categories";
-import { reviews_list } from "../data/reviews";
-import { faqs_list } from "../data/faqs";
+import { reviews_list_br } from "../data/reviews";
+import { faqs_list_br } from "../data/faqs";
 import { courses_list_br } from "../data/courses";
 import { home_text as text } from "../lang/homepage";
 import { heroContent as hero_content } from "../data/home";
@@ -30,8 +30,8 @@ export default function InstrestApp() {
     useState<Course | null>(null);
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
-  const REVIEWS: Review[] = reviews_list;
-  const FAQS: FAQItem[] = faqs_list;
+  const REVIEWS: Review[] = reviews_list_br;
+  const FAQS: FAQItem[] = faqs_list_br;
   const COURSES: Course[] = courses_list_br;
 
   const activeCategory = CATEGORIES[activeCategoryId];

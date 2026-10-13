@@ -23,8 +23,6 @@ export const candles_lead_text = {
     'Imersão Presencial de Velas',
     'Workshop Presencial de Velas',
     'Curso Online de Velas Aromáticas & Terapêuticas',
-    'Profesorado em Velas Online',
-    'Tecnicatura em Arte e Design de Velas',
     'Ainda não decidi',
   ],
   formBtnSubmit: 'Quero meu cupom',
