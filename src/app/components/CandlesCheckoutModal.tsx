@@ -32,7 +32,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
   const [success, setSuccess] = useState(false);
   const [protocolNumber, setProtocolNumber] = useState('');
 
-  const imgUrl = (candle_images as Record<string, string>)[course.id] ?? '/images/courses/hero_candle.png';
+  const imgUrl = (candle_images as Record<string, string>)[course.id] ?? '/images/courses/velas-pavio-madeira.jpg';
 
   const handleApplyCoupon = () => {
     if (!coupon.trim()) return;
