@@ -6,9 +6,9 @@ export const why_section_text = {
     point1Title: "6+ Anos de Especialização",
     point1Desc:
       "Não somos meros reprodutores de fórmulas. Estudamos a química das ceras vegetais, pavios, saponificação fria e fixação de aromas de alto padrão.",
-    point2Title: "Diploma Internacional Homologado",
+    point2Title: "Certificado Oficial Ivana Academy",
     point2Desc:
-      "Garanta autoridade técnica no seu ateliê. Oferecemos duplo certificado de validade internacional em parcerias oficiais como o Conservatório Grassi na Argentina.",
+      "Garanta autoridade técnica no seu ateliê. Ao concluir os cursos online e os workshops presenciais, você recebe o certificado oficial da Ivana Academy.",
     point3Title: "Formação em Negócios Inclusa",
     point3Desc:
       "Mais do que ensinar receitas, te capacitamos a extrair custos corretos, definir embalagens desejáveis, lidar com revendedores e criar canais e estratégias de venda rápidas.",
@@ -23,9 +23,9 @@ export const why_section_text = {
     point1Title: "6+ Años de Especialización",
     point1Desc:
       "No copiamos recetas de internet. Estudiamos las bases químicas de ceras vegetales, pabilos, saponificación botánica y fijadores aromáticos de nivel boutique.",
-    point2Title: "Título Oficial de Prestigio",
+    point2Title: "Certificado Oficial Ivana Academy",
     point2Desc:
-      "Construye credibilidad real. Ofrecemos certificación con reconocimiento internacional directo de convenios académicos como el ilustre Conservatorio Grassi.",
+      "Construye credibilidad real. Al terminar los cursos online y los talleres presenciales, recibes el certificado oficial de Ivana Academy.",
     point3Title: "Formación para Negocios",
     point3Desc:
       "Entendemos el mercado. Aprenderás finanzas, diseño de empaques atractivos, estrategias para revendedores y marketing digital enfocado en ventas rápidas.",

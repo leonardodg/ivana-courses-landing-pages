@@ -3,8 +3,8 @@ import { Course, Language } from '../classes/types';
 
 import { categories_data } from '../data/categories';
 import { courses_list_br } from '../data/courses';
-import { reviews_list } from '../data/reviews';
-import { faqs_list } from '../data/faqs';
+import { reviews_list_br } from '../data/reviews';
+import { faqs_list_br } from '../data/faqs';
 import { heroContent as hero_content } from '../data/home';
 import { home_text } from '../lang/homepage';
 
@@ -182,12 +182,12 @@ export default function CandlesBrApp() {
 
         <WhyUsSection language={LANGUAGE} />
 
-        <ReviewsCarousel language={LANGUAGE} reviews={reviews_list} />
+        <ReviewsCarousel language={LANGUAGE} reviews={reviews_list_br} />
 
         {/* Captura de lead com cupom de boas-vindas (diferencial de conversão) */}
         <CandlesLeadForm onCouponAwarded={handleCouponAwarded} />
 
-        <FAQSection language={LANGUAGE} faqs={faqs_list} />
+        <FAQSection language={LANGUAGE} faqs={faqs_list_br} />
       </main>
 
       {/* Footer */}

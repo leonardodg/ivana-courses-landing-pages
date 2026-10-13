@@ -31,7 +31,7 @@ export const faqs_text = {
   },
   faq4: {
     question: {
-      pt: "O suporte via WhatsApp really funciona? Como tiro minhas dúvidas?",
+      pt: "O suporte via WhatsApp realmente funciona? Como tiro minhas dúvidas?",
       es: "¿Cómo funciona el soporte directo telefónico de consultas?",
     },
     answer: {
@@ -47,6 +47,27 @@ export const faqs_text = {
     answer: {
       pt: "Sim! Para os cursos brasileiros e presenciais, aceitamos Pix e parcelamento em até 12 vezes via cartão de crédito. Para as matrículas do Conservatório Grassi na Argentina ou matrículas internacionais, aceitamos pagamentos via PayPal ou depósito local.",
       es: "¡Sí! Aceptamos pagos con tarjeta de crédito de cuotas flexibles. Para las inscripciones internacionales en la plataforma académica se puede abonar mediante PayPal, procesadores digitales o depósitos bancarios locales.",
+    },
+  },
+};
+
+// Textos das páginas brasileiras (sem menção ao Conservatório Grassi; a página da Argentina usa faqs_text).
+export const faqs_text_br = {
+  faq3: {
+    question: {
+      pt: "Recebo certificado ao concluir o curso?",
+      es: "¿Recibo certificado al terminar el curso?",
+    },
+    answer: {
+      pt: "Sim! Os cursos online e os workshops presenciais da Ivana Academy emitem certificado oficial da Ivana Academy após a conclusão.",
+      es: "¡Sí! Los cursos online y los talleres presenciales de Ivana Academy entregan certificado oficial de Ivana Academy al finalizar.",
+    },
+  },
+  faq5: {
+    question: faqs_text.faq5.question,
+    answer: {
+      pt: "Sim! Nos cursos presenciais, o sinal reserva a vaga e é pago por Pix; o restante pode ser Pix ou cartão no dia do curso. O parcelamento em até 12x no cartão vale apenas para os cursos de imersão. Nos cursos online, o pagamento é feito na página de compra.",
+      es: "¡Sí! En los cursos presenciales, la seña reserva el cupo y se paga por Pix; el resto puede ser Pix o tarjeta el día del curso. Las cuotas en hasta 12x con tarjeta valen solo para los cursos de inmersión. En los cursos online, el pago se realiza en la página de compra.",
     },
   },
 };

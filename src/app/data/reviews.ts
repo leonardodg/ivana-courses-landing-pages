@@ -29,3 +29,6 @@ export const reviews_list = [
     stars: 5,
   },
 ];
+
+// Páginas brasileiras: sem o depoimento do Profesorado (Conservatório Grassi).
+export const reviews_list_br = reviews_list.filter((review) => review.id !== "crit-2");
