@@ -15,8 +15,8 @@ interface CandlesOnlineSectionProps {
 }
 
 const IMAGES: Record<string, string> = {
-  'profesorado-velas-ar':   '/images/courses/candle_professorship.png',
-  'tecnicatura-velas-ar':   '/images/courses/candles_tec.png',
+  'profesorado-velas-ar':   '/images/courses/velas-maos.jpg',
+  'tecnicatura-velas-ar':   '/images/courses/velas-online.jpg',
   'curso-velas-virtual-br': '/images/courses/velas-online.jpg',
 };
 
