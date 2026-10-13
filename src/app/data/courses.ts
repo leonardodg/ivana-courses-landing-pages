@@ -155,3 +155,6 @@ export const courses_list: Course[] = [
     features: courses_text.air_fresheners_online_br.features,
   },
 ];
+
+// Páginas brasileiras (home, interesse, velas BR) não mostram os cursos da Argentina (Conservatório Grassi); eles ficam só em /velas-ar.
+export const courses_list_br: Course[] = courses_list.filter((c) => !c.id.endsWith("-ar"));
