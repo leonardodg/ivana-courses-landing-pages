@@ -15,8 +15,8 @@ interface CandlesWorkshopsSectionProps {
 }
 
 const IMAGES: Record<string, string> = {
-  'imersao-velas-br':   '/images/courses/imersion.jpg',
-  'workshop-velas-br':  '/images/courses/candles_workshop.png',
+  'imersao-velas-br':   '/images/courses/imersao-turma.jpg',
+  'workshop-velas-br':  '/images/courses/workshop-velas.jpg',
 };
 
 const TAGS: Record<string, string> = {
@@ -49,7 +49,7 @@ export default function CandlesWorkshopsSection({ courses, onEnroll }: CandlesWo
         {/* Cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
           {presencial.map((course) => {
-            const img   = IMAGES[course.id] ?? '/images/courses/hero_candle.png';
+            const img   = IMAGES[course.id] ?? '/images/courses/velas-pavio-madeira.jpg';
             const tag   = TAGS[course.id]   ?? 'PRESENCIAL';
 
             return (
@@ -133,7 +133,7 @@ export default function CandlesWorkshopsSection({ courses, onEnroll }: CandlesWo
 
             <div className="relative aspect-[16/7] bg-gray-200">
               <img
-                src={IMAGES[selectedCourse.id] ?? '/images/courses/hero_candle.png'}
+                src={IMAGES[selectedCourse.id] ?? '/images/courses/velas-pavio-madeira.jpg'}
                 alt=""
                 className="w-full h-full object-cover"
               />
