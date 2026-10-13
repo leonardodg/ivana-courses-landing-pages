@@ -11,8 +11,8 @@ interface CandlesArCoursesSectionProps {
 }
 
 const IMAGES: Record<string, string> = {
-  'profesorado-velas-ar':  '/images/courses/candle_professorship.png',
-  'tecnicatura-velas-ar':  '/images/courses/candles_tec.png',
+  'profesorado-velas-ar':  '/images/courses/velas-maos.jpg',
+  'tecnicatura-velas-ar':  '/images/courses/velas-online.jpg',
 };
 
 const BADGES: Record<string, { label: string; extra?: string }> = {
@@ -44,7 +44,7 @@ export default function CandlesArCoursesSection({ courses }: CandlesArCoursesSec
       {/* Course Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {online.map((course) => {
-          const img   = IMAGES[course.id] ?? '/images/courses/hero_candle.png';
+          const img   = IMAGES[course.id] ?? '/images/courses/velas-pavio-madeira.jpg';
           const badge = BADGES[course.id];
 
           return (
@@ -137,7 +137,7 @@ export default function CandlesArCoursesSection({ courses }: CandlesArCoursesSec
 
             <div className="relative aspect-[16/7] bg-gray-200">
               <img
-                src={IMAGES[selectedCourse.id] ?? '/images/courses/hero_candle.png'}
+                src={IMAGES[selectedCourse.id] ?? '/images/courses/velas-pavio-madeira.jpg'}
                 alt=""
                 className="w-full h-full object-cover"
               />

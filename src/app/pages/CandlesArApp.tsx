@@ -127,7 +127,7 @@ export default function CandlesArApp() {
             <img
               alt="Velas artesanales Ivana Academy Argentina"
               className="w-full h-[400px] md:h-[520px] object-cover rounded-xl shadow-xl group-hover:scale-[1.01] transition-transform duration-500"
-              src="/images/courses/candle_professorship.png"
+              src="/images/courses/workshop-velas.jpg"
             />
             {/* Quote bubble */}
             <div className="absolute bottom-6 -left-6 bg-white/95 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-muted hidden md:block max-w-xs">
@@ -148,7 +148,7 @@ export default function CandlesArApp() {
               <img
                 alt="Ivana Lerea, Fundadora"
                 className="w-full aspect-[4/5] object-cover rounded-2xl shadow-md object-top"
-                src="/images/courses/imersion.jpg"
+                src="/images/portfolio/ivana-retrato.jpg"
               />
             </div>
 
