@@ -28,7 +28,7 @@ export default function CourseGrid({
   const fallbackGenericCategoryImages: Record<CategoryId, string> = category_images;
 
   const getCourseImage = (course: Course) => {
-    if (course.categoryId === 'velas' && candleImages[course.id]) {
+    if (candleImages[course.id]) {
       return candleImages[course.id];
     }
     return fallbackGenericCategoryImages[course.categoryId] || fallbackGenericCategoryImages['velas'];
