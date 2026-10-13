@@ -8,7 +8,7 @@ import {
   FAQItem,
 } from "./classes/types";
 import { categories_data } from "./data/categories";
-import { courses_list } from "./data/courses";
+import { courses_list_br } from "./data/courses";
 import { reviews_list } from "./data/reviews";
 import { faqs_list } from "./data/faqs";
 import { home_text as text } from "./lang/homepage";
@@ -31,7 +31,7 @@ export default function App() {
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
   const REVIEWS: Review[] = reviews_list;
   const FAQS: FAQItem[] = faqs_list;
-  const COURSES: Course[] = courses_list;
+  const COURSES: Course[] = courses_list_br;
 
   const activeCategory = CATEGORIES[activeCategoryId];
 
