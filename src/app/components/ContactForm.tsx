@@ -3,6 +3,7 @@ import { useState }                          from 'react';
 import { Send, MessageCircle, Clock }        from 'lucide-react';
 import { Language }                          from '../classes/types';
 import { useContactForm, sanitize }          from '../hooks/useContactForm';
+import type { ContactErrorKey }             from '../hooks/useContactForm';
 import { applyPhoneMask, DDI_OPTIONS }       from '../hooks/usePhoneMask';
 import { submitContact }                     from '../hooks/useSubmitContact';
 import type { SubmitStatus }                 from '../hooks/useSubmitContact';
@@ -55,6 +56,7 @@ function Field({ label, required, error, hint, children }: FieldProps) {
 
 export default function ContactForm({ language, coursePage }: ContactFormProps) {
   const t = text[language];
+  const errText = (key?: ContactErrorKey) => (key ? t[key] : undefined);
   const { form, errors, touched, setField, blurField, isValid } = useContactForm();
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus]     = useState<SubmitStatus>('idle');
@@ -170,7 +172,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
               <Field
                 label={t.labelName}
                 required
-                error={touched.has('fullName') ? t[errors.fullName] : undefined}
+                error={touched.has('fullName') ? errText(errors.fullName) : undefined}
               >
                 <input
                   type="text"
@@ -190,7 +192,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                 <Field
                   label={t.labelEmail}
                   required
-                  error={touched.has('email') ? t[errors.email] : undefined}
+                  error={touched.has('email') ? errText(errors.email) : undefined}
                 >
                   <input
                     type="email"
@@ -208,7 +210,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                 <Field
                   label={t.labelPhone}
                   required
-                  error={touched.has('phone') ? t[errors.phone] : undefined}
+                  error={touched.has('phone') ? errText(errors.phone) : undefined}
                 >
                   <div className="flex gap-2">
                     <select
@@ -253,7 +255,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
               <Field
                 label={t.labelMessage}
                 required
-                error={touched.has('message') ?  t[errors.message] : undefined}
+                error={touched.has('message') ?  errText(errors.message) : undefined}
                 hint={`${form.message.length} ${t.charCount}`}
               > 
                 <textarea
@@ -264,7 +266,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                   placeholder={t.placeholderMessage}
                   onChange={e => setField('message', e.target.value)}
                   onBlur={() => blurField('message')}
-                  className={`input-minimal resize-y ${inputStateClass(touched.has('message'), t[errors.message])}`}
+                  className={`input-minimal resize-y ${inputStateClass(touched.has('message'), errText(errors.message))}`}
                 />
               </Field>
 
