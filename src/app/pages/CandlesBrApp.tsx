@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Course, Language } from '../classes/types';
 
 import { categories_data } from '../data/categories';
-import { courses_list } from '../data/courses';
-import { reviews_list } from '../data/reviews';
-import { faqs_list } from '../data/faqs';
+import { courses_list_br } from '../data/courses';
+import { reviews_list_br } from '../data/reviews';
+import { faqs_list_br } from '../data/faqs';
 import { heroContent as hero_content } from '../data/home';
 import { home_text } from '../lang/homepage';
 
@@ -33,7 +33,7 @@ export default function CandlesBrApp() {
   const [checkoutCoupon, setCheckoutCoupon] = useState('');
   const [portalOpen, setPortalOpen] = useState(false);
 
-  const courses: Course[] = courses_list.filter((c) => c.categoryId === CATEGORY_ID) as Course[];
+  const courses: Course[] = courses_list_br.filter((c) => c.categoryId === CATEGORY_ID) as Course[];
   const heroContent = hero_content[CATEGORY_ID];
   const activeCategory = categories_data[CATEGORY_ID];
   const courses_text = home_text[LANGUAGE];
@@ -127,22 +127,14 @@ export default function CandlesBrApp() {
               </div>
             </div>
 
-            {/* Right: Video Frame */}
+            {/* Right: Photo Frame */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
-              <video
-                className="relative z-10 w-full h-[320px] md:h-[500px] rounded-xl shadow-xl border border-slate-200 object-cover"
-                controls
-                controlsList="nodownload"
-                playsInline
-                preload="metadata"
-                crossOrigin="anonymous"
-                poster="https://lh3.googleusercontent.com/aida-public/AB6AXuCwRD1B5ICYfFTb-4GsJSQhSzgEHoRHca3niIXJTcDNnnjKKsowegd-iDlWgAebU1lMUu9vUxl7ZXFknkc0XV89lFKDj2TLKNTAi6-e7GwJXciCdGxlwsx2okDFr-Uknnn6lrubv6PbxZoP3UVzbKgakR5H2csp8rInrQx6exlOITewIQU3Uu0yHI1IA8ODNxHHQZyLXrw6_bDMdXtuLoV8OfNLxh52d56n--4Dn_SaVnM3Hsk8bwvbdnkz3fPo4n0iP_hW1V6iu2Kf"
-              >
-                <source src="/videos/home.webm" type="video/webm" />
-                <source src="/videos/home.mp4" type="video/mp4" />
-                Seu navegador não suporta este formato de vídeo.
-              </video>
+              <img
+                alt="Ivana Lerea segurando velas artesanais feitas na aula"
+                className="relative z-10 w-full h-[420px] md:h-[540px] rounded-xl shadow-xl border border-slate-200 object-cover object-top"
+                src="/images/ivana-com-velas.jpg"
+              />
             </div>
           </div>
         </section>
@@ -190,12 +182,12 @@ export default function CandlesBrApp() {
 
         <WhyUsSection language={LANGUAGE} />
 
-        <ReviewsCarousel language={LANGUAGE} reviews={reviews_list} />
+        <ReviewsCarousel language={LANGUAGE} reviews={reviews_list_br} />
 
         {/* Captura de lead com cupom de boas-vindas (diferencial de conversão) */}
         <CandlesLeadForm onCouponAwarded={handleCouponAwarded} />
 
-        <FAQSection language={LANGUAGE} faqs={faqs_list} />
+        <FAQSection language={LANGUAGE} faqs={faqs_list_br} />
       </main>
 
       {/* Footer */}

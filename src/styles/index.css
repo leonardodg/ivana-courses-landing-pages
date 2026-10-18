@@ -57,7 +57,7 @@
   --color-border-review: #e2dfda;
 
   /* Hero / surface background */
-  --color-surface-hero: #FAF6F0;
+  --color-surface-hero: #F7EFE4;
   --color-surface-form: #f0ede9;
   --color-surface-tag: #e5e2de;
 
@@ -66,38 +66,38 @@
   --color-velas-to: #B27D7C;
   --color-velas-accent-bg: #ffdad9;
   --color-velas-accent-text: #805252;
-  --color-velas-hero-to: #EBC2C1;
+  --color-velas-hero-to: #F7EFE4;
 
   /* Accent / category palette: Sage Green (saboaria) */
-  --color-saboaria-from: #4D6551;
-  --color-saboaria-to: #76917A;
-  --color-saboaria-accent-bg: #D2E7D6;
-  --color-saboaria-accent-text: #324536;
-  --color-saboaria-hero-to: #C9DACD;
+  --color-saboaria-from: #805252;
+  --color-saboaria-to: #B27D7C;
+  --color-saboaria-accent-bg: #ffdad9;
+  --color-saboaria-accent-text: #805252;
+  --color-saboaria-hero-to: #F7EFE4;
 
   /* Accent / category palette: Ocean Blue/Teal (resinas) */
-  --color-resinas-from: #3A6073;
-  --color-resinas-to: #4F8CA3;
-  --color-resinas-accent-bg: #D5E6EE;
-  --color-resinas-accent-text: #1B3E4F;
-  --color-resinas-hero-to: #BDD8E4;
+  --color-resinas-from: #805252;
+  --color-resinas-to: #B27D7C;
+  --color-resinas-accent-bg: #ffdad9;
+  --color-resinas-accent-text: #805252;
+  --color-resinas-hero-to: #F7EFE4;
 
   /* Accent / category palette: Terracotta (macrame) */
-  --color-macrame-from: #8A5134;
-  --color-macrame-to: #B3795C;
-  --color-macrame-accent-bg: #FFDFD2;
-  --color-macrame-accent-text: #5C2B11;
-  --color-macrame-hero-to: #FFECD5;
+  --color-macrame-from: #805252;
+  --color-macrame-to: #B27D7C;
+  --color-macrame-accent-bg: #ffdad9;
+  --color-macrame-accent-text: #805252;
+  --color-macrame-hero-to: #F7EFE4;
 
   /* Accent / category palette: Amethyst (aromas_incensos) */
-  --color-incenso-from: #6E4B6E;
-  --color-incenso-to: #9B6F9B;
-  --color-incenso-accent-bg: #F2DDF2;
-  --color-incenso-accent-text: #441D44;
-  --color-incenso-hero-to: #ECCDEB;
+  --color-incenso-from: #805252;
+  --color-incenso-to: #B27D7C;
+  --color-incenso-accent-bg: #ffdad9;
+  --color-incenso-accent-text: #805252;
+  --color-incenso-hero-to: #F7EFE4;
 
   /* Shared hero gradient start/via (same cream for all categories) */
-  --color-hero-bg: #FAF6F0;
+  --color-hero-bg: #F7EFE4;
 
   /* Special: terminal green for TechDashboard */
   --color-terminal-green: #4AF626;
@@ -355,4 +355,52 @@
 
   /* ── TechDashboard terminal ── */
   .text-terminal-green { color: var(--color-terminal-green); }
+}
+
+/* ─── Padrão da página de links (/links/br) ─────────────────────────────
+   Fundo creme liso, botões em pílula (Dusty Rose com texto Tinta; secundários
+   em Papel com contorno rosa) e títulos em Libre Caslon regular. Fica fora de
+   @layer de propósito, para valer sobre as utilitárias do Tailwind. */
+button.bg-primary,
+a.bg-primary,
+.brand-btn-primary {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 9999px;
+  box-shadow: none;
+}
+button.bg-primary:hover,
+a.bg-primary:hover,
+.brand-btn-primary:hover {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-surface);
+  box-shadow: 0 10px 22px -12px rgba(128, 82, 82, 0.55);
+}
+.brand-btn-secondary,
+a.border.bg-white\/80 {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-primary-container);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 9999px;
+}
+.brand-btn-secondary:hover,
+a.border.bg-white\/80:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-on-surface);
+}
+.font-serif.font-bold,
+.font-serif.font-black,
+h1.font-serif, h2.font-serif, h3.font-serif {
+  font-weight: 400;
 }

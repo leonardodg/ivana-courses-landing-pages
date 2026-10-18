@@ -143,7 +143,7 @@ export default function CandlesArStudentPortal({ onClose }: CandlesArStudentPort
               <div className="lg:col-span-8 space-y-6">
                 <div className="aspect-video bg-black rounded-2xl relative overflow-hidden ring-1 ring-[#31302e] shadow-2xl flex items-center justify-center group cursor-pointer">
                   <img
-                    src="/images/courses/candle_professorship.png"
+                    src="/images/courses/imersao-turma.jpg"
                     alt="Clase de laboratorio de velas"
                     className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-102 transition-transform duration-700"
                   />

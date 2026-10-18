@@ -52,7 +52,7 @@ const forumPosts = [
   {
     author: 'Estanislao Perez',
     avatarLetters: 'EP',
-    courseName: 'Profesorado de Velas',
+    courseName: 'Curso Online de Velas',
     time: '1d atrás',
     title: 'Dúvida com a exalação olfativa em velas de gel cristal',
     content: 'Olá colegas, alguém já testou incorporar perfume puro ao gel? Fiz a aproximadamente 80 graus mas notei que custa ligar por completo. Recomendam subir para 90 graus?',
@@ -159,7 +159,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
               <div className="lg:col-span-8 space-y-6">
                 <div className="aspect-video bg-black rounded-2xl relative overflow-hidden ring-1 ring-[#31302e] shadow-2xl flex items-center justify-center group cursor-pointer">
                   <img
-                    src="/images/courses/imersion.jpg"
+                    src="/images/courses/imersao-turma.jpg"
                     alt="Aula de laboratório de velas"
                     className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-102 transition-transform duration-700"
                   />

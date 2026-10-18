@@ -4,26 +4,26 @@ export const heroContent = {
   velas: {
     title: hero_text.candles.title,
     desc: hero_text.candles.desc,
-    imageUrl: "/images/courses/hero_candle.png",
+    imageUrl: "/images/courses/velas-pavio-madeira.jpg",
   },
   saboaria: {
     title: hero_text.soap.title,
     desc: hero_text.soap.desc,
-    imageUrl: "/images/courses/hero_soap.png",
+    imageUrl: "/images/courses/saboaria.jpg",
   },
   resinas: {
     title: hero_text.resin.title,
     desc: hero_text.resin.desc,
-    imageUrl: "/images/courses/resin.png",
+    imageUrl: "/images/courses/resina-bandeja-flores.jpg",
   },
   macrame: {
     title: hero_text.macrame.title,
     desc: hero_text.macrame.desc,
-    imageUrl: "/images/courses/hero_macrame.png",
+    imageUrl: "/images/courses/macrame-praia.jpg",
   },
   aromas_incensos: {
     title: hero_text.incense.title,
     desc: hero_text.incense.desc,
-    imageUrl: "/images/courses/hero_incense.jpeg",
+    imageUrl: "/images/courses/aromatizantes-difusor.jpg",
   },
 };

@@ -1,7 +1,7 @@
 export const category_images = {
-  velas: "/images/courses/resin.png",
-  saboaria: "/images/courses/soap.jpg",
-  resinas: "/images/courses/resin.png",
-  macrame: "/images/courses/hero_macrame.png",
-  aromas_incensos: "/images/courses/hero_incense.jpeg",
+  velas: "/images/courses/velas-pavio-madeira.jpg",
+  saboaria: "/images/courses/saboaria.jpg",
+  resinas: "/images/courses/resina-bandeja-flores.jpg",
+  macrame: "/images/courses/macrame-praia.jpg",
+  aromas_incensos: "/images/courses/aromatizantes-difusor.jpg",
 };
