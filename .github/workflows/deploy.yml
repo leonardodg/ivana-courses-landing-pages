@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# Um deploy por vez: merges seguidos entram em fila (o mais recente roda por último)
+# em vez de disputar o mesmo container no VPS ("container name already in use").
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
 jobs:
   # ────────────────────────────────────────────────────────────────
   # JOB 1 — Build estático com Vite + verificação rápida
