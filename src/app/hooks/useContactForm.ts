@@ -10,12 +10,23 @@ export interface ContactFormData {
   message: string;
 }
 
+// Chaves de mensagem de erro: existem em lang/contact_form.ts (pt e es)
+export type ContactErrorKey =
+  | "errNameShort"
+  | "errNameLong"
+  | "errEmailInvalid"
+  | "errEmailLong"
+  | "errPhoneShort"
+  | "errSubjectLong"
+  | "errMessageShort"
+  | "errMessageLong";
+
 export interface FieldErrors {
-  fullName?: string;
-  email?: string;
-  phone?: string;
-  subject?: string;
-  message?: string;
+  fullName?: ContactErrorKey;
+  email?: ContactErrorKey;
+  phone?: ContactErrorKey;
+  subject?: ContactErrorKey;
+  message?: ContactErrorKey;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -32,7 +43,7 @@ export function sanitize(value: string, maxLen = 2000): string {
 export function validateField(
   field: keyof ContactFormData,
   value: string,
-): string | undefined {
+): ContactErrorKey | undefined {
   const v = sanitize(value);
 
   switch (field) {
