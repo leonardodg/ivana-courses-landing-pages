@@ -11,6 +11,10 @@
   </url>
 
   <url>
+    <loc>https://courses.ivana.academy/agenda/</loc>
+  </url>
+
+  <url>
     <loc>https://courses.ivana.academy/pt_br/candles/</loc>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt_br/candles/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es_ar/candles/"/>
