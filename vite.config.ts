@@ -32,6 +32,7 @@ const pages: Record<string, string> = {
   // name of input  :  path the HTML relation à root project
   main: "src/index.html",
   interest: "src/interest.html",
+  agenda: "src/agenda/index.html",
   pt_br_candles: "src/pt_br/candles/index.html",
   es_ar_candles: "src/es_ar/candles/index.html",
   // soap:           "src/soap/index.html",    ← example the new course page
