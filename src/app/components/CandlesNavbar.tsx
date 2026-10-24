@@ -26,16 +26,16 @@ export default function CandlesNavbar() {
 
         {/* Right controls */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => {
-              // Dispatch event para o CandlesApp abrir o portal
-              window.dispatchEvent(new CustomEvent("candles:openPortal"));
-            }}
-            className="hidden sm:flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-on-surface-variant hover:text-primary border border-subtle bg-white/80 hover:bg-white px-3.5 py-2.5 rounded-full transition-all cursor-pointer"
+          <a
+            href="https://ivana.academy"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="hidden sm:flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-on-surface-variant hover:text-primary border border-subtle bg-white/[0.8] hover:bg-white px-3.5 py-2.5 rounded-full transition-all cursor-pointer"
           >
             <GraduationCap className="w-3.5 h-3.5" />
-            Portal do Aluno
-          </button>
+            <span>Portal do Aluno</span>
+          </a>
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
