@@ -11,7 +11,7 @@ export interface PresencialCourse {
   takesHome: string[];
   duration: string;
   includes: string[];
-  image: string; // foto real do curso (a capa da loja traz título; não é usada nos cards)
+  image: string; // foto autoral do curso; sem foto, capa da marca (bloco Dusty Rose + folha, como as peças de oferta)
   urlLoja: string;
   naLoja: boolean; // false = ainda sem turma na loja
 }
@@ -143,7 +143,7 @@ export const presencial_courses: Record<string, PresencialCourse> = {
     takesHome: ["Você leva copos, bandejas e potinhos", "Diversos materiais e acabamentos", "Apostila completa"],
     duration: "3 horas",
     includes: ["Todos os materiais", "Apostila completa", "Certificado Ivana Academy"],
-    image: '/images/courses/resina-bandeja-flores.jpg',
+    image: '/images/cursos/pecas-concreto-foto.jpg',
     urlLoja: "https://loja.ivana.academy/curso-pecas-concreto.html",
     naLoja: false,
   },
@@ -156,7 +156,7 @@ export const presencial_courses: Record<string, PresencialCourse> = {
     takesHome: ["Manta de ~0,90 x 1,70 m (1 kg de lã)", "Não precisa ter experiência", "Cafezinho incluso"],
     duration: "cerca de 2 horas",
     includes: ["A lã 100% merino (1 kg)", "Cafezinho", "Apostila e material de apoio", "Certificado Ivana Academy"],
-    image: '/images/courses/macrame-praia.jpg',
+    image: '/images/cursos/trico-gigante-foto.jpg',
     urlLoja: "https://loja.ivana.academy/curso-trico-gigante.html",
     naLoja: false,
   },

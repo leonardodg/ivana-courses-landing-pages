@@ -123,6 +123,16 @@ export function TurmasSection({ theme }: { theme: PresencialTheme }) {
               <a href="/agenda/" className={btnPrimary}>Ver agenda completa</a>
               <a href="/interest" className={btnOutline}>Quero ser avisada</a>
             </div>
+            {status === 'error' && (
+              <div className="mt-5 pt-4 border-t border-muted text-xs text-on-surface-variant">
+                Escolha a turma direto na loja:
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2">
+                  {theme.courses.map(k => presencial_courses[k]).filter(c => c.naLoja).map(c => (
+                    <a key={c.key} href={lojaLink(c, theme.utm)} className="underline text-primary">{c.name}</a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -145,19 +155,24 @@ export interface CursoCardProps {
   utm: string;
   events: AgendaEvent[]; // turmas futuras deste curso, em ordem de data
   feedError: boolean;
+  loading?: boolean; // agenda ainda carregando: não decide o CTA antes da hora
   /** Home: lista as próximas turmas no card e liga ao curso na página do tema. */
   turmas?: { max: number; pageHref: string };
 }
 
-export function CursoCard({ c, utm, events, feedError, turmas }: CursoCardProps) {
-  const next = events[0];
+export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoCardProps) {
+  // Compra só em turma com vagas; esgotada vai para a lista de espera.
+  const open = events.filter(e => e.status !== 'esgotado');
+  const next = open[0];
   // Com turma → loja na próxima turma. Feed fora do ar → página do curso na loja.
   // Sem turma → "Quero ser avisada".
   const cta = next
     ? { href: lojaLink(c, utm, next.id), label: 'Garantir minha vaga' }
-    : feedError && c.naLoja
-      ? { href: lojaLink(c, utm), label: 'Ver na loja' }
-      : { href: '/interest', label: 'Quero ser avisada' };
+    : events.length > 0
+      ? { href: WHATSAPP_URL, label: 'Esgotado · Lista de espera' }
+      : feedError && c.naLoja
+        ? { href: lojaLink(c, utm), label: 'Ver na loja' }
+        : { href: '/interest', label: 'Quero ser avisada' };
   const primary = !!next || cta.label === 'Ver na loja';
 
   return (
@@ -203,14 +218,14 @@ export function CursoCard({ c, utm, events, feedError, turmas }: CursoCardProps)
               return (
                 <li key={e.id}>
                   <a
-                    href={lojaLink(c, utm, e.id)}
+                    href={e.status === 'esgotado' ? WHATSAPP_URL : lojaLink(c, utm, e.id)}
                     className="flex items-center gap-3 rounded-lg border border-muted bg-surface-cream/60 hover:bg-surface-cream px-3 py-2 text-xs text-gray-900"
                   >
                     <span className="font-serif text-lg leading-none w-9 text-center">
                       {Number(day)}
                       <small className="block text-[9px] font-mono uppercase text-on-surface-variant">{MESES[Number(m) - 1]}</small>
                     </span>
-                    <span className="grow">{e.time} · {e.city}</span>
+                    <span className="grow">{e.time} · {e.city}{e.status === 'esgotado' && ' · esgotada (lista de espera)'}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-primary shrink-0" />
                   </a>
                 </li>
@@ -231,9 +246,15 @@ export function CursoCard({ c, utm, events, feedError, turmas }: CursoCardProps)
             {brl(c.price)}
             <span className="text-xs font-sans text-on-surface-variant ml-2">valor cheio · parcele no cartão</span>
           </div>
-          <a href={cta.href} className={`${primary ? btnPrimary : btnOutline} w-full`}>
-            {cta.label} <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          {loading ? (
+            <span className={`${btnOutline} w-full opacity-60 cursor-default`} aria-busy="true">
+              Carregando turmas…
+            </span>
+          ) : (
+            <a href={cta.href} className={`${primary ? btnPrimary : btnOutline} w-full`}>
+              {cta.label} <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          )}
           {turmas && (
             <a href={turmas.pageHref} className="block text-center text-xs text-primary underline mt-3">
               Ver detalhes do curso
@@ -261,6 +282,7 @@ export function CursosSection({ theme, id }: { theme: PresencialTheme; id?: stri
               utm={theme.utm}
               events={events.filter(e => e.course === key)}
               feedError={status === 'error'}
+              loading={status === 'loading'}
             />
           ))}
         </div>
