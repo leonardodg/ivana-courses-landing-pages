@@ -26,17 +26,19 @@ import { Menu, SquarePen } from "lucide-react";
 
 export default function App() {
   const [language, setLanguage] = useState<Language>("pt");
-  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("velas");
+  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null); // null = todos os cards, sem filtro (primeiro acesso)
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
   const REVIEWS: Review[] = reviews_list_br;
   const FAQS: FAQItem[] = faqs_list_br;
   const COURSES: Course[] = courses_list_br;
 
-  const activeCategory = CATEGORIES[activeCategoryId];
+  // Sem filtro, a abertura (hero e cores) usa o visual de velas.
+  const heroCategoryId: CategoryId = activeCategoryId ?? "velas";
+  const activeCategory = CATEGORIES[heroCategoryId];
 
   // Specific hero definitions to make switching incredible
-  const heroContent = hero_content[activeCategoryId];
+  const heroContent = hero_content[heroCategoryId];
 
   const handleEnrollClick = (course: Course) => {
     const title = course.title[language];

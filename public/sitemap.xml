@@ -28,4 +28,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt_br/candles/"/>
   </url>
 
+  <url>
+    <loc>https://courses.ivana.academy/pt_br/soap/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/pt_br/aromas/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/pt_br/resin/</loc>
+  </url>
+
 </urlset>

@@ -7,8 +7,8 @@ import { navbar_text as text } from '../lang/navbar';
 interface NavbarProps {
   language: Language;
   setLanguage: (lang: Language) => void;
-  activeCategoryId: CategoryId;
-  setActiveCategoryId: (cat: CategoryId) => void;
+  activeCategoryId: CategoryId | null;
+  setActiveCategoryId: (cat: CategoryId | null) => void;
 }
 
 const BrazilFlag = ({ isSelected }: { isSelected: boolean }) => (
@@ -53,13 +53,13 @@ export default function Navbar({
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo and Brand */}
-        <div className="flex items-center gap-3 px-2">
+        <a href="/" aria-label="Ivana Academy - página inicial" className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
             src="/images/logo.svg"
           />
-        </div>
+        </a>
 
         {/* Categories Quick Switcher (Desktop) */}
         <div className="hidden md:flex items-center gap-2 bg-surface-form p-1 rounded-full border border-subtle">
@@ -68,7 +68,7 @@ export default function Navbar({
             return (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategoryId(cat.id)}
+                onClick={() => setActiveCategoryId(isActive ? null : cat.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 transition-all cursor-pointer ${
                   isActive
                     ? "bg-primary text-white shadow-sm"
@@ -139,7 +139,7 @@ export default function Navbar({
                 <button
                   key={cat.id}
                   onClick={() => {
-                    setActiveCategoryId(cat.id);
+                    setActiveCategoryId(isActive ? null : cat.id);
                     setMenuOpen(false);
                   }}
                   className={`w-full p-2.5 rounded-lg text-left text-sm font-semibold tracking-wide flex items-center gap-2.5 transition-all ${

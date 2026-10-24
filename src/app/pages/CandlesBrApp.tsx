@@ -14,7 +14,8 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 
 import CandlesNavbar from '../components/CandlesNavbar';
-import CandlesWorkshopsSection from '../components/CandlesWorkshopsSection';
+import { TurmasSection, CursosSection, ComoFuncionaSection, InclusoSection, LocaisSection } from '../components/theme/ThemeSections';
+import { presencial_themes } from '../data/presencial';
 import CandlesOnlineSection from '../components/CandlesOnlineSection';
 import CandlesLeadForm from '../components/CandlesLeadForm';
 import CandlesCheckoutModal from '../components/CandlesCheckoutModal';
@@ -169,14 +170,16 @@ export default function CandlesBrApp() {
           </div>
         </section>
 
-        {/* Workshops presenciais — cards visuais com imagem grande */}
-        <CandlesWorkshopsSection
-          courses={courses}
-          onEnroll={handleSelectEnroll}
-        />
+        {/* Presenciais: turmas da agenda e cursos, com compra na loja */}
+        <TurmasSection theme={presencial_themes.velas} />
+        <CursosSection theme={presencial_themes.velas} />
 
         {/* Cursos online — cards horizontais com link Moodle */}
         <CandlesOnlineSection courses={courses} onEnroll={handleSelectEnroll} />
+
+        <ComoFuncionaSection />
+        <InclusoSection />
+        <LocaisSection />
 
         <AboutSection language={LANGUAGE} />
 
