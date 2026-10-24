@@ -357,48 +357,7 @@
   .text-terminal-green { color: var(--color-terminal-green); }
 }
 
-/* ─── Padrão da página de links (/links/br) ─────────────────────────────
-   Fundo creme liso, botões em pílula (Dusty Rose com texto Tinta; secundários
-   em Papel com contorno rosa) e títulos em Libre Caslon regular. Fica fora de
-   @layer de propósito, para valer sobre as utilitárias do Tailwind. */
-button.bg-primary,
-a.bg-primary,
-.brand-btn-primary {
-  background-color: var(--color-primary-container);
-  color: var(--color-on-surface);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-  border-radius: 9999px;
-  box-shadow: none;
-}
-button.bg-primary:hover,
-a.bg-primary:hover,
-.brand-btn-primary:hover {
-  background-color: var(--color-primary-container);
-  color: var(--color-on-surface);
-  box-shadow: 0 10px 22px -12px rgba(128, 82, 82, 0.55);
-}
-.brand-btn-secondary,
-a.border.bg-white\/80 {
-  background-color: var(--color-surface);
-  border: 1.5px solid var(--color-primary-container);
-  color: var(--color-on-surface);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-  border-radius: 9999px;
-}
-.brand-btn-secondary:hover,
-a.border.bg-white\/80:hover {
-  background-color: var(--color-surface);
-  border-color: var(--color-primary);
-  color: var(--color-on-surface);
-}
+/* Títulos em Libre Caslon regular (padrão da página de links). */
 .font-serif.font-bold,
 .font-serif.font-black,
 h1.font-serif, h2.font-serif, h3.font-serif {
