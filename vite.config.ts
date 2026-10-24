@@ -35,8 +35,9 @@ const pages: Record<string, string> = {
   agenda: "src/agenda/index.html",
   pt_br_candles: "src/pt_br/candles/index.html",
   es_ar_candles: "src/es_ar/candles/index.html",
-  // soap:           "src/soap/index.html",    ← example the new course page
-  // resin:          "src/resin/index.html",
+  pt_br_soap: "src/pt_br/soap/index.html",
+  pt_br_aromas: "src/pt_br/aromas/index.html",
+  pt_br_resin: "src/pt_br/resin/index.html",
 };
 
 export default defineConfig(({ mode }) => {
