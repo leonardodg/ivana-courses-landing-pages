@@ -16,13 +16,13 @@ export default function CandlesNavbar() {
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo */}
-        <div className="flex items-center gap-3 px-2">
+        <a href="/" aria-label="Ivana Academy - página inicial" className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
             src="/images/logo.svg"
           />
-        </div>
+        </a>
 
         {/* Right controls */}
         <div className="flex items-center gap-3">

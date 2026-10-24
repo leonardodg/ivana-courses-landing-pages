@@ -5,10 +5,13 @@ import { candle_images } from '../data/candle_images';
 import { category_images } from '../data/category_images';
 import { Star, MapPin, Calendar, CheckSquare, Sparkles, BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
+import { useAgenda } from '../hooks/useAgenda';
+import { CursoCard } from './theme/ThemeSections';
+import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
 
 interface CourseGridProps {
   language: Language;
-  activeCategoryId: CategoryId;
+  activeCategoryId: CategoryId | null; // null = sem filtro (todos os cards)
   courses: Course[];
   onSelectEnroll: (course: Course) => void;
 }
@@ -36,11 +39,17 @@ export default function CourseGrid({
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
 
-  const activeCategorySpec = CATEGORIES[activeCategoryId];
-
   const courses_text = text[language];
 
-  const categoryCourses = courses.filter(c => c.categoryId === activeCategoryId);
+  // Presenciais em PT: cards da loja, com as turmas reais da agenda. Os demais seguem como antes.
+  const agenda = useAgenda();
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+  const futureEvents = agenda.events
+    .filter(e => e.date >= today)
+    .sort((a, b) => a.start.localeCompare(b.start));
+
+  // Sem filtro: todas as categorias, em ordem. Com filtro: só a escolhida.
+  const categoryIds = (activeCategoryId ? [activeCategoryId] : Object.keys(CATEGORIES)) as CategoryId[];
 
   return (
     <section id="cursos" className="py-16 md:py-24 bg-surface-hero relative">
@@ -48,9 +57,11 @@ export default function CourseGrid({
         
         {/* Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
-            {activeCategorySpec.name[language]}
-          </span>
+          {activeCategoryId && (
+            <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
+              {CATEGORIES[activeCategoryId].name[language]}
+            </span>
+          )}
           <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">
             {courses_text.headline}
           </h2>
@@ -59,88 +70,120 @@ export default function CourseGrid({
           </p>
         </div>
 
-        {/* Dynamic Courses Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {categoryCourses.map((course) => {
-            const courseImage = getCourseImage(course);
-            return (
-              <div
-                key={course.id}
-                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-muted overflow-hidden flex flex-col group h-full"
-              >
-                {/* Product Cover Photo with Category Overlay */}
-                <div className="aspect-[16/10] w-full bg-surface-hero overflow-hidden relative">
-                  <img
-                    alt={course.title[language]}
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 select-none"
-                    src={courseImage}
+        {categoryIds.map((categoryId) => {
+          const homeTheme = language === 'pt' ? home_category_themes[categoryId] : undefined;
+          const theme = homeTheme ? presencial_themes[homeTheme.theme] : undefined;
+          const themeEvents = theme ? futureEvents.filter(e => theme.courses.includes(e.course)) : [];
+          const categoryCourses = courses.filter(
+            c => c.categoryId === categoryId && !(theme && c.modalidade === 'presencial'),
+          );
+          return (
+            <div key={categoryId} className={activeCategoryId ? '' : 'mb-16 last:mb-0'}>
+              {!activeCategoryId && (
+                <h3 className="text-xs font-mono font-bold tracking-widest text-primary uppercase mb-6">
+                  {CATEGORIES[categoryId].badgeLogo} {CATEGORIES[categoryId].name[language]}
+                </h3>
+              )}
+        {theme && homeTheme && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-8 lg:mb-10">
+                {theme.courses.map(key => (
+                  <CursoCard
+                    key={key}
+                    c={presencial_courses[key]}
+                    utm={theme.utm}
+                    events={themeEvents.filter(e => e.course === key)}
+                    feedError={agenda.status === 'error'}
+                    turmas={{ max: 3, pageHref: `${homeTheme.page}#${key}` }}
                   />
-                  
-                  {/* Category Pill Tag */}
-                  <div className="absolute top-4 left-4 flex gap-1.5 flex-wrap">
-                    <span className="bg-white/90 backdrop-blur-md text-gray-900 border border-gray-250 text-micro font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
-                      <span>{activeCategorySpec.badgeLogo}</span>
-                      <span>{course.modalidade === 'presencial' ? courses_text.badgePresencial : courses_text.badgeOnline}</span>
-                    </span>
-                  </div>
-
-                  {/* Rating Badge */}
-                  <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-sm text-amber-400 font-mono text-mini font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <span>{course.rating.toFixed(1)}</span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 md:p-8 flex flex-col grow justify-between">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-serif text-gray-900 leading-snug group-hover:text-primary transition-colors mb-3">
-                      {course.title[language]}
-                    </h3>
-                    <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6 line-clamp-3">
-                      {course.description[language]}
-                    </p>
-
-                    {/* Quick Specs */}
-                    <div className="space-y-2 mb-6 text-xs text-on-surface-variant font-sans border-t border-muted pt-4">
-                      {course.duracao && (
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-primary shrink-0" />
-                          <span className="font-semibold">{courses_text.duration}</span>
-                          <span>{course.duracao[language]}</span>
+                ))}
+              </div>
+            )}
+    
+            {/* Dynamic Courses Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+              {categoryCourses.map((course) => {
+                const courseImage = getCourseImage(course);
+                return (
+                  <div
+                    key={course.id}
+                    className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-muted overflow-hidden flex flex-col group h-full"
+                  >
+                    {/* Product Cover Photo with Category Overlay */}
+                    <div className="aspect-[16/10] w-full bg-surface-hero overflow-hidden relative">
+                      <img
+                        alt={course.title[language]}
+                        className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 select-none"
+                        src={courseImage}
+                      />
+                      
+                      {/* Category Pill Tag */}
+                      <div className="absolute top-4 left-4 flex gap-1.5 flex-wrap">
+                        <span className="bg-white/90 backdrop-blur-md text-gray-900 border border-gray-250 text-micro font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
+                          <span>{CATEGORIES[categoryId].badgeLogo}</span>
+                          <span>{course.modalidade === 'presencial' ? courses_text.badgePresencial : courses_text.badgeOnline}</span>
+                        </span>
+                      </div>
+    
+                      {/* Rating Badge */}
+                      <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-sm text-amber-400 font-mono text-mini font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow">
+                        <Star className="w-3.5 h-3.5 fill-current" />
+                        <span>{course.rating.toFixed(1)}</span>
+                      </div>
+                    </div>
+    
+                    {/* Content */}
+                    <div className="p-6 md:p-8 flex flex-col grow justify-between">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-serif text-gray-900 leading-snug group-hover:text-primary transition-colors mb-3">
+                          {course.title[language]}
+                        </h3>
+                        <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6 line-clamp-3">
+                          {course.description[language]}
+                        </p>
+    
+                        {/* Quick Specs */}
+                        <div className="space-y-2 mb-6 text-xs text-on-surface-variant font-sans border-t border-muted pt-4">
+                          {course.duracao && (
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-primary shrink-0" />
+                              <span className="font-semibold">{courses_text.duration}</span>
+                              <span>{course.duracao[language]}</span>
+                            </div>
+                          )}
+                          {course.location && (
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-primary shrink-0" />
+                              <span className="font-semibold">{courses_text.location}</span>
+                              <span>{course.location[language]}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {course.location && (
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-primary shrink-0" />
-                          <span className="font-semibold">{courses_text.location}</span>
-                          <span>{course.location[language]}</span>
-                        </div>
-                      )}
+                      </div>
+    
+                      {/* Action row */}
+                      <div className="space-y-3 pt-4 border-t border-muted">
+                        <button
+                          onClick={() => setSelectedCourse(course)}
+                          className="brand-btn-secondary w-full py-3 text-xs"
+                        >
+                          {courses_text.learnMore}
+                        </button>
+    
+                        <button
+                          onClick={() => onSelectEnroll(course)}
+                          className="brand-btn-primary w-full py-3 text-xs"
+                        >
+                          {courses_text.enrollNow}
+                        </button>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Action row */}
-                  <div className="space-y-3 pt-4 border-t border-muted">
-                    <button
-                      onClick={() => setSelectedCourse(course)}
-                      className="brand-btn-secondary w-full py-3 text-xs"
-                    >
-                      {courses_text.learnMore}
-                    </button>
-
-                    <button
-                      onClick={() => onSelectEnroll(course)}
-                      className="brand-btn-primary w-full py-3 text-xs"
-                    >
-                      {courses_text.enrollNow}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Course Program Modal */}

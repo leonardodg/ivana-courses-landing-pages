@@ -57,7 +57,7 @@ export default function InstrestApp() {
         language={language}
         setLanguage={setLanguage}
         activeCategoryId={activeCategoryId}
-        setActiveCategoryId={setActiveCategoryId}
+        setActiveCategoryId={(c) => c && setActiveCategoryId(c)} // aqui a categoria é sempre uma
       />
 
       {/* Main Sections */}
