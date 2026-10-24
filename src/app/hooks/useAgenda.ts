@@ -80,11 +80,11 @@ const mockEvent = (
 
 const MOCK_EVENTS: AgendaEvent[] = import.meta.env.DEV
   ? [
-      mockEvent("m1", "2026-11-06", "19h", "22h", "Saboaria e Extratos Naturais", "Florianópolis", "", ""),
-      mockEvent("m2", "2026-11-07", "9h", "12h30", "Velas Aromáticas e de Moldes", "Balneário Camboriú", "Eventos Elegance", "Rua 3122, nº 481, Balneário Camboriú", { price: "R$ 380", seats: "10", status: "ultimas-vagas" }),
-      mockEvent("m3", "2026-11-13", "14h", "17h", "Aromatizantes e Perfumes", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { note: "Traga avental e um recipiente para levar os produtos." }),
-      mockEvent("m4", "2026-11-14", "14h", "17h", "Saboaria e Extratos Naturais", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { status: "esgotado" }),
-      mockEvent("m5", "2026-12-05", "9h30", "16h30", "Imersão de Velas", "Florianópolis", "", "", { free: true }),
+      mockEvent("m1", "2026-11-06", "19h", "22h", "Saboaria e Extratos Naturais", "Florianópolis", "", "", { course: "saboaria-extratos" }),
+      mockEvent("m2", "2026-11-07", "9h", "12h30", "Velas Aromáticas e de Moldes", "Balneário Camboriú", "Eventos Elegance", "Rua 3122, nº 481, Balneário Camboriú", { course: "velas-aromaticas-moldes", price: "R$ 380", seats: "10", status: "ultimas-vagas" }),
+      mockEvent("m3", "2026-11-13", "14h", "17h", "Aromatizantes e Perfumes", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { course: "aromatizantes-perfumes", note: "Traga avental e um recipiente para levar os produtos." }),
+      mockEvent("m4", "2026-11-14", "14h", "17h", "Saboaria e Extratos Naturais", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { course: "saboaria-extratos", status: "esgotado" }),
+      mockEvent("m5", "2026-12-05", "9h30", "16h30", "Imersão de Velas", "Florianópolis", "", "", { course: "imersao-velas", free: true }),
     ]
   : [];
 
@@ -105,7 +105,51 @@ function writeCache(payload: AgendaPayload) {
   }
 }
 
-export function useAgenda(): AgendaState {
+// Uma única busca por carregamento de página, compartilhada por todos os blocos que usam a agenda.
+let shared: Promise<AgendaState> | null = null;
+
+function loadAgenda(): Promise<AgendaState> {
+  if (shared) return shared;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+  shared = fetch(AGENDA_URL, { signal: controller.signal })
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json() as Promise<AgendaPayload>;
+    })
+    .then((payload): AgendaState => {
+      writeCache(payload);
+      return {
+        status: "ready",
+        events: payload.events ?? [],
+        generatedAt: payload.generated_at,
+        stale: false,
+      };
+    })
+    .catch((): AgendaState => {
+      const cached = readCache();
+      if (cached) {
+        const today = new Date().toLocaleDateString("en-CA", {
+          timeZone: "America/Sao_Paulo",
+        });
+        return {
+          status: "ready",
+          events: (cached.events ?? []).filter((e) => e.date >= today),
+          generatedAt: cached.generated_at,
+          stale: true,
+        };
+      }
+      return { status: "error", events: [], generatedAt: null, stale: false };
+    })
+    .finally(() => clearTimeout(timer));
+
+  return shared;
+}
+
+// enabled=false: não busca (ex.: home em espanhol ou categoria sem turmas).
+export function useAgenda(enabled = true): AgendaState {
   const [state, setState] = useState<AgendaState>({
     status: "loading",
     events: [],
@@ -114,52 +158,22 @@ export function useAgenda(): AgendaState {
   });
 
   useEffect(() => {
+    if (!enabled) return;
+
     // Só em desenvolvimento (?mock): dados de exemplo para testar o layout. Some do build de produção.
     if (import.meta.env.DEV && new URLSearchParams(window.location.search).has("mock")) {
       setState({ status: "ready", events: MOCK_EVENTS, generatedAt: null, stale: false });
       return;
     }
 
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-
-    fetch(AGENDA_URL, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<AgendaPayload>;
-      })
-      .then((payload) => {
-        writeCache(payload);
-        setState({
-          status: "ready",
-          events: payload.events ?? [],
-          generatedAt: payload.generated_at,
-          stale: false,
-        });
-      })
-      .catch(() => {
-        const cached = readCache();
-        if (cached) {
-          const today = new Date().toLocaleDateString("en-CA", {
-            timeZone: "America/Sao_Paulo",
-          });
-          setState({
-            status: "ready",
-            events: (cached.events ?? []).filter((e) => e.date >= today),
-            generatedAt: cached.generated_at,
-            stale: true,
-          });
-        } else {
-          setState({ status: "error", events: [], generatedAt: null, stale: false });
-        }
-      })
-      .finally(() => clearTimeout(timer));
-
+    let active = true;
+    loadAgenda().then((next) => {
+      if (active) setState(next);
+    });
     return () => {
-      clearTimeout(timer);
-      controller.abort();
+      active = false;
     };
-  }, []);
+  }, [enabled]);
 
   return state;
 }
