@@ -1,5 +1,6 @@
 // Formulário de direitos do titular (LGPD, art. 18). Coleta só o necessário:
 // nome, e-mail e o pedido. Sem telefone, CPF ou documentos.
+import { useCooldownReset } from '../hooks/useCooldownReset';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Language } from '../classes/types';
@@ -8,7 +9,7 @@ import CandlesArNavbar from '../components/CandlesArNavbar';
 import Footer from '../components/Footer';
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
-import { sanitize } from '../hooks/useContactForm';
+import { sanitize, EMAIL_RE } from '../hooks/useContactForm';
 import { company } from '../legal/company';
 
 const REQUESTS_PT = [
@@ -78,8 +79,6 @@ const UI = {
   },
 } as const;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
 export default function LgpdApp({ language = 'pt' }: { language?: Language }) {
   const es = language === 'es';
   const t = UI[language];
@@ -91,6 +90,8 @@ export default function LgpdApp({ language = 'pt' }: { language?: Language }) {
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus] = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
+
+  useCooldownReset(status, cooldown, setCooldown, setStatus);
 
   const valid = name.trim().length >= 2 && EMAIL_RE.test(email.trim());
   const busy = status === 'loading';
@@ -120,9 +121,9 @@ export default function LgpdApp({ language = 'pt' }: { language?: Language }) {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {es ? (
-        <CandlesArNavbar onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+        <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
       ) : (
-        <CandlesNavbar />
+        <CandlesNavbar base="/pt_br/candles/" />
       )}
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <div className="max-w-xl mx-auto">

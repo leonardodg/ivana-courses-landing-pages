@@ -32,9 +32,9 @@ export default function LegalApp({ doc, language = 'pt' }: { doc: LegalDocKey; l
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {language === 'es' ? (
-        <CandlesArNavbar onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+        <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
       ) : (
-        <CandlesNavbar />
+        <CandlesNavbar base="/pt_br/candles/" />
       )}
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <article className="max-w-3xl mx-auto">

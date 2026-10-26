@@ -10,7 +10,9 @@ import SkipLink from './SkipLink';
 import { useState } from 'react';
 import { Menu, X, PhoneCall, Link2, Award, GraduationCap, SquarePen } from 'lucide-react';
 
-export default function CandlesNavbar() {
+// base: caminho da página das âncoras (#cursos, #contato). Vazio na própria página de velas;
+// nas páginas legais aponta para /pt_br/candles/.
+export default function CandlesNavbar({ base = '' }: { base?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -59,7 +61,7 @@ export default function CandlesNavbar() {
         <div className="md:hidden bg-surface-hero w-full border-t border-subtle py-4 px-6 shadow-inner animate-fade-in">
           <div className="flex flex-col gap-2">
             <a
-              href="#cursos"
+              href={`${base}#cursos`}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs w-full p-2.5 rounded-lg text-left font-semibold tracking-wide bg-white border-gray-200 text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all"
             >
@@ -67,7 +69,7 @@ export default function CandlesNavbar() {
               <Menu className="w-4 h-4 text-primary" />
             </a>
             <a
-              href="#contato"
+              href={`${base}#contato`}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between text-xs text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all bg-white p-2.5 rounded-lg border border-gray-200 font-semibold"
             >

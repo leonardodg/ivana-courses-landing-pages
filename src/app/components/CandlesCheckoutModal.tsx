@@ -6,6 +6,7 @@
 // banco: ela coleta nome/e-mail/telefone/cupom e abre o WhatsApp com esses
 // dados, para a venda ser fechada direto com a equipe comercial.
 
+import { trackOutbound } from '../lib/analytics';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CreditCard, Tag, Check, X, GraduationCap } from 'lucide-react';
@@ -58,6 +59,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
       `Protocolo: ${protocol}`,
     ].filter(Boolean).join('\n');
 
+    trackOutbound(`https://wa.me/${WHATSAPP_NUMBER}`);
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
       '_blank',

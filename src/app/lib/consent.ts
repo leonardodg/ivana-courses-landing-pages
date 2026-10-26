@@ -24,21 +24,25 @@ export const GA_ID: string = envGaId === 'off' ? '' : envGaId || DEFAULT_GA_ID;
 /** Só há o que consentir se algum rastreador estiver configurado. */
 export const hasTrackers = (): boolean => GA_ID.length > 0;
 
+// Cópia em memória: vale quando o navegador bloqueia o localStorage (só nesta visita).
+let memoryConsent: ConsentState | null = null;
+
 export function readConsent(): ConsentState | null {
   try {
     const raw = localStorage.getItem(KEY);
-    if (!raw) return null;
+    if (!raw) return memoryConsent;
     const c = JSON.parse(raw) as ConsentState;
     // vale por 12 meses; depois pedimos de novo
     const fresh = Date.now() - new Date(c.ts).getTime() < 365 * 24 * 3600 * 1000;
-    return c.v === CONSENT_VERSION && fresh ? c : null;
+    return c.v === CONSENT_VERSION && fresh ? c : memoryConsent;
   } catch {
-    return null;
+    return memoryConsent;
   }
 }
 
 export function saveConsent(analytics: boolean): ConsentState {
   const state: ConsentState = { v: CONSENT_VERSION, analytics, ts: new Date().toISOString() };
+  memoryConsent = state;
   try {
     localStorage.setItem(KEY, JSON.stringify(state));
   } catch {
@@ -74,6 +78,8 @@ function ensureGtag(): GtagFn {
   return window.gtag;
 }
 
+const gaDisableKey = () => `ga-disable-${GA_ID}`;
+
 function loadGA() {
   if (gaLoaded || !GA_ID) return;
   gaLoaded = true;
@@ -84,6 +90,8 @@ function loadGA() {
     ad_user_data: 'denied',
     ad_personalization: 'denied',
   });
+  // O aceite é aplicado ANTES do config: assim o primeiro page_view já sai com consentimento.
+  gtag('consent', 'update', { analytics_storage: 'granted' });
   const s = document.createElement('script');
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
@@ -111,9 +119,12 @@ function clearGACookies() {
 export function applyConsent(state: ConsentState | null) {
   if (!GA_ID) return;
   if (state?.analytics) {
-    loadGA();
-    ensureGtag()('consent', 'update', { analytics_storage: 'granted' });
+    (window as unknown as Record<string, unknown>)[gaDisableKey()] = false;
+    if (gaLoaded) ensureGtag()('consent', 'update', { analytics_storage: 'granted' });
+    else loadGA();
   } else if (gaLoaded) {
+    // Retirada do consentimento: para toda coleta (flag oficial do Google) e apaga os cookies.
+    (window as unknown as Record<string, unknown>)[gaDisableKey()] = true;
     ensureGtag()('consent', 'update', { analytics_storage: 'denied' });
     clearGACookies();
   }

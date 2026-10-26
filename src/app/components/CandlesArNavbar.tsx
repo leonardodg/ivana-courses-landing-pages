@@ -8,9 +8,10 @@ import { School, Menu, X, GraduationCap } from 'lucide-react';
 
 interface CandlesArNavbarProps {
   onOpenPortal: () => void;
+  base?: string; // caminho da página das âncoras; vazio na própria página argentina
 }
 
-export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) {
+export default function CandlesArNavbar({ onOpenPortal, base = '' }: CandlesArNavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -37,7 +38,7 @@ export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) 
             Portal del Alumno
           </button>
           <a
-            href="#formaciones"
+            href={`${base}#formaciones`}
             className="hidden sm:flex items-center gap-1.5 bg-primary text-white text-xs font-bold font-mono uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-primary/90 transition-all"
           >
             Ver Formaciones

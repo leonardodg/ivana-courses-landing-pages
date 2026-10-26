@@ -16,18 +16,16 @@ export function trackEvent(name: string, params: Params = {}) {
 }
 
 /** Origem do clique, por caminho da página (ex.: /pt_br/soap/ → "pt_br/soap"). */
-const pageName = () => location.pathname.replace(/^\/|\/$/g, '') || 'home';
+export const pageName = () => location.pathname.replace(/^\/|\/$/g, '') || 'home';
 
-function onClick(e: MouseEvent) {
-  const a = (e.target as Element | null)?.closest?.('a[href]');
-  if (!a) return;
+/** Classifica um destino externo (loja ou WhatsApp) e registra o evento correspondente. */
+export function trackOutbound(href: string) {
   let url: URL;
   try {
-    url = new URL((a as HTMLAnchorElement).href, location.href);
+    url = new URL(href, location.href);
   } catch {
     return;
   }
-
   if (url.hostname === 'loja.ivana.academy') {
     trackEvent('click_loja', {
       curso: url.pathname.replace(/^\/curso-|\.html$/g, ''),
@@ -37,6 +35,11 @@ function onClick(e: MouseEvent) {
   } else if (url.hostname === 'wa.me') {
     trackEvent('click_whatsapp', { pagina: pageName() });
   }
+}
+
+function onClick(e: MouseEvent) {
+  const a = (e.target as Element | null)?.closest?.('a[href]');
+  if (a) trackOutbound((a as HTMLAnchorElement).href);
 }
 
 let started = false;

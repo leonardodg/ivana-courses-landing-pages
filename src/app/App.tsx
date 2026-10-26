@@ -22,6 +22,7 @@ import FAQSection from "./components/FAQSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 import { setPageLanguage } from "./lib/lang";
+import { trackOutbound } from "./lib/analytics";
 
 import { Menu, SquarePen } from "lucide-react";
 
@@ -50,6 +51,7 @@ export default function App() {
       language === "pt"
         ? `Olá! Quero garantir minha vaga no curso "${title}".`
         : `¡Hola! Quiero asegurar mi lugar en el curso "${title}".`;
+    trackOutbound(`https://wa.me/5548991671659`);
     window.open(
       `https://wa.me/5548991671659?text=${encodeURIComponent(message)}`,
       "_blank",

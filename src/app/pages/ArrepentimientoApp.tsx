@@ -1,15 +1,14 @@
 // Botón de arrepentimiento (Argentina, Res. SCI 424/2020 y art. 34 de la Ley 24.240).
 // Sin registro previo ni trámites: solo lo necesario para identificar la compra.
+import { useCooldownReset } from '../hooks/useCooldownReset';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import CandlesArNavbar from '../components/CandlesArNavbar';
 import Footer from '../components/Footer';
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
-import { sanitize } from '../hooks/useContactForm';
+import { sanitize, EMAIL_RE } from '../hooks/useContactForm';
 import { company } from '../legal/company';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const newCode = () => `ARR-${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -21,6 +20,8 @@ export default function ArrepentimientoApp() {
   const [status, setStatus] = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
   const [code, setCode] = useState('');
+
+  useCooldownReset(status, cooldown, setCooldown, setStatus);
 
   const valid = name.trim().length >= 2 && EMAIL_RE.test(email.trim()) && course.trim().length >= 3;
   const busy = status === 'loading';
@@ -49,7 +50,7 @@ export default function ArrepentimientoApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesArNavbar onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+      <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <div className="max-w-xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif leading-tight">Botón de arrepentimiento</h1>
