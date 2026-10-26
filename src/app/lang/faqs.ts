@@ -16,7 +16,7 @@ export const faqs_text = {
     },
     answer: {
       pt: "Todos os insumos (ceras vegetais, pavios importados, essências concentradas, recipientes de vidro de luxo e corantes químicos seguros) estão inclusos no preço da inscrição. Você só precisa trazer sua criatividade e interesse!",
-      es: "Todos los ingredientes de alta calidad (ceras vegetales biodegradables, esencias de alta concentración, pabilos de algodón, frascos de diseño y pigmentos) están incluidos. ¡Solo necesitas traer tu energía y ganas de aprender!",
+      es: "Todos los ingredientes de alta calidad (ceras vegetales biodegradables, esencias de alta concentración, pabilos de algodón, frascos de diseño y pigmentos) están incluidos. ¡Solo necesitás traer tu energía y ganas de aprender!",
     },
   },
   faq3: {
@@ -36,7 +36,7 @@ export const faqs_text = {
     },
     answer: {
       pt: "Sim! As alunas da Ivana Academy recebem um link com senha para entrar em contato com um canal exclusivo. Suas dúvidas de formulação, cálculo de essências ou imperfeições estéticas podem ser enviadas por foto/áudio e são respondidas pessoalmente pela Ivana Lerea.",
-      es: "¡Sí! Al iniciar recibes el contacto exclusivo premium de WhatsApp. Cualquier inquietud sobre una mezcla, aromas, problemas de fragancia o acabado estético en tus productos se puede enviar directamente con foto o audio y es respondido en horas por Ivana.",
+      es: "¡Sí! Al iniciar recibís el contacto exclusivo premium de WhatsApp. Cualquier inquietud sobre una mezcla, aromas, problemas de fragancia o acabado estético en tus productos se puede enviar directamente con foto o audio y es respondido en horas por Ivana.",
     },
   },
   faq5: {

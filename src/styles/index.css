@@ -1,10 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Fontes hospedadas no próprio site (LGPD: nada é pedido ao Google ao abrir a página). */
+@import "@fontsource/libre-caslon-text/latin-400.css";
+@import "@fontsource/libre-caslon-text/latin-400-italic.css";
+@import "@fontsource/libre-caslon-text/latin-700.css";
+@import "@fontsource/libre-caslon-text/latin-ext-400.css";
+@import "@fontsource/libre-caslon-text/latin-ext-400-italic.css";
+@import "@fontsource/libre-caslon-text/latin-ext-700.css";
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
 @import "tailwindcss";
 
 @theme {
   --font-serif: "Libre Caslon Text", serif;
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Custom "Artisanal Elegance" Color Palette Variables */
   --color-primary: #805252;
@@ -362,4 +370,19 @@
 .font-serif.font-black,
 h1.font-serif, h2.font-serif, h3.font-serif {
   font-weight: 400;
+}
+
+
+/* Acessibilidade: foco sempre visível ao navegar pelo teclado. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

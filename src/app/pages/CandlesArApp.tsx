@@ -57,7 +57,7 @@ export default function CandlesArApp() {
 
       <CandlesArNavbar onOpenPortal={() => setPortalOpen(true)} />
 
-      <main className="grow">
+      <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
 
         {/* ── HERO ── */}
         <section
@@ -124,7 +124,7 @@ export default function CandlesArApp() {
           {/* Right — image frame */}
           <div className="relative group lg:ml-6">
             <div className="absolute -inset-4 bg-primary/10 rounded-2xl -rotate-2 -z-10 group-hover:rotate-0 transition-transform duration-500" />
-            <img
+            <img fetchPriority="high" decoding="async"
               alt="Velas artesanales Ivana Academy Argentina"
               className="w-full h-[400px] md:h-[520px] object-cover rounded-xl shadow-xl group-hover:scale-[1.01] transition-transform duration-500"
               src="/images/courses/workshop-velas.jpg"
@@ -145,7 +145,7 @@ export default function CandlesArApp() {
             {/* Portrait */}
             <div className="lg:col-span-5 relative group">
               <div className="absolute -inset-3 bg-primary/10 rounded-3xl rotate-1 group-hover:rotate-0 transition-all duration-300" />
-              <img
+              <img fetchPriority="high" decoding="async"
                 alt="Ivana Lerea, Fundadora"
                 className="w-full aspect-[4/5] object-cover rounded-2xl shadow-md object-top"
                 src="/images/portfolio/ivana-retrato.jpg"

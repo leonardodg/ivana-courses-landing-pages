@@ -20,14 +20,14 @@ export const courses_text = {
   es: {
     headline: "Formaciones & Talleres",
     description:
-      "Estructura académica de primer nivel con mentorías personalizadas. Elige tu modalidad:",
+      "Estructura académica de primer nivel con mentorías personalizadas. Elegí tu modalidad:",
     badgePresencial: "Presencial",
     badgeOnline: "Online",
     duration: "Duración:",
     location: "Ubicación:",
     materials: "Materiales:",
     learnMore: "Ver Programa de Estudios",
-    enrollNow: "Inscribirme / Reservar Vacante",
+    enrollNow: "Inscribirme / Reservar Cupo",
     officialSite: "Ir al Aula Online (Plataforma de Aprendizaje)",
     syllabusTitle: "Programa de Estudio Detallado",
     materialsLabel: "Insumos / Soporte:",

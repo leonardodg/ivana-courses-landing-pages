@@ -15,6 +15,7 @@ services:
         - APP_ENV=development
         - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
         - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
+        - VITE_GA_ID=${VITE_GA_ID:-}
     env_file:
       - ../env/default.env
     environment:

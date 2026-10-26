@@ -1,5 +1,7 @@
 // src/app/hooks/useSubmitContact.ts
 
+import { trackEvent } from '../lib/analytics';
+
 export type SubmitStatus = 'idle' | 'loading' | 'success' | 'error' | 'rate_limited';
 
 export interface ContactPayload {
@@ -9,6 +11,7 @@ export interface ContactPayload {
   subject:     string;
   message:     string;
   form_source: string;
+  consent?:    string; // versão da política aceita (prova do consentimento)
 }
 
 interface SubmitResult {
@@ -84,7 +87,11 @@ export async function submitContact(payload: ContactPayload): Promise<SubmitResu
 
   try {
     const res = await postWithRetry(payload);
-    if (res.ok) return { status: 'success', cooldown: 0 };
+    if (res.ok) {
+      // Pedido de direitos LGPD não é lead de marketing.
+      if (!/^(lgpd|arrepentimiento)/.test(payload.form_source)) trackEvent('generate_lead', { form_source: payload.form_source });
+      return { status: 'success', cooldown: 0 };
+    }
     return { status: 'error', cooldown: 0 };
   } catch {
     return { status: 'error', cooldown: 0 };

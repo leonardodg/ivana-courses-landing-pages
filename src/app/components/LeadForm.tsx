@@ -32,6 +32,7 @@ import { Language, Course }          from '../classes/types';
 import { useLeadForm, sanitize }                 from '../hooks/useLeadForm';
 import { applyPhoneMask, DDI_OPTIONS }           from '../hooks/usePhoneMask';
 import { submitContact }                         from '../hooks/useSubmitContact';
+import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
 import type { SubmitStatus }                     from '../hooks/useSubmitContact';
 import { lead_text as text }                     from '../lang/lead_form';
 
@@ -183,6 +184,7 @@ export default function LeadForm({
   const [honeypot, setHoneypot] = useState('');
   const [status,   setStatus]   = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
+  const [consent, setConsent]   = useState(false);
 
   // ── Scroll automático quando curso é selecionado externamente ───────────────
   useEffect(() => {
@@ -234,6 +236,7 @@ export default function LeadForm({
         `País: ${country}`,
       ].filter(Boolean).join('\n'),
       form_source: formSource,
+      consent:     CONSENT_TEXT_VERSION,
     });
 
     setStatus(result.status);
@@ -252,6 +255,7 @@ export default function LeadForm({
 
   const btnDisabled =
     !isValid ||
+    !consent ||
     status === 'loading'    ||
     status === 'rate_limited' ||
     status === 'success';
@@ -280,7 +284,7 @@ export default function LeadForm({
       <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* ── Coluna esquerda: narrativa ───────────────────────────────────── */}
         <div className="lg:col-span-5 space-y-6">
-          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-500 bg-surface-tag px-3 py-1 rounded-full">
+          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-600 bg-surface-tag px-3 py-1 rounded-full">
             {t.badge}
           </span>
 
@@ -521,6 +525,7 @@ export default function LeadForm({
               >
                 <div className="flex gap-2">
                   <select
+                    aria-label="Código do país (DDI)"
                     value={form.ddi}
                     autoComplete="tel-country-code"
                     onChange={(e) => {
@@ -621,6 +626,7 @@ export default function LeadForm({
                     {t.labelCourse}
                   </label>
                   <select
+                    aria-label="Curso de interesse"
                     value={form.courseId}
                     onChange={(e) => setField("courseId", e.target.value)}
                     className="input-minimal font-sans"
@@ -650,6 +656,8 @@ export default function LeadForm({
                   {t.rateLimitSuffix}
                 </p>
               )}
+
+              <PrivacyConsent id="consent-lead" checked={consent} onChange={setConsent} language={language} />
 
               {/* ── Submit ─────────────────────────────────────────────────── */}
               <button

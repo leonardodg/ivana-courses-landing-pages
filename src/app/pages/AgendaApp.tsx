@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Language } from "../classes/types";
 import Footer from "../components/Footer";
+import SkipLink from "../components/SkipLink";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 
 const WHATSAPP = "5548991671659";
@@ -229,6 +230,7 @@ export default function AgendaApp() {
   return (
     <div className="flex min-h-screen flex-col justify-between bg-surface-cream font-sans text-on-surface">
       <header className="border-b border-surface-container-highest">
+        <SkipLink />
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4 md:px-16">
           <a href="/" aria-label="Ivana Academy - página inicial" className={`flex min-h-11 items-center rounded-lg ${FOCUS}`}>
             <img src="/images/logo.svg" alt="Ivana Academy" className="h-10 w-auto" />
@@ -239,8 +241,8 @@ export default function AgendaApp() {
         </div>
       </header>
 
-      <main className="grow">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-12 md:px-16 md:py-20 lg:grid-cols-12 lg:gap-16">
+      <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
+        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-8 md:px-16 md:py-20 lg:grid-cols-12 lg:gap-16">
           <aside className="min-w-0 space-y-6 lg:col-span-4">
             <div className="space-y-4 lg:sticky lg:top-8">
               <p className="flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-[0.05em] text-tertiary">
@@ -253,6 +255,11 @@ export default function AgendaApp() {
                 Datas, horários e endereços sempre atualizados. Escolha a sua turma e garanta a vaga pelo
                 WhatsApp.
               </p>
+
+              {/* Ação principal visível sem rolar, também no celular */}
+              <a href={whatsappGeneral} target="_blank" rel="noopener noreferrer" className={`${BTN_SECONDARY} inline-flex`}>
+                <MessageCircle className="h-4 w-4" aria-hidden /> Falar com a Ivana
+              </a>
 
               {cities.length > 1 && (
                 <div
@@ -278,9 +285,6 @@ export default function AgendaApp() {
                 </div>
               )}
 
-              <a href={whatsappGeneral} target="_blank" rel="noopener noreferrer" className={`${BTN_SECONDARY} hidden lg:inline-flex`}>
-                <MessageCircle className="h-4 w-4" aria-hidden /> Falar com a Ivana
-              </a>
             </div>
           </aside>
 

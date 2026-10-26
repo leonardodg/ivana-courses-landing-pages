@@ -25,12 +25,12 @@ export const why_section_text = {
       "No copiamos recetas de internet. Estudiamos las bases químicas de ceras vegetales, pabilos, saponificación botánica y fijadores aromáticos de nivel boutique.",
     point2Title: "Certificado Oficial Ivana Academy",
     point2Desc:
-      "Construye credibilidad real. Al terminar los cursos online y los talleres presenciales, recibes el certificado oficial de Ivana Academy.",
+      "Construí credibilidad real. Al terminar los cursos online y los talleres presenciales, recibís el certificado oficial de Ivana Academy.",
     point3Title: "Formación para Negocios",
     point3Desc:
       "Entendemos el mercado. Aprenderás finanzas, diseño de empaques atractivos, estrategias para revendedores y marketing digital enfocado en ventas rápidas.",
-    point4Title: "Mentoria VIP por WhatsApp",
+    point4Title: "Mentoría VIP por WhatsApp",
     point4Desc:
-      "Nunca estarás sola. Resuelve cualquier duda de mezclado, cristalización de ceras o control olfativo mediante notas de audio directas con la profesora.",
+      "Nunca estarás sola. Resolvé cualquier duda de mezclado, cristalización de ceras o control olfativo mediante notas de audio directas con la profesora.",
   },
 };

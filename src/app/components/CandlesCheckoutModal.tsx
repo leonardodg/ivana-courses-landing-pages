@@ -6,6 +6,7 @@
 // banco: ela coleta nome/e-mail/telefone/cupom e abre o WhatsApp com esses
 // dados, para a venda ser fechada direto com a equipe comercial.
 
+import { trackOutbound } from '../lib/analytics';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CreditCard, Tag, Check, X, GraduationCap } from 'lucide-react';
@@ -58,6 +59,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
       `Protocolo: ${protocol}`,
     ].filter(Boolean).join('\n');
 
+    trackOutbound(`https://wa.me/${WHATSAPP_NUMBER}`);
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
       '_blank',
@@ -110,7 +112,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                     {course.modalidade === 'presencial' ? 'Presencial' : 'Online'}
                   </span>
                   <h4 className="font-display text-sm font-bold text-on-surface mt-1">{course.title.pt}</h4>
-                  <span className="text-[11px] text-on-surface-variant/70 font-body">{course.duracao.pt}</span>
+                  <span className="text-[11px] text-on-surface-variant font-body">{course.duracao.pt}</span>
                 </div>
               </div>
 
@@ -154,6 +156,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                   </label>
                   <div className="flex gap-2">
                     <select
+                      aria-label="Código do país (DDI)"
                       value={ddi}
                       onChange={(e) => { setDdi(e.target.value); setUserPhone(''); }}
                       className="bg-surface-container-low border border-outline-variant/50 rounded-lg p-3 text-sm text-on-surface w-24 shrink-0 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"

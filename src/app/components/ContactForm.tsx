@@ -8,6 +8,7 @@ import { applyPhoneMask, DDI_OPTIONS }       from '../hooks/usePhoneMask';
 import { submitContact }                     from '../hooks/useSubmitContact';
 import type { SubmitStatus }                 from '../hooks/useSubmitContact';
 import { contact_form_text as text }         from '../lang/contact_form';
+import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus]     = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
+  const [consent, setConsent]   = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -74,9 +76,11 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
       full_name:   sanitize(form.fullName, 150),
       email:       sanitize(form.email, 254).toLowerCase(),
       phone:       `${form.ddi} ${form.phone.replace(/\D/g, '')}`,
-      subject:     sanitize(form.subject, 255),
+      // Sem campo de assunto (formulário curto): o assunto vem do início da mensagem.
+      subject:     sanitize(`${language === 'es' ? 'Contacto' : 'Contato'}: ${form.message.slice(0, 60)}`, 255),
       message:     sanitize(form.message, 2000),
       form_source: coursePage,
+      consent:     CONSENT_TEXT_VERSION,
     });
 
     setStatus(result.status);
@@ -94,6 +98,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
 
   const btnDisabled =
     !isValid ||
+    !consent ||
     status === 'loading' ||
     status === 'rate_limited' ||
     status === 'success';
@@ -119,7 +124,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
         {/* ── Left column: narrative ─────────────────────────────────────── */}
         <div className="lg:col-span-5 space-y-6">
 
-          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-500 bg-surface-tag px-3 py-1 rounded-full">
+          <span className="text-xs font-mono font-bold tracking-widest uppercase text-gray-600 bg-surface-tag px-3 py-1 rounded-full">
             {t.badge}
           </span>
 
@@ -214,6 +219,7 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                 >
                   <div className="flex gap-2">
                     <select
+                      aria-label="Código do país (DDI)"
                       value={form.ddi}
                       autoComplete="tel-country-code"
                       onChange={e => { setField('ddi', e.target.value); setField('phone', ''); }}
@@ -237,19 +243,6 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                   </div>
                 </Field>
               </div>
-
-              {/* Assunto */}
-              <Field label={t.labelSubject}>
-                <input
-                  type="text"
-                  maxLength={255}
-                  value={form.subject}
-                  placeholder={t.placeholderSubject}
-                  onChange={e => setField('subject', e.target.value)}
-                  onBlur={() => blurField('subject')}
-                  className="input-minimal"
-                />
-              </Field>
 
               {/* Mensagem */}
               <Field
@@ -281,6 +274,8 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
                   {t.rateLimitMsg} {cooldown}{t.rateLimitSuffix}
                 </p>
               )}
+
+              <PrivacyConsent id="consent-contact" checked={consent} onChange={setConsent} language={language} />
 
               {/* Submit */}
               <button
