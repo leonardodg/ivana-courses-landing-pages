@@ -72,6 +72,7 @@ export const privacidade: LegalDoc = {
           <Ul
             items={[
               'Provedores de hospedagem e automação do nosso atendimento (servidores da Ivana Academy e ferramenta de fluxos que recebe os formulários);',
+              'Cloudflare, que entrega e protege o site (rede de distribuição e segurança) e mede o desempenho das páginas;',
               'Meios de pagamento da loja (Mercado Pago), que tratam os dados de pagamento sob a política deles;',
               'WhatsApp (Meta), quando você fala conosco por lá;',
               'Google, apenas se você aceitar os cookies de estatísticas;',
@@ -114,6 +115,7 @@ export const privacidade: LegalDoc = {
             items={[
               <><strong>Essenciais (sempre ativos):</strong> guardam a sua escolha de cookies (<code>ivana-consent</code>) e uma cópia da agenda pública de turmas (<code>ivana-agenda-v1</code>) para o site carregar mais rápido. Não identificam você.</>,
               <><strong>Estatísticas (só com o seu aceite):</strong> cookies do Google Analytics 4 (<code>_ga</code>, <code>_ga_*</code>), com validade de até 2 anos. Se você recusar ou retirar o aceite, eles não são carregados e os já criados são apagados.</>,
+              <><strong>Medição de desempenho (Cloudflare Web Analytics):</strong> a Cloudflare, que entrega o site, mede o tempo de carregamento e as visitas de forma agregada. Segundo a própria Cloudflare, esse serviço não usa cookies nem identifica você individualmente; por isso funciona sem pedir consentimento. Você pode se opor pelo e-mail de privacidade.</>,
               <><strong>Publicidade:</strong> não usamos cookies de publicidade nem pixels de redes sociais neste site.</>,
             ]}
           />
