@@ -12,7 +12,7 @@ export const courses_text = {
     materials: { pt: "Inclusos no valor", es: "Incluidos en el precio" },
     description: {
       pt: "O curso presencial de imersão mais completo do Brasil. Aprenda de forma prática do absoluto zero a produzir velas aromáticas, terapêuticas, moldáveis, velas gourmet, wax melts e velas para massagens ricas em detalhes visuais e de aroma primoroso.",
-      es: "El curso de inmersión presencial más completo de Brasil. Aprende de forma práctica desde cero a producir velas aromáticas, terapéuticas, con moldes, velas gourmet, wax melts y velas para masajes con un diseño y aroma de lujo.",
+      es: "El curso de inmersión presencial más completo de Brasil. Aprendé de forma práctica desde cero a producir velas aromáticas, terapéuticas, con moldes, velas gourmet, wax melts y velas para masajes con un diseño y aroma de lujo.",
     },
     features: {
       pt: [
@@ -35,7 +35,7 @@ export const courses_text = {
   candle_workshop_br: {
     title: {
       pt: "Workshop Presencial de Velas",
-      es: "Workshop Presencial de Velas",
+      es: "Taller Presencial de Velas",
     },
     duration: { pt: "1 dia (4 horas)", es: "1 día (4 horas)" },
     location: {
@@ -116,7 +116,7 @@ export const courses_text = {
     },
     description: {
       pt: "Estude o desenvolvimento acadêmico do design de velas: aromáticas, terapêuticas, moldáveis, wax melts, velas massagens, gourmet, gel de parafina cristal, técnicas coreanas minimalistas e moldagem em base de cimento.",
-      es: "La tecnicatura más completa. Aprende sobre cera vegetal, de abejas y gel coreano, técnicas de vaciado, moldes de cemento, velas gourmet, gel transparente con encapsulado y velas de diseño contemporáneo.",
+      es: "La tecnicatura más completa. Aprendé sobre cera vegetal, de abejas y gel coreano, técnicas de vaciado, moldes de cemento, velas gourmet, gel transparente con encapsulado y velas de diseño contemporáneo.",
     },
     features: {
       pt: [
@@ -150,7 +150,7 @@ export const courses_text = {
     },
     description: {
       pt: "Aprenda do extremo zero a produzir suas velas profissionais com qualidade de boutique. Inclui técnicas completas de cera vegana de soja, aditivos naturais, essências hidrossolúveis e bônus incríveis como vela decorativa Oratório em resina.",
-      es: "Descubre cómo crear tu propia marca de velas Premium desde casa. Incluye clases paso a paso de velas de cera de soya 100% natural, velas de masaje, velas de parafina en gel transparente y un módulo extra de velas Oratorio con resina.",
+      es: "Descubrí cómo crear tu propia marca de velas Premium desde casa. Incluye clases paso a paso de velas de cera de soya 100% natural, velas de masaje, velas de parafina en gel transparente y un módulo extra de velas Oratorio con resina.",
     },
     features: {
       pt: [
@@ -173,7 +173,7 @@ export const courses_text = {
       pt: "Curso Presencial de Saboaria Natural",
       es: "Curso Presencial de Jabonería Natural",
     },
-    duration: { pt: "4 horas Intensivo", es: "4 horas Intensivo" },
+    duration: { pt: "4 horas Intensivo", es: "4 horas intensivas" },
     location: {
       pt: "*Florianópolis, SC, Brasil (Atelier Central)",
       es: "*Florianópolis, SC, Brasil (Taller Central)",
@@ -184,7 +184,7 @@ export const courses_text = {
     },
     description: {
       pt: 'Aprenda do zero absoluto a criar sabonetes artesanais e 100% naturais. Trabalharemos com bases vegetais prontas com o método glicerinado "Melt & Pour" (derreter e verter), além de desenvolver extratos e tinturas fitoterápicas aromáticas.',
-      es: 'Aprende desde cero absoluto a diseñar jabones terapéuticos 100% naturales. Utilizaremos el método "Melt and Pour" (derretir y verter) con ingredientes naturales, arcillas depurativas, exfoliantes, extractos y tinturas madre fitoterapia.',
+      es: 'Aprendé desde cero absoluto a diseñar jabones terapéuticos 100% naturales. Utilizaremos el método "Melt and Pour" (derretir y verter) con ingredientes naturales, arcillas depurativas, exfoliantes, extractos y tinturas madre fitoterapia.',
     },
     features: {
       pt: [
@@ -218,7 +218,7 @@ export const courses_text = {
     },
     description: {
       pt: "Leve bem-estar para suas clientes com sabonetes clássicos, esfoliantes, fitoterápicos, hidratantes e rejuvenescedores. Você irá dominar a criação de receitas exclusivas, sabonetes botânicos e tintura-mãe hidratante.",
-      es: "Comienza hoy un negocio de bienestar en auge. Domina jabones tradicionales, faciales de arcilla, exfoliantes rústicos, hidratantes de avena y líneas fitoterapéuticas con recetas personalizadas y extractos hechos en casa.",
+      es: "Comenzá hoy un negocio de bienestar en auge. Dominá jabones tradicionales, faciales de arcilla, exfoliantes rústicos, hidratantes de avena y líneas fitoterapéuticas con recetas personalizadas y extractos hechos en casa.",
     },
     features: {
       pt: [
@@ -241,7 +241,7 @@ export const courses_text = {
       pt: "Curso Presencial de Resina Epóxi e Encapsulados",
       es: "Curso Presencial de Resina Epoxi y Encapsulados",
     },
-    duration: { pt: "5 horas Intensivas", es: "5 horas Intensivas" },
+    duration: { pt: "5 horas Intensivas", es: "5 horas intensivas" },
     location: {
       pt: "*Florianópolis, SC, Brasil (Atelier Central)",
       es: "*Florianópolis, SC, Brasil (Taller Central)",
@@ -252,7 +252,7 @@ export const courses_text = {
     },
     description: {
       pt: "Técnica passo a passo para trabalhar com segurança usando resina epóxi premium. Aprenda a escolher a viscosidade ideal de resina para chaveiros, canetas personalizadas, bandejas de luxo, porta-copos e técnicas de flores encapsuladas.",
-      es: "Aprende a formular y vaciar resina epoxi de alta gama con protección UV. Te enseñaremos a seleccionar viscosidades para llaveros personalizados, marcapáginas, canetas decoradas, posavasos y encapsulado eterno de flores.",
+      es: "Aprendé a formular y vaciar resina epoxi de alta gama con protección UV. Te enseñaremos a seleccionar viscosidades para llaveros personalizados, marcapáginas, canetas decoradas, posavasos y encapsulado eterno de flores.",
     },
     features: {
       pt: [
@@ -286,7 +286,7 @@ export const courses_text = {
     },
     description: {
       pt: "Os cursos de Macramê são desenhados tanto para iniciantes absolutos quanto para experientes. Você pode trazer um design próprio que tenha visto e queira modelar, e Ivana guiará o nó-a-nó até concluir seu lindo vaso de macramê ou peça de parede decorativa.",
-      es: "Taller personalizado y cercano. Diseñado para principiantes y avanzadas: puedes traer un proyecto exclusivo que te encante y yo te ayudo a tejerlo paso a paso. Domina nudos llanos, alondras, festones y flecos perfectos.",
+      es: "Taller personalizado y cercano. Diseñado para principiantes y avanzadas: podés traer un proyecto exclusivo que te encante y yo te ayudo a tejerlo paso a paso. Dominá nudos llanos, alondras, festones y flecos perfectos.",
     },
     features: {
       pt: [
@@ -307,7 +307,7 @@ export const courses_text = {
   incense_in_personal_br: {
     title: {
       pt: "Curso Presencial de Incensaria Natural Seca",
-      es: "Curso Presencial de Incensaria Natural Seca",
+      es: "Curso Presencial de Sahumerios e Inciensos Naturales Secos",
     },
     duration: { pt: "3 horas de Prática", es: "3 horas de Taller" },
     location: {
@@ -354,7 +354,7 @@ export const courses_text = {
     },
     description: {
       pt: "Formulação prática onde você aprende a produzir e leva de imediato para casa uma linha completa de Home Spray premium, Body Splash refrescante, Água aromática para tecidos, Sachê perfumado delicado, e difusores para varetas e carro.",
-      es: "Aprende perfumería de ambientes de calidad profesional. Elaborarás y te llevarás a casa un set completo: Home Spray de alta persistencia, Body Splash hidratante, agua perfumada de planchado, saquito aromático y difusor de varitas.",
+      es: "Aprendé perfumería de ambientes de calidad profesional. Elaborarás y te llevarás a casa un set completo: Home Spray de alta persistencia, Body Splash hidratante, agua perfumada de planchado, saquito aromático y difusor de varitas.",
     },
     features: {
       pt: [
@@ -388,7 +388,7 @@ export const courses_text = {
     },
     description: {
       pt: "Aprenda do conforto de sua casa. Vídeos detalhados e apostila técnica completa com o passo a passo com fórmulas exatas para fazer Home Spray de longa duração, difusores duradouros e body splash.",
-      es: "Inicia tu marca de marketing olfativo para locales y hogares. Aprende paso a paso en línea la formulación matemática de home spray ultra concentrados, difusores de varitas de lenta evaporación y body splash sedosos.",
+      es: "Iniciá tu marca de marketing olfativo para locales y hogares. Aprendé paso a paso en línea la formulación matemática de home spray ultra concentrados, difusores de varitas de lenta evaporación y body splash sedosos.",
     },
     features: {
       pt: [

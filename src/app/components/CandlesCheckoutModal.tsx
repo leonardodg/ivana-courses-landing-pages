@@ -110,7 +110,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                     {course.modalidade === 'presencial' ? 'Presencial' : 'Online'}
                   </span>
                   <h4 className="font-display text-sm font-bold text-on-surface mt-1">{course.title.pt}</h4>
-                  <span className="text-[11px] text-on-surface-variant/70 font-body">{course.duracao.pt}</span>
+                  <span className="text-[11px] text-on-surface-variant font-body">{course.duracao.pt}</span>
                 </div>
               </div>
 
@@ -154,6 +154,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                   </label>
                   <div className="flex gap-2">
                     <select
+                      aria-label="Código do país (DDI)"
                       value={ddi}
                       onChange={(e) => { setDdi(e.target.value); setUserPhone(''); }}
                       className="bg-surface-container-low border border-outline-variant/50 rounded-lg p-3 text-sm text-on-surface w-24 shrink-0 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all"

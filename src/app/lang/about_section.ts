@@ -22,9 +22,9 @@ export const about_text = {
     tag: "La Especialista Detrás de las Artes",
     title: "Ivana Lerea",
     subtitle:
-      "Artesana calificada, Emprendedora y Mentora de más de 2,000 alumnas.",
+      "Artesana calificada, Emprendedora y Mentora de más de 2.000 alumnas.",
     bio1: "Desde hace más de 6 años, Ivana Lerea transforma la vida de mujeres creativas en América Latina a través del desarrollo y perfeccionamiento técnico de artes manuales premium. Especialista bilingüe con validez internacional, dicta workshops inmersivos continuos en Florianópolis (su sede central), Curitiba, Río de Janeiro y múltiples ciudades en la República Argentina.",
-    bio2: "Su verdadero diferencial diferencial radica en que, además de enseñarte la alquimia detrás de fragancias, jabones o moldes de resina, te prepara profesionalmente para el mercado real. Aprenderás a definir tu marca, conseguir clientes y estructurar tu rentabilidad para comercializar tus colecciones de inmediato de forma rentable.",
+    bio2: "Su verdadero diferencial radica en que, además de enseñarte la alquimia detrás de fragancias, jabones o moldes de resina, te prepara profesionalmente para el mercado real. Aprenderás a definir tu marca, conseguir clientes y estructurar tu rentabilidad para comercializar tus colecciones de inmediato de forma rentable.",
     boxATitle: "Certificación Internacional",
     boxADesc:
       "Títulos oficiales avalados que respaldan tus talleres ante clientes.",
@@ -35,7 +35,7 @@ export const about_text = {
     boxCDesc: "Una red activa en constante crecimiento compartiendo éxitos.",
     boxDTitle: "Foco en Negocios",
     boxDDesc:
-      "Aprende a calcular costos, diseñar empaques de lujo y ganar dinero rápido.",
+      "Aprendé a calcular costos, diseñar empaques de lujo y ganar dinero rápido.",
     imageFrase:
       '"El arte es el desbordamiento de nuestra mejor energía, moldeada a mano."',
   },

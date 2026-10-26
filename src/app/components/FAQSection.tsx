@@ -42,6 +42,9 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
                 className="bg-surface-hero rounded-xl overflow-hidden border border-muted transition-all"
               >
                 <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${f.id}`}
                   onClick={() => toggleFaq(f.id)}
                   className="w-full text-left p-5 md:p-6 flex items-center justify-between gap-4 font-serif font-bold text-gray-950 text-sm md:text-base cursor-pointer hover:bg-surface-hero/70 transition-colors"
                 >
@@ -54,7 +57,7 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-on-surface-variant leading-relaxed border-t border-muted pt-4 animate-fade-in bg-white">
+                  <div id={`faq-panel-${f.id}`} className="px-5 md:px-6 pb-6 text-xs md:text-sm text-on-surface-variant leading-relaxed border-t border-muted pt-4 animate-fade-in bg-white">
                     {f.answer[language]}
                   </div>
                 )}

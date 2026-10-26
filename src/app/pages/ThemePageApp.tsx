@@ -5,9 +5,7 @@ import { useState } from 'react';
 import { CalendarDays, SquarePen } from 'lucide-react';
 import { Language } from '../classes/types';
 import { presencial_themes, PresencialTheme, WHATSAPP_URL } from '../data/presencial';
-import { reviews_list_br } from '../data/reviews';
 import CandlesNavbar from '../components/CandlesNavbar';
-import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import {
@@ -68,10 +66,10 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       <CandlesNavbar />
 
-      <main className="grow">
+      <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura */}
         <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-hero-bg">
-          <img src={cfg.heroImage} alt={cfg.title} className="absolute inset-0 w-full h-full object-cover opacity-85" />
+          <img fetchPriority="high" decoding="async" src={cfg.heroImage} alt={cfg.title} className="absolute inset-0 w-full h-full object-cover opacity-85" />
           <div className="absolute inset-0 bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
           <div className="relative z-10 px-6 md:px-12 pt-28 pb-12 max-w-[1280px] mx-auto w-full space-y-5">
             <span className="inline-block bg-white/95 border border-subtle px-3.5 py-1.5 rounded-full text-micro uppercase font-mono tracking-widest text-primary font-semibold">
@@ -104,7 +102,7 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
         <ComoFuncionaSection />
         <InclusoSection />
         <LocaisSection />
-        <ReviewsCarousel language="pt" reviews={reviews_list_br} />
+        {/* Prova social: os depoimentos atuais são sobre velas; entram aqui só depoimentos reais e autorizados do tema. */}
         <FAQSection language="pt" faqs={faqs_presencial} />
 
         {/* 10. Contato */}

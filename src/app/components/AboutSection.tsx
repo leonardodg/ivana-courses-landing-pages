@@ -15,7 +15,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
         {/* Left Side: Photo Column */}
         <div className="lg:col-span-5 relative">
           <div className="aspect-[3/4] max-w-[420px] mx-auto rounded-2xl overflow-hidden shadow-lg border border-faint relative z-10 bg-surface-hero">
-            <img
+            <img loading="lazy" decoding="async"
               alt="Ivana Lerea - Mentora"
               className="w-full h-full object-cover select-none"
               src="/images/portfolio/ivana-servindo-cera.jpg"

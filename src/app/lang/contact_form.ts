@@ -42,10 +42,10 @@ export const contact_form_text = {
     errMessageLong: "Máximo 2000 caracteres",
   },
   es: {
-    badge: "Contáctanos",
-    headline: "Envía un mensaje a nuestro equipo",
+    badge: "Contactanos",
+    headline: "Enviá un mensaje a nuestro equipo",
     subtitle:
-      "Completa el formulario y te responderemos en hasta 24h por e-mail o WhatsApp.",
+      "Completá el formulario y te responderemos en hasta 24h por e-mail o WhatsApp.",
     trustDirect: "Atención Directa",
     trustDirectDesc:
       "Tu mensaje llega directamente al equipo de Ivana Lerea, quien responde en formato de consultoría gratuita.",
@@ -54,7 +54,7 @@ export const contact_form_text = {
       "Respondemos todos los mensajes en hasta 24h hábiles por e-mail o WhatsApp.",
     labelName: "Nombre completo",
     labelEmail: "Correo electrónico",
-    labelPhone: "Número WhatsApp / Celular",
+    labelPhone: "Número de WhatsApp / Celular",
     labelSubject: "Asunto",
     labelMessage: "Mensaje",
     placeholderName: "Tu nombre completo",
@@ -70,8 +70,8 @@ export const contact_form_text = {
     successTitle: "¡Mensaje recibido!",
     successDesc: "Te responderemos pronto al correo",
     errorMsg:
-      "No se pudo enviar tras 3 intentos. Inténtalo de nuevo o contáctanos por WhatsApp.",
-    rateLimitMsg: "Demasiados intentos. Espera",
+      "No se pudo enviar tras 3 intentos. Intentalo de nuevo o contactanos por WhatsApp.",
+    rateLimitMsg: "Demasiados intentos. Esperá",
     rateLimitSuffix: "s antes de intentar de nuevo.",
     charCount: "/ 2000",
     errNameShort: "El nombre debe tener al menos 2 caracteres",

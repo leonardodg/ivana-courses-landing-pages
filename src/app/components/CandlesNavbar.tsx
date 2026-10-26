@@ -6,6 +6,7 @@
 // Velas / PT-BR, então exibir esses seletores como inertes confundiria
 // o visitante. Mantém o link de contato e o link para a plataforma.
 
+import SkipLink from './SkipLink';
 import { useState } from 'react';
 import { Menu, X, PhoneCall, Link2, Award, GraduationCap, SquarePen } from 'lucide-react';
 
@@ -14,6 +15,7 @@ export default function CandlesNavbar() {
 
   return (
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
+      <SkipLink />
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo */}
         <a href="/" aria-label="Ivana Academy - página inicial" className="flex items-center gap-3 px-2">
@@ -39,6 +41,8 @@ export default function CandlesNavbar() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={menuOpen}
             className="md:hidden text-gray-700 hover:text-primary p-1"
           >
             {menuOpen ? (

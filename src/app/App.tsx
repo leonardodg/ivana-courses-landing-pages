@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Course,
   CategorySpec,
@@ -21,11 +21,15 @@ import ReviewsCarousel from "./components/ReviewsCarousel";
 import FAQSection from "./components/FAQSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
+import { setPageLanguage } from "./lib/lang";
 
 import { Menu, SquarePen } from "lucide-react";
 
 export default function App() {
   const [language, setLanguage] = useState<Language>("pt");
+
+  // Mantém <html lang> e os componentes compartilhados (cookies, atalho) no idioma escolhido.
+  useEffect(() => setPageLanguage(language), [language]);
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null); // null = todos os cards, sem filtro (primeiro acesso)
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
@@ -66,14 +70,14 @@ export default function App() {
       />
 
       {/* Main Sections */}
-      <main className="grow">
+      <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* Dynamic Category Hero Section incorporating the unique specifications of each segment */}
         <section
           className={`relative min-h-[90vh] md:min-h-[85vh] overflow-hidden transition-all duration-700 bg-gradient-to-b ${activeCategory.heroBgClass}`}
         >
           {/* Cover photo behind */}
           <div className="absolute inset-0 z-0">
-            <img
+            <img fetchPriority="high" decoding="async"
               alt={heroContent.title[language]}
               className="w-full h-full object-cover opacity-85 select-none"
               src={heroContent.imageUrl}
@@ -126,7 +130,7 @@ export default function App() {
             {/* Right: Photo Frame */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
-              <img
+              <img fetchPriority="high" decoding="async"
                 alt="Ivana Lerea segurando velas artesanais feitas na aula"
                 className="relative z-10 w-full h-[420px] md:h-[540px] rounded-xl shadow-xl border border-slate-200 object-cover object-top"
                 src="/images/ivana-com-velas.jpg"
@@ -142,7 +146,7 @@ export default function App() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 2.000+
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsAlunas}
               </span>
             </div>
@@ -150,7 +154,7 @@ export default function App() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 6+ Anos
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsExp}
               </span>
             </div>
@@ -158,7 +162,7 @@ export default function App() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 BR &amp; AR
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsPort}
               </span>
             </div>

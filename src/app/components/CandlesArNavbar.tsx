@@ -2,6 +2,7 @@
 // Navbar dedicada da página /es_ar/candles — fixo em ES-AR.
 // Visual inspirado no protótipo (links de seção desktop, botão portal).
 
+import SkipLink from './SkipLink';
 import { useState } from 'react';
 import { School, Menu, X, GraduationCap } from 'lucide-react';
 
@@ -14,10 +15,11 @@ export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) 
 
   return (
     <header className="fixed top-0 w-full z-50 bg-surface-cream/95 backdrop-blur-md border-b border-subtle shadow-xs transition-all">
+      <SkipLink />
       <nav className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
 
         {/* Logo and Brand */}
-        <a href="/" aria-label="Ivana Academy - página inicial" className="flex items-center gap-3 px-2">
+        <a href="/" aria-label="Ivana Academy - página de inicio" className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
@@ -42,6 +44,8 @@ export default function CandlesArNavbar({ onOpenPortal }: CandlesArNavbarProps) 
           </a>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={menuOpen}
             className="md:hidden text-on-surface-variant hover:text-primary p-1"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

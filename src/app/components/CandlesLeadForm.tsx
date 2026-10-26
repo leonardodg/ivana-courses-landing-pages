@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, CheckCircle, Copy, Sparkles, Mail, Phone, MapPin } from 'lucide-react';
 import { submitContact } from '../hooks/useSubmitContact';
+import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
 import { sanitize } from '../hooks/useContactForm';
 import { applyPhoneMask, DDI_OPTIONS } from '../hooks/usePhoneMask';
@@ -33,6 +34,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
   const [interest, setInterest] = useState(t.formInterestOptions[0]);
   const [status, setStatus] = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
+  const [consent, setConsent] = useState(false);
   const [generatedCoupon, setGeneratedCoupon] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -43,7 +45,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || phoneError || submitting) return;
+    if (!name || !email || phoneError || submitting || !consent) return;
 
     setStatus('loading');
 
@@ -56,6 +58,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
       subject: `Lead — cupom de boas-vindas (${interest})`,
       message: `Lead capturado na página de velas ${country}. Interesse: ${interest}. Cupom gerado: ${couponCode}.`,
       form_source: formSource,
+      consent: CONSENT_TEXT_VERSION,
     });
 
     if (result.status === 'success') {
@@ -159,7 +162,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder={t.formNamePlaceholder}
-                        className="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
+                        className="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
                       />
                     </div>
 
@@ -175,7 +178,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder={t.formEmailPlaceholder}
-                        className="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
+                        className="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
                       />
                     </div>
 
@@ -185,6 +188,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                       </label>
                       <div className="flex gap-2">
                         <select
+                          aria-label="Código do país (DDI)"
                           value={ddi}
                           onChange={(e) => { setDdi(e.target.value); setPhone(''); }}
                           className="bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface w-28 shrink-0 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
@@ -202,7 +206,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                           onChange={(e) => setPhone(applyPhoneMask(e.target.value, ddi))}
                           onBlur={() => setPhoneTouched(true)}
                           placeholder={t.formPhonePlaceholder}
-                          className="flex-1 bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
+                          className="flex-1 bg-surface-container-low border border-outline-variant/50 rounded-xl p-4 text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300"
                         />
                       </div>
                       {phoneTouched && phoneError && (
@@ -235,9 +239,11 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                       </p>
                     )}
 
+                    <PrivacyConsent id="consent-cupom" checked={consent} onChange={setConsent} language={country === 'AR' ? 'es' : 'pt'} />
+
                     <button
                       type="submit"
-                      disabled={submitting || status === 'rate_limited' || !!phoneError}
+                      disabled={submitting || status === 'rate_limited' || !!phoneError || !consent}
                       className="w-full bg-primary hover:bg-primary/95 text-on-primary py-4 rounded-xl text-sm uppercase tracking-wider font-label font-bold shadow-md shadow-primary/10 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-75 disabled:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
                     >
                       <Send className="w-4.5 h-4.5" />

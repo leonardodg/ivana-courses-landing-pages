@@ -14,6 +14,7 @@ services:
       args:
         - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
         - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
+        - VITE_GA_ID=${VITE_GA_ID:-}
     image: leodg/courses-landing-pages:main
     container_name: courses-nginx
     restart: unless-stopped
