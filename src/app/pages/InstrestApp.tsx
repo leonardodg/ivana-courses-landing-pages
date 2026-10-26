@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setPageLanguage } from "../lib/lang";
 import {
   Course,
   CategorySpec,
@@ -25,6 +26,7 @@ import { Menu, SquarePen } from "lucide-react";
 export default function InstrestApp() {
   const [checkoutCoupon, setCheckoutCoupon] = useState("");
   const [language, setLanguage] = useState<Language>("pt");
+  useEffect(() => setPageLanguage(language), [language]);
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("velas");
   const [selectedCourseForForm, setSelectedCourseForForm] =
     useState<Course | null>(null);
@@ -61,14 +63,14 @@ export default function InstrestApp() {
       />
 
       {/* Main Sections */}
-      <main className="grow">
+      <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* Dynamic Category Hero Section incorporating the unique specifications of each segment */}
         <section
           className={`relative min-h-[90vh] md:min-h-[85vh] overflow-hidden transition-all duration-700 bg-gradient-to-b ${activeCategory.heroBgClass}`}
         >
           {/* Cover photo behind */}
           <div className="absolute inset-0 z-0">
-            <img
+            <img fetchPriority="high" decoding="async"
               alt={heroContent.title[language]}
               className="w-full h-full object-cover opacity-85 select-none"
               src={heroContent.imageUrl}
@@ -121,7 +123,7 @@ export default function InstrestApp() {
             {/* Right: Photo Frame */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
-              <img
+              <img fetchPriority="high" decoding="async"
                 alt="Ivana Lerea segurando velas artesanais feitas na aula"
                 className="relative z-10 w-full h-[420px] md:h-[540px] rounded-xl shadow-xl border border-slate-200 object-cover object-top"
                 src="/images/ivana-com-velas.jpg"
@@ -137,7 +139,7 @@ export default function InstrestApp() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 2.000+
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsAlunas}
               </span>
             </div>
@@ -145,7 +147,7 @@ export default function InstrestApp() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 6+ Anos
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsExp}
               </span>
             </div>
@@ -153,7 +155,7 @@ export default function InstrestApp() {
               <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
                 BR &amp; AR
               </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-500 block">
+              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
                 {courses_text.statsPort}
               </span>
             </div>

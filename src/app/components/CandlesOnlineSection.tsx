@@ -70,7 +70,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
               >
                 {/* Thumbnail */}
                 <div className="w-full sm:w-56 md:w-64 shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden relative">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={img}
                     alt={course.title.pt}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -161,7 +161,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
           <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl border border-gray-200">
 
             <div className="relative aspect-[16/7] bg-gray-200">
-              <img
+              <img loading="lazy" decoding="async"
                 src={IMAGES[selectedCourse.id] ?? '/images/courses/velas-pavio-madeira.jpg'}
                 alt=""
                 className="w-full h-full object-cover"
@@ -203,7 +203,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
             <div className="bg-surface-cream border-t border-muted px-6 py-4 flex justify-between items-center gap-4">
               <button
                 onClick={() => setSelectedCourse(null)}
-                className="text-xs font-bold text-gray-500 hover:text-gray-800 uppercase tracking-widest cursor-pointer"
+                className="text-xs font-bold text-gray-600 hover:text-gray-800 uppercase tracking-widest cursor-pointer"
               >
                 Fechar
               </button>

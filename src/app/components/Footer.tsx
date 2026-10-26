@@ -1,6 +1,9 @@
 import { Language } from "../classes/types";
 
 import { footer_text as text } from "../lang/footer";
+import { company, legalLinks } from "../legal/company";
+import { site_link_groups } from "../data/site_links";
+import { openCookiePreferences } from "../lib/consent";
 
 interface FooterProps {
   language: Language;
@@ -14,70 +17,60 @@ export default function Footer({ language, setLanguage }: FooterProps) {
     <footer className="bg-surface-hero border-t border-subtle py-12 md:py-16 text-xs text-on-surface-variant">
       <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         {/* Card 1: Description */}
-        <div className="md:col-span-6 space-y-4">
-          <img
+        <div className="md:col-span-12 lg:col-span-3 space-y-4">
+          <img loading="lazy" decoding="async"
             alt="Ivana Academy"
             className="h-22 w-auto object-contain"
-            src="/images/logo-square.svg"
+            src="/images/logo-square.png"
           />
           <p className="max-w-md leading-relaxed">{footer_text.about}</p>
+          <p className="leading-relaxed">{footer_text.addressBR} · {footer_text.addressAR}</p>
         </div>
 
-        {/* Card 2: Links */}
-        <div className="md:col-span-3 space-y-3">
-          <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">
-            {footer_text.platformLinks}
-          </span>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="#cursos"
-                className="hover:text-primary transition-colors"
-              >
-                {footer_text.coursesLabel}
-              </a>
-            </li>
-            <li>
-              <a href="#sobre" className="hover:text-primary transition-colors">
-                {footer_text.aboutLabel}
-              </a>
-            </li>
-            <li>
-              <a href="/interest" className="hover:text-primary transition-colors">
-                {footer_text.interestLabel}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contato"
-                className="hover:text-primary transition-colors"
-              >
-                {footer_text.contactLabel}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Card 3: Contact */}
-        <div className="md:col-span-3 space-y-3">
-          <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">
-            {footer_text.contact}
-          </span>
-          <p className="leading-relaxed">
-            {footer_text.addressBR} <br />
-            {footer_text.addressAR} <br />
-            <span className="font-bold text-primary mt-1 block">
-              {footer_text.platform}
-              <a href={footer_text.platformUrl} target="_blank">
-                {footer_text.platformText}
-              </a>
+        {/* Grupos de links do projeto */}
+        {site_link_groups.map((group) => (
+          <nav key={group.title.pt} aria-label={group.title[language]} className="md:col-span-4 lg:col-span-3 space-y-3">
+            <span className="font-bold text-gray-900 uppercase font-mono tracking-wider block">
+              {group.title[language]}
             </span>
-          </p>
-        </div>
+            <ul className="space-y-2">
+              {group.links.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={language === "es" && l.hrefEs ? l.hrefEs : l.href}
+                    {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                    className="hover:text-primary hover:underline transition-colors"
+                  >
+                    {l.label[language]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-6 border-t border-muted mt-12 pt-6 text-center text-gray-500 text-[11px]">
-        <span>{footer_text.rights}</span>
+      <div className="max-w-[1280px] mx-auto px-6 border-t border-muted mt-12 pt-6 text-center text-on-surface-variant text-[11px] space-y-3">
+        <nav aria-label={language === "es" ? "Información legal" : "Informações legais"} className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs">
+          {legalLinks.map((l) => (
+            <a key={l.href} href={language === "es" ? l.hrefEs : l.href} className="underline hover:text-primary">{l.label[language]}</a>
+          ))}
+          {language === "es" && (
+            <>
+              <a href="/es_ar/arrepentimiento/" className="underline hover:text-primary">Botón de arrepentimiento</a>
+              <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noreferrer" className="underline hover:text-primary">
+                Defensa de las y los Consumidores: para reclamos, ingresá acá
+              </a>
+            </>
+          )}
+          <button type="button" onClick={openCookiePreferences} className="underline hover:text-primary cursor-pointer">
+            {language === "es" ? "Preferencias de cookies" : "Preferências de cookies"}
+          </button>
+        </nav>
+        <p>
+          {company.legalName} · CNPJ {company.cnpj} · {language === "es" ? company.ar.email : company.email}
+        </p>
+        <p>{footer_text.rights}</p>
       </div>
     </footer>
   );

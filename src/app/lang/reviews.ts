@@ -5,8 +5,8 @@ export const reviews_text = {
       es: "Curso online Inmersión de Velas Presencial",
     },
     text: {
-      pt: "O curso de velas mudou completamente meus finais de semana e abriu um novo negócio. Trabalho na minha mesa de jantar e hoje faturo mais de 4 mil reais por mês vendendo para lojas de decoração locais!",
-      es: "¡El curso de velas cambió mis fines de semana y se convirtió en un gran negocio familiar! Trabajo desde mi comedor y hoy gano muy bien vendiendo velas a boutiques de decoración locales.",
+      pt: "O curso de velas mudou completamente meus finais de semana e abriu um novo negócio.",
+      es: "¡El curso de velas cambió mis fines de semana y se convirtió en un gran negocio familiar!",
     },
   },
   review2: {
@@ -15,7 +15,7 @@ export const reviews_text = {
       es: "Profesorado Online en Velas (Conservatorio Grassi)",
     },
     text: {
-      pt: "La doble certificación con el Conservatorio Grassi me habilitó a abrir mi propio taller educativo de jabonería y velas en mi provincia. La paciencia de Ivana para enseñar es incomparable, te da todas las recetas sin esconder nada.",
+      pt: "A dupla certificação com o Conservatório Grassi me habilitou a abrir meu próprio ateliê de ensino de saboaria e velas na minha província. A paciência da Ivana para ensinar é incomparável, ela entrega todas as receitas sem esconder nada.",
       es: "La doble certificación del Conservatorio Grassi me habilitó a abrir mi propio taller de velas en mi provincia. La paciencia de Ivana al enseñar es incomparable, te entrega todas las recetas listas sin esconder nada.",
     },
   },
@@ -34,14 +34,14 @@ export const reviews_text = {
 export const reviews_header = {
   pt: {
     badge: "Depoimentos em Redes Sociais",
-    title: "Transbordando Histórias de Sucesso",
+    title: "Relatos de Quem Já Passou pelos Cursos",
     subtitle:
-      "Mais do que produzir peças artesanais, nossas alunas criam negócios autossuficientes.",
+      "Experiências individuais; os resultados de cada pessoa variam e não são garantidos.",
   },
   es: {
     badge: "Testimonios en redes sociales",
     title: "Historias que nos Inspiran",
     subtitle:
-      "Más allá de fabricar piezas hermosas, nuestras alumnas construyen emprendimientos rentables.",
+      "Experiencias individuales; los resultados de cada persona varían y no están garantizados.",
   },
 };

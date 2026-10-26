@@ -4,7 +4,7 @@ import { courses_text as text } from '../lang/courses_grid';
 import { candle_images } from '../data/candle_images';
 import { category_images } from '../data/category_images';
 import { Star, MapPin, Calendar, CheckSquare, Sparkles, BookOpen, ExternalLink, GraduationCap } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAgenda } from '../hooks/useAgenda';
 import { CursoCard } from './theme/ThemeSections';
 import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
@@ -23,6 +23,14 @@ export default function CourseGrid({
   onSelectEnroll,
 }: CourseGridProps) {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+  // Esc fecha o modal (teclado)
+  useEffect(() => {
+    if (!selectedCourse) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSelectedCourse(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedCourse]);
 
   // Mapped background images for candles
   const candleImages: Record<string, string> = candle_images;
@@ -111,7 +119,7 @@ export default function CourseGrid({
                   >
                     {/* Product Cover Photo with Category Overlay */}
                     <div className="aspect-[16/10] w-full bg-surface-hero overflow-hidden relative">
-                      <img
+                      <img loading="lazy" decoding="async"
                         alt={course.title[language]}
                         className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 select-none"
                         src={courseImage}
@@ -190,12 +198,12 @@ export default function CourseGrid({
       {/* Course Program Modal */}
       {selectedCourse && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-2xl w-full max-w-[620px] overflow-hidden shadow-2xl border border-gray-200 animate-slide-up">
+          <div role="dialog" aria-modal="true" aria-labelledby="course-modal-title" className="bg-white rounded-2xl w-full max-w-[620px] overflow-hidden shadow-2xl border border-gray-200 animate-slide-up">
             
             {/* Cover header */}
             <div className="relative aspect-[16/7] bg-surface-cream">
-              <img
-                alt="Modal Header"
+              <img loading="lazy" decoding="async"
+                alt=""
                 className="w-full h-full object-cover"
                 src={getCourseImage(selectedCourse)}
               />
@@ -204,7 +212,7 @@ export default function CourseGrid({
                 <span className="text-micro uppercase font-mono tracking-widest text-inverse-primary font-bold">
                   {selectedCourse.modalidade === 'presencial' ? courses_text.badgePresencial : courses_text.badgeOnline}
                 </span>
-                <h3 className="text-xl md:text-2xl font-serif font-semibold mt-1 leading-tight">
+                <h3 id="course-modal-title" className="text-xl md:text-2xl font-serif font-semibold mt-1 leading-tight">
                   {selectedCourse.title[language]}
                 </h3>
               </div>
@@ -213,7 +221,7 @@ export default function CourseGrid({
             {/* Syllabus Specs */}
             <div className="p-6 md:p-8 space-y-5 max-h-[420px] overflow-y-auto">
               <div>
-                <h4 className="text-xs uppercase tracking-wider text-gray-400 font-mono">{courses_text.syllabusTitle}</h4>
+                <h4 className="text-xs uppercase tracking-wider text-gray-600 font-mono">{courses_text.syllabusTitle}</h4>
                 <ul className="space-y-3 mt-3">
                   {selectedCourse.features[language].map((f, i) => (
                     <li key={i} className="flex gap-2.5 text-xs md:text-sm text-on-surface-variant leading-relaxed">
@@ -240,7 +248,7 @@ export default function CourseGrid({
             <div className="bg-surface-hero px-6 py-4 border-t border-muted flex items-center justify-between gap-4">
               <button
                 onClick={() => setSelectedCourse(null)}
-                className="text-xs font-bold text-gray-500 hover:text-gray-800 uppercase tracking-widest cursor-pointer px-4 py-2"
+                className="text-xs font-bold text-gray-600 hover:text-gray-800 uppercase tracking-widest cursor-pointer px-4 py-2"
               >
                 {courses_text.close}
               </button>

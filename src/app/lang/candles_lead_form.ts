@@ -49,7 +49,7 @@ export const candles_lead_text = {
 
 // Textos da mesma secao para /es_ar/candles — mesma estrutura, mercado AR.
 export const candles_lead_text_es = {
-  tagLabel: 'CONTÁCTANOS',
+  tagLabel: 'CONTACTANOS',
   title: 'Asegurá tu Cupón de Bienvenida',
   subtitle:
     'Dejanos tus datos y recibí el calendario completo de clases, el catálogo de cursos y un cupón exclusivo del 10% de descuento para tu inscripción.',

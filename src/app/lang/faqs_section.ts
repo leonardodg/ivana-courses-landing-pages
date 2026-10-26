@@ -5,6 +5,6 @@ export const faqs_text = {
     },
     es: {
       title: 'Preguntas Frecuentes',
-      subtitle: 'Todo lo que necesitas saber antes de iniciar tus clases y talleres.',
+      subtitle: 'Todo lo que necesitás saber antes de iniciar tus clases y talleres.',
     }
   };

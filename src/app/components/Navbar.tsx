@@ -1,4 +1,5 @@
 import { CategorySpec, Language, CategoryId } from '../classes/types';
+import SkipLink from './SkipLink';
 import { categories_data } from '../data/categories';
 import { Languages, PhoneCall, ChevronRight, Menu, X, Flame, Sparkles, Sliders, Link2 } from 'lucide-react';
 import { useState } from 'react';
@@ -51,9 +52,10 @@ export default function Navbar({
 
   return (
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
+      <SkipLink />
       <div className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full">
         {/* Logo and Brand */}
-        <a href="/" aria-label="Ivana Academy - página inicial" className="flex items-center gap-3 px-2">
+        <a href="/" aria-label={language === "es" ? "Ivana Academy - página de inicio" : "Ivana Academy - página inicial"} className="flex items-center gap-3 px-2">
           <img
             alt="Ivana Academy Logo"
             className="h-10 md:h-12 w-auto object-contain"
@@ -91,7 +93,7 @@ export default function Navbar({
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                 language === "pt"
                   ? "bg-primary text-white shadow-xs"
-                  : "text-gray-500 hover:bg-gray-200/50"
+                  : "text-gray-600 hover:bg-gray-200/50"
               }`}
               title="Português (Brasil)"
             >
@@ -103,7 +105,7 @@ export default function Navbar({
               className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                 language === "es"
                   ? "bg-primary text-white shadow-xs"
-                  : "text-gray-500 hover:bg-gray-200/50"
+                  : "text-gray-600 hover:bg-gray-200/50"
               }`}
               title="Español (Argentina)"
             >
@@ -115,6 +117,8 @@ export default function Navbar({
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? (language === 'es' ? 'Cerrar menú' : 'Fechar menu') : (language === 'es' ? 'Abrir menú' : 'Abrir menu')}
+            aria-expanded={menuOpen}
             className="md:hidden text-gray-700 hover:text-primary p-1"
           >
             {menuOpen ? (
@@ -129,7 +133,7 @@ export default function Navbar({
       {/* Mobile Drawer */}
       {menuOpen && (
         <div className="md:hidden bg-surface-hero w-full border-t border-subtle py-4 px-6 shadow-inner animate-fade-in">
-          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-500 mb-2">
+          <p className="text-micro uppercase font-mono tracking-wider font-semibold text-gray-600 mb-2">
             {navbar_text.allCategories}
           </p>
           <div className="flex flex-col gap-2">

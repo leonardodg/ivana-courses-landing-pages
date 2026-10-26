@@ -38,6 +38,15 @@ const pages: Record<string, string> = {
   pt_br_soap: "src/pt_br/soap/index.html",
   pt_br_aromas: "src/pt_br/aromas/index.html",
   pt_br_resin: "src/pt_br/resin/index.html",
+  pt_br_privacidade: "src/pt_br/privacidade/index.html",
+  pt_br_termos: "src/pt_br/termos/index.html",
+  pt_br_reembolso: "src/pt_br/reembolso/index.html",
+  pt_br_lgpd: "src/pt_br/lgpd/index.html",
+  es_ar_privacidad: "src/es_ar/privacidad/index.html",
+  es_ar_terminos: "src/es_ar/terminos/index.html",
+  es_ar_reembolso: "src/es_ar/reembolso/index.html",
+  es_ar_derechos: "src/es_ar/derechos/index.html",
+  es_ar_arrepentimiento: "src/es_ar/arrepentimiento/index.html",
 };
 
 export default defineConfig(({ mode }) => {
@@ -60,6 +69,8 @@ export default defineConfig(({ mode }) => {
   const clientEnv = {
     VITE_WEBHOOK_URL: loadedFileEnv.VITE_WEBHOOK_URL ?? "",
     VITE_WEBHOOK_SECRET: loadedFileEnv.VITE_WEBHOOK_SECRET ?? "",
+    // Google Analytics 4: vazio usa o ID padrão de lib/consent.ts; 'off' desliga.
+    VITE_GA_ID: loadedFileEnv.VITE_GA_ID ?? "",
   };
 
   for (const [key, value] of Object.entries(process.env)) {

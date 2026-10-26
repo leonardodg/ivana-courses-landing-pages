@@ -6,7 +6,6 @@ export interface ContactFormData {
   email: string;
   ddi: string;
   phone: string;
-  subject: string;
   message: string;
 }
 
@@ -17,7 +16,6 @@ export type ContactErrorKey =
   | "errEmailInvalid"
   | "errEmailLong"
   | "errPhoneShort"
-  | "errSubjectLong"
   | "errMessageShort"
   | "errMessageLong";
 
@@ -25,11 +23,10 @@ export interface FieldErrors {
   fullName?: ContactErrorKey;
   email?: ContactErrorKey;
   phone?: ContactErrorKey;
-  subject?: ContactErrorKey;
   message?: ContactErrorKey;
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // Strip de caracteres perigosos para XSS — feito no cliente como primeira linha
 // A sanitização real acontece de novo no N8N (defesa em profundidade)
@@ -61,10 +58,6 @@ export function validateField(
       if (v.replace(/\D/g, "").length < 7) return "errPhoneShort"; //"Número muito curto"
       return undefined;
 
-    case "subject":
-      if (v.length > 255) return "errSubjectLong"; //  "Máximo 255 caracteres"
-      return undefined;
-
     case "message":
       if (v.length < 10) return "errMessageShort"; // "Mensagem muito curta (mín. 10 caracteres)"
       if (v.length > 2000) return "errMessageLong"; // "Máximo 2000 caracteres"
@@ -78,7 +71,6 @@ export function useContactForm() {
     email: "",
     ddi: "+55",
     phone: "",
-    subject: "",
     message: "",
   });
   const [errors, setErrors] = useState<FieldErrors>({});
