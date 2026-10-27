@@ -93,7 +93,7 @@ export function CarreraCard({ carrera, href }: { carrera: CarreraAr; href?: stri
         <div className="mt-auto space-y-3">
           <InscribirmeButton carrera={carrera} className="w-full" />
           {href && (
-            <a href={href} className="block text-center text-xs text-primary underline">Ver el plan de la carrera</a>
+            <a href={href} className="flex min-h-11 items-center justify-center text-xs text-primary underline">Ver el plan de la carrera</a>
           )}
         </div>
       </div>
@@ -286,7 +286,7 @@ export function SalidaLaboralSection() {
 }
 
 /* ── Cómo inscribirme ───────────────────────────────────────────────── */
-export function ComoInscribirmeSection({ carrera }: { carrera: CarreraAr }) {
+export function ComoInscribirmeSection({ carrera }: { carrera?: CarreraAr }) {
   const steps = [
     'Elegís la carrera.',
     'Te registrás en la tienda.',
@@ -306,10 +306,21 @@ export function ComoInscribirmeSection({ carrera }: { carrera: CarreraAr }) {
           ))}
         </ol>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <InscribirmeButton carrera={carrera} />
-          <a href={whatsappInscripcion(carrera)} className={btnOutline}>
-            <MessageCircle className="w-3.5 h-3.5" /> Hablar por WhatsApp
-          </a>
+          {carrera ? (
+            <>
+              <InscribirmeButton carrera={carrera} />
+              <a href={whatsappInscripcion(carrera)} className={btnOutline}>
+                <MessageCircle className="w-3.5 h-3.5" /> Hablar por WhatsApp
+              </a>
+            </>
+          ) : (
+            <>
+              <a href="#carreras" className={btnPrimary}>Elegir mi carrera <ArrowRight className="w-3.5 h-3.5" /></a>
+              <a href={WHATSAPP_AR} target="_blank" rel="noreferrer" className={btnOutline}>
+                <MessageCircle className="w-3.5 h-3.5" /> Hablar por WhatsApp
+              </a>
+            </>
+          )}
         </div>
       </div>
     </section>

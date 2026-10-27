@@ -1,12 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import CandlesArApp from '../../app/pages/CandlesArApp.tsx';
+import CareerPageApp from '../../app/pages/CareerPageApp.tsx';
 import ConsentManager from '../../app/components/ConsentManager.tsx';
 import '../../styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <CandlesArApp />
+    <CareerPageApp slug="candles" />
     <ConsentManager />
   </StrictMode>,
 );
