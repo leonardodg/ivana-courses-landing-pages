@@ -50,7 +50,7 @@ export default function CourseGrid({
   const courses_text = text[language];
 
   // Presenciais em PT: cards da loja, com as turmas reais da agenda. Os demais seguem como antes.
-  const agenda = useAgenda(language === 'pt');
+  const agenda = useAgenda('BR', language === 'pt');
   const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
   const futureEvents = agenda.events
     .filter(e => e.date >= today)
