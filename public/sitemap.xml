@@ -29,6 +29,37 @@
   </url>
 
   <url>
+    <loc>https://courses.ivana.academy/es_ar/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/resin/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt_br/resin/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es_ar/resin/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt_br/resin/"/>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/macrame/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/textil/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/interiores/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/mixmedia/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/es_ar/agenda/</loc>
+  </url>
+
+  <url>
     <loc>https://courses.ivana.academy/pt_br/soap/</loc>
   </url>
 
@@ -38,6 +69,9 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt_br/resin/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt_br/resin/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es_ar/resin/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt_br/resin/"/>
   </url>
 
   <url>
