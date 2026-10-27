@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 // Não contém segredo nenhum, é seguro no bundle do navegador.
 export const AGENDA_URL = "https://webhook.ivana.academy/webhook/agenda";
 
-const CACHE_KEY = "ivana-agenda-v1";
+// Sem parâmetro o feed devolve só o Brasil. Para a Argentina: ?pais=AR (cache separado).
+export type AgendaCountry = "BR" | "AR";
+const feedUrl = (country: AgendaCountry) => (country === "AR" ? `${AGENDA_URL}?pais=AR` : AGENDA_URL);
+const cacheKey = (country: AgendaCountry) => (country === "AR" ? "ivana-agenda-ar-v1" : "ivana-agenda-v1");
 const TIMEOUT_MS = 10000;
 
 export interface AgendaEvent {
@@ -28,6 +31,16 @@ export interface AgendaEvent {
   status: string;
   link: string | null;
   note: string | null;
+  // Só no feed da Argentina (pais=AR). Todos opcionais: o feed do Brasil não os traz.
+  // ATENÇÃO: `price` também vem preenchido na Argentina ("$40.000 por mes"); a landing AR nunca o mostra.
+  end_date?: string | null; // etapas de dia inteiro: último dia
+  country?: string;
+  etapa?: string; // "modulo 1/9" … "repaso", "receso", "cierre"
+  turma?: string; // "Cohorte 2027"
+  nivel?: string; // "Tecnicatura" | "Profesorado"
+  modalidad?: string;
+  online?: boolean;
+  duration?: string;
 }
 
 interface AgendaPayload {
@@ -88,39 +101,40 @@ const MOCK_EVENTS: AgendaEvent[] = import.meta.env.DEV
     ]
   : [];
 
-function readCache(): AgendaPayload | null {
+function readCache(country: AgendaCountry): AgendaPayload | null {
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
+    const raw = localStorage.getItem(cacheKey(country));
     return raw ? (JSON.parse(raw) as AgendaPayload) : null;
   } catch {
     return null;
   }
 }
 
-function writeCache(payload: AgendaPayload) {
+function writeCache(country: AgendaCountry, payload: AgendaPayload) {
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+    localStorage.setItem(cacheKey(country), JSON.stringify(payload));
   } catch {
     // modo privado ou storage bloqueado: segue sem cache
   }
 }
 
 // Uma única busca por carregamento de página, compartilhada por todos os blocos que usam a agenda.
-let shared: Promise<AgendaState> | null = null;
+const shared: Partial<Record<AgendaCountry, Promise<AgendaState>>> = {};
 
-function loadAgenda(): Promise<AgendaState> {
-  if (shared) return shared;
+function loadAgenda(country: AgendaCountry): Promise<AgendaState> {
+  const cached = shared[country];
+  if (cached) return cached;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-  shared = fetch(AGENDA_URL, { signal: controller.signal })
+  const request = fetch(feedUrl(country), { signal: controller.signal })
     .then((res) => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json() as Promise<AgendaPayload>;
     })
     .then((payload): AgendaState => {
-      writeCache(payload);
+      writeCache(country, payload);
       return {
         status: "ready",
         events: payload.events ?? [],
@@ -129,7 +143,7 @@ function loadAgenda(): Promise<AgendaState> {
       };
     })
     .catch((): AgendaState => {
-      const cached = readCache();
+      const cached = readCache(country);
       if (cached) {
         const today = new Date().toLocaleDateString("en-CA", {
           timeZone: "America/Sao_Paulo",
@@ -145,11 +159,13 @@ function loadAgenda(): Promise<AgendaState> {
     })
     .finally(() => clearTimeout(timer));
 
-  return shared;
+  shared[country] = request;
+  return request;
 }
 
+// country: "BR" (padrão, sem parâmetro) ou "AR" (?pais=AR, cache próprio).
 // enabled=false: não busca (ex.: home em espanhol ou categoria sem turmas).
-export function useAgenda(enabled = true): AgendaState {
+export function useAgenda(country: AgendaCountry = "BR", enabled = true): AgendaState {
   const [state, setState] = useState<AgendaState>({
     status: "loading",
     events: [],
@@ -162,18 +178,25 @@ export function useAgenda(enabled = true): AgendaState {
 
     // Só em desenvolvimento (?mock): dados de exemplo para testar o layout. Some do build de produção.
     if (import.meta.env.DEV && new URLSearchParams(window.location.search).has("mock")) {
-      setState({ status: "ready", events: MOCK_EVENTS, generatedAt: null, stale: false });
+      if (country === "AR") {
+        // import dinâmico: o módulo dos mocks AR nem entra no build de produção
+        import("../data/agenda_ar_mock").then((m) =>
+          setState({ status: "ready", events: m.MOCK_EVENTS_AR, generatedAt: null, stale: false }),
+        );
+      } else {
+        setState({ status: "ready", events: MOCK_EVENTS, generatedAt: null, stale: false });
+      }
       return;
     }
 
     let active = true;
-    loadAgenda().then((next) => {
+    loadAgenda(country).then((next) => {
       if (active) setState(next);
     });
     return () => {
       active = false;
     };
-  }, [enabled]);
+  }, [country, enabled]);
 
   return state;
 }
