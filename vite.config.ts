@@ -71,6 +71,8 @@ export default defineConfig(({ mode }) => {
     VITE_WEBHOOK_SECRET: loadedFileEnv.VITE_WEBHOOK_SECRET ?? "",
     // Google Analytics 4: vazio usa o ID padrão de lib/consent.ts; 'off' desliga.
     VITE_GA_ID: loadedFileEnv.VITE_GA_ID ?? "",
+    // Base da tienda Argentina (ex.: https://tienda.ivana.academy). Vazio = botão leva ao WhatsApp AR.
+    VITE_TIENDA_AR_URL: loadedFileEnv.VITE_TIENDA_AR_URL ?? "",
   };
 
   for (const [key, value] of Object.entries(process.env)) {

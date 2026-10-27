@@ -16,6 +16,7 @@ services:
         - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
         - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
         - VITE_GA_ID=${VITE_GA_ID:-}
+        - VITE_TIENDA_AR_URL=${VITE_TIENDA_AR_URL:-}
     env_file:
       - ../env/default.env
     environment:
