@@ -36,6 +36,7 @@ const pages: Record<string, string> = {
   pt_br_candles: "src/pt_br/candles/index.html",
   es_ar_candles: "src/es_ar/candles/index.html",
   es_ar_home: "src/es_ar/index.html",
+  es_ar_agenda: "src/es_ar/agenda/index.html",
   es_ar_resin: "src/es_ar/resin/index.html",
   es_ar_macrame: "src/es_ar/macrame/index.html",
   es_ar_textil: "src/es_ar/textil/index.html",

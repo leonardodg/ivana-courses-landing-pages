@@ -30,10 +30,10 @@ const sectionHeader = (kicker: string, title: string, sub?: string) => (
   </div>
 );
 
-const fmtDay = (iso: string) =>
+export const fmtDay = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', timeZone: 'UTC' });
-const fmtRange = (a: string, b?: string | null) => (b && b !== a ? `${fmtDay(a)} al ${fmtDay(b)}` : fmtDay(a));
-const fmtFull = (iso: string) =>
+export const fmtRange = (a: string, b?: string | null) => (b && b !== a ? `${fmtDay(a)} al ${fmtDay(b)}` : fmtDay(a));
+export const fmtFull = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 export const nivelLabel = (c: CarreraAr) => (c.nivel === 'tecnicatura' ? 'Tecnicatura' : 'Profesorado');
@@ -102,7 +102,7 @@ export function CarreraCard({ carrera, href }: { carrera: CarreraAr; href?: stri
 }
 
 /* ── Cohorte (cronograma desde el feed) ─────────────────────────────── */
-const etapaLabel = (e: AgendaEvent) => {
+export const etapaLabel = (e: AgendaEvent) => {
   const raw = (e.etapa ?? '').toLowerCase();
   const m = raw.match(/^modulo\s+(\d+)\/(\d+)/);
   if (m) return `Módulo ${m[1]} de ${m[2]}`;
