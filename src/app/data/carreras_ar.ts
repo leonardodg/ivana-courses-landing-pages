@@ -181,7 +181,7 @@ export const carreras_principales = [
 export const WHATSAPP_AR = 'https://wa.me/5493757201014';
 
 /** Base da tienda (ex.: https://tienda.ivana.academy). Vazia até a tienda existir. */
-const TIENDA_AR_URL = ((import.meta.env.VITE_TIENDA_AR_URL as string | undefined) ?? '').trim().replace(/\/+$/, '');
+export const TIENDA_AR_URL = ((import.meta.env.VITE_TIENDA_AR_URL as string | undefined) ?? '').trim().replace(/\/+$/, '');
 
 /** Mensagem de inscrição para o WhatsApp AR (fluxo atual: nombre, DNI y e-mail). */
 export const whatsappInscripcion = (c: CarreraAr) =>
