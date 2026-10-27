@@ -25,6 +25,18 @@ export const site_link_groups: SiteLinkGroup[] = [
     ],
   },
   {
+    title: { pt: 'Carreras online (Argentina)', es: 'Carreras online' },
+    links: [
+      { href: '/es_ar/', label: { pt: 'Todas as carreras', es: 'Todas las carreras' } },
+      { href: '/es_ar/candles/', label: { pt: 'Velas (Tecnicatura)', es: 'Velas' } },
+      { href: '/es_ar/resin/', label: { pt: 'Resinas (Tecnicatura)', es: 'Resinas' } },
+      { href: '/es_ar/macrame/', label: { pt: 'Macramé (Tecnicatura)', es: 'Macramé' } },
+      { href: '/es_ar/textil/', label: { pt: 'Estampas textiles', es: 'Estampas textiles' } },
+      { href: '/es_ar/interiores/', label: { pt: 'Diseño de interiores', es: 'Diseño de interiores' } },
+      { href: '/es_ar/mixmedia/', label: { pt: 'Arte mix media (Profesorado)', es: 'Arte mix media' } },
+    ],
+  },
+  {
     title: { pt: 'Online e materiais', es: 'Online y materiales' },
     links: [
       { href: '/velas/', label: { pt: 'Curso online de Velas', es: 'Curso online de Velas' } },

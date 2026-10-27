@@ -28,7 +28,7 @@ export default function CareerNavbar({ ptHref, anchorBase = '' }: CareerNavbarPr
     <header className="fixed top-0 w-full z-50 bg-surface-cream/95 backdrop-blur-md border-b border-subtle shadow-xs">
       <SkipLink />
       <nav className="flex justify-between items-center px-4 md:px-12 py-3.5 max-w-[1280px] mx-auto w-full" aria-label="Principal">
-        <a href="/es_ar/" aria-label="Ivana Academy - inicio" className="flex items-center gap-3 px-2">
+        <a href="/es_ar/" aria-label="Ivana Academy - inicio" className="flex min-h-11 items-center gap-3 px-2">
           <img alt="Ivana Academy" className="h-10 md:h-12 w-auto object-contain" src="/images/logo.svg" />
         </a>
 

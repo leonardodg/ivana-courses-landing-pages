@@ -50,17 +50,9 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura */}
-        <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-hero-bg">
-          <img
-            src={carrera.image}
-            alt={carrera.nombre}
-            fetchPriority="high"
-            decoding="async"
-            style={{ objectPosition: carrera.imagePos }}
-            className="absolute inset-0 w-full h-full object-cover opacity-85"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
-          <div className="relative z-10 px-6 md:px-12 pt-28 pb-12 max-w-[1280px] mx-auto w-full space-y-5">
+        <section className="bg-surface-cream pt-28 pb-14 md:pb-20 px-6 md:px-12">
+          <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            <div className="space-y-5">
             <ul className="flex flex-wrap gap-2">
               {selos.map((s) => (
                 <li key={s.text} className="inline-flex items-center gap-1.5 bg-white/95 border border-subtle px-3.5 py-1.5 rounded-full text-micro uppercase font-mono tracking-wider text-primary font-semibold">
@@ -79,6 +71,18 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
               <a href={whatsappInscripcion(carrera)} className={`${btnOutline} px-8 py-4 rounded-full bg-white/80`}>
                 <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
               </a>
+            </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-3 bg-primary-container/15 rounded-2xl -rotate-2 pointer-events-none" />
+              <img
+                src={carrera.image}
+                alt={carrera.nombre}
+                fetchPriority="high"
+                decoding="async"
+                style={{ objectPosition: carrera.imagePos }}
+                className="relative w-full h-[320px] sm:h-[420px] lg:h-[520px] object-cover rounded-xl shadow-xl border border-slate-200"
+              />
             </div>
           </div>
         </section>
