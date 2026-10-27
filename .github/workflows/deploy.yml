@@ -81,6 +81,8 @@ jobs:
           VITE_WEBHOOK_SECRET: ${{ secrets.VITE_WEBHOOK_SECRET }}
           # Opcional: sobrescreve o ID do GA4 (variável do repositório). 'off' desliga o rastreamento.
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
+          # Opcional: base da tienda Argentina (ex.: https://tienda.ivana.academy). Vazia = botão leva ao WhatsApp AR.
+          VITE_TIENDA_AR_URL: ${{ vars.VITE_TIENDA_AR_URL }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
@@ -90,7 +92,7 @@ jobs:
           # resolvidos a partir dos GitHub Secrets) para o ambiente da sessao
           # SSH remota, onde o docker compose build os le via interpolacao
           # ${VITE_WEBHOOK_URL}/${VITE_WEBHOOK_SECRET} no prod.yml.
-          envs: VITE_WEBHOOK_URL,VITE_WEBHOOK_SECRET,VITE_GA_ID
+          envs: VITE_WEBHOOK_URL,VITE_WEBHOOK_SECRET,VITE_GA_ID,VITE_TIENDA_AR_URL
           script: |
             set -e
 
