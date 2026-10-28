@@ -89,6 +89,8 @@ export default function Hero({
       <div className="absolute inset-0 z-0">
         <img
           alt={backdrop.alt}
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover opacity-85 select-none"
           src={backdrop.src}
           style={backdrop.position ? { objectPosition: backdrop.position } : undefined}

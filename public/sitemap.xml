@@ -15,6 +15,18 @@
   </url>
 
   <url>
+    <loc>https://courses.ivana.academy/velas/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/saboaria/</loc>
+  </url>
+
+  <url>
+    <loc>https://courses.ivana.academy/apostila/</loc>
+  </url>
+
+  <url>
     <loc>https://courses.ivana.academy/pt_br/candles/</loc>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt_br/candles/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es_ar/candles/"/>

@@ -7,9 +7,10 @@ import { Section, SectionHeader } from '../ui';
 interface ReviewsCarouselProps {
   language: Language;
   reviews: Review[];
+  note?: string; // aviso curto abaixo do carrossel (ex.: origem dos depoimentos)
 }
 
-export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselProps) {
+export default function ReviewsCarousel({ language, reviews, note }: ReviewsCarouselProps) {
   const [index, setIndex] = useState(0);
 
   const handleNext = () => {
@@ -50,11 +51,13 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
 
             {/* Quote details */}
             <div className="grow space-y-2">
-              <div className="flex items-center gap-1 text-amber-500">
-                {[...Array(r.stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
-                ))}
-              </div>
+              {r.stars > 0 && (
+                <div className="flex items-center gap-1 text-amber-500">
+                  {[...Array(r.stars)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+              )}
 
               {/* Student Quote text */}
               <blockquote className="text-sm md:text-base font-serif italic text-gray-800 leading-relaxed">
@@ -64,10 +67,12 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
               {/* Meta */}
               <div className="pt-2 border-t border-gray-100 mt-4">
                 <span className="font-bold text-gray-900 text-xs md:text-sm tracking-wide block">{r.name}</span>
-                <span className="text-xs text-gray-600 block">{r.location}</span>
-                <span className="text-micro font-mono tracking-wider font-bold text-primary uppercase bg-velas-accent/40 px-2 py-0.5 rounded inline-block mt-1">
-                  {r.courseName[language]}
-                </span>
+                {r.location && <span className="text-xs text-gray-600 block">{r.location}</span>}
+                {r.courseName[language] && (
+                  <span className="text-micro font-mono tracking-wider font-bold text-primary uppercase bg-velas-accent/40 px-2 py-0.5 rounded inline-block mt-1">
+                    {r.courseName[language]}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -83,14 +88,14 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
             <div className="flex gap-2">
               <button
                 onClick={handlePrev}
-                className="w-9 h-9 border border-gray-200 hover:border-gray-400 hover:text-gray-950 text-gray-600 flex items-center justify-center rounded-xl transition-all cursor-pointer bg-white"
+                className="w-11 h-11 border border-gray-200 hover:border-gray-400 hover:text-gray-950 text-gray-600 flex items-center justify-center rounded-xl transition-all cursor-pointer bg-white"
                 aria-label={language === "pt" ? "Depoimento anterior" : "Testimonio anterior"}
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={handleNext}
-                className="w-9 h-9 border border-gray-200 hover:border-gray-400 hover:text-gray-950 text-gray-600 flex items-center justify-center rounded-xl transition-all cursor-pointer bg-white"
+                className="w-11 h-11 border border-gray-200 hover:border-gray-400 hover:text-gray-950 text-gray-600 flex items-center justify-center rounded-xl transition-all cursor-pointer bg-white"
                 aria-label={language === "pt" ? "Próximo depoimento" : "Siguiente testimonio"}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -101,6 +106,7 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
         </div>
 
       </div>
+      {note && <p className="relative z-10 text-center text-xs text-on-surface-variant mt-6">{note}</p>}
     </Section>
   );
 }

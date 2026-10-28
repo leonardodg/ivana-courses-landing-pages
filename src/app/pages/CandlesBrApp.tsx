@@ -22,7 +22,7 @@ import CandlesCheckoutModal from '../components/CandlesCheckoutModal';
 import CandlesStudentPortal from '../components/CandlesStudentPortal';
 
 import Footer from "../components/Footer";
-import { BrazilFlag, Hero, HeroBadgeText } from '../ui';
+import { BrazilFlag, Hero, HeroBadgeText, StatsBar } from '../ui';
 
 import { Menu, SquarePen } from "lucide-react";
 
@@ -84,35 +84,14 @@ export default function CandlesBrApp() {
           backdrop={{ src: heroContent.imageUrl, alt: heroContent.title[LANGUAGE], gradientClass: activeCategory.heroBgClass }}
         />
 
-        {/* Trust stats bar */}
-        <section className="bg-white border-y border-subtle py-8">
-          <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center items-center">
-            <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                2.000+
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsAlunas}
-              </span>
-            </div>
-            <div className="space-y-1 border-y md:border-y-0 md:border-x border-subtle py-4 md:py-0">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                6+ Anos
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsExp}
-              </span>
-            </div>
-            <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                BR &amp; AR
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsPort}
-              </span>
-            </div>
-          </div>
-        </section>
+        {/* Faixa de números */}
+        <StatsBar
+          items={[
+            { value: '2.000+', label: courses_text.statsAlunas },
+            { value: '6+ Anos', label: courses_text.statsExp },
+            { value: 'BR & AR', label: courses_text.statsPort },
+          ]}
+        />
 
         {/* Presenciais: turmas da agenda e cursos, com compra na loja */}
         <TurmasSection theme={presencial_themes.velas} />

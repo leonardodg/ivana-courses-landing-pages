@@ -6,6 +6,7 @@
 //   click_whatsapp   clique em link do WhatsApp
 //   click_tienda     clique em link para a tienda Argentina (carrera, origen)
 //   select_career    clique em "Ver valores e inscribirme" (carrera, origen), com ou sem tienda
+//   click_checkout   clique em compra na Hotmart (produto, página de origem)
 //   generate_lead    formulário enviado com sucesso (form_source)
 
 import { GA_ID, readConsent } from './consent';
@@ -46,6 +47,8 @@ export function trackOutbound(href: string) {
       turma: url.searchParams.get('turma') ?? undefined,
       pagina: pageName(),
     });
+  } else if (url.hostname === 'pay.hotmart.com') {
+    trackEvent('click_checkout', { produto: url.pathname.replace(/^\//, ''), pagina: pageName() });
   } else if (tiendaHost && url.hostname === tiendaHost) {
     trackEvent('click_tienda', {
       carrera: url.searchParams.get('utm_campaign') ?? url.pathname.replace(/^\/|\.html$/g, ''),
