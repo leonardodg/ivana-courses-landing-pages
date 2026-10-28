@@ -66,3 +66,7 @@ Abra `https://webhook.ivana.academy/webhook/agenda` e veja:
 - `stats.private`: quantos ficaram privados (de propósito).
 
 Se um evento não apareceu, quase sempre falta `publicar: sim` nas Notas.
+
+## Argentina
+
+Cursos online da Argentina usam o mesmo calendário, com `pais: AR` nas Notas e `curso: ar-...`. Formato e pendências do n8n: `~/whatsapp/docs/AGENDA-ARGENTINA.md`.

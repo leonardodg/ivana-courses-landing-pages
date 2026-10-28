@@ -63,10 +63,16 @@ Cada linha diz **onde está o modelo pt_BR**. O `es_ar` deve usar o mesmo compon
 | **Páginas de tema** | `CandlesNavbar.tsx` | `header` fixo `bg-surface-cream/95 backdrop-blur-md shadow-sm border-b border-subtle`, container `px-4 md:px-12 py-3.5`. **Esquerda:** logo (`h-10 md:h-12`) linkada à home. **Direita:** uma única pílula "Portal do Aluno" (`border border-subtle bg-white/[0.8] rounded-full px-3.5 py-2.5 font-mono text-xs uppercase`) e, no celular, botão de menu. **Gaveta:** itens em caixas brancas `rounded-lg border` ("Cursos", "Fale conosco", "Plataforma de Ensino") |
 | Agenda | `AgendaApp.tsx` | Cabeçalho simples: logo + link "Ver todos os cursos" |
 
-**Regra para es_ar (aplicada):** a mesma navbar das páginas de tema, `<CandlesNavbar language="es" />`,
-com os itens traduzidos ("Portal del Alumno" → `https://ivana.academy`; gaveta: "Carreras",
-"Contacto", "Campus virtual"). Nada de menu suspenso, links soltos ou botão extra que o
-BR não tenha. O `CareerNavbar` foi removido.
+**Regra para es_ar (aplicada):** a mesma navbar das páginas de tema, `<CandlesNavbar language="es" menu={buildArMenu(ptHref)} />`.
+O **desenho é o do Brasil** (header, logo, pílula "Portal del Alumno", gaveta) e as **opções de menu da
+Argentina** (aprovadas pela Ivana) entram **no estilo da home**: um contêiner de pílulas
+`hidden lg:flex bg-surface-form p-1 rounded-full border border-subtle` com **Carreras ▾** (submenu em cartão
+`bg-white rounded-2xl border border-muted shadow-lg`, as 6 carreras com nome completo), **Agenda**,
+**Cómo inscribirme** e **WhatsApp**; à direita o seletor **PT | ES** (mesmo contêiner do seletor de idioma da
+home; só nas páginas com par no Brasil) e a pílula do portal. Cada item é uma pílula
+`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide text-on-surface-variant hover:bg-surface-container-high`.
+Abaixo de `lg` as opções vão para a gaveta, em caixas brancas `rounded-lg` como no Brasil.
+Nada de texto solto sem pílula, nem botão que o padrão não tenha.
 
 ### 3.2 Herói
 
@@ -165,7 +171,7 @@ Estados: carregando, vazio e erro como cartão branco centralizado com ícone `C
 |---|---|---|---|
 | 1 | **Cards** | 3 colunas, alturas livres | `CarreraCard` = `CursoCard`: 2 colunas, `h-full`, imagem 16/10, mesmo corpo `p-6 md:p-8`; 1 card `max-w-md`, 2 cards `max-w-4xl` (`CarrerasGrid`) |
 | 2 | **Passos** | 2 colunas, número grande | `ComoInscribirmeSection` = `ComoFuncionaSection`: 4 colunas, ícone + número, `max-w-[1100px]` |
-| 3 | **Menu** | `CareerNavbar` com menu suspenso | `CandlesNavbar language="es"`: logo + pílula "Portal del Alumno" + gaveta |
+| 3 | **Menu** | `CareerNavbar`: opções em texto solto, fora do estilo | `CandlesNavbar language="es" menu={…}`: **mesmas opções de antes** (Carreras ▾, Agenda, Cómo inscribirme, WhatsApp, PT) em pílulas no estilo da home, mais logo e "Portal del Alumno" |
 | 4 | **Herói** | 3 selos, botões retangulares | herói dividido, 1 selo, 2 botões em pílula (`heroPrimary` / `heroSecondary`) |
 | 5 | Cohorte | cartão próprio | item `TurmaCard` (data `w-14`, botão à direita) + cronograma no mesmo cartão |
 | 6 | Incluso | inexistente | `InclusoSection` ("Incluido en todas") |
@@ -179,7 +185,7 @@ componentes compartilhados, para valer nos dois países.
 
 | Componente | Arquivo | Uso | BR | AR |
 |---|---|---|---|---|
-| `CandlesNavbar` | `components/CandlesNavbar.tsx` | `<CandlesNavbar language="pt\|es" base="" />` | sim | sim |
+| `CandlesNavbar` | `components/CandlesNavbar.tsx` | `<CandlesNavbar language="pt\|es" base="" menu={buildArMenu(ptHref)} />` (`menu` só na AR) | sim | sim, com menu em pílulas |
 | Herói dividido | `pages/CandlesBrApp.tsx`, `CareerPageApp.tsx` | `heroPrimary` + `heroSecondary` | sim | sim |
 | Herói imagem de fundo | `pages/ThemePageApp.tsx` | `bg-primary` pílula + `border-subtle` pílula | sim | não usado |
 | `sectionHeader` | `ThemeSections.tsx`, `CareerSections.tsx` | `(kicker, title, sub?)` | sim | sim |

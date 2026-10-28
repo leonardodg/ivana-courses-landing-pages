@@ -22,7 +22,8 @@ import {
   Users,
 } from 'lucide-react';
 import type { AgendaEvent, AgendaState } from '../../hooks/useAgenda';
-import { CarreraAr, carreras_ar, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
+import { CarreraAr, carreras_ar, carreras_principales, ar_pages, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
+import type { NavMenu } from '../CandlesNavbar';
 import { trackSelectCareer } from '../../lib/analytics';
 import type { FAQItem } from '../../classes/types';
 
@@ -52,6 +53,20 @@ export const fmtFull = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 export const nivelLabel = (c: CarreraAr) => (c.nivel === 'tecnicatura' ? 'Tecnicatura' : 'Profesorado');
+
+/* ── Opções do menu da Argentina (navbar de tema, em pílulas) ────────── */
+export function buildArMenu(ptHref?: string): NavMenu {
+  return {
+    careersLabel: 'Carreras',
+    careers: carreras_principales.map((c) => ({ label: carreras_ar[c].nombre, href: ar_pages[carreras_ar[c].page].path })),
+    links: [
+      { label: 'Agenda', href: '/es_ar/agenda/' },
+      { label: 'Cómo inscribirme', href: '#inscripcion' },
+      { label: 'WhatsApp', href: WHATSAPP_AR, external: true },
+    ],
+    ptHref,
+  };
+}
 
 /* ── Botão "Ver valores e inscribirme" (botão de card/lista) ─────────── */
 export function InscribirmeButton({

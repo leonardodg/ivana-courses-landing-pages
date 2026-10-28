@@ -12,6 +12,7 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import {
+  buildArMenu,
   CarrerasGrid,
   ComoInscribirmeSection,
   CursadaSection,
@@ -35,7 +36,7 @@ export default function CareerHomeApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" />
+      <CandlesNavbar language="es" menu={buildArMenu()} />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura (herói dividido, igual ao da página de velas do Brasil) */}
