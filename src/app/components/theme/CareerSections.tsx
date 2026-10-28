@@ -55,9 +55,63 @@ export function InscribirmeButton({
   );
 }
 
-/* ── Card de carrera (usa o Card do Brasil) e grade ──────────────────── */
-export function CarreraCard({ carrera, href }: { carrera: CarreraAr; href?: string }) {
+/* ── Card de carrera (o Card único do site) e grade ────────────────── */
+/**
+ * Temario da carrera: o confirmado (`carrera.temario`) em produção; em DEV, se ainda não houver confirmado,
+ * o rascunho (import dinâmico, fora do build de produção). `draft` marca o rascunho.
+ */
+export function useTemario(carrera: CarreraAr): { items: string[]; draft: boolean } {
+  const [borrador, setBorrador] = useState<string[]>([]);
+  useEffect(() => {
+    if (!import.meta.env.DEV || carrera.temario.length > 0) return;
+    let active = true;
+    import('../../data/carreras_ar_temario').then((m) => {
+      if (active) setBorrador(m.temario_borrador[carrera.course] ?? []);
+    });
+    return () => {
+      active = false;
+    };
+  }, [carrera.course, carrera.temario.length]);
+  return carrera.temario.length > 0 ? { items: carrera.temario, draft: false } : { items: borrador, draft: borrador.length > 0 };
+}
+
+const INCLUIDO = ['Clases en el campus virtual', 'Grupo de la carrera', 'Evaluación y seguimiento', 'Título del Conservatorio Grassi'];
+
+export function CarreraCard({ carrera, agenda, href }: { carrera: CarreraAr; agenda: AgendaState; href?: string }) {
   const cont = carrera.continuaCon ? carreras_ar[carrera.continuaCon] : null;
+  const temario = useTemario(carrera);
+  const etapas = agenda.events
+    .filter((e) => e.course === carrera.course)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const inicio = carrera.enCalendario2027
+    ? etapas.find((e) => /^modulo\s+1\//i.test(e.etapa ?? '')) ?? etapas[0]
+    : undefined;
+
+  // Início da cohorte no lugar das "turmas" (as carreras são online e a inscripción está abierta todo el año).
+  const turma = inicio
+    ? [{
+        key: 'inicio',
+        day: Number(inicio.date.split('-')[2]),
+        month: MESES[Number(inicio.date.split('-')[1]) - 1],
+        label: `Inicio de cursada · ${inicio.turma ?? 'Cohorte 2027'}`,
+        href: tiendaLink(carrera),
+      }]
+    : [];
+  const emptyText =
+    agenda.status === 'loading'
+      ? 'Cargando el calendario…'
+      : agenda.status === 'error'
+        ? 'No pudimos cargar el calendario ahora.'
+        : !carrera.enCalendario2027
+          ? 'La fecha de inicio se confirma más adelante.'
+          : 'Próximamente el calendario de la Cohorte 2027.';
+
+  const bullets = [
+    `${nivelLabel(carrera)} de ${carrera.meses} meses, un módulo por mes`,
+    'Título del Conservatorio Grassi, con validez internacional',
+    cont ? `Podés continuar con el Profesorado (+${cont.meses} meses)` : 'Evaluación y seguimiento en cada módulo',
+  ];
+
   return (
     <Card
       id={carrera.course}
@@ -65,13 +119,9 @@ export function CarreraCard({ carrera, href }: { carrera: CarreraAr; href?: stri
       alt={carrera.nombre}
       imagePos={carrera.imagePos}
       tag="100% online"
-      href={href}
+      titleHref={href}
       title={carrera.nombre}
-      bullets={[
-        `${nivelLabel(carrera)} de ${carrera.meses} meses, un módulo por mes`,
-        'Título del Conservatorio Grassi, con validez internacional',
-        cont ? `Podés continuar con el Profesorado (+${cont.meses} meses)` : 'Evaluación y seguimiento en cada módulo',
-      ]}
+      bullets={bullets}
       meta={
         <>
           <span className="flex items-center gap-1.5">
@@ -84,25 +134,53 @@ export function CarreraCard({ carrera, href }: { carrera: CarreraAr; href?: stri
           </span>
         </>
       }
-      footer={
-        <>
-          <InscribirmeButton carrera={carrera} className="w-full" />
-          {href && (
-            <a href={href} className={`${textLink} w-full justify-center mt-1`}>
-              Ver el plan de la carrera
-            </a>
-          )}
-        </>
-      }
+      turmas={{ items: turma, emptyText }}
+      cta={<InscribirmeButton carrera={carrera} className="w-full" />}
+      // "Ver plan de estudios" só existe quando há temario (confirmado; em DEV, o rascunho).
+      grade={temario.items.length === 0 ? undefined : {
+        label: 'Ver plan de estudios',
+        closeLabel: 'Cerrar',
+        content: {
+          image: carrera.image,
+          imagePos: carrera.imagePos,
+          tag: '100% online',
+          title: carrera.nombre,
+          intro: `${nivelLabel(carrera)} de ${carrera.meses} meses, con un módulo por mes y el acompañamiento de la profesora Ivana Lerea.`,
+          facts: [
+            { label: 'Duración', value: `${carrera.meses} meses` },
+            { label: 'Modalidad', value: '100% online' },
+          ],
+          sections: [
+            {
+              title: temario.draft ? 'Temario (borrador, solo desarrollo)' : 'Plan de estudios: un módulo por mes',
+              items: temario.items,
+            },
+            ...(inicio && etapas.length > 0
+              ? [{ title: 'Cronograma de la cohorte', items: etapas.map((e) => `${etapaLabel(e)} · ${fmtRange(e.date, e.end_date)}`) }]
+              : []),
+            { title: 'Incluido', items: INCLUIDO },
+          ],
+          action: <InscribirmeButton carrera={carrera} />,
+        },
+      }}
+      details={href ? { label: 'Ver el plan de la carrera', href } : undefined}
     />
   );
 }
 
-export function CarrerasGrid({ items, linkTo }: { items: CarreraAr[]; linkTo?: (c: CarreraAr) => string | undefined }) {
+export function CarrerasGrid({
+  items,
+  agenda,
+  linkTo,
+}: {
+  items: CarreraAr[];
+  agenda: AgendaState;
+  linkTo?: (c: CarreraAr) => string | undefined;
+}) {
   return (
     <CardGrid count={items.length}>
       {items.map((c) => (
-        <CarreraCard key={c.course} carrera={c} href={linkTo?.(c)} />
+        <CarreraCard key={c.course} carrera={c} agenda={agenda} href={linkTo?.(c)} />
       ))}
     </CardGrid>
   );
@@ -221,27 +299,17 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
 
 /* ── Qué vas a aprender ─────────────────────────────────────────────── */
 export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
-  // O temario é rascunho (títulos de apostilas): só existe em DEV, por import dinâmico; em produção o módulo
-  // nem entra no build. Só publique o temario depois que a Ivana confirmar.
-  const [borrador, setBorrador] = useState<string[]>([]);
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    let active = true;
-    import('../../data/carreras_ar_temario').then((m) => {
-      if (active) setBorrador(m.temario_borrador[carrera.course] ?? []);
-    });
-    return () => {
-      active = false;
-    };
-  }, [carrera.course]);
+  const temario = useTemario(carrera);
   return (
     <Section id="plan" bg="white" width="narrow">
       <SectionHeader kicker="QUÉ VAS A APRENDER" title="Un módulo por mes" sub={`${carrera.meses} meses de cursada, con evaluación y seguimiento en cada módulo.`} />
-      {borrador.length > 0 ? (
-        <div className="rounded-2xl border border-dashed border-primary/40 bg-surface-cream p-6">
-          <p className="text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">Borrador (solo desarrollo): temario sin confirmar</p>
+      {temario.items.length > 0 ? (
+        <div className={`rounded-2xl bg-surface-cream p-6 ${temario.draft ? 'border border-dashed border-primary/40' : 'border border-muted'}`}>
+          {temario.draft && (
+            <p className="text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">Borrador (solo desarrollo): temario sin confirmar</p>
+          )}
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-900">
-            {borrador.map((t) => (
+            {temario.items.map((t) => (
               <li key={t} className="flex gap-2"><Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />{t}</li>
             ))}
           </ul>

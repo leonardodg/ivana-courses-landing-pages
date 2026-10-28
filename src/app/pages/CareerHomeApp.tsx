@@ -7,6 +7,7 @@ import type { Language } from '../classes/types';
 import { ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
 import SiteNavbar from '../components/SiteNavbar';
+import { useAgenda } from '../hooks/useAgenda';
 import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
@@ -25,6 +26,7 @@ import {
 
 export default function CareerHomeApp() {
   const language: Language = 'es';
+  const agenda = useAgenda('AR');
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
@@ -48,6 +50,7 @@ export default function CareerHomeApp() {
         <Section id="carreras" bg="white" border="y" width="wide">
           <SectionHeader kicker="LAS CARRERAS" title="Elegí tu carrera" sub="Todas son 100% online y terminan con el título del Conservatorio Grassi." />
           <CarrerasGrid
+            agenda={agenda}
             items={carreras_principales.map((c) => carreras_ar[c])}
             linkTo={(c) => ar_pages[c.page].path}
           />

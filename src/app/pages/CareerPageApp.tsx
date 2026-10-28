@@ -63,7 +63,7 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
 
         <Section id="carreras" bg="cream" border="y" width="wide">
           <SectionHeader kicker="LA CARRERA" title="Elegí cómo seguir" sub="100% online, con el título del Conservatorio Grassi." />
-          <CarrerasGrid items={cards} />
+          <CarrerasGrid items={cards} agenda={agenda} />
         </Section>
 
         <QueAprenderSection carrera={carrera} />

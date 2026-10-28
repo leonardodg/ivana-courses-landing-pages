@@ -27,7 +27,7 @@ Argentina) acompanham.
 | `Section` | seção: fundo (`cream`/`white`/`hero`), borda, largura (`prose`/`narrow`/`mid`/`wide`) e respiro | todas as páginas, incl. sobre, "por que nós", depoimentos, perguntas e a grade da home |
 | `SectionHeader` | rótulo (opcional) + título + subtítulo | todas as seções |
 | `Hero` (+ `HeroBadgeText`) | herói com selo, 2 botões em pílula e foto/fundo (3 composições) | BR: velas, soap, aromas, resin · AR: todas |
-| `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas; aceita descrição, selo de nota e metadados | cursos BR, carreras AR, **cards online e presenciais da home (mesma grade)** |
+| `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas; aceita descrição, selo de nota e metadados | cursos BR, carreras AR, **cards online e presenciais da home (mesma grade)**. Um só card: foto · título · tópicos · turmas (presencial BR e carreras AR; online BR não mostra) · preço (só BR) · CTA · **"Ver grade" / "Ver plan de estudios" (modal `GradeModal`) só quando há conteúdo programático** · "ver detalhes" |
 | `DateRow` | item de lista com data (turma / início de cohorte) | turmas BR, cohorte AR |
 | `Steps` | 4 passos em colunas, com ou sem número | como funciona, cursada |
 | `FeatureList` | grade 2 colunas "incluso" | incluso BR, incluido AR |

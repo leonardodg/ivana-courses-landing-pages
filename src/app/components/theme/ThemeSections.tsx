@@ -135,11 +135,11 @@ export interface CursoCardProps {
   events: AgendaEvent[]; // turmas futuras deste curso, em ordem de data
   feedError: boolean;
   loading?: boolean; // agenda ainda carregando: não decide o CTA antes da hora
-  /** Home: lista as próximas turmas no card e liga ao curso na página do tema. */
-  turmas?: { max: number; pageHref: string };
+  /** Home: liga o card à página do curso ("Ver detalhes do curso"). */
+  details?: { href: string };
 }
 
-export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoCardProps) {
+export function CursoCard({ c, utm, events, feedError, loading, details }: CursoCardProps) {
   // Compra só em turma com vagas; esgotada vai para a lista de espera.
   const open = events.filter(e => e.status !== 'esgotado');
   const next = open[0];
@@ -153,6 +153,7 @@ export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoC
         ? { href: lojaLink(c, utm), label: 'Ver na loja' }
         : { href: '/pt-br/interesse/', label: 'Quero ser avisada' };
   const primary = !!next || cta.label === 'Ver na loja';
+  const btn = primary ? btnPrimary : btnOutline;
 
   return (
     <Card
@@ -160,7 +161,7 @@ export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoC
       image={c.image}
       alt={c.name}
       tag="Presencial"
-      href={turmas?.pageHref}
+      titleHref={details?.href}
       title={c.name}
       srText={c.subtitle}
       bullets={c.takesHome}
@@ -177,59 +178,57 @@ export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoC
           )}
         </>
       }
-      extra={
-        turmas && events.length > 0 ? (
-          <ul className="mb-5 space-y-2">
-            {events.slice(0, turmas.max).map(e => {
-              const [, m, day] = e.date.split('-');
-              return (
-                <li key={e.id}>
-                  <a
-                    href={e.status === 'esgotado' ? WHATSAPP_URL : lojaLink(c, utm, e.id)}
-                    className="flex items-center gap-3 rounded-lg border border-muted bg-surface-cream/60 hover:bg-surface-cream px-3 py-2 min-h-11 text-xs text-gray-900"
-                  >
-                    <span className="font-serif text-lg leading-none w-9 text-center">
-                      {Number(day)}
-                      <small className="block text-[9px] font-mono uppercase text-on-surface-variant">{MESES[Number(m) - 1]}</small>
-                    </span>
-                    <span className="grow">{e.time} · {e.city}{e.status === 'esgotado' && ' · esgotada (lista de espera)'}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-primary shrink-0" />
-                  </a>
-                </li>
-              );
-            })}
-            {events.length > turmas.max && (
-              <li>
-                <a href={turmas.pageHref} className={textLink}>
-                  + {events.length - turmas.max} {events.length - turmas.max === 1 ? 'turma' : 'turmas'}
-                </a>
-              </li>
-            )}
-          </ul>
-        ) : undefined
+      turmas={{
+        items: events.map(e => {
+          const [, m, day] = e.date.split('-');
+          const esgotada = e.status === 'esgotado';
+          return {
+            key: e.id,
+            day: Number(day),
+            month: MESES[Number(m) - 1],
+            label: `${e.time} · ${e.city}${esgotada ? ' · esgotada (lista de espera)' : ''}`,
+            href: esgotada ? WHATSAPP_URL : lojaLink(c, utm, e.id),
+          };
+        }),
+        moreHref: details?.href ?? '#turmas',
+        emptyText: loading ? undefined : 'Sem turmas marcadas por enquanto.',
+      }}
+      price={{ main: brl(c.price), sub: 'valor cheio · parcele no cartão' }}
+      cta={
+        loading ? (
+          <span className={`${btnOutline} w-full opacity-60 cursor-default`} aria-busy="true">
+            Carregando turmas…
+          </span>
+        ) : (
+          <a href={cta.href} className={`${btn} w-full`}>
+            {cta.label} <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        )
       }
-      footer={
-        <>
-          <div className="mb-3 font-serif text-2xl text-gray-900">
-            {brl(c.price)}
-            <span className="text-xs font-sans text-on-surface-variant ml-2">valor cheio · parcele no cartão</span>
-          </div>
-          {loading ? (
-            <span className={`${btnOutline} w-full opacity-60 cursor-default`} aria-busy="true">
-              Carregando turmas…
-            </span>
-          ) : (
-            <a href={cta.href} className={`${primary ? btnPrimary : btnOutline} w-full`}>
-              {cta.label} <ArrowRight className="w-3.5 h-3.5" />
+      grade={c.takesHome.length + c.includes.length === 0 ? undefined : {
+        label: 'Ver grade',
+        closeLabel: 'Fechar',
+        content: {
+          image: c.image,
+          tag: 'Presencial',
+          title: c.name,
+          intro: c.subtitle,
+          facts: [
+            { label: 'Duração', value: c.duration },
+            { label: 'Valor', value: `${brl(c.price)} (valor cheio)` },
+          ],
+          sections: [
+            { title: 'O que você leva', items: c.takesHome },
+            { title: 'Incluso', items: c.includes },
+          ],
+          action: loading ? undefined : (
+            <a href={cta.href} className={btn}>
+              {cta.label}
             </a>
-          )}
-          {turmas && (
-            <a href={turmas.pageHref} className="flex min-h-11 items-center justify-center text-xs text-primary underline mt-1">
-              Ver detalhes do curso
-            </a>
-          )}
-        </>
-      }
+          ),
+        },
+      }}
+      details={details && { label: 'Ver detalhes do curso', href: details.href }}
     />
   );
 }
