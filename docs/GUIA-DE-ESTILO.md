@@ -5,12 +5,15 @@ Argentina (`/es_ar/…`) só trocam o idioma e o conteúdo, nunca o desenho: mes
 componentes, mesmos tamanhos, mesma ordem. Se um componente de `es_ar` não tem
 par neste guia, ele está fora do padrão.
 
-## Fora do guia (pendência)
+## Páginas de curso online (no padrão desde 27/10/2026)
 
-As páginas de curso online **`/velas/`, `/saboaria/` e `/apostila/`** (em
-`public/`) foram feitas fora do padrão. **Não as use como referência** e não
-copie nada delas. Ficam como pendência: depois do alinhamento das páginas
-`es_ar`, refazê-las com os componentes deste guia (ver "Pendências", no fim).
+`/velas/`, `/saboaria/` e `/apostila/` eram páginas estáticas feitas fora do padrão (em `public/`). Foram
+refeitas com os componentes de `ui/`: `OnlineCoursePageApp` (`src/app/pages/`) monta a página a partir do
+conteúdo em `src/app/data/online_courses.ts` (textos, preço, links da Hotmart, fotos em `public/images/online/`).
+Navbar, herói, faixa de números, depoimentos, perguntas, contato e rodapé são os mesmos do resto do site.
+**Para mudar texto, preço ou link de compra, edite só `online_courses.ts`; para mudar o visual, edite `ui/`.**
+Componentes novos desta migração: `StatsBar`, `Gallery`, `InfoGrid`, `Profile`, `PriceBlock`, `PurchaseCta`,
+`StickyBuyBar`, `emphasis` (títulos com *destaque*).
 
 ## Regra de ouro: um componente, um lugar
 
@@ -250,5 +253,5 @@ mesmo tempo e registre aqui.
 ## Pendências (fazer depois)
 
 1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
-2. **Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`** (em `public/`), que estão fora do padrão, usando navbar, herói, botões, cards e rodapé deste guia. Só depois delas é que passam a valer como referência.
+2. ~~Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`~~ (feito em 27/10/2026, ver o início do guia).
 3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). ~~Migrar navbar da home, cards online da home, sobre, "por que nós", depoimentos e perguntas~~ (feito em 27/10/2026). **Ainda com `<section>` próprio** (migrar na próxima rodada): `ContactForm` e `CandlesLeadForm` (formulários), `CandlesOnlineSection` (cards online horizontais de velas), `AgendaApp`/`AgendaArApp` (layout da agenda), a faixa de números de `CandlesBrApp` e as páginas legais.

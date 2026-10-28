@@ -58,7 +58,7 @@ export default function NavHeader({
             onClick={onToggle}
             aria-label={menuOpen ? menuLabels.close : menuLabels.open}
             aria-expanded={menuOpen}
-            className={`${hide} text-gray-700 hover:text-primary p-1`}
+            className={`${hide} text-gray-700 hover:text-primary min-h-11 min-w-11 inline-flex items-center justify-center`}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
