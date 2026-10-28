@@ -8,7 +8,7 @@
 import { useState } from 'react';
 import { CalendarDays, GraduationCap, Heart, MessageCircle } from 'lucide-react';
 import type { CategoryId } from '../classes/types';
-import { ArgentinaFlag, BrazilFlag, NavHeader, NavDropdown, LangSwitch, drawerItem, nav_icons, navGroupClass, navPill, navPortalPill } from '../ui';
+import { ArgentinaFlag, BrazilFlag, NavHeader, NavDropdown, LangSwitch, drawerItem, nav_icons, navGroupClass, navPill } from '../ui';
 import { nav_agenda, nav_argentina, nav_brasil, nav_contato, nav_interesse, nav_portal, label, pairFor, type NavItem } from '../data/site_nav';
 import { setPageLanguage, usePageLanguage } from '../lib/lang';
 
@@ -89,6 +89,10 @@ export default function SiteNavbar({
           {label(nav_interesse.label, language)}
         </a>
       )}
+      <a href={nav_portal.href} target="_blank" rel="noreferrer" className={navPill()}>
+        <GraduationCap className="w-3.5 h-3.5 text-primary" />
+        {label(nav_portal.label, language)}
+      </a>
     </nav>
   );
 
@@ -101,10 +105,6 @@ export default function SiteNavbar({
           onSelect={setPageLanguage}
         />
       </div>
-      <a href={nav_portal.href} target="_blank" rel="noreferrer" onClick={close} className={navPortalPill}>
-        <GraduationCap className="w-3.5 h-3.5" />
-        <span>{label(nav_portal.label, language)}</span>
-      </a>
     </>
   );
 

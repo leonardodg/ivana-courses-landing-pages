@@ -11,9 +11,6 @@ export const navPill = (active = false) =>
   `px-3.5 py-1.5 min-h-9 rounded-full text-xs font-semibold tracking-wide inline-flex items-center gap-1.5 transition-all cursor-pointer ${
     active ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high'
   }`;
-/** Pílula do portal (borda suave). */
-export const navPortalPill =
-  'hidden sm:flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-on-surface-variant hover:text-primary border border-subtle bg-white/[0.8] hover:bg-white px-3.5 py-2.5 rounded-full transition-all cursor-pointer';
 /** Caixa branca da gaveta (celular). */
 export const drawerItem =
   'flex items-center justify-between text-xs text-gray-700 hover:text-on-surface-variant hover:bg-surface-container-high transition-all bg-white p-2.5 min-h-11 rounded-lg border border-gray-200 font-semibold';
