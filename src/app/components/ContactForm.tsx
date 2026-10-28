@@ -14,7 +14,7 @@ import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
 
 interface ContactFormProps {
   language:   Language;
-  coursePage: 'candles' | 'soap' | 'resins' | 'homepage';
+  coursePage: 'candles' | 'soap' | 'resins' | 'homepage' | 'carreras_ar';
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

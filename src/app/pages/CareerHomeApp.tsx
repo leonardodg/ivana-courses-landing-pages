@@ -11,6 +11,7 @@ import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
+import ContactForm from '../components/ContactForm';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
   buildArMenu,
@@ -53,12 +54,13 @@ export default function CareerHomeApp() {
           />
         </Section>
 
-        <CursadaSection />
-        <ComoInscribirmeSection />
-        <InclusoSection />
+        <CursadaSection bg="cream" />
+        <ComoInscribirmeSection bg="white" />
+        <InclusoSection bg="cream" />
         <AboutSection language="es" />
         <ReviewsCarousel language="es" reviews={reviews_list} />
         <FAQSection language="es" faqs={faqs_carreras_ar} />
+        <ContactForm language="es" coursePage="carreras_ar" />
         <WhatsAppFooterCta />
       </main>
 

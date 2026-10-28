@@ -10,7 +10,7 @@
 //   generate_lead    formulário enviado com sucesso (form_source)
 
 import { GA_ID, readConsent } from './consent';
-import { TIENDA_AR_URL } from '../data/carreras_ar';
+import { TIENDA_AR_URL } from './tienda';
 
 type Params = Record<string, string | number | boolean | undefined>;
 

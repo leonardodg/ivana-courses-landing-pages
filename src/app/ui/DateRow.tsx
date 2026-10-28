@@ -9,6 +9,7 @@ export default function DateRow({
   lines,
   action,
   footer,
+  tone = 'white',
 }: {
   day: number | string;
   month: string; // "nov", "feb"
@@ -16,9 +17,10 @@ export default function DateRow({
   lines?: ReactNode[]; // linhas com ícone (horário, local…)
   action: ReactNode;
   footer?: ReactNode;
+  tone?: 'white' | 'cream'; // cor do cartão: oposta à do fundo da seção
 }) {
   return (
-    <li className="bg-white rounded-2xl border border-muted shadow-sm overflow-hidden">
+    <li className={`${tone === 'cream' ? 'bg-surface-cream' : 'bg-white'} rounded-2xl border border-muted shadow-sm overflow-hidden`}>
       <div className="p-4 flex flex-col sm:flex-row sm:items-center gap-4">
         <span className="w-14 shrink-0 text-center font-serif text-3xl leading-none text-gray-900">
           {day}

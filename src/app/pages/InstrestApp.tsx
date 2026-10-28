@@ -19,6 +19,7 @@ import AboutSection from "../components/AboutSection";
 import WhyUsSection from "../components/WhyUsSection";
 import ReviewsCarousel from "../components/ReviewsCarousel";
 import Footer from "../components/Footer";
+import { StatsBar } from "../ui";
 import LeadForm from "../components/LeadForm";
 
 import { Menu, SquarePen } from "lucide-react";
@@ -133,34 +134,13 @@ export default function InstrestApp() {
         </section>
 
         {/* Trust stats bar */}
-        <section className="bg-white border-y border-subtle py-8">
-          <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center items-center">
-            <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                2.000+
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsAlunas}
-              </span>
-            </div>
-            <div className="space-y-1 border-y md:border-y-0 md:border-x border-subtle py-4 md:py-0">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                6+ Anos
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsExp}
-              </span>
-            </div>
-            <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-serif text-primary font-black block">
-                BR &amp; AR
-              </span>
-              <span className="text-micro uppercase font-mono tracking-wider font-bold text-gray-600 block">
-                {courses_text.statsPort}
-              </span>
-            </div>
-          </div>
-        </section>
+        <StatsBar
+          items={[
+            { value: '+3.000', label: courses_text.statsAlunas },
+            { value: '6+ Anos', label: courses_text.statsExp },
+            { value: 'BR & AR', label: courses_text.statsPort },
+          ]}
+        />
 
         {/* Flexible lead capture form */}
         <LeadForm

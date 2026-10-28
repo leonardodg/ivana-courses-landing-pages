@@ -1,7 +1,7 @@
 // Páginas legais (política de privacidade, termos de uso e reembolso) em pt-BR e es-AR.
 import { Language } from '../classes/types';
 import CandlesNavbar from '../components/CandlesNavbar';
-import CandlesArNavbar from '../components/CandlesArNavbar';
+import { buildArMenu } from '../components/theme/CareerSections';
 import Footer from '../components/Footer';
 import { company } from '../legal/company';
 import { privacidade, termos, reembolso, LegalDoc } from '../legal/content';
@@ -32,7 +32,7 @@ export default function LegalApp({ doc, language = 'pt' }: { doc: LegalDocKey; l
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {language === 'es' ? (
-        <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
       ) : (
         <CandlesNavbar base="/pt_br/candles/" />
       )}

@@ -148,9 +148,12 @@ function loadAgenda(country: AgendaCountry): Promise<AgendaState> {
         const today = new Date().toLocaleDateString("en-CA", {
           timeZone: "America/Sao_Paulo",
         });
+        // Brasil: só turmas futuras. Argentina: o cronograma da cohorte é fixo e a página precisa do módulo 1
+        // (início de cursada) mesmo depois da data, então o cache da AR não é filtrado.
+        const events = country === "AR" ? (cached.events ?? []) : (cached.events ?? []).filter((e) => e.date >= today);
         return {
           status: "ready",
-          events: (cached.events ?? []).filter((e) => e.date >= today),
+          events,
           generatedAt: cached.generated_at,
           stale: true,
         };
@@ -178,15 +181,18 @@ export function useAgenda(country: AgendaCountry = "BR", enabled = true): Agenda
 
     // Só em desenvolvimento (?mock): dados de exemplo para testar o layout. Some do build de produção.
     if (import.meta.env.DEV && new URLSearchParams(window.location.search).has("mock")) {
+      let mockActive = true;
       if (country === "AR") {
         // import dinâmico: o módulo dos mocks AR nem entra no build de produção
-        import("../data/agenda_ar_mock").then((m) =>
-          setState({ status: "ready", events: m.MOCK_EVENTS_AR, generatedAt: null, stale: false }),
-        );
+        import("../data/agenda_ar_mock").then((m) => {
+          if (mockActive) setState({ status: "ready", events: m.MOCK_EVENTS_AR, generatedAt: null, stale: false });
+        });
       } else {
         setState({ status: "ready", events: MOCK_EVENTS, generatedAt: null, stale: false });
       }
-      return;
+      return () => {
+        mockActive = false;
+      };
     }
 
     let active = true;

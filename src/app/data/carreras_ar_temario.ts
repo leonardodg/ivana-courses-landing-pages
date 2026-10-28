@@ -1,0 +1,116 @@
+// Temario RASCUNHO das carreras (títulos das apostilas do Drive). Só existe em DEV: é carregado por import
+// dinâmico atrás de import.meta.env.DEV (ver QueAprenderSection) e não entra no build de produção.
+// Só publique algo daqui depois que a Ivana confirmar o temario de cada carreira.
+export const temario_borrador: Record<string, string[]> = {
+  "ar-velas": [
+    "Aditivos",
+    "Aula 2Velas teraeuticas",
+    "Aula1Velas Aromaticas Artesanales",
+    "Etiqueta de Seguridad de una Vela Proteccion y Prevencion Esencial",
+    "Fabricacion de Velas con Moldes y Wax Melts",
+    "Velas con Parafina Gel Innovacion en Decoracion",
+    "Velas efecto porcelana",
+    "Velas globo de nieve",
+    "Velas gourmet",
+    "Velasaromaticas"
+  ],
+  "ar-velas-prof": [
+    "Aula 1",
+    "Bandeja Mix Media",
+    "Cera APF para velas en moldes y wax melts caracteristicas y uso",
+    "Cópia de Bandeja Mix Media",
+    "Curso de Velas Pilar con Piedras y Resinas Guia Paso a Paso",
+    "Espejo",
+    "Guia Completa",
+    "Tapiz portamacetas",
+    "Vela Horneada Ivana Academy",
+    "Velas Terapéuticas. Las velas terapéuticas son velas creadas con ceras vegetales y aceites esenciales, trayendo las propiedades aroma terapéuticas de los mismos. Podemos optar por usar cera de soj",
+    "Velas cóctel",
+    "Velas Pilar hechas en Base de Concreto",
+    "Velas con efecto marmol",
+    "Velas de Gel y Cera de Soja",
+    "Velas en gel",
+    "Velas globo de nieve"
+  ],
+  "ar-resinas": [
+    "Aplicacion de Resina Epoxi 2",
+    "Aula 1 resina epoxi",
+    "Aula 2 resina con moldes",
+    "Aula 9",
+    "Creacion de un Reloj de Pared Efecto Mar con Resina sobre MDF",
+    "Cuadro Geoda",
+    "Encapsulados con Resina Epoxi y Terminaciones con Resina UV",
+    "Jaboneras reciclando",
+    "Joyas Botanicas con Resina UV Inspiracion y Tendencias",
+    "Mesas de Rio con Resina Arte y Tecnica en Madera y Epoxi",
+    "Paso a Paso para Decorar Vasos con Resinas Epoxi",
+    "Pigmentos para Resina Definicion Tipos y Aplicaciones",
+    "Presentacion del Proyecto",
+    "Profesorado Resinas Efecto3D IvanaAcademy",
+    "Tecnicatura en resinas",
+    "Untitled",
+    "guia resina epoxi pisos",
+    "ultimo TP resina"
+  ],
+  "ar-resinas-prof": [],
+  "ar-macrame": [
+    "Aula 2 espejo",
+    "Porta Macetas de Macrame",
+    "Portamacetas",
+    "Tapiz Porta Macetas",
+    "Tapiz con repiza",
+    "Tapiz de Hojas en Macrame",
+    "Tapiz mediano bicolor",
+    "tapiz semicircular"
+  ],
+  "ar-macrame-prof": [
+    "Arbol de la Vida en Macrame Guia Paso a Paso",
+    "Arbol de navidad",
+    "Cama Para gato circular",
+    "Encordado",
+    "Lampara en macrame combinando nudos",
+    "Sandalias de Macrame Personalizadas",
+    "Vestido en Macrame Materiales"
+  ],
+  "ar-estampas": [
+    "Ecoprint La Alquimia Botanica sobre Tejidos Naturales",
+    "Estampa tus Propias Creaciones",
+    "Guia Creativa",
+    "marmolado ivana academy",
+    "preparacion lienzo eco print"
+  ],
+  "ar-interiores": [
+    "Arte y Revolucion",
+    "Estilos",
+    "Estilos en Diseno de Interiores Moderno Vintage Rustico Nordico Shabby Chic Industrial y Minimalista",
+    "Iluminacion y Cortinas La Sinergia Perfecta en Diseno de Interiores",
+    "Intervencion en Paredes",
+    "Intervencion en pisos renovacion sin obras",
+    "Tapiceria basica",
+    "Tecnicatura en diseno de interiores"
+  ],
+  "ar-mixmedia": [
+    "Alambrismo Artesanal Creando Belleza con Hilos de Metal",
+    "Apostilla Papel Mache y Cartapesta Ivana Academy ES 1Hoja",
+    "Arte Mix Media y Fotomontaje",
+    "Arte Mix media",
+    "Cartapesta y Papel Mache Ivana Academy",
+    "Craquelado sobre Madera",
+    "Cuadro con relieve y hojas de oro",
+    "Decoupage Invertido con Servilletas sobre Platos Transparentes",
+    "El Circulo Cromatico",
+    "Falso Decapado y Sublimacion sobre Madera Tecnicas y Aplicaciones",
+    "Falso Enlozado Arte y Reciclaje en Latas Vidrios y Plasticos",
+    "Guia Completa de Tecnicas Pictoricas y Decorativas",
+    "Introduccion a la Teoria del Color",
+    "Introduccion al Arte Mix Media Transformando una Bandeja de MDF",
+    "Ivana Academy Decoracion Frascos",
+    "Mariposa",
+    "Materiales aula 8 Mix M",
+    "Patinas Artesanales sobre Madera Yeso y Metal Arte y Ciencia del Envejecimiento Controlado",
+    "Pinturas con Lacas Vitrales Arte Luminoso",
+    "Steampunk y Arte Mix Media Creando una Caja Costurero con Piezas Cotidianas",
+    "Sublimacion en Casa",
+    "Tapiz con repiza"
+  ]
+};

@@ -87,7 +87,7 @@ export default function CandlesBrApp() {
         {/* Faixa de números */}
         <StatsBar
           items={[
-            { value: '2.000+', label: courses_text.statsAlunas },
+            { value: '+3.000', label: courses_text.statsAlunas },
             { value: '6+ Anos', label: courses_text.statsExp },
             { value: 'BR & AR', label: courses_text.statsPort },
           ]}

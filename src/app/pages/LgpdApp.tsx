@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Language } from '../classes/types';
 import CandlesNavbar from '../components/CandlesNavbar';
-import CandlesArNavbar from '../components/CandlesArNavbar';
+import { buildArMenu } from '../components/theme/CareerSections';
 import Footer from '../components/Footer';
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
@@ -121,7 +121,7 @@ export default function LgpdApp({ language = 'pt' }: { language?: Language }) {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {es ? (
-        <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
       ) : (
         <CandlesNavbar base="/pt_br/candles/" />
       )}
