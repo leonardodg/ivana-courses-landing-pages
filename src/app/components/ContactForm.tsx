@@ -58,7 +58,7 @@ function Field({ label, required, error, hint, children }: FieldProps) {
 export default function ContactForm({ language, coursePage }: ContactFormProps) {
   const t = text[language];
   const errText = (key?: ContactErrorKey) => (key ? t[key] : undefined);
-  const { form, errors, touched, setField, blurField, isValid } = useContactForm();
+  const { form, errors, touched, setField, blurField, isValid } = useContactForm(language === 'es' ? '+54' : '+55');
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus]     = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);

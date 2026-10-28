@@ -83,12 +83,10 @@ export default function SiteNavbar({
         <MessageCircle className="w-3.5 h-3.5 text-primary" />
         {label(nav_contato.label, language)}
       </a>
-      {language === 'pt' && (
-        <a href={nav_interesse.href} className={navPill()}>
-          <Heart className="w-3.5 h-3.5 text-primary" />
-          {label(nav_interesse.label, language)}
-        </a>
-      )}
+      <a href={nav_interesse.href[language]} className={navPill()}>
+        <Heart className="w-3.5 h-3.5 text-primary" />
+        {label(nav_interesse.label, language)}
+      </a>
       <a href={nav_portal.href} target="_blank" rel="noreferrer" className={navPill()}>
         <GraduationCap className="w-3.5 h-3.5 text-primary" />
         {label(nav_portal.label, language)}
@@ -143,12 +141,10 @@ export default function SiteNavbar({
         <MessageCircle className="w-4 h-4 text-primary shrink-0" />
         <span>{label(nav_contato.label, language)}</span>
       </a>
-      {language === 'pt' && (
-        <a href={nav_interesse.href} onClick={close} className={`${drawerItem} justify-start gap-3`}>
-          <Heart className="w-4 h-4 text-primary shrink-0" />
-          <span>{label(nav_interesse.label, language)}</span>
-        </a>
-      )}
+      <a href={nav_interesse.href[language]} onClick={close} className={`${drawerItem} justify-start gap-3`}>
+        <Heart className="w-4 h-4 text-primary shrink-0" />
+        <span>{label(nav_interesse.label, language)}</span>
+      </a>
       <a href={nav_portal.href} target="_blank" rel="noreferrer" onClick={close} className={`${drawerItem} justify-start gap-3`}>
         <GraduationCap className="w-4 h-4 text-primary shrink-0" />
         <span>{label(nav_portal.label, language)}</span>
