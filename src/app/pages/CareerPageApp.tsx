@@ -14,6 +14,7 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import {
+  buildArMenu,
   CarrerasGrid,
   CohorteSection,
   ComoInscribirmeSection,
@@ -27,6 +28,9 @@ import {
   heroSecondary,
   nivelLabel,
 } from '../components/theme/CareerSections';
+
+// Páginas que têm par no Brasil (seletor PT | ES e hreflang).
+const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt_br/candles/', resin: '/pt_br/resin/' };
 
 const ArgentinaFlag = () => (
   <svg viewBox="0 0 3 2" className="w-4.5 h-3 opacity-95 rounded-[1px] scale-105" aria-hidden="true">
@@ -45,7 +49,7 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" />
+      <CandlesNavbar language="es" menu={buildArMenu(PT_PAIR[slug])} />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura (herói dividido, igual ao da página de velas do Brasil) */}
