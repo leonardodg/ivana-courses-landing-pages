@@ -1,0 +1,221 @@
+# Guia de estilo das páginas (pt_BR é a referência; es_ar segue)
+
+Criado em 27/10/2026. **O que está no ar no Brasil é o padrão.** As páginas da
+Argentina (`/es_ar/…`) só trocam o idioma e o conteúdo, nunca o desenho: mesmos
+componentes, mesmos tamanhos, mesma ordem. Se um componente de `es_ar` não tem
+par neste guia, ele está fora do padrão.
+
+## Fora do guia (pendência)
+
+As páginas de curso online **`/velas/`, `/saboaria/` e `/apostila/`** (em
+`public/`) foram feitas fora do padrão. **Não as use como referência** e não
+copie nada delas. Ficam como pendência: depois do alinhamento das páginas
+`es_ar`, refazê-las com os componentes deste guia (ver "Pendências", no fim).
+
+## 1. Fundamentos (tokens)
+
+Fonte única: `src/styles/index.css` (Tailwind v4) e `kit-de-marca` (Artisanal Elegance).
+
+| Item | Valor |
+|---|---|
+| Cores | Creme `#F7EFE4` (`surface-hero`, `hero-bg`) · Papel `#FCF9F5` (`surface-cream`) · Dusty Rose `#D9A1A0` (`primary-container`) · Rosé Profundo `#805252` (`primary`) · Tinta `#1C1C1A` (`on-surface`) · Tinta Suave `#514443` (`on-surface-variant`) · Terracota `#805533` (`tertiary`) |
+| Bordas | `border-subtle` `#E1DEDA` · `border-muted` `#EAE8E4` (cards) |
+| Títulos | Libre Caslon Text (`font-serif`), peso 400. Destaque em *itálico Rosé Profundo*. Nunca bold pesado em título |
+| Corpo | Plus Jakarta Sans (`font-sans`) |
+| Rótulos e botões | JetBrains Mono (`font-mono`), `text-xs`, caixa alta, `tracking-wider` ou `tracking-widest` |
+| Container | `max-w-[1280px] mx-auto px-6` (conteúdo estreito: `max-w-3xl`; passos e locais: `max-w-[1100px]`) |
+| Ritmo vertical | seções `py-16 md:py-24` (cabeçalho de seção `mb-12`) |
+| Raios | cards `rounded-2xl` · botões de card `rounded-lg` · botões de herói, selos e navbar `rounded-full` |
+| Sombras | `shadow-sm`, e `hover:shadow-md` ou `hover:shadow-lg` nos cards |
+| Alvos de toque | mínimo 44 px (`min-h-11`) em links e botões |
+| Foco | `focus-visible:outline-2 outline-offset-2 outline-tertiary`; skip link no topo (`SkipLink`) |
+
+**Fundos das seções alternam** (de cima para baixo): creme `bg-surface-cream` → branco
+`bg-white border-y border-muted` → creme → branco… Nunca duas seções seguidas com o mesmo fundo.
+
+## 2. Estrutura de uma página de tema
+
+Ordem fixa (BR: `ThemePageApp` e `CandlesBrApp`; AR: `CareerPageApp`):
+
+1. Navbar fixa
+2. Herói
+3. (opcional) barra de números
+4. Turmas / Cohorte (lista)
+5. Cursos / Carreras (grade de cards)
+6. Online do tema (cards)
+7. Como funciona (4 passos)
+8. Incluso em todos
+9. Locais (BR) · Salida laboral (AR)
+10. Sobre a Ivana, depoimentos e perguntas
+11. Contato (WhatsApp)
+12. Rodapé
+
+## 3. Componentes
+
+Cada linha diz **onde está o modelo pt_BR**. O `es_ar` deve usar o mesmo componente
+(ou uma variante com o mesmo desenho) e só trocar textos.
+
+### 3.1 Navbar
+
+| Variante | Onde | Desenho |
+|---|---|---|
+| Home | `Navbar.tsx` | Logo (link para `/`) · pílulas de categoria · seletor PT/ES |
+| **Páginas de tema** | `CandlesNavbar.tsx` | `header` fixo `bg-surface-cream/95 backdrop-blur-md shadow-sm border-b border-subtle`, container `px-4 md:px-12 py-3.5`. **Esquerda:** logo (`h-10 md:h-12`) linkada à home. **Direita:** uma única pílula "Portal do Aluno" (`border border-subtle bg-white/[0.8] rounded-full px-3.5 py-2.5 font-mono text-xs uppercase`) e, no celular, botão de menu. **Gaveta:** itens em caixas brancas `rounded-lg border` ("Cursos", "Fale conosco", "Plataforma de Ensino") |
+| Agenda | `AgendaApp.tsx` | Cabeçalho simples: logo + link "Ver todos os cursos" |
+
+**Regra para es_ar (aplicada):** a mesma navbar das páginas de tema, `<CandlesNavbar language="es" />`,
+com os itens traduzidos ("Portal del Alumno" → `https://ivana.academy`; gaveta: "Carreras",
+"Contacto", "Campus virtual"). Nada de menu suspenso, links soltos ou botão extra que o
+BR não tenha. O `CareerNavbar` foi removido.
+
+### 3.2 Herói
+
+Dois desenhos aprovados. Cada página usa o do seu par no Brasil.
+
+- **A. Imagem de fundo** (`ThemePageApp`, páginas soap, aromas, resin): seção `min-h-[70vh] flex items-end`, foto em tela cheia `opacity-85` com gradiente `from-hero-bg via-hero-bg/70 to-hero-bg/20`, conteúdo `px-6 md:px-12 pt-28 pb-12`: **um** selo (pílula branca, `text-micro uppercase font-mono tracking-widest text-primary`), `h1` (`text-3xl sm:text-4xl md:text-5xl font-serif font-bold`), parágrafo `max-w-xl`, e **dois botões**.
+- **B. Dividido** (`CandlesBrApp`, página de velas): texto à esquerda, foto emoldurada à direita (`rounded-xl shadow-xl`, moldura rosa `-rotate-2`), selo com bandeira.
+
+**Botões do herói (sempre estes dois, nesta ordem, ambos pílula):**
+
+```
+Primário:   bg-primary text-white font-semibold font-mono text-xs tracking-widest uppercase
+            inline-flex items-center gap-2 px-8 py-4 rounded-full shadow-sm  (+ ícone lucide w-3.5 h-3.5)
+Secundário: border border-subtle bg-white/80 hover:bg-white text-on-surface-variant hover:text-primary
+            font-bold font-mono text-xs uppercase tracking-wider px-8 py-4 rounded-full  (+ ícone)
+```
+
+Rótulos BR: "Catálogo de cursos" / "Entrar em contato" (ou "Ver próximas turmas" /
+"Prefere online?"). **Regra es_ar (aplicada):** todas as páginas usam o herói **B**
+(dividido). Selo único com a bandeira ("100% online · Conservatorio Grassi"); primário
+"Ver carreras" no inicio e "Ver cohorte 2027" nas páginas de carreira; secundário
+"Hablar por WhatsApp". O botão "Ver valores e inscribirme" **não vai no herói**: fica
+nos cards e na seção de cohorte. Sem 3 selos, sem botão `rounded-lg`, sem borda
+`border-primary` no secundário. Constantes: `heroPrimary` e `heroSecondary`
+(`CareerSections.tsx`).
+
+### 3.3 Botões (resumo)
+
+| Uso | Classes |
+|---|---|
+| Herói primário / secundário | acima |
+| Botão de card e de lista (`btnPrimary`) | `bg-primary hover:bg-primary/90 text-white text-xs font-bold font-mono uppercase tracking-wider px-5 py-2.5 rounded-lg`, `w-full` dentro de card |
+| Botão de card secundário (`btnOutline`) | `border border-primary text-primary hover:bg-primary hover:text-white` + mesmas medidas |
+| Formulário | classe `brand-btn-primary` / `brand-btn-secondary` (`index.css`) |
+
+Um mesmo bloco nunca mistura pílula e `rounded-lg`.
+
+### 3.4 Cabeçalho de seção (`sectionHeader`)
+
+`text-center max-w-2xl mx-auto mb-12`: rótulo `text-xs font-mono font-bold tracking-widest text-primary uppercase mb-3`, título `text-3xl md:text-4xl font-serif text-gray-900`, subtítulo opcional `text-sm text-on-surface-variant mt-3`.
+Exemplos BR: "PRÓXIMAS TURMAS / Escolha a sua data", "CURSOS PRESENCIAIS / Do zero, com a mão na massa".
+
+### 3.5 Card de curso (`CursoCard`) e grade
+
+**Este é o card padrão. Carreras usam exatamente o mesmo, sem variação de tamanho.**
+
+- **Grade:** `grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10` (2 colunas no desktop em **todas** as páginas, home e tema). Com 1 curso: `max-w-md mx-auto`; com 2: `max-w-4xl mx-auto`. **Nunca 3 colunas.**
+- **Card:** `bg-white rounded-2xl shadow-sm hover:shadow-md border border-muted overflow-hidden flex flex-col h-full` (todos os cards da linha têm a mesma altura).
+- **Imagem:** `aspect-[16/10]`, `object-cover`, selo "Presencial" no canto superior esquerdo (pílula branca `text-micro uppercase tracking-wider`).
+- **Corpo:** `p-6 md:p-8 flex flex-col grow`: título `text-xl md:text-2xl font-serif mb-4`, lista de benefícios com ícone `Check` verde `w-4 h-4`, linha de metadados (duração, nº de turmas) com borda superior, bloco de preço (só no BR), botão `w-full` ao fim (`mt-auto`).
+- **Equivalente AR:** mesma estrutura, selo "100% online", benefícios (nivel e meses, título Conservatorio Grassi, continuação), **sem preço**, botão "Ver valores e inscribirme".
+
+### 3.6 Lista de turmas (`TurmaCard`) e Cohorte
+
+`ul space-y-4`; cada item `bg-white rounded-2xl border border-muted shadow-sm p-4 flex gap-4`: bloco de data à esquerda (`w-14`, dia `font-serif text-3xl`, mês `text-[10px] font-mono uppercase`), título `font-semibold`, horário e local com ícone `w-3 h-3 text-primary`, botão à direita (`btnPrimary`). Largura `max-w-3xl`, fundo `bg-surface-cream`.
+Estados: carregando, vazio e erro como cartão branco centralizado com ícone `CalendarDays`.
+**AR:** `CohorteSection` deve usar este mesmo item (bloco de data, título, botão à direita); o cronograma expansível vem logo abaixo, no mesmo cartão.
+
+### 3.7 Como funciona (passos)
+
+`ComoFuncionaSection`: seção `bg-white border-t border-muted`, `max-w-[1100px]`; `ol grid gap-6 sm:grid-cols-2 lg:grid-cols-4`; cada passo `bg-surface-cream rounded-2xl p-6 border border-muted` com linha de ícone e número (`flex items-center gap-2 text-primary font-mono font-bold text-xs mb-3`), título `font-serif text-lg` e texto `text-xs text-on-surface-variant`; frase de rodapé centralizada `text-xs`.
+**AR:** `ComoInscribirmeSection` precisa virar este bloco: 4 passos em 4 colunas, com ícone e número, não 2 colunas com número grande.
+
+### 3.8 Incluso em todos · Locais · Selos
+
+- **Incluso:** `max-w-3xl`, `grid grid-cols-2 gap-4`, itens `bg-white rounded-xl border border-muted p-4` com ícone `Gift`.
+- **Locais:** `grid gap-6 md:grid-cols-3`, `bg-surface-cream rounded-2xl border border-muted p-6`, ícone de pino, cidade em `font-serif`, link "Abrir no mapa".
+- **Selo / pílula:** `bg-white/95 border border-subtle px-3.5 py-1.5 rounded-full text-micro uppercase font-mono tracking-wider text-primary font-semibold`.
+
+### 3.9 Cards online (`CandlesOnlineSection`)
+
+`bg-white border-t border-muted`, cabeçalho em linha com selo "ATELIER MASTERCLASS VIRTUAL", cards horizontais com imagem, badge de cor, "GRADE" e "MATRÍCULA". Só existe no BR; a AR não cria equivalente (sem curso online avulso).
+
+### 3.10 Sobre, números, depoimentos, perguntas
+
+| Bloco | Componente | Fundo |
+|---|---|---|
+| Barra de números | seção em `CandlesBrApp` (3 colunas, `font-serif text-primary font-black`) | `bg-white border-y border-subtle py-8` |
+| Sobre a Ivana | `AboutSection` (foto 3/4 à esquerda, texto à direita) | `bg-white border-y border-subtle` |
+| Por que nós | `WhyUsSection` | `bg-white` |
+| Depoimentos | `ReviewsCarousel` (cartão `max-w-[750px] rounded-2xl`) | `bg-surface-hero border-t border-review` |
+| Perguntas | `FAQSection` (`max-w-[800px]`, acordeão) | `bg-white` |
+
+### 3.11 Contato e rodapé
+
+- **Contato (tema):** seção `bg-white border-t border-muted text-center`, `h2 font-serif text-2xl md:text-3xl`, texto, um botão pílula "Chamar no WhatsApp".
+- **Rodapé:** `Footer.tsx` igual em todas as páginas (`bg-surface-hero border-t border-subtle`), com links legais; em `es` inclui arrepentimiento e Defensa del Consumidor.
+
+### 3.12 Agenda
+
+`AgendaApp.tsx`: cabeçalho simples, coluna lateral com título, texto, botão e filtro (chips `rounded-full min-h-11`), lista por mês com cartões `rounded-2xl border bg-surface-cream`. A `AgendaArApp` segue o mesmo desenho (já alinhada).
+
+## 4. Alinhamento de `es_ar` ao padrão (estado em 27/10/2026)
+
+| # | Item | Antes (fora do padrão) | Agora (= pt_BR) |
+|---|---|---|---|
+| 1 | **Cards** | 3 colunas, alturas livres | `CarreraCard` = `CursoCard`: 2 colunas, `h-full`, imagem 16/10, mesmo corpo `p-6 md:p-8`; 1 card `max-w-md`, 2 cards `max-w-4xl` (`CarrerasGrid`) |
+| 2 | **Passos** | 2 colunas, número grande | `ComoInscribirmeSection` = `ComoFuncionaSection`: 4 colunas, ícone + número, `max-w-[1100px]` |
+| 3 | **Menu** | `CareerNavbar` com menu suspenso | `CandlesNavbar language="es"`: logo + pílula "Portal del Alumno" + gaveta |
+| 4 | **Herói** | 3 selos, botões retangulares | herói dividido, 1 selo, 2 botões em pílula (`heroPrimary` / `heroSecondary`) |
+| 5 | Cohorte | cartão próprio | item `TurmaCard` (data `w-14`, botão à direita) + cronograma no mesmo cartão |
+| 6 | Incluso | inexistente | `InclusoSection` ("Incluido en todas") |
+| 7 | Contato | botão retangular | pílula `px-8 py-4 rounded-full`, `id="contacto"` |
+
+Itens que continuam iguais ao Brasil e **não** são da AR: alvos menores que 44 px na
+logo (40 px), no botão de menu (32 px) e nas setas dos depoimentos (36 px). Corrigir nos
+componentes compartilhados, para valer nos dois países.
+
+## 4b. Catálogo de componentes (código)
+
+| Componente | Arquivo | Uso | BR | AR |
+|---|---|---|---|---|
+| `CandlesNavbar` | `components/CandlesNavbar.tsx` | `<CandlesNavbar language="pt\|es" base="" />` | sim | sim |
+| Herói dividido | `pages/CandlesBrApp.tsx`, `CareerPageApp.tsx` | `heroPrimary` + `heroSecondary` | sim | sim |
+| Herói imagem de fundo | `pages/ThemePageApp.tsx` | `bg-primary` pílula + `border-subtle` pílula | sim | não usado |
+| `sectionHeader` | `ThemeSections.tsx`, `CareerSections.tsx` | `(kicker, title, sub?)` | sim | sim |
+| `CursoCard` / `CarreraCard` | `ThemeSections.tsx` / `CareerSections.tsx` | card padrão 16/10 + `h-full` | sim | sim |
+| `CarrerasGrid` | `CareerSections.tsx` | `<CarrerasGrid items={…} linkTo={…} />` | (grade `grid md:grid-cols-2`) | sim |
+| `TurmasSection` / `CohorteSection` | idem | lista com item `TurmaCard` | sim | sim |
+| `ComoFuncionaSection` / `ComoInscribirmeSection` | idem | 4 passos | sim | sim |
+| `InclusoSection` | idem | grade 2 colunas | sim | sim |
+| `LocaisSection` | `ThemeSections.tsx` | 3 cartões | sim | não se aplica (online) |
+| `AboutSection`, `ReviewsCarousel`, `FAQSection` | `components/` | `language="pt\|es"` | sim | sim |
+| Contato (WhatsApp) | `ThemePageApp.tsx`, `WhatsAppFooterCta` | pílula | sim | sim |
+| `Footer` | `components/Footer.tsx` | `language` | sim | sim |
+| `PrivacyConsent` | `components/PrivacyConsent.tsx` | todo formulário | sim | sim |
+
+**Novo componente = primeiro conferir esta tabela.** Se já existe um equivalente no
+Brasil, reaproveite (parametrizando o idioma); se não existe, crie nos dois idiomas ao
+mesmo tempo e registre aqui.
+
+## 5. Regras de conteúdo es_ar (valem sobre o desenho)
+
+- **Nenhum preço**, nem o campo `price` do feed. O valor só aparece na tienda.
+- **Nomes oficiais completos com o nível** ("Tecnicatura en arte y diseño de velas").
+- **Só online.** Espanhol rioplatense (voseo). Datas só do feed.
+- Fotos só da Ivana ou de alunas autorizadas; sem foto, capa da marca.
+
+## 6. Checklist para aprovar uma página nova
+
+- [ ] Navbar, herói, botões e rodapé idênticos aos do par pt_BR
+- [ ] Grade de cards em 2 colunas, todos com a mesma altura e proporção de imagem
+- [ ] Passos em 4 colunas com ícone e número
+- [ ] Fundos de seção alternados, `py-16 md:py-24`
+- [ ] Alvos de toque ≥ 44 px, sem rolagem horizontal em 390 px, sem erro no console
+- [ ] `npm run lint` e `npm run build` limpos; busca por preço em `dist/es_ar` = zero
+
+## Pendências (fazer depois)
+
+1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
+2. **Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`** (em `public/`), que estão fora do padrão, usando navbar, herói, botões, cards e rodapé deste guia. Só depois delas é que passam a valer como referência.
+3. Extrair os blocos repetidos (`sectionHeader`, botões, `TurmaCard`, `CursoCard`) para um módulo compartilhado, para BR e AR não divergirem de novo.
