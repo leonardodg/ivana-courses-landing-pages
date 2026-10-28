@@ -3,7 +3,8 @@
 import { useCooldownReset } from '../hooks/useCooldownReset';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
-import CandlesArNavbar from '../components/CandlesArNavbar';
+import CandlesNavbar from '../components/CandlesNavbar';
+import { buildArMenu } from '../components/theme/CareerSections';
 import Footer from '../components/Footer';
 import { submitContact } from '../hooks/useSubmitContact';
 import type { SubmitStatus } from '../hooks/useSubmitContact';
@@ -50,7 +51,7 @@ export default function ArrepentimientoApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesArNavbar base="/es_ar/candles/" onOpenPortal={() => window.open(company.platform, '_blank', 'noreferrer')} />
+      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <div className="max-w-xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif leading-tight">Botón de arrepentimiento</h1>

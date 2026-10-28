@@ -7,15 +7,17 @@ export default function ContactCta({
   text,
   action,
   below,
+  tone = 'cream',
 }: {
   id?: string;
   title: string;
   text: string;
   action: { label: string; href: string };
   below?: ReactNode;
+  tone?: 'cream' | 'white'; // alterna com o fundo da seção anterior (perguntas: branco)
 }) {
   return (
-    <section id={id} className="py-16 bg-white border-t border-muted text-center px-6">
+    <section id={id} className={`py-16 ${tone === 'cream' ? 'bg-surface-cream' : 'bg-white'} border-t border-muted text-center px-6`}>
       <h2 className="text-2xl md:text-3xl font-serif text-gray-900">{title}</h2>
       <p className="text-sm text-on-surface-variant mt-2">{text}</p>
       <a

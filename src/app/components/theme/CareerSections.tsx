@@ -5,7 +5,7 @@
 // REGRAS: nenhum preço (nem o campo `price` do feed). O valor só aparece na tienda.
 // Datas vêm do feed (useAgenda('AR')); textos e temario, de data/carreras_ar.ts.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   CalendarDays,
@@ -36,13 +36,14 @@ export const fmtFull = (iso: string) =>
 export const nivelLabel = (c: CarreraAr) => (c.nivel === 'tecnicatura' ? 'Tecnicatura' : 'Profesorado');
 
 /* ── Opções do menu da Argentina (navbar de tema, em pílulas) ────────── */
-export function buildArMenu(ptHref?: string): NavMenu {
+/** `base`: caminho da página das âncoras ('' na própria página; '/es_ar/' nas páginas legais). */
+export function buildArMenu(ptHref?: string, base = ''): NavMenu {
   return {
     careersLabel: 'Carreras',
     careers: carreras_principales.map((c) => ({ label: carreras_ar[c].nombre, href: ar_pages[carreras_ar[c].page].path })),
     links: [
       { label: 'Agenda', href: '/es_ar/agenda/' },
-      { label: 'Cómo inscribirme', href: '#inscripcion' },
+      { label: 'Cómo inscribirme', href: `${base}#inscripcion` },
       { label: 'WhatsApp', href: WHATSAPP_AR, external: true },
     ],
     ptHref,
@@ -134,41 +135,14 @@ export const etapaLabel = (e: AgendaEvent) => {
   return e.etapa ?? e.title;
 };
 
-export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda: AgendaState }) {
+/** Item da cohorte: data de início + botão + cronograma expansível. Usado na página da carreira e na agenda. */
+export function CohorteRow({ carrera, etapas, tone = 'cream' }: { carrera: CarreraAr; etapas: AgendaEvent[]; tone?: 'white' | 'cream' }) {
   const [open, setOpen] = useState(false);
-  const etapas = agenda.events
-    .filter((e) => e.course === carrera.course)
-    .sort((a, b) => a.date.localeCompare(b.date));
   const inicio = etapas.find((e) => /^modulo\s+1\//i.test(e.etapa ?? '')) ?? etapas[0];
   const turma = inicio?.turma ?? 'Cohorte 2027';
-
-  const vacio = (msg: string, sub?: string) => (
-    <div className="bg-white rounded-2xl border border-muted p-6 text-center">
-      <CalendarDays className="w-6 h-6 text-primary mx-auto mb-2" />
-      <p className="text-sm text-gray-900 font-semibold">{msg}</p>
-      {sub && <p className="text-xs text-on-surface-variant mt-1">{sub}</p>}
-      <div className="flex flex-wrap justify-center gap-3 mt-4">
-        <a href={whatsappInscripcion(carrera)} className={btnPrimary}>Consultar por WhatsApp</a>
-        <a href="/es_ar/agenda/" className={btnOutline}>Ver agenda completa</a>
-      </div>
-    </div>
-  );
-
-  let body;
-  if (agenda.status === 'loading') {
-    body = <p className="text-center text-sm text-on-surface-variant">Cargando el calendario…</p>;
-  } else if (agenda.status === 'error') {
-    body = vacio('No pudimos cargar el calendario ahora.', 'Escribinos y te pasamos las fechas.');
-  } else if (!carrera.enCalendario2027) {
-    body = vacio('La fecha de inicio se confirma más adelante.', 'Consultanos por WhatsApp y te avisamos.');
-  } else if (etapas.length === 0) {
-    body = vacio('Próximamente el calendario de la Cohorte 2027', 'Mientras tanto, consultanos por WhatsApp.');
-  } else {
-    const [, m, day] = inicio.date.split('-');
-    body = (
-      <>
-        <ul className="space-y-4">
-          <DateRow
+  const [, m, day] = inicio.date.split('-');
+  return (
+    <DateRow
             day={Number(day)}
             month={MESES[Number(m) - 1]}
             title={`Inicio de cursada · ${turma}`}
@@ -182,6 +156,7 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
                 100% online · inscripción abierta todo el año
               </>,
             ]}
+            tone={tone}
             action={<InscribirmeButton carrera={carrera} />}
             footer={
               <>
@@ -206,7 +181,41 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
                 )}
               </>
             }
-          />
+    />
+  );
+}
+
+export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda: AgendaState }) {
+  const etapas = agenda.events
+    .filter((e) => e.course === carrera.course)
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const vacio = (msg: string, sub?: string) => (
+    <div className="bg-surface-cream rounded-2xl border border-muted p-6 text-center">
+      <CalendarDays className="w-6 h-6 text-primary mx-auto mb-2" />
+      <p className="text-sm text-gray-900 font-semibold">{msg}</p>
+      {sub && <p className="text-xs text-on-surface-variant mt-1">{sub}</p>}
+      <div className="flex flex-wrap justify-center gap-3 mt-4">
+        <a href={whatsappInscripcion(carrera)} className={btnPrimary}>Consultar por WhatsApp</a>
+        <a href="/es_ar/agenda/" className={btnOutline}>Ver agenda completa</a>
+      </div>
+    </div>
+  );
+
+  let body;
+  if (agenda.status === 'loading') {
+    body = <p className="text-center text-sm text-on-surface-variant">Cargando el calendario…</p>;
+  } else if (agenda.status === 'error') {
+    body = vacio('No pudimos cargar el calendario ahora.', 'Escribinos y te pasamos las fechas.');
+  } else if (!carrera.enCalendario2027) {
+    body = vacio('La fecha de inicio se confirma más adelante.', 'Consultanos por WhatsApp y te avisamos.');
+  } else if (etapas.length === 0) {
+    body = vacio('Próximamente el calendario de la Cohorte 2027', 'Mientras tanto, consultanos por WhatsApp.');
+  } else {
+    body = (
+      <>
+        <ul className="space-y-4">
+          <CohorteRow carrera={carrera} etapas={etapas} tone="cream" />
         </ul>
         <a
           href="/es_ar/agenda/"
@@ -219,7 +228,7 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
   }
 
   return (
-    <Section id="cohorte" bg="cream" width="narrow">
+    <Section id="cohorte" bg="white" width="narrow">
       <SectionHeader kicker="COHORTE 2027" title="Cuándo empezás" sub="La inscripción está abierta todo el año. Podés sumarte en cualquier momento." />
       {body}
     </Section>
@@ -228,16 +237,27 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
 
 /* ── Qué vas a aprender ─────────────────────────────────────────────── */
 export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
-  // O temario é rascunho (títulos de apostilas): só aparece em DEV até a Ivana confirmar.
-  const borrador = import.meta.env.DEV && carrera.temarioBorrador.length > 0;
+  // O temario é rascunho (títulos de apostilas): só existe em DEV, por import dinâmico; em produção o módulo
+  // nem entra no build. Só publique o temario depois que a Ivana confirmar.
+  const [borrador, setBorrador] = useState<string[]>([]);
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    let active = true;
+    import('../../data/carreras_ar_temario').then((m) => {
+      if (active) setBorrador(m.temario_borrador[carrera.course] ?? []);
+    });
+    return () => {
+      active = false;
+    };
+  }, [carrera.course]);
   return (
-    <Section id="plan" bg="cream" width="narrow">
+    <Section id="plan" bg="white" width="narrow">
       <SectionHeader kicker="QUÉ VAS A APRENDER" title="Un módulo por mes" sub={`${carrera.meses} meses de cursada, con evaluación y seguimiento en cada módulo.`} />
-      {borrador ? (
-        <div className="rounded-2xl border border-dashed border-primary/40 bg-white p-6">
+      {borrador.length > 0 ? (
+        <div className="rounded-2xl border border-dashed border-primary/40 bg-surface-cream p-6">
           <p className="text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">Borrador (solo desarrollo): temario sin confirmar</p>
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-900">
-            {carrera.temarioBorrador.map((t) => (
+            {borrador.map((t) => (
               <li key={t} className="flex gap-2"><Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />{t}</li>
             ))}
           </ul>
@@ -252,13 +272,13 @@ export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
 }
 
 /* ── Cómo es la cursada (Steps sin número) ──────────────────────────── */
-export function CursadaSection() {
+export function CursadaSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
   return (
-    <Section id="cursada" bg="white" border="top" width="mid">
+    <Section id="cursada" bg={bg} border="top" width="mid">
       <SectionHeader kicker="CÓMO ES LA CURSADA" title="100% online, con acompañamiento" />
       <Steps
         numbered={false}
-        tone="cream"
+        tone={bg === 'cream' ? 'white' : 'cream'}
         items={[
           { icon: CalendarDays, title: 'Un módulo por mes', text: 'Avanzás a tu ritmo dentro de cada módulo, con una propuesta clara por mes.' },
           { icon: Monitor, title: 'Campus virtual', text: 'Las clases están en el campus virtual de Ivana Academy, disponibles cuando te quede cómodo.' },
@@ -274,12 +294,12 @@ export function CursadaSection() {
 }
 
 /* ── Cómo inscribirme (= ComoFuncionaSection do Brasil) ─────────────── */
-export function ComoInscribirmeSection() {
+export function ComoInscribirmeSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
   return (
-    <Section id="inscripcion" bg="cream" border="top" width="mid">
+    <Section id="inscripcion" bg={bg} border="top" width="mid">
       <SectionHeader kicker="CÓMO INSCRIBIRME" title="Inscribirte es simple" />
       <Steps
-        tone="white"
+        tone={bg === 'cream' ? 'white' : 'cream'}
         items={[
           { icon: GraduationCap, title: 'Elegís la carrera', text: 'Mirá el plan y la fecha de inicio y tocá "Ver valores e inscribirme".' },
           { icon: Mail, title: 'Te registrás en la tienda', text: 'Creás tu cuenta con tus datos, en la tienda de Ivana Academy.' },
@@ -296,12 +316,12 @@ export function ComoInscribirmeSection() {
 }
 
 /* ── Incluido en todas (= InclusoSection do Brasil) ─────────────────── */
-export function InclusoSection() {
+export function InclusoSection({ bg = 'white' }: { bg?: 'cream' | 'white' }) {
   return (
-    <Section id="incluido" bg="white" border="top" pad="md">
+    <Section id="incluido" bg={bg} border="top" pad="md">
       <SectionHeader kicker="INCLUIDO EN TODAS" title="Todo lo que necesitás para cursar" />
       <FeatureList
-        tone="cream"
+        tone={bg === 'cream' ? 'white' : 'cream'}
         items={['Clases en el campus virtual', 'Grupo de la carrera', 'Evaluación y seguimiento', 'Título del Conservatorio Grassi']}
       />
     </Section>
@@ -340,6 +360,7 @@ export const WhatsAppFooterCta = () => (
     id="contacto"
     title="¿Te quedó alguna duda?"
     text="Escribinos por WhatsApp."
+    tone="cream"
     action={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR }}
     below={<p className="mt-4 text-xs"><a href="/es_ar/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
   />

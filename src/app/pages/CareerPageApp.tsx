@@ -13,13 +13,13 @@ import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
+import ContactForm from '../components/ContactForm';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
   buildArMenu,
   CarrerasGrid,
   CohorteSection,
   ComoInscribirmeSection,
-  CursadaSection,
   InclusoSection,
   QueAprenderSection,
   SalidaLaboralSection,
@@ -37,7 +37,8 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
   const agenda = useAgenda('AR');
   const page = ar_pages[slug];
   const carrera = carreras_ar[page.courses[0]];
-  const cards = page.courses.map((c) => carreras_ar[c]);
+  // Profesorados com nome oficial ainda sem confirmação não são publicados (nombreConfirmado: false).
+  const cards = page.courses.map((c) => carreras_ar[c]).filter((c) => c.nombreConfirmado);
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
@@ -61,19 +62,19 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
 
         <CohorteSection carrera={carrera} agenda={agenda} />
 
-        <Section id="carreras" bg="white" border="y" width="wide">
+        <Section id="carreras" bg="cream" border="y" width="wide">
           <SectionHeader kicker="LA CARRERA" title="Elegí cómo seguir" sub="100% online, con el título del Conservatorio Grassi." />
           <CarrerasGrid items={cards} />
         </Section>
 
         <QueAprenderSection carrera={carrera} />
-        <CursadaSection />
-        <ComoInscribirmeSection />
-        <InclusoSection />
+        <ComoInscribirmeSection bg="cream" />
+        <InclusoSection bg="white" />
         <SalidaLaboralSection />
         <AboutSection language="es" />
         <ReviewsCarousel language="es" reviews={reviews_list} />
         <FAQSection language="es" faqs={faqs_carreras_ar} />
+        <ContactForm language="es" coursePage="carreras_ar" />
         <WhatsAppFooterCta />
       </main>
 
