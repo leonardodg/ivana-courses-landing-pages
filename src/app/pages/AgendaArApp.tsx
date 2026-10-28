@@ -1,4 +1,4 @@
-// Agenda da Argentina (/es_ar/agenda/): a Cohorte 2027 das carreras online, vinda do feed (pais=AR).
+// Agenda da Argentina (/es-ar/agenda/): a Cohorte 2027 das carreras online, vinda do feed (pais=AR).
 // Mesmo padrão das páginas AR: navbar, Section, SectionHeader e CohorteRow (o mesmo item da página da carreira).
 // Sem preço: o feed traz `price` ("$40.000 por mes") e este arquivo NUNCA o lê.
 
@@ -27,7 +27,7 @@ export default function AgendaArApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
+      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         <Section bg="cream" width="wide" className="pt-28 md:pt-32">

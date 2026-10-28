@@ -28,36 +28,23 @@ import { defineConfig } from "vite";
 //   "soap"   → "src/soap/index.html"
 //   "resin"  → "src/resin/index.html"
 // ---------------------------------------------------------------------------
-const pages: Record<string, string> = {
-  // name of input  :  path the HTML relation à root project
-  main: "src/index.html",
-  interest: "src/interest.html",
-  agenda: "src/agenda/index.html",
-  velas: "src/velas/index.html",
-  saboaria: "src/saboaria/index.html",
-  apostila: "src/apostila/index.html",
-  pt_br_candles: "src/pt_br/candles/index.html",
-  es_ar_candles: "src/es_ar/candles/index.html",
-  es_ar_home: "src/es_ar/index.html",
-  es_ar_agenda: "src/es_ar/agenda/index.html",
-  es_ar_resin: "src/es_ar/resin/index.html",
-  es_ar_macrame: "src/es_ar/macrame/index.html",
-  es_ar_textil: "src/es_ar/textil/index.html",
-  es_ar_interiores: "src/es_ar/interiores/index.html",
-  es_ar_mixmedia: "src/es_ar/mixmedia/index.html",
-  pt_br_soap: "src/pt_br/soap/index.html",
-  pt_br_aromas: "src/pt_br/aromas/index.html",
-  pt_br_resin: "src/pt_br/resin/index.html",
-  pt_br_privacidade: "src/pt_br/privacidade/index.html",
-  pt_br_termos: "src/pt_br/termos/index.html",
-  pt_br_reembolso: "src/pt_br/reembolso/index.html",
-  pt_br_lgpd: "src/pt_br/lgpd/index.html",
-  es_ar_privacidad: "src/es_ar/privacidad/index.html",
-  es_ar_terminos: "src/es_ar/terminos/index.html",
-  es_ar_reembolso: "src/es_ar/reembolso/index.html",
-  es_ar_derechos: "src/es_ar/derechos/index.html",
-  es_ar_arrepentimiento: "src/es_ar/arrepentimiento/index.html",
-};
+// Descobre sozinho todas as páginas: cada pasta de src/ com um index.html vira uma entrada. O caminho da pasta
+// É a URL publicada (ver docs/URLS.md): src/pt-br/cursos/velas/index.html → /pt-br/cursos/velas/.
+function discoverPages(dir: string, root = dir): Record<string, string> {
+  const found: Record<string, string> = {};
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "app" || entry.name === "styles") continue; // código, não páginas
+      Object.assign(found, discoverPages(full, root));
+    } else if (entry.name === "index.html") {
+      const rel = path.relative(root, dir);
+      found[rel === "" ? "main" : rel.replace(/[^a-z0-9]+/gi, "_")] = path.relative(__dirname, full);
+    }
+  }
+  return found;
+}
+const pages: Record<string, string> = discoverPages(path.resolve(__dirname, "src"));
 
 export default defineConfig(({ mode }) => {
   const envDir = path.resolve(__dirname, "src");

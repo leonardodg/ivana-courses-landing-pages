@@ -102,7 +102,7 @@ export const privacidade: LegalDoc = {
       body: (
         <>
           <p>Você pode, a qualquer momento (art. 18 da LGPD): confirmar se tratamos seus dados; acessar; corrigir; pedir anonimização, bloqueio ou eliminação de dados desnecessários; pedir portabilidade; saber com quem compartilhamos; revogar o consentimento; e se opor a um tratamento.</p>
-          <p>Faça o pedido pelo <a href="/pt_br/lgpd/" className="underline text-primary">formulário de direitos LGPD</a>, por {mail} ou pelo WhatsApp {wa}. Respondemos em até 15 dias. Para sua segurança, podemos pedir uma confirmação de identidade. Você também pode reclamar à Autoridade Nacional de Proteção de Dados (gov.br/anpd).</p>
+          <p>Faça o pedido pelo <a href="/pt-br/lgpd/" className="underline text-primary">formulário de direitos LGPD</a>, por {mail} ou pelo WhatsApp {wa}. Respondemos em até 15 dias. Para sua segurança, podemos pedir uma confirmação de identidade. Você também pode reclamar à Autoridade Nacional de Proteção de Dados (gov.br/anpd).</p>
         </>
       ),
     },
@@ -146,8 +146,8 @@ export const termos: LegalDoc = {
   intro: (
     <p>
       Ao usar os sites da {c.tradeName} ({c.site.replace('https://', '')}, {c.platform.replace('https://', '')} e {c.store.replace('https://', '')}),
-      você concorda com estes termos. Eles complementam a <a href="/pt_br/privacidade/" className="underline text-primary">Política de Privacidade</a> e a{' '}
-      <a href="/pt_br/reembolso/" className="underline text-primary">Política de Reembolso e Cancelamento</a>.
+      você concorda com estes termos. Eles complementam a <a href="/pt-br/privacidade/" className="underline text-primary">Política de Privacidade</a> e a{' '}
+      <a href="/pt-br/reembolso/" className="underline text-primary">Política de Reembolso e Cancelamento</a>.
     </p>
   ),
   sections: [

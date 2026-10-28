@@ -36,13 +36,13 @@ export const fmtFull = (iso: string) =>
 export const nivelLabel = (c: CarreraAr) => (c.nivel === 'tecnicatura' ? 'Tecnicatura' : 'Profesorado');
 
 /* ── Opções do menu da Argentina (navbar de tema, em pílulas) ────────── */
-/** `base`: caminho da página das âncoras ('' na própria página; '/es_ar/' nas páginas legais). */
+/** `base`: caminho da página das âncoras ('' na própria página; '/es-ar/' nas páginas legais). */
 export function buildArMenu(ptHref?: string, base = ''): NavMenu {
   return {
     careersLabel: 'Carreras',
     careers: carreras_principales.map((c) => ({ label: carreras_ar[c].nombre, href: ar_pages[carreras_ar[c].page].path })),
     links: [
-      { label: 'Agenda', href: '/es_ar/agenda/' },
+      { label: 'Agenda', href: '/es-ar/agenda/' },
       { label: 'Cómo inscribirme', href: `${base}#inscripcion` },
       { label: 'WhatsApp', href: WHATSAPP_AR, external: true },
     ],
@@ -197,7 +197,7 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
       {sub && <p className="text-xs text-on-surface-variant mt-1">{sub}</p>}
       <div className="flex flex-wrap justify-center gap-3 mt-4">
         <a href={whatsappInscripcion(carrera)} className={btnPrimary}>Consultar por WhatsApp</a>
-        <a href="/es_ar/agenda/" className={btnOutline}>Ver agenda completa</a>
+        <a href="/es-ar/agenda/" className={btnOutline}>Ver agenda completa</a>
       </div>
     </div>
   );
@@ -218,7 +218,7 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
           <CohorteRow carrera={carrera} etapas={etapas} tone="cream" />
         </ul>
         <a
-          href="/es_ar/agenda/"
+          href="/es-ar/agenda/"
           className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-primary hover:underline"
         >
           Agenda completa y siempre actualizada <ArrowRight className="w-3.5 h-3.5" />
@@ -362,6 +362,6 @@ export const WhatsAppFooterCta = () => (
     text="Escribinos por WhatsApp."
     tone="cream"
     action={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR }}
-    below={<p className="mt-4 text-xs"><a href="/es_ar/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
+    below={<p className="mt-4 text-xs"><a href="/es-ar/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
   />
 );

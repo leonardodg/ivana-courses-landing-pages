@@ -57,7 +57,7 @@ export default function Footer({ language, setLanguage }: FooterProps) {
           ))}
           {language === "es" && (
             <>
-              <a href="/es_ar/arrepentimiento/" className="underline hover:text-primary">Botón de arrepentimiento</a>
+              <a href="/es-ar/arrepentimiento/" className="underline hover:text-primary">Botón de arrepentimiento</a>
               <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noreferrer" className="underline hover:text-primary">
                 Defensa de las y los Consumidores: para reclamos, ingresá acá
               </a>

@@ -33,7 +33,7 @@
 
   /* Alias "surface" → mesmo valor de surface-cream.
      Adicionado para compatibilizar componentes que usam bg-surface / text-on-surface
-     (página /pt_br/candles), sem alterar nenhum token existente. */
+     (página /pt-br/candles), sem alterar nenhum token existente. */
   --color-surface: #fcf9f5;
 
   --color-surface-cream: #fcf9f5;

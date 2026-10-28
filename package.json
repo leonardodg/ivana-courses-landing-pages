@@ -19,7 +19,8 @@
     "dev": "vite --port=3003 --host=0.0.0.0",
     "build": "vite build",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "check:urls": "node tests/scripts/check-urls.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

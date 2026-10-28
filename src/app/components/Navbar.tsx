@@ -45,10 +45,11 @@ export default function Navbar({ language, setLanguage, activeCategoryId, setAct
         <BrazilFlag selected={language === 'pt'} />
         <span>PT</span>
       </button>
-      <button onClick={() => setLanguage('es')} className={langBtn(language === 'es')} title="Español (Argentina)">
-        <ArgentinaFlag selected={language === 'es'} />
+      {/* Cada país tem a sua home: ES leva à Argentina (/es-ar/), não troca o idioma desta página. */}
+      <a href="/es-ar/" hrefLang="es-AR" className={langBtn(false)} title="Español (Argentina)">
+        <ArgentinaFlag selected={false} />
         <span>ES</span>
-      </button>
+      </a>
     </div>
   );
 
@@ -95,7 +96,7 @@ export default function Navbar({ language, setLanguage, activeCategoryId, setAct
 
   return (
     <NavHeader
-      homeHref="/"
+      homeHref="/pt-br/"
       homeLabel={es ? 'Ivana Academy - página de inicio' : 'Ivana Academy - página inicial'}
       center={center}
       right={right}

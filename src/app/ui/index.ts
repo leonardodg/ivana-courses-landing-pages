@@ -21,3 +21,4 @@ export { default as InfoGrid } from './InfoGrid';
 export type { InfoCardData } from './InfoGrid';
 export { default as Profile } from './Profile';
 export { PriceBlock, PurchaseCta, StickyBuyBar } from './Purchase';
+export { default as LinkCard } from './LinkCard';

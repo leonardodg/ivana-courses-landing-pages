@@ -232,10 +232,10 @@ export default function AgendaApp() {
       <header className="border-b border-surface-container-highest">
         <SkipLink />
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4 md:px-16">
-          <a href="/" aria-label="Ivana Academy - página inicial" className={`flex min-h-11 items-center rounded-lg ${FOCUS}`}>
+          <a href="/pt-br/" aria-label="Ivana Academy - página inicial" className={`flex min-h-11 items-center rounded-lg ${FOCUS}`}>
             <img src="/images/logo.svg" alt="Ivana Academy" className="h-10 w-auto" />
           </a>
-          <a href="/" className={`inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-tertiary underline underline-offset-4 ${FOCUS}`}>
+          <a href="/pt-br/" className={`inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-tertiary underline underline-offset-4 ${FOCUS}`}>
             Ver todos os cursos
           </a>
         </div>

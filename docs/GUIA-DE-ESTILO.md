@@ -1,13 +1,13 @@
 # Guia de estilo das páginas (pt_BR é a referência; es_ar segue)
 
 Criado em 27/10/2026. **O que está no ar no Brasil é o padrão.** As páginas da
-Argentina (`/es_ar/…`) só trocam o idioma e o conteúdo, nunca o desenho: mesmos
+Argentina (`/es-ar/…`) só trocam o idioma e o conteúdo, nunca o desenho: mesmos
 componentes, mesmos tamanhos, mesma ordem. Se um componente de `es_ar` não tem
 par neste guia, ele está fora do padrão.
 
 ## Páginas de curso online (no padrão desde 27/10/2026)
 
-`/velas/`, `/saboaria/` e `/apostila/` eram páginas estáticas feitas fora do padrão (em `public/`). Foram
+`/pt-br/cursos/online/velas-aromaticas/`, `/pt-br/cursos/online/saboaria-com-extratos-naturais/` e `/pt-br/apostilas/60-receitas-de-sabonetes/` eram páginas estáticas feitas fora do padrão (em `public/`). Foram
 refeitas com os componentes de `ui/`: `OnlineCoursePageApp` (`src/app/pages/`) monta a página a partir do
 conteúdo em `src/app/data/online_courses.ts` (textos, preço, links da Hotmart, fotos em `public/images/online/`).
 Navbar, herói, faixa de números, depoimentos, perguntas, contato e rodapé são os mesmos do resto do site.
@@ -253,5 +253,5 @@ mesmo tempo e registre aqui.
 ## Pendências (fazer depois)
 
 1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
-2. ~~Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`~~ (feito em 27/10/2026, ver o início do guia).
+2. ~~Refazer as páginas de curso online `/pt-br/cursos/online/velas-aromaticas/`, `/pt-br/cursos/online/saboaria-com-extratos-naturais/` e `/pt-br/apostilas/60-receitas-de-sabonetes/`~~ (feito em 27/10/2026, ver o início do guia).
 3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). ~~Migrar navbar da home, cards online da home, sobre, "por que nós", depoimentos e perguntas~~ (feito em 27/10/2026). **Ainda com `<section>` próprio** (migrar na próxima rodada): `ContactForm` e `CandlesLeadForm` (formulários), `CandlesOnlineSection` (cards online horizontais de velas), `AgendaApp` (agenda do Brasil; a da Argentina já usa `ui/`) e as páginas legais (que já usam a navbar padrão).

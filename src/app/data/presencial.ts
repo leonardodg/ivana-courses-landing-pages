@@ -191,8 +191,8 @@ export function lojaLink(course: PresencialCourse, utm: string, eventId?: string
 
 // Home: categoria → tema presencial e página. Categorias sem entrada (macramé) seguem o card antigo.
 export const home_category_themes: Record<string, { theme: PresencialTheme['id']; page: string }> = {
-  velas:           { theme: 'velas',    page: '/pt_br/candles/' },
-  saboaria:        { theme: 'saboaria', page: '/pt_br/soap/' },
-  aromas_incensos: { theme: 'aromas',   page: '/pt_br/aromas/' },
-  resinas:         { theme: 'resina',   page: '/pt_br/resin/' },
+  velas:           { theme: 'velas',    page: '/pt-br/cursos/velas/' },
+  saboaria:        { theme: 'saboaria', page: '/pt-br/cursos/sabonetes/' },
+  aromas_incensos: { theme: 'aromas',   page: '/pt-br/cursos/aromas/' },
+  resinas:         { theme: 'resina',   page: '/pt-br/cursos/resinas/' },
 };

@@ -108,7 +108,7 @@ export default function ConsentManager() {
         <h2 id="consent-title" className="font-serif text-lg text-gray-900">{t.title}</h2>
         <p className="text-xs text-on-surface-variant leading-relaxed mt-2">
           {t.intro}{' '}
-          <a href={lang === 'es' ? '/es_ar/privacidad/#cookies' : '/pt_br/privacidade/#cookies'} className="underline text-primary">{t.policy}</a>.
+          <a href={lang === 'es' ? '/es-ar/privacidad/#cookies' : '/pt-br/privacidade/#cookies'} className="underline text-primary">{t.policy}</a>.
         </p>
 
         {details && (

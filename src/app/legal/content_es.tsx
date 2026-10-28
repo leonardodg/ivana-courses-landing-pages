@@ -94,7 +94,7 @@ export const privacidadEs: LegalDoc = {
       body: (
         <>
           <p>Podés, cuando quieras y de forma gratuita en intervalos no menores a seis meses (art. 14 de la Ley 25.326): acceder a tus datos, rectificarlos o actualizarlos, pedir su supresión, y retirar tu consentimiento.</p>
-          <p>Hacé el pedido desde el <a href="/es_ar/derechos/" className="underline text-primary">formulario de derechos sobre tus datos</a>, por {mail} o por WhatsApp {wa}. Respondemos en un máximo de 10 días corridos para consultas de acceso y 5 días hábiles para rectificación o supresión. Por tu seguridad, podemos pedirte que confirmes tu identidad.</p>
+          <p>Hacé el pedido desde el <a href="/es-ar/derechos/" className="underline text-primary">formulario de derechos sobre tus datos</a>, por {mail} o por WhatsApp {wa}. Respondemos en un máximo de 10 días corridos para consultas de acceso y 5 días hábiles para rectificación o supresión. Por tu seguridad, podemos pedirte que confirmes tu identidad.</p>
           <p>La Agencia de Acceso a la Información Pública (AAIP), órgano de control de la Ley 25.326, recibe denuncias y reclamos de las personas titulares de datos (argentina.gob.ar/aaip).</p>
         </>
       ),
@@ -139,8 +139,8 @@ export const terminosEs: LegalDoc = {
   intro: (
     <p>
       Al usar los sitios de {c.tradeName} ({sitio(c.site)}, {sitio(c.platform)} y {sitio(c.store)}) aceptás estos términos. Se complementan con la{' '}
-      <a href="/es_ar/privacidad/" className="underline text-primary">Política de Privacidad</a> y la{' '}
-      <a href="/es_ar/reembolso/" className="underline text-primary">Política de Reembolso y Cancelación</a>.
+      <a href="/es-ar/privacidad/" className="underline text-primary">Política de Privacidad</a> y la{' '}
+      <a href="/es-ar/reembolso/" className="underline text-primary">Política de Reembolso y Cancelación</a>.
     </p>
   ),
   sections: [
@@ -231,7 +231,7 @@ export const reembolsoEs: LegalDoc = {
       body: (
         <>
           <p>En las compras hechas por internet o fuera del local comercial podés arrepentirte dentro de los 10 días corridos contados desde la contratación o desde que recibís el servicio, lo que ocurra último, sin necesidad de dar explicaciones (art. 34 de la Ley 24.240 y art. 1110 del Código Civil y Comercial). Rige para cursos online y presenciales.</p>
-          <p>Cómo pedirlo: usá el <a href="/es_ar/arrepentimiento/" className="underline text-primary">Botón de arrepentimiento</a> (sin registro, con código de confirmación dentro de las 24 horas) o escribinos a {mail} o por WhatsApp {wa} indicando el nombre y el correo que usaste en la compra.</p>
+          <p>Cómo pedirlo: usá el <a href="/es-ar/arrepentimiento/" className="underline text-primary">Botón de arrepentimiento</a> (sin registro, con código de confirmación dentro de las 24 horas) o escribinos a {mail} o por WhatsApp {wa} indicando el nombre y el correo que usaste en la compra.</p>
         </>
       ),
     },

@@ -1,4 +1,4 @@
-// Inicio da Argentina (/es_ar/): vitrine das 6 carreras online. Sem preço.
+// Inicio da Argentina (/es-ar/): vitrine das 6 carreras online. Sem preço.
 // Segue docs/GUIA-DE-ESTILO.md (mesma navbar, herói, grade de cards e passos das páginas pt_BR).
 
 import { useState } from 'react';

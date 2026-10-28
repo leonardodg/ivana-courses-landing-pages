@@ -16,8 +16,8 @@ const DOCS: Record<Language, Record<LegalDocKey, LegalDoc>> = {
 
 // Mesma página no outro idioma.
 const OTHER_PATH: Record<Language, Record<LegalDocKey, string>> = {
-  pt: { privacidade: '/es_ar/privacidad/', termos: '/es_ar/terminos/', reembolso: '/es_ar/reembolso/' },
-  es: { privacidade: '/pt_br/privacidade/', termos: '/pt_br/termos/', reembolso: '/pt_br/reembolso/' },
+  pt: { privacidade: '/es-ar/privacidad/', termos: '/es-ar/terminos/', reembolso: '/es-ar/reembolso/' },
+  es: { privacidade: '/pt-br/privacidade/', termos: '/pt-br/termos/', reembolso: '/pt-br/reembolso/' },
 };
 
 const UI = {
@@ -32,9 +32,9 @@ export default function LegalApp({ doc, language = 'pt' }: { doc: LegalDocKey; l
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {language === 'es' ? (
-        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
+        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
       ) : (
-        <CandlesNavbar base="/pt_br/candles/" />
+        <CandlesNavbar base="/pt-br/cursos/velas/" />
       )}
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <article className="max-w-3xl mx-auto">

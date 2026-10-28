@@ -25,7 +25,7 @@ export default function PrivacyConsent({ id, checked, onChange, language = 'pt' 
       />
       <label htmlFor={id} className="text-xs leading-relaxed text-on-surface-variant">
         {es ? 'Acepto el uso de mis datos para recibir respuesta y novedades de los cursos, según la ' : 'Concordo em usar meus dados para receber resposta e novidades dos cursos, conforme a '}
-        <a href={es ? '/es_ar/privacidad/' : '/pt_br/privacidade/'} target="_blank" rel="noreferrer" className="underline text-primary">
+        <a href={es ? '/es-ar/privacidad/' : '/pt-br/privacidade/'} target="_blank" rel="noreferrer" className="underline text-primary">
           {es ? 'Política de Privacidad' : 'Política de Privacidade'}
         </a>
         . {es ? 'Podés retirar el consentimiento cuando quieras.' : 'Posso retirar o consentimento quando quiser.'}
