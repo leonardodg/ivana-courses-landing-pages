@@ -65,8 +65,8 @@ export const nav_contato = {
   href: { pt: company.whatsappUrl, es: company.ar.whatsappUrl },
 };
 
-/** Interesse: só no Brasil (não existe página equivalente na Argentina). */
-export const nav_interesse = { label: { pt: 'Interesse', es: 'Interés' }, href: '/pt-br/interesse/' };
+/** Interesse / Interés: uma página por país. */
+export const nav_interesse = { label: { pt: 'Interesse', es: 'Interés' }, href: { pt: '/pt-br/interesse/', es: '/es-ar/interes/' } };
 
 export const nav_portal = { label: { pt: 'Portal do Aluno', es: 'Portal del Alumno' }, href: company.platform };
 
@@ -80,6 +80,7 @@ export const lang_pairs: [string, string][] = [
   ['/pt-br/cursos/velas/', '/es-ar/carreras/tecnicatura-arte-diseno-velas/'],
   ['/pt-br/cursos/resinas/', '/es-ar/carreras/tecnicatura-arte-decoracion-resinas/'],
   ['/pt-br/agenda/', '/es-ar/agenda/'],
+  ['/pt-br/interesse/', '/es-ar/interes/'],
   ['/pt-br/privacidade/', '/es-ar/privacidad/'],
   ['/pt-br/termos/', '/es-ar/terminos/'],
   ['/pt-br/reembolso/', '/es-ar/reembolso/'],

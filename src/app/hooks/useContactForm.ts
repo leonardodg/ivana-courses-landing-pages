@@ -65,11 +65,12 @@ export function validateField(
   }
 }
 
-export function useContactForm() {
+// ddi: DDI inicial do país da página (+55 Brasil, +54 Argentina).
+export function useContactForm(initialDdi = "+55") {
   const [form, setForm] = useState<ContactFormData>({
     fullName: "",
     email: "",
-    ddi: "+55",
+    ddi: initialDdi,
     phone: "",
     message: "",
   });
