@@ -13,7 +13,7 @@ import WhyUsSection from '../components/WhyUsSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import { TurmasSection, CursosSection, ComoFuncionaSection, InclusoSection, LocaisSection } from '../components/theme/ThemeSections';
 import { presencial_themes } from '../data/presencial';
 import CandlesOnlineSection from '../components/CandlesOnlineSection';
@@ -30,7 +30,7 @@ const LANGUAGE = 'pt' as const;
 const CATEGORY_ID = 'velas' as const;
 
 export default function CandlesBrApp() {
-  const [language, setLanguage] = useState<Language>("pt");
+  const language: Language = 'pt';
   const [checkoutCourse, setCheckoutCourse] = useState<Course | null>(null);
   const [checkoutCoupon, setCheckoutCoupon] = useState('');
   const [portalOpen, setPortalOpen] = useState(false);
@@ -65,7 +65,7 @@ export default function CandlesBrApp() {
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
       {/* Navbar fixa — sem seletor de idioma, sem troca de categoria
           (a página é dedicada exclusivamente a velas PT-BR) */}
-      <CandlesNavbar />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* Hero */}
@@ -117,7 +117,7 @@ export default function CandlesBrApp() {
       </main>
 
       {/* Footer */}
-      <Footer language={LANGUAGE} setLanguage={setLanguage} />
+      <Footer />
 
       {/* Modais */}
       {checkoutCourse && (

@@ -4,13 +4,11 @@ import { footer_text as text } from "../lang/footer";
 import { company, legalLinks } from "../legal/company";
 import { site_link_groups } from "../data/site_links";
 import { openCookiePreferences } from "../lib/consent";
+import { usePageLanguage } from "../lib/lang";
 
-interface FooterProps {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-}
-
-export default function Footer({ language, setLanguage }: FooterProps) {
+// O idioma do rodapé é o da página (<html lang>), o mesmo do PT | ES do menu (lib/lang.ts).
+export default function Footer() {
+  const language: Language = usePageLanguage();
   const footer_text = text[language];
 
   return (

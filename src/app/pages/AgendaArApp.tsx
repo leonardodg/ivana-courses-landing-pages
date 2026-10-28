@@ -6,14 +6,14 @@ import { useMemo, useState } from 'react';
 import { CalendarDays, MessageCircle } from 'lucide-react';
 import type { Language } from '../classes/types';
 import Footer from '../components/Footer';
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import { AgendaEvent, useAgenda } from '../hooks/useAgenda';
 import { carreras_ar, carreras_principales, WHATSAPP_AR, whatsappInscripcion } from '../data/carreras_ar';
-import { CohorteRow, buildArMenu } from '../components/theme/CareerSections';
+import { CohorteRow } from '../components/theme/CareerSections';
 import { Section, SectionHeader, btnOutline, btnPrimary, navGroupClass, navPill } from '../ui';
 
 export default function AgendaArApp() {
-  const [language, setLanguage] = useState<Language>('es');
+  const language: Language = 'es';
   const [filtro, setFiltro] = useState<string>('');
   const agenda = useAgenda('AR');
 
@@ -27,7 +27,7 @@ export default function AgendaArApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         <Section bg="cream" width="wide" className="pt-28 md:pt-32">
@@ -103,7 +103,7 @@ export default function AgendaArApp() {
         </Section>
       </main>
 
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

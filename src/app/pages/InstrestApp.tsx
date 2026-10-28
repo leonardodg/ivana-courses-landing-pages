@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { setPageLanguage } from "../lib/lang";
+import { usePageLanguage } from "../lib/lang";
 import {
   Course,
   CategorySpec,
@@ -14,7 +14,7 @@ import { faqs_list_br } from "../data/faqs";
 import { courses_list_br } from "../data/courses";
 import { home_text as text } from "../lang/homepage";
 import { heroContent as hero_content } from "../data/home";
-import Navbar from "../components/Navbar";
+import SiteNavbar from "../components/SiteNavbar";
 import AboutSection from "../components/AboutSection";
 import WhyUsSection from "../components/WhyUsSection";
 import ReviewsCarousel from "../components/ReviewsCarousel";
@@ -26,8 +26,8 @@ import { Menu, SquarePen } from "lucide-react";
 
 export default function InstrestApp() {
   const [checkoutCoupon, setCheckoutCoupon] = useState("");
-  const [language, setLanguage] = useState<Language>("pt");
-  useEffect(() => setPageLanguage(language), [language]);
+  // Sem página equivalente em espanhol: o PT | ES do menu só troca o idioma desta página.
+  const language: Language = usePageLanguage();
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("velas");
   const [selectedCourseForForm, setSelectedCourseForForm] =
     useState<Course | null>(null);
@@ -56,12 +56,7 @@ export default function InstrestApp() {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
       {/* Sticky Navigation Bar */}
-      <Navbar
-        language={language}
-        setLanguage={setLanguage}
-        activeCategoryId={activeCategoryId}
-        setActiveCategoryId={(c) => c && setActiveCategoryId(c)} // aqui a categoria é sempre uma
-      />
+      <SiteNavbar />
 
       {/* Main Sections */}
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
@@ -161,7 +156,7 @@ export default function InstrestApp() {
       </main>
 
       {/* Footer */}
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

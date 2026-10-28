@@ -16,7 +16,7 @@ import {
 import type { Language, FAQItem, Review } from '../classes/types';
 import { online_courses, OnlineBlock } from '../data/online_courses';
 import { WHATSAPP_URL } from '../data/presencial';
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import ReviewsCarousel from '../components/ReviewsCarousel';
@@ -66,7 +66,7 @@ const toReviews = (items: { text: string; cite: string }[]): Review[] =>
   });
 
 export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboaria' | 'apostila' }) {
-  const [language, setLanguage] = useState<Language>('pt');
+  const language: Language = 'pt';
   const c = online_courses[slug];
 
   const firstAnchor = c.sections.map((s) => ANCHOR[s.type]).find(Boolean);
@@ -158,7 +158,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between pb-16 md:pb-0">
-      <CandlesNavbar />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         <Hero
@@ -195,7 +195,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
       </main>
 
       <StickyBuyBar price={c.price_label.main} buy={c.buy} shortLabel={shortLabel} />
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

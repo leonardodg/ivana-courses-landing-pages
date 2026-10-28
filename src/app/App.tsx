@@ -13,7 +13,7 @@ import { reviews_list_br } from "./data/reviews";
 import { faqs_list_br } from "./data/faqs";
 import { home_text as text } from "./lang/homepage";
 import { heroContent as hero_content } from "./data/home";
-import Navbar from "./components/Navbar";
+import SiteNavbar from "./components/SiteNavbar";
 import AboutSection from "./components/AboutSection";
 import CourseGrid from "./components/CourseGrid";
 import WhyUsSection from "./components/WhyUsSection";
@@ -22,16 +22,13 @@ import FAQSection from "./components/FAQSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 import { StatsBar } from "./ui";
-import { setPageLanguage } from "./lib/lang";
 import { trackOutbound } from "./lib/analytics";
 
 import { Menu, SquarePen } from "lucide-react";
 
 export default function App() {
-  const [language, setLanguage] = useState<Language>("pt");
-
-  // Mantém <html lang> e os componentes compartilhados (cookies, atalho) no idioma escolhido.
-  useEffect(() => setPageLanguage(language), [language]);
+  // A home do Brasil é em português; o ES do menu leva à home da Argentina (/es-ar/).
+  const language: Language = "pt";
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null); // null = todos os cards, sem filtro (primeiro acesso)
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
@@ -65,12 +62,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
       {/* Sticky Navigation Bar */}
-      <Navbar
-        language={language}
-        setLanguage={setLanguage}
-        activeCategoryId={activeCategoryId}
-        setActiveCategoryId={setActiveCategoryId}
-      />
+      <SiteNavbar onSelectCategory={setActiveCategoryId} />
 
       {/* Main Sections */}
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
@@ -176,10 +168,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer
-        language={language}
-        setLanguage={setLanguage}
-      />
+      <Footer />
     </div>
   );
 }

@@ -38,10 +38,10 @@ export default function NavHeader({
   menuOpen: boolean;
   onToggle: () => void;
   menuLabels: { open: string; close: string };
-  hideFrom?: 'md' | 'lg'; // a partir deste ponto a gaveta some (as pílulas aparecem)
+  hideFrom?: 'md' | 'lg' | 'xl'; // a partir deste ponto a gaveta some (as pílulas aparecem)
   rightGap?: string;
 }) {
-  const hide = hideFrom === 'lg' ? 'lg:hidden' : 'md:hidden';
+  const hide = hideFrom === 'xl' ? 'xl:hidden' : hideFrom === 'lg' ? 'lg:hidden' : 'md:hidden';
   return (
     <header className="bg-surface-cream/95 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-subtle transition-all">
       <SkipLink />

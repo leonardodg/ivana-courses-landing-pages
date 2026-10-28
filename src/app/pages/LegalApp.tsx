@@ -1,7 +1,6 @@
 // Páginas legais (política de privacidade, termos de uso e reembolso) em pt-BR e es-AR.
 import { Language } from '../classes/types';
-import CandlesNavbar from '../components/CandlesNavbar';
-import { buildArMenu } from '../components/theme/CareerSections';
+import SiteNavbar from '../components/SiteNavbar';
 import Footer from '../components/Footer';
 import { company } from '../legal/company';
 import { privacidade, termos, reembolso, LegalDoc } from '../legal/content';
@@ -31,11 +30,7 @@ export default function LegalApp({ doc, language = 'pt' }: { doc: LegalDocKey; l
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      {language === 'es' ? (
-        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
-      ) : (
-        <CandlesNavbar base="/pt-br/cursos/velas/" />
-      )}
+      <SiteNavbar />
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <article className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">{d.title}</h1>
@@ -64,7 +59,7 @@ export default function LegalApp({ doc, language = 'pt' }: { doc: LegalDocKey; l
           ))}
         </article>
       </main>
-      <Footer language={language} setLanguage={() => undefined} />
+      <Footer />
     </div>
   );
 }
