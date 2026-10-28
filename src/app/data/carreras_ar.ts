@@ -21,6 +21,8 @@ export interface CarreraAr {
   enCalendario2027: boolean;
   image: string;
   imagePos: string;
+  /** Temario CONFIRMADO pela Ivana (um módulo por mês). Vazio = não publicado: o card não mostra "Ver plan de estudios". */
+  temario: string[];
 }
 
 export const carreras_ar: Record<string, CarreraAr> = {
@@ -36,6 +38,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/velas.jpg',
     imagePos: 'center 30%',
+    temario: [],
   },
   'ar-velas-prof': {
     course: 'ar-velas-prof',
@@ -49,6 +52,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: false,
     image: '/images/ar/velas.jpg',
     imagePos: 'center 30%',
+    temario: [],
   },
   'ar-resinas': {
     course: 'ar-resinas',
@@ -62,6 +66,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/resinas.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-resinas-prof': {
     course: 'ar-resinas-prof',
@@ -75,6 +80,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: false,
     image: '/images/ar/resinas.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-macrame': {
     course: 'ar-macrame',
@@ -88,6 +94,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/macrame.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-macrame-prof': {
     course: 'ar-macrame-prof',
@@ -101,6 +108,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: false,
     image: '/images/ar/macrame.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-estampas': {
     course: 'ar-estampas',
@@ -114,6 +122,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/estampas.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-interiores': {
     course: 'ar-interiores',
@@ -127,6 +136,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/interiores.jpg',
     imagePos: 'center',
+    temario: [],
   },
   'ar-mixmedia': {
     course: 'ar-mixmedia',
@@ -140,6 +150,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: false,
     image: '/images/ar/mixmedia.jpg',
     imagePos: 'center',
+    temario: [],
   },
 };
 
