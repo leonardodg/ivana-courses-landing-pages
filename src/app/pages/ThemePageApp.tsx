@@ -2,11 +2,12 @@
 // Estrutura em conteudo/ORGANIZACAO.md; toda compra termina na loja.
 
 import { useState } from 'react';
-import { CalendarDays, SquarePen } from 'lucide-react';
+import { CalendarDays, MessageCircle, SquarePen } from 'lucide-react';
 import { Language } from '../classes/types';
 import { presencial_themes, PresencialTheme, WHATSAPP_URL } from '../data/presencial';
 import CandlesNavbar from '../components/CandlesNavbar';
 import FAQSection from '../components/FAQSection';
+import { ContactCta, Hero, HeroBadgeText } from '../ui';
 import Footer from '../components/Footer';
 import {
   TurmasSection,
@@ -68,33 +69,18 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura */}
-        <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-hero-bg">
-          <img fetchPriority="high" decoding="async" src={cfg.heroImage} alt={cfg.title} className="absolute inset-0 w-full h-full object-cover opacity-85" />
-          <div className="absolute inset-0 bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
-          <div className="relative z-10 px-6 md:px-12 pt-28 pb-12 max-w-[1280px] mx-auto w-full space-y-5">
-            <span className="inline-block bg-white/95 border border-subtle px-3.5 py-1.5 rounded-full text-micro uppercase font-mono tracking-widest text-primary font-semibold">
-              {cfg.kicker}
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-950 font-bold leading-tight tracking-tight">{cfg.title}</h1>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed max-w-xl font-medium">{cfg.intro}</p>
-            <div className="flex flex-wrap gap-4 items-center">
-              <a
-                href="#turmas"
-                className="bg-primary text-white font-semibold font-mono text-xs tracking-widest uppercase inline-flex items-center gap-2 px-8 py-4 rounded-full transition-all shadow-sm hover:shadow cursor-pointer"
-              >
-                <CalendarDays className="w-3.5 h-3.5" /> Ver próximas turmas
-              </a>
-              {cfg.online.length > 0 && (
-                <a
-                  href="#online"
-                  className="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary border border-subtle bg-white/80 hover:bg-white text-xs font-bold font-mono uppercase tracking-wider px-8 py-4 rounded-full transition-all"
-                >
-                  <SquarePen className="w-3.5 h-3.5" /> Prefere online?
-                </a>
-              )}
-            </div>
-          </div>
-        </section>
+        <Hero
+          badge={<HeroBadgeText>{cfg.kicker}</HeroBadgeText>}
+          title={cfg.title}
+          text={cfg.intro}
+          primary={{ label: 'Ver próximas turmas', href: '#turmas', icon: CalendarDays }}
+          secondary={
+            cfg.online.length > 0
+              ? { label: 'Prefere online?', href: '#online', icon: SquarePen }
+              : { label: 'Falar no WhatsApp', href: WHATSAPP_URL, icon: MessageCircle, external: true }
+          }
+          backdrop={{ src: cfg.heroImage, alt: cfg.title }}
+        />
 
         <TurmasSection theme={cfg.theme} />
         <CursosSection theme={cfg.theme} />
@@ -105,20 +91,13 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
         {/* Prova social: os depoimentos atuais são sobre velas; entram aqui só depoimentos reais e autorizados do tema. */}
         <FAQSection language="pt" faqs={faqs_presencial} />
 
-        {/* 10. Contato */}
-        <section id="contato" className="py-16 bg-white border-t border-muted text-center px-6">
-          <h2 className="text-2xl md:text-3xl font-serif text-gray-900">Ficou com alguma dúvida?</h2>
-          <p className="text-sm text-on-surface-variant mt-2">Fale com a gente pelo WhatsApp.</p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex items-center gap-2 bg-primary text-white text-xs font-bold font-mono uppercase tracking-wider px-8 py-4 rounded-full"
-          >
-            Chamar no WhatsApp
-          </a>
-          <p className="mt-4 text-xs"><a href="/agenda/" className="underline text-primary">Agenda completa</a></p>
-        </section>
+        <ContactCta
+          id="contato"
+          title="Ficou com alguma dúvida?"
+          text="Fale com a gente pelo WhatsApp."
+          action={{ label: 'Chamar no WhatsApp', href: WHATSAPP_URL }}
+          below={<p className="mt-4 text-xs"><a href="/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
+        />
       </main>
 
       <Footer language={language} setLanguage={setLanguage} />

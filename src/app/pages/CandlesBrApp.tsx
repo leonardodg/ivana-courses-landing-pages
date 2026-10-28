@@ -22,6 +22,7 @@ import CandlesCheckoutModal from '../components/CandlesCheckoutModal';
 import CandlesStudentPortal from '../components/CandlesStudentPortal';
 
 import Footer from "../components/Footer";
+import { BrazilFlag, Hero, HeroBadgeText } from '../ui';
 
 import { Menu, SquarePen } from "lucide-react";
 
@@ -53,16 +54,6 @@ export default function CandlesBrApp() {
     setCheckoutCoupon(coupon);
   };
 
-  const BrazilFlag = () => (
-    <svg
-      viewBox="0 0 720 500"
-      className="w-4.5 h-3 opacity-95 rounded-[1px] transition-all duration-300 grayscale-0 scale-105"
-    >
-      <rect width="720" height="500" fill="#009c3b" />
-      <polygon points="360,60 60,250 360,440 660,250" fill="#ffdf00" />
-      <circle cx="360" cy="250" r="120" fill="#002776" />
-    </svg>
-  );
 
   useEffect(() => {
     const handler = () => setPortalOpen(true);
@@ -78,67 +69,20 @@ export default function CandlesBrApp() {
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* Hero */}
-        <section
-          className={`relative min-h-[90vh] md:min-h-[85vh] flex items-end overflow-hidden transition-all duration-700 bg-gradient-to-b ${activeCategory.heroBgClass}`}
-        >
-          <div className="absolute inset-0 z-0">
-            <img fetchPriority="high" decoding="async"
-              alt={heroContent.title[LANGUAGE]}
-              className="w-full h-full object-cover opacity-85 select-none"
-              src={heroContent.imageUrl}
-            />
-            <div className="absolute inset-0 hero-gradient bg-gradient-to-t from-hero-bg via-hero-bg/70 to-hero-bg/20" />
-          </div>
-
-          {/* Content Grid - Left: Info, Right: Video */}
-          <div className="relative z-10 px-6 md:px-12 pt-24 md:pt-28 pb-12 max-w-[1280px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-4 md:space-y-6">
-              <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-subtle px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
-                <span className="text-sm">
-                  <BrazilFlag />
-                </span>
-                <span className="text-micro uppercase font-mono tracking-widest text-primary">
-                  Cursos Velas Artesanais do Brasil
-                </span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-950 font-bold leading-tight tracking-tight">
-                {heroContent.title[LANGUAGE]}
-              </h1>
-
-              <p className="text-xs sm:text-sm md:text-base text-gray-800 leading-relaxed max-w-xl font-sans font-medium">
-                {heroContent.desc[LANGUAGE]}
-              </p>
-
-              <div className="pt-2 pb-4 flex flex-wrap gap-4 items-center">
-                <a
-                  href="#cursos"
-                  className="bg-primary hover:bg-opacity-95 text-white font-semibold font-mono text-xs tracking-widest uppercase inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full transition-all shadow-sm hover:shadow active:scale-97 cursor-pointer hover:bg-primary-container hover:text-on-primary-container"
-                >
-                  <Menu className="w-3.5 h-3.5" /> {courses_text.btnCourses}
-                </a>
-
-                <a
-                  href="#contato"
-                  className="sm:flex items-center gap-2 inline-flex  text-on-surface-variant hover:text-primary border border-subtle bg-white/80 hover:bg-white  text-xs font-bold font-mono uppercase tracking-wider px-8 py-4 rounded-full transition-all"
-                >
-                  <SquarePen className="w-3.5 h-3.5" />{" "}
-                  {courses_text.btnContact}
-                </a>
-              </div>
-            </div>
-
-            {/* Right: Photo Frame */}
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
-              <img fetchPriority="high" decoding="async"
-                alt="Ivana Lerea segurando velas artesanais feitas na aula"
-                className="relative z-10 w-full h-[420px] md:h-[540px] rounded-xl shadow-xl border border-slate-200 object-cover object-top"
-                src="/images/ivana-com-velas.jpg"
-              />
-            </div>
-          </div>
-        </section>
+        <Hero
+          badge={
+            <>
+              <BrazilFlag />
+              <HeroBadgeText>Cursos Velas Artesanais do Brasil</HeroBadgeText>
+            </>
+          }
+          title={heroContent.title[LANGUAGE]}
+          text={heroContent.desc[LANGUAGE]}
+          primary={{ label: courses_text.btnCourses, href: '#cursos', icon: Menu }}
+          secondary={{ label: courses_text.btnContact, href: '#contato', icon: SquarePen }}
+          photo={{ src: '/images/ivana-com-velas.jpg', alt: 'Ivana Lerea segurando velas artesanais feitas na aula', position: 'top' }}
+          backdrop={{ src: heroContent.imageUrl, alt: heroContent.title[LANGUAGE], gradientClass: activeCategory.heroBgClass }}
+        />
 
         {/* Trust stats bar */}
         <section className="bg-white border-y border-subtle py-8">

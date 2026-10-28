@@ -12,6 +12,32 @@ As páginas de curso online **`/velas/`, `/saboaria/` e `/apostila/`** (em
 copie nada delas. Ficam como pendência: depois do alinhamento das páginas
 `es_ar`, refazê-las com os componentes deste guia (ver "Pendências", no fim).
 
+## Regra de ouro: um componente, um lugar
+
+**Toda página usa os componentes de `src/app/ui/`.** Não se recria botão, card, passo,
+cabeçalho de seção, herói nem bloco de contato dentro de uma página. Para mudar o
+desenho, **edita-se o componente em `ui/` uma única vez** e todas as páginas (Brasil e
+Argentina) acompanham.
+
+| Componente (`import … from '../ui'`) | O que é | Usado em |
+|---|---|---|
+| `Section` | seção: fundo (`cream`/`white`), borda, largura (`narrow`/`mid`/`wide`) e respiro | todas as páginas |
+| `SectionHeader` | rótulo + título + subtítulo | todas as seções |
+| `Hero` (+ `HeroBadgeText`) | herói com selo, 2 botões em pílula e foto/fundo (3 composições) | BR: velas, soap, aromas, resin · AR: todas |
+| `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas | cursos BR, carreras AR, home |
+| `DateRow` | item de lista com data (turma / início de cohorte) | turmas BR, cohorte AR |
+| `Steps` | 4 passos em colunas, com ou sem número | como funciona, cursada |
+| `FeatureList` | grade 2 colunas "incluso" | incluso BR, incluido AR |
+| `ContactCta` | bloco final de contato | todas as páginas de tema |
+| `ArgentinaFlag`, `BrazilFlag` | bandeiras do selo | herói |
+| `btnPrimary`, `btnOutline`, `heroPrimary`, `heroSecondary`, `textLink`, `heroBadge`, `cardTag` | classes de botões e selos (`ui/styles.ts`) | todo o site |
+
+**Como criar ou alterar uma página**
+1. Monte a página só com componentes de `ui/` e com os blocos de `components/theme/` (BR: `ThemeSections.tsx`; AR: `CareerSections.tsx`), que por sua vez só compõem `ui/`.
+2. Precisa de um bloco que não existe? Crie o componente **em `ui/`** (genérico, sem texto de uma página), exporte em `ui/index.ts`, registre na tabela acima e só então use.
+3. Mudou o visual de algo? Mude em `ui/` e confira Brasil e Argentina (`?mock` na AR).
+4. Nunca copie classes Tailwind de um componente para dentro de uma página.
+
 ## 1. Fundamentos (tokens)
 
 Fonte única: `src/styles/index.css` (Tailwind v4) e `kit-de-marca` (Artisanal Elegance).
@@ -200,7 +226,7 @@ componentes compartilhados, para valer nos dois países.
 | `Footer` | `components/Footer.tsx` | `language` | sim | sim |
 | `PrivacyConsent` | `components/PrivacyConsent.tsx` | todo formulário | sim | sim |
 
-**Novo componente = primeiro conferir esta tabela.** Se já existe um equivalente no
+**Novo componente = primeiro conferir a tabela da "Regra de ouro" e esta.** Se já existe um equivalente no
 Brasil, reaproveite (parametrizando o idioma); se não existe, crie nos dois idiomas ao
 mesmo tempo e registre aqui.
 
@@ -224,4 +250,4 @@ mesmo tempo e registre aqui.
 
 1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
 2. **Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`** (em `public/`), que estão fora do padrão, usando navbar, herói, botões, cards e rodapé deste guia. Só depois delas é que passam a valer como referência.
-3. Extrair os blocos repetidos (`sectionHeader`, botões, `TurmaCard`, `CursoCard`) para um módulo compartilhado, para BR e AR não divergirem de novo.
+3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). Falta migrar o que ainda é próprio: os cards online da home (`CourseGrid`), o `Navbar` da home e os blocos `AboutSection`, `WhyUsSection`, `ReviewsCarousel` e `FAQSection`, que hoje trazem o seu próprio `<section>`.

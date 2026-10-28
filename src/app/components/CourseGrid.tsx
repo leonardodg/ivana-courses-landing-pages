@@ -7,6 +7,7 @@ import { Star, MapPin, Calendar, CheckSquare, Sparkles, BookOpen, ExternalLink, 
 import { useEffect, useState } from 'react';
 import { useAgenda } from '../hooks/useAgenda';
 import { CursoCard } from './theme/ThemeSections';
+import { cardGridClass } from '../ui';
 import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
 
 interface CourseGridProps {
@@ -93,7 +94,7 @@ export default function CourseGrid({
                 </h3>
               )}
         {theme && homeTheme && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-8 lg:mb-10">
+              <div className={`${cardGridClass} mb-8 lg:mb-10`}>
                 {theme.courses.map(key => (
                   <CursoCard
                     key={key}

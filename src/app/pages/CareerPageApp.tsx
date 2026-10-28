@@ -13,6 +13,7 @@ import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
+import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
   buildArMenu,
   CarrerasGrid,
@@ -24,21 +25,12 @@ import {
   SalidaLaboralSection,
   WhatsAppFooterCta,
   faqs_carreras_ar,
-  heroPrimary,
-  heroSecondary,
   nivelLabel,
 } from '../components/theme/CareerSections';
 
 // Páginas que têm par no Brasil (seletor PT | ES e hreflang).
 const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt_br/candles/', resin: '/pt_br/resin/' };
 
-const ArgentinaFlag = () => (
-  <svg viewBox="0 0 3 2" className="w-4.5 h-3 opacity-95 rounded-[1px] scale-105" aria-hidden="true">
-    <rect width="3" height="2" fill="#74ACDF" />
-    <rect y="0.66" width="3" height="0.66" fill="#FFFFFF" />
-    <circle cx="1.5" cy="1" r="0.18" fill="#FFAF36" />
-  </svg>
-);
 
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
   const [language, setLanguage] = useState<Language>('es');
@@ -52,63 +44,27 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
       <CandlesNavbar language="es" menu={buildArMenu(PT_PAIR[slug])} />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
-        {/* 1. Abertura (herói dividido, igual ao da página de velas do Brasil) */}
-        <section className="relative overflow-hidden bg-surface-cream pt-28 md:pt-32 pb-14 md:pb-20 px-6 md:px-12">
-          <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-4 md:space-y-6">
-              <div className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-md border border-subtle px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
-                <ArgentinaFlag />
-                <span className="text-micro uppercase font-mono tracking-widest text-primary">
-                  100% online · Conservatorio Grassi
-                </span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-950 font-bold leading-tight tracking-tight">
-                {carrera.nombre}
-              </h1>
-
-              <p className="text-xs sm:text-sm md:text-base text-gray-800 leading-relaxed max-w-xl font-sans font-medium">
-                {nivelLabel(carrera)} de {carrera.meses} meses, con un módulo por mes. Estudiás desde tu casa, con acompañamiento de la profesora Ivana Lerea.
-              </p>
-
-              <div className="pt-2 pb-4 flex flex-wrap gap-4 items-center">
-                <a href="#cohorte" className={heroPrimary}>
-                  <CalendarDays className="w-3.5 h-3.5" /> Ver cohorte 2027
-                </a>
-                <a href={WHATSAPP_AR} className={heroSecondary}>
-                  <MessageCircle className="w-3.5 h-3.5" /> Hablar por WhatsApp
-                </a>
-              </div>
-            </div>
-
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-primary-container/10 rounded-2xl -rotate-2 group-hover:rotate-0 transition-transform duration-500 pointer-events-none" />
-              <img
-                src={carrera.image}
-                alt={carrera.nombre}
-                fetchPriority="high"
-                decoding="async"
-                style={{ objectPosition: carrera.imagePos }}
-                className="relative z-10 w-full h-[320px] sm:h-[420px] md:h-[540px] rounded-xl shadow-xl border border-slate-200 object-cover"
-              />
-            </div>
-          </div>
-        </section>
+        {/* 1. Abertura */}
+        <Hero
+          badge={
+            <>
+              <ArgentinaFlag />
+              <HeroBadgeText>100% online · Conservatorio Grassi</HeroBadgeText>
+            </>
+          }
+          title={carrera.nombre}
+          text={`${nivelLabel(carrera)} de ${carrera.meses} meses, con un módulo por mes. Estudiás desde tu casa, con acompañamiento de la profesora Ivana Lerea.`}
+          primary={{ label: 'Ver cohorte 2027', href: '#cohorte', icon: CalendarDays }}
+          secondary={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true }}
+          photo={{ src: carrera.image, alt: carrera.nombre, position: carrera.imagePos }}
+        />
 
         <CohorteSection carrera={carrera} agenda={agenda} />
 
-        <section id="carreras" className="py-16 md:py-24 bg-white border-y border-muted">
-          <div className="max-w-[1280px] mx-auto px-6">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase block mb-3">LA CARRERA</span>
-              <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">Elegí cómo seguir</h2>
-              <p className="text-sm text-on-surface-variant mt-3 leading-relaxed">
-                100% online, con el título del Conservatorio Grassi.
-              </p>
-            </div>
-            <CarrerasGrid items={cards} />
-          </div>
-        </section>
+        <Section id="carreras" bg="white" border="y" width="wide">
+          <SectionHeader kicker="LA CARRERA" title="Elegí cómo seguir" sub="100% online, con el título del Conservatorio Grassi." />
+          <CarrerasGrid items={cards} />
+        </Section>
 
         <QueAprenderSection carrera={carrera} />
         <CursadaSection />

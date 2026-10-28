@@ -9,7 +9,8 @@ import Footer from '../components/Footer';
 import SkipLink from '../components/SkipLink';
 import { AgendaEvent, useAgenda } from '../hooks/useAgenda';
 import { carreras_ar, carreras_principales, CarreraAr, WHATSAPP_AR, whatsappInscripcion } from '../data/carreras_ar';
-import { InscribirmeButton, btnOutline, btnPrimary, etapaLabel, fmtFull, fmtRange } from '../components/theme/CareerSections';
+import { InscribirmeButton, etapaLabel, fmtFull, fmtRange } from '../components/theme/CareerSections';
+import { btnOutline, btnPrimary } from '../ui';
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary';
 const AR = { timeZone: 'America/Argentina/Buenos_Aires' } as const;
