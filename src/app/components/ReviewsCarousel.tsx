@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Review, Language } from '../classes/types';
 import { Star, ChevronLeft, ChevronRight, MessageSquareQuote } from 'lucide-react';
 import { reviews_header as text } from '../lang/reviews';
+import { Section, SectionHeader } from '../ui';
 
 interface ReviewsCarouselProps {
   language: Language;
@@ -24,26 +25,14 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
   const reviews_text = text[language];
 
   return (
-    <section className="py-16 md:py-24 bg-surface-hero border-t border-review relative overflow-hidden">
+    <Section bg="hero" border="top" width="wide" className="relative overflow-hidden">
       {/* Decorative quotes background graphic */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-200/40 select-none pointer-events-none pr-8">
         <MessageSquareQuote className="w-64 h-64 opacity-5 stroke-[0.3]" />
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-        
-        {/* Title */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
-            {reviews_text.badge}
-          </span>
-          <h2 className="text-2xl md:text-3xl font-serif text-on-surface leading-tight">
-            {reviews_text.title}
-          </h2>
-          <p className="text-xs md:text-sm text-gray-600 mt-2">
-            {reviews_text.subtitle}
-          </p>
-        </div>
+      <div className="relative z-10">
+        <SectionHeader kicker={reviews_text.badge} title={reviews_text.title} sub={reviews_text.subtitle} />
 
         {/* Carousel Container */}
         <div className="max-w-[750px] mx-auto bg-white rounded-2xl shadow-sm border border-muted p-8 md:p-12 relative">
@@ -112,6 +101,6 @@ export default function ReviewsCarousel({ language, reviews }: ReviewsCarouselPr
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

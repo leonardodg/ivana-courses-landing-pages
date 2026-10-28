@@ -1,5 +1,6 @@
 import { Award, GraduationCap, Globe, ShieldCheck } from 'lucide-react';
 import { Language } from '../classes/types';
+import { Section } from '../ui';
 import { about_text as text } from '../lang/about_section';
 
 interface AboutSectionProps {
@@ -10,8 +11,8 @@ export default function AboutSection({ language }: AboutSectionProps) {
   const about_text = text[language];
 
   return (
-    <section id="sobre" className="py-16 md:py-24 bg-white border-y border-subtle overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <Section id="sobre" bg="white" border="y" width="wide" className="overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Side: Photo Column */}
         <div className="lg:col-span-5 relative">
           <div className="aspect-[3/4] max-w-[420px] mx-auto rounded-2xl overflow-hidden shadow-lg border border-faint relative z-10 bg-surface-hero">
@@ -88,6 +89,6 @@ export default function AboutSection({ language }: AboutSectionProps) {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
