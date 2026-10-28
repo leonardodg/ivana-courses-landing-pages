@@ -13,3 +13,5 @@ Frontend for Ivana Academy's course landing pages (React 19 + Vite 6 + Tailwind 
 - Conformidade (LGPD): páginas legais em `/pt_br/privacidade/`, `/pt_br/termos/`, `/pt_br/reembolso/` e `/pt_br/lgpd/` (Brasil) e `/es_ar/privacidad/`, `/terminos/`, `/reembolso/`, `/derechos/` e `/arrepentimiento/` (Argentina). Páginas do Brasil ficam sempre sob `/pt_br/`, as da Argentina sob `/es_ar/` (textos em `src/app/legal/`, dados da empresa em `legal/company.ts`). Todo formulário que coleta dados usa `PrivacyConsent`.
 - Rastreamento: só o GA4, carregado depois do aceite em `lib/consent.ts` (ID padrão no arquivo; `VITE_GA_ID` sobrescreve, `off` desliga). Eventos em `lib/analytics.ts`. Não adicione scripts de terceiros direto no HTML.
 - Fontes são hospedadas no site (`@fontsource`), sem Google Fonts.
+
+- Componentes das páginas: **sempre** os de `src/app/ui/` (ver `docs/GUIA-DE-ESTILO.md`). Não recrie botão, card, passo, herói ou cabeçalho de seção dentro de uma página; para mudar o visual, edite o componente em `ui/` (um só lugar, vale para Brasil e Argentina).
