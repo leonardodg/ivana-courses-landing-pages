@@ -8,7 +8,7 @@ import type { Language } from '../classes/types';
 import { ar_pages, ArPageSlug, carreras_ar, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
 import { useAgenda } from '../hooks/useAgenda';
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
@@ -16,7 +16,6 @@ import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
-  buildArMenu,
   CarrerasGrid,
   CohorteSection,
   ComoInscribirmeSection,
@@ -33,7 +32,7 @@ const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt-br/cursos/v
 
 
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
-  const [language, setLanguage] = useState<Language>('es');
+  const language: Language = 'es';
   const agenda = useAgenda('AR');
   const page = ar_pages[slug];
   const carrera = carreras_ar[page.courses[0]];
@@ -42,7 +41,7 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" menu={buildArMenu(PT_PAIR[slug])} />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura */}
@@ -78,7 +77,7 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
         <WhatsAppFooterCta />
       </main>
 
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { GraduationCap, MessageCircle } from 'lucide-react';
 import type { Language } from '../classes/types';
 import { ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
@@ -14,7 +14,6 @@ import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
-  buildArMenu,
   CarrerasGrid,
   ComoInscribirmeSection,
   CursadaSection,
@@ -25,11 +24,11 @@ import {
 
 
 export default function CareerHomeApp() {
-  const [language, setLanguage] = useState<Language>('es');
+  const language: Language = 'es';
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" menu={buildArMenu()} />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         <Hero
@@ -64,7 +63,7 @@ export default function CareerHomeApp() {
         <WhatsAppFooterCta />
       </main>
 
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

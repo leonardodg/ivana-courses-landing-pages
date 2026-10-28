@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Language } from "../classes/types";
 import Footer from "../components/Footer";
-import SkipLink from "../components/SkipLink";
+import SiteNavbar from "../components/SiteNavbar";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 
 const WHATSAPP = "5548991671659";
@@ -188,7 +188,7 @@ function EventCard({ event, featured }: { event: AgendaEvent; featured: boolean 
 }
 
 export default function AgendaApp() {
-  const [language, setLanguage] = useState<Language>("pt");
+  const language: Language = 'pt';
   const [city, setCity] = useState<string>("");
   const agenda = useAgenda();
 
@@ -229,20 +229,10 @@ export default function AgendaApp() {
 
   return (
     <div className="flex min-h-screen flex-col justify-between bg-surface-cream font-sans text-on-surface">
-      <header className="border-b border-surface-container-highest">
-        <SkipLink />
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4 md:px-16">
-          <a href="/pt-br/" aria-label="Ivana Academy - página inicial" className={`flex min-h-11 items-center rounded-lg ${FOCUS}`}>
-            <img src="/images/logo.svg" alt="Ivana Academy" className="h-10 w-auto" />
-          </a>
-          <a href="/pt-br/" className={`inline-flex min-h-11 items-center rounded-lg text-sm font-semibold text-tertiary underline underline-offset-4 ${FOCUS}`}>
-            Ver todos os cursos
-          </a>
-        </div>
-      </header>
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-8 md:px-16 md:py-20 lg:grid-cols-12 lg:gap-16">
+        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 pb-8 pt-28 md:px-16 md:pb-20 md:pt-32 lg:grid-cols-12 lg:gap-16">
           <aside className="min-w-0 space-y-6 lg:col-span-4">
             <div className="space-y-4 lg:sticky lg:top-8">
               <p className="flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-[0.05em] text-tertiary">
@@ -356,7 +346,7 @@ export default function AgendaApp() {
         </div>
       </main>
 
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

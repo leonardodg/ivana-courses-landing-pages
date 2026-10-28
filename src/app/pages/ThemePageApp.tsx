@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { CalendarDays, MessageCircle, SquarePen } from 'lucide-react';
 import { Language } from '../classes/types';
 import { presencial_themes, PresencialTheme, WHATSAPP_URL } from '../data/presencial';
-import CandlesNavbar from '../components/CandlesNavbar';
+import SiteNavbar from '../components/SiteNavbar';
 import FAQSection from '../components/FAQSection';
 import { ContactCta, Hero, HeroBadgeText } from '../ui';
 import Footer from '../components/Footer';
@@ -60,12 +60,12 @@ const THEMES: Record<'saboaria' | 'aromas' | 'resina', ThemeConfig> = {
 };
 
 export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES }) {
-  const [language, setLanguage] = useState<Language>('pt');
+  const language: Language = 'pt';
   const cfg = THEMES[themeId];
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar />
+      <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         {/* 1. Abertura */}
@@ -100,7 +100,7 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
         />
       </main>
 
-      <Footer language={language} setLanguage={setLanguage} />
+      <Footer />
     </div>
   );
 }

@@ -32,7 +32,7 @@ Argentina) acompanham.
 | `Steps` | 4 passos em colunas, com ou sem número | como funciona, cursada |
 | `FeatureList` | grade 2 colunas "incluso" | incluso BR, incluido AR |
 | `ContactCta` | bloco final de contato | todas as páginas de tema |
-| `NavHeader` (+ `navGroupClass`, `navPill`, `navPortalPill`, `drawerItem`) | casca da navbar: logo, pílulas, gaveta | `Navbar` da home, `CandlesNavbar` (BR e AR) |
+| `NavHeader` (+ `navGroupClass`, `navPill`, `navPortalPill`, `drawerItem`), `NavDropdown`, `LangSwitch`, `nav_icons` | casca da navbar, submenus, seletor PT \| ES e ícones | `SiteNavbar` |
 | `ArgentinaFlag`, `BrazilFlag` | bandeiras (selo do herói e seletor de idioma) | herói, navbar da home |
 | `btnPrimary`, `btnOutline`, `heroPrimary`, `heroSecondary`, `textLink`, `heroBadge`, `cardTag` | classes de botões e selos (`ui/styles.ts`) | todo o site |
 
@@ -85,24 +85,23 @@ Ordem fixa (BR: `ThemePageApp` e `CandlesBrApp`; AR: `CareerPageApp`):
 Cada linha diz **onde está o modelo pt_BR**. O `es_ar` deve usar o mesmo componente
 (ou uma variante com o mesmo desenho) e só trocar textos.
 
-### 3.1 Navbar
+### 3.1 Navbar (uma só, em todas as páginas)
 
-| Variante | Onde | Desenho |
-|---|---|---|
-| Home | `Navbar.tsx` | Logo (link para `/`) · pílulas de categoria · seletor PT/ES |
-| **Páginas de tema** | `CandlesNavbar.tsx` | `header` fixo `bg-surface-cream/95 backdrop-blur-md shadow-sm border-b border-subtle`, container `px-4 md:px-12 py-3.5`. **Esquerda:** logo (`h-10 md:h-12`) linkada à home. **Direita:** uma única pílula "Portal do Aluno" (`border border-subtle bg-white/[0.8] rounded-full px-3.5 py-2.5 font-mono text-xs uppercase`) e, no celular, botão de menu. **Gaveta:** itens em caixas brancas `rounded-lg border` ("Cursos", "Fale conosco", "Plataforma de Ensino") |
-| Agenda | `AgendaApp.tsx` | Cabeçalho simples: logo + link "Ver todos os cursos" |
+`SiteNavbar` (`components/SiteNavbar.tsx`), montada sobre o `NavHeader` de `ui/`. O conteúdo (opções, ícones, links e
+pares de idioma) fica em `data/site_nav.ts`; os ícones, em `ui/navIcons.tsx`. **Não existe navbar por página nem por país.**
 
-**Regra para es_ar (aplicada):** a mesma navbar das páginas de tema, `<CandlesNavbar language="es" menu={buildArMenu(ptHref)} />`.
-O **desenho é o do Brasil** (header, logo, pílula "Portal del Alumno", gaveta) e as **opções de menu da
-Argentina** (aprovadas pela Ivana) entram **no estilo da home**: um contêiner de pílulas
-`hidden lg:flex bg-surface-form p-1 rounded-full border border-subtle` com **Carreras ▾** (submenu em cartão
-`bg-white rounded-2xl border border-muted shadow-lg`, as 6 carreras com nome completo), **Agenda**,
-**Cómo inscribirme** e **WhatsApp**; à direita o seletor **PT | ES** (mesmo contêiner do seletor de idioma da
-home; só nas páginas com par no Brasil) e a pílula do portal. Cada item é uma pílula
-`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide text-on-surface-variant hover:bg-surface-container-high`.
-Abaixo de `lg` as opções vão para a gaveta, em caixas brancas `rounded-lg` como no Brasil.
-Nada de texto solto sem pílula, nem botão que o padrão não tenha.
+- **Esquerda:** logo (leva à home do idioma: `/pt-br/` ou `/es-ar/`).
+- **Menu principal (pílulas, a partir de 1280 px; abaixo disso, gaveta):**
+  **Brasil ▾** (Cursos presenciais por segmento: velas, sabonetes, aromas e incensos, resina e decoração · Cursos online:
+  velas aromáticas, saboaria com extratos naturais, apostila 60 receitas) · **Argentina ▾** (todas as carreras e cada uma,
+  com o nome oficial) · **Agenda ▾** (Brasil e Argentina) · **Contato** (WhatsApp do país do idioma) · **Interesse**
+  (só em português). Cada opção tem um ícone; Brasil e Argentina usam a bandeira.
+- **Direita:** seletor **PT (bandeira do Brasil) | ES (bandeira da Argentina)** e a pílula **Portal do Aluno**.
+- **PT | ES:** se a página tem equivalente no outro idioma (`lang_pairs` em `site_nav.ts`), vira link e muda de página;
+  se não tem, só troca o idioma do menu, do rodapé e dos componentes que seguem `usePageLanguage` (a página de interesse
+  traduz o conteúdo; as demais mantêm o texto da página).
+- **Home do Brasil:** os segmentos do menu filtram os cards da própria página (`onSelectCategory`).
+- **Gaveta (celular):** as mesmas opções, com ícone, em caixas brancas; PT | ES no topo.
 
 ### 3.2 Herói
 
@@ -215,7 +214,7 @@ componentes compartilhados, para valer nos dois países.
 
 | Componente | Arquivo | Uso | BR | AR |
 |---|---|---|---|---|
-| `CandlesNavbar` | `components/CandlesNavbar.tsx` | `<CandlesNavbar language="pt\|es" base="" menu={buildArMenu(ptHref)} />` (`menu` só na AR) | sim | sim, com menu em pílulas |
+| `SiteNavbar` | `components/SiteNavbar.tsx` | `<SiteNavbar onSelectCategory? />` (menu em `data/site_nav.ts`) | sim | sim |
 | Herói dividido | `pages/CandlesBrApp.tsx`, `CareerPageApp.tsx` | `heroPrimary` + `heroSecondary` | sim | sim |
 | Herói imagem de fundo | `pages/ThemePageApp.tsx` | `bg-primary` pílula + `border-subtle` pílula | sim | não usado |
 | `sectionHeader` | `ThemeSections.tsx`, `CareerSections.tsx` | `(kicker, title, sub?)` | sim | sim |
