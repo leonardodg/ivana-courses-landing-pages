@@ -1,5 +1,6 @@
 import { Award, CheckCircle, Flame, HeartHandshake, ShieldAlert, Sparkles } from 'lucide-react';
 import { Language } from '../classes/types';
+import { Section, SectionHeader } from '../ui';
 import { why_section_text as text } from '../lang/why_section';
 
 interface WhyUsSectionProps {
@@ -10,18 +11,8 @@ export default function WhyUsSection({ language }: WhyUsSectionProps) {
   const why_section_text = text[language];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-[1280px] mx-auto px-6">
-        
-        {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">
-            {why_section_text.headline}
-          </h2>
-          <p className="text-sm md:text-base text-on-surface-variant mt-3 leading-relaxed">
-            {why_section_text.subtitle}
-          </p>
-        </div>
+    <Section bg="white" width="wide">
+      <SectionHeader title={why_section_text.headline} sub={why_section_text.subtitle} />
 
         {/* Bento Board of Qualities */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -68,7 +59,6 @@ export default function WhyUsSection({ language }: WhyUsSectionProps) {
 
         </div>
 
-      </div>
-    </section>
+    </Section>
   );
 }

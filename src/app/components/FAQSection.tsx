@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FAQItem, Language } from '../classes/types';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { faqs_text as text } from '../lang/faqs_section';
+import { Section, SectionHeader } from '../ui';
 
 interface FAQSectionProps {
   language: Language;
@@ -18,19 +19,9 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-[800px] mx-auto px-6">
-        
-        {/* Title */}
-        <div className="text-center mb-16">
-          <HelpCircle className="w-8 h-8 mx-auto text-primary mb-3" />
-          <h2 className="text-2xl md:text-3xl font-serif text-gray-900 leading-tight">
-            {faqs_text.title}
-          </h2>
-          <p className="text-xs md:text-sm text-on-surface-variant mt-2 leading-relaxed max-w-xl mx-auto">
-            {faqs_text.subtitle}
-          </p>
-        </div>
+    <Section bg="white" width="prose">
+      <div>
+        <SectionHeader title={faqs_text.title} sub={faqs_text.subtitle} />
 
         {/* Accordions */}
         <div className="space-y-4">
@@ -67,6 +58,6 @@ export default function FAQSection({ language, faqs }: FAQSectionProps) {
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

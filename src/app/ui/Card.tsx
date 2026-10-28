@@ -13,7 +13,9 @@ export default function Card({
   href,
   title,
   srText,
-  bullets,
+  description,
+  bullets = [],
+  corner,
   meta,
   extra,
   footer,
@@ -22,11 +24,13 @@ export default function Card({
   image: string;
   alt: string;
   imagePos?: string;
-  tag: string; // "Presencial", "100% online"
+  tag: ReactNode; // "Presencial", "100% online" (ou ícone + texto)
   href?: string; // título e imagem clicáveis (home)
   title: string;
   srText?: string; // texto só para leitor de tela (ex.: subtítulo)
-  bullets: string[];
+  description?: string; // parágrafo curto (cards online da home)
+  bullets?: string[];
+  corner?: ReactNode; // selo no canto inferior direito da foto (ex.: nota)
   meta?: ReactNode; // linha de metadados (duração, nº de turmas…)
   extra?: ReactNode; // ex.: lista de turmas na home
   footer: ReactNode; // preço + botões
@@ -47,6 +51,7 @@ export default function Card({
           className="w-full h-full object-cover select-none"
         />
         <span className={cardTag}>{tag}</span>
+        {corner}
       </div>
 
       <div className="p-6 md:p-8 flex flex-col grow">
@@ -54,6 +59,9 @@ export default function Card({
           {href ? <a href={href}>{title}</a> : title}
         </h3>
         {srText && <p className="sr-only">{srText}</p>}
+        {description && (
+          <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-5 line-clamp-3">{description}</p>
+        )}
         <ul className="space-y-2 mb-5">
           {bullets.map((b) => (
             <li key={b} className="flex gap-2 text-xs text-on-surface-variant leading-relaxed">

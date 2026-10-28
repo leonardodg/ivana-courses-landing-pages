@@ -12,3 +12,4 @@ export type { StepItem } from './Steps';
 export { default as FeatureList } from './FeatureList';
 export { default as ContactCta } from './ContactCta';
 export { ArgentinaFlag, BrazilFlag } from './Flags';
+export { default as NavHeader, navGroupClass, navPill, navPortalPill, drawerItem } from './NavHeader';

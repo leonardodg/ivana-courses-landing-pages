@@ -21,15 +21,16 @@ Argentina) acompanham.
 
 | Componente (`import … from '../ui'`) | O que é | Usado em |
 |---|---|---|
-| `Section` | seção: fundo (`cream`/`white`), borda, largura (`narrow`/`mid`/`wide`) e respiro | todas as páginas |
-| `SectionHeader` | rótulo + título + subtítulo | todas as seções |
+| `Section` | seção: fundo (`cream`/`white`/`hero`), borda, largura (`prose`/`narrow`/`mid`/`wide`) e respiro | todas as páginas, incl. sobre, "por que nós", depoimentos, perguntas e a grade da home |
+| `SectionHeader` | rótulo (opcional) + título + subtítulo | todas as seções |
 | `Hero` (+ `HeroBadgeText`) | herói com selo, 2 botões em pílula e foto/fundo (3 composições) | BR: velas, soap, aromas, resin · AR: todas |
-| `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas | cursos BR, carreras AR, home |
+| `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas; aceita descrição, selo de nota e metadados | cursos BR, carreras AR, **cards online e presenciais da home (mesma grade)** |
 | `DateRow` | item de lista com data (turma / início de cohorte) | turmas BR, cohorte AR |
 | `Steps` | 4 passos em colunas, com ou sem número | como funciona, cursada |
 | `FeatureList` | grade 2 colunas "incluso" | incluso BR, incluido AR |
 | `ContactCta` | bloco final de contato | todas as páginas de tema |
-| `ArgentinaFlag`, `BrazilFlag` | bandeiras do selo | herói |
+| `NavHeader` (+ `navGroupClass`, `navPill`, `navPortalPill`, `drawerItem`) | casca da navbar: logo, pílulas, gaveta | `Navbar` da home, `CandlesNavbar` (BR e AR) |
+| `ArgentinaFlag`, `BrazilFlag` | bandeiras (selo do herói e seletor de idioma) | herói, navbar da home |
 | `btnPrimary`, `btnOutline`, `heroPrimary`, `heroSecondary`, `textLink`, `heroBadge`, `cardTag` | classes de botões e selos (`ui/styles.ts`) | todo o site |
 
 **Como criar ou alterar uma página**
@@ -250,4 +251,4 @@ mesmo tempo e registre aqui.
 
 1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
 2. **Refazer as páginas de curso online `/velas/`, `/saboaria/` e `/apostila/`** (em `public/`), que estão fora do padrão, usando navbar, herói, botões, cards e rodapé deste guia. Só depois delas é que passam a valer como referência.
-3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). Falta migrar o que ainda é próprio: os cards online da home (`CourseGrid`), o `Navbar` da home e os blocos `AboutSection`, `WhyUsSection`, `ReviewsCarousel` e `FAQSection`, que hoje trazem o seu próprio `<section>`.
+3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). ~~Migrar navbar da home, cards online da home, sobre, "por que nós", depoimentos e perguntas~~ (feito em 27/10/2026). **Ainda com `<section>` próprio** (migrar na próxima rodada): `ContactForm` e `CandlesLeadForm` (formulários), `CandlesOnlineSection` (cards online horizontais de velas), `AgendaApp`/`AgendaArApp` (layout da agenda), a faixa de números de `CandlesBrApp` e as páginas legais.

@@ -7,7 +7,7 @@ import { Star, MapPin, Calendar, CheckSquare, Sparkles, BookOpen, ExternalLink, 
 import { useEffect, useState } from 'react';
 import { useAgenda } from '../hooks/useAgenda';
 import { CursoCard } from './theme/ThemeSections';
-import { cardGridClass } from '../ui';
+import { Card, Section, SectionHeader, btnOutline, btnPrimary, cardGridClass } from '../ui';
 import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
 
 interface CourseGridProps {
@@ -61,23 +61,13 @@ export default function CourseGrid({
   const categoryIds = (activeCategoryId ? [activeCategoryId] : Object.keys(CATEGORIES)) as CategoryId[];
 
   return (
-    <section id="cursos" className="py-16 md:py-24 bg-surface-hero relative">
-      <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-        
-        {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          {activeCategoryId && (
-            <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase bg-velas-accent px-3.5 py-1.5 rounded-full inline-block mb-3">
-              {CATEGORIES[activeCategoryId].name[language]}
-            </span>
-          )}
-          <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">
-            {courses_text.headline}
-          </h2>
-          <p className="text-sm md:text-base text-on-surface-variant mt-3 leading-relaxed">
-            {courses_text.description}
-          </p>
-        </div>
+    <>
+      <Section id="cursos" bg="hero" width="wide">
+        <SectionHeader
+          kicker={activeCategoryId ? CATEGORIES[activeCategoryId].name[language] : undefined}
+          title={courses_text.headline}
+          sub={courses_text.description}
+        />
 
         {categoryIds.map((categoryId) => {
           const homeTheme = language === 'pt' ? home_category_themes[categoryId] : undefined;
@@ -93,9 +83,10 @@ export default function CourseGrid({
                   {CATEGORIES[categoryId].badgeLogo} {CATEGORIES[categoryId].name[language]}
                 </h3>
               )}
-        {theme && homeTheme && (
-              <div className={`${cardGridClass} mb-8 lg:mb-10`}>
-                {theme.courses.map(key => (
+            <div className={cardGridClass}>
+              {theme && homeTheme && (
+                <>
+                  {theme.courses.map(key => (
                   <CursoCard
                     key={key}
                     c={presencial_courses[key]}
@@ -106,95 +97,60 @@ export default function CourseGrid({
                     turmas={{ max: 3, pageHref: `${homeTheme.page}#${key}` }}
                   />
                 ))}
-              </div>
-            )}
-    
-            {/* Dynamic Courses Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-              {categoryCourses.map((course) => {
-                const courseImage = getCourseImage(course);
-                return (
-                  <div
-                    key={course.id}
-                    className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-muted overflow-hidden flex flex-col group h-full"
-                  >
-                    {/* Product Cover Photo with Category Overlay */}
-                    <div className="aspect-[16/10] w-full bg-surface-hero overflow-hidden relative">
-                      <img loading="lazy" decoding="async"
-                        alt={course.title[language]}
-                        className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 select-none"
-                        src={courseImage}
-                      />
-                      
-                      {/* Category Pill Tag */}
-                      <div className="absolute top-4 left-4 flex gap-1.5 flex-wrap">
-                        <span className="bg-white/90 backdrop-blur-md text-gray-900 border border-gray-250 text-micro font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
-                          <span>{CATEGORIES[categoryId].badgeLogo}</span>
-                          <span>{course.modalidade === 'presencial' ? courses_text.badgePresencial : courses_text.badgeOnline}</span>
+                </>
+              )}
+              {categoryCourses.map((course) => (
+                <Card
+                  key={course.id}
+                  image={getCourseImage(course)}
+                  alt={course.title[language]}
+                  tag={
+                    <span className="flex items-center gap-1">
+                      <span>{CATEGORIES[categoryId].badgeLogo}</span>
+                      <span>{course.modalidade === 'presencial' ? courses_text.badgePresencial : courses_text.badgeOnline}</span>
+                    </span>
+                  }
+                  title={course.title[language]}
+                  description={course.description[language]}
+                  corner={
+                    <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-sm text-amber-400 font-mono text-mini font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow">
+                      <Star className="w-3.5 h-3.5 fill-current" />
+                      <span>{course.rating.toFixed(1)}</span>
+                    </div>
+                  }
+                  meta={
+                    <>
+                      {course.duracao && (
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
+                          <strong className="font-semibold">{courses_text.duration}</strong> {course.duracao[language]}
                         </span>
-                      </div>
-    
-                      {/* Rating Badge */}
-                      <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-sm text-amber-400 font-mono text-mini font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow">
-                        <Star className="w-3.5 h-3.5 fill-current" />
-                        <span>{course.rating.toFixed(1)}</span>
-                      </div>
+                      )}
+                      {course.location && (
+                        <span className="flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                          <strong className="font-semibold">{courses_text.location}</strong> {course.location[language]}
+                        </span>
+                      )}
+                    </>
+                  }
+                  footer={
+                    <div className="space-y-3">
+                      <button onClick={() => setSelectedCourse(course)} className={`${btnOutline} w-full`}>
+                        {courses_text.learnMore}
+                      </button>
+                      <button onClick={() => onSelectEnroll(course)} className={`${btnPrimary} w-full`}>
+                        {courses_text.enrollNow}
+                      </button>
                     </div>
-    
-                    {/* Content */}
-                    <div className="p-6 md:p-8 flex flex-col grow justify-between">
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-serif text-gray-900 leading-snug group-hover:text-primary transition-colors mb-3">
-                          {course.title[language]}
-                        </h3>
-                        <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6 line-clamp-3">
-                          {course.description[language]}
-                        </p>
-    
-                        {/* Quick Specs */}
-                        <div className="space-y-2 mb-6 text-xs text-on-surface-variant font-sans border-t border-muted pt-4">
-                          {course.duracao && (
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-primary shrink-0" />
-                              <span className="font-semibold">{courses_text.duration}</span>
-                              <span>{course.duracao[language]}</span>
-                            </div>
-                          )}
-                          {course.location && (
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-primary shrink-0" />
-                              <span className="font-semibold">{courses_text.location}</span>
-                              <span>{course.location[language]}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-    
-                      {/* Action row */}
-                      <div className="space-y-3 pt-4 border-t border-muted">
-                        <button
-                          onClick={() => setSelectedCourse(course)}
-                          className="brand-btn-secondary w-full py-3 text-xs"
-                        >
-                          {courses_text.learnMore}
-                        </button>
-    
-                        <button
-                          onClick={() => onSelectEnroll(course)}
-                          className="brand-btn-primary w-full py-3 text-xs"
-                        >
-                          {courses_text.enrollNow}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                  }
+                />
+              ))}
             </div>
             </div>
           );
         })}
-      </div>
+      </Section>
 
       {/* Course Program Modal */}
       {selectedCourse && (
@@ -282,6 +238,6 @@ export default function CourseGrid({
         </div>
       )}
 
-    </section>
+    </>
   );
 }
