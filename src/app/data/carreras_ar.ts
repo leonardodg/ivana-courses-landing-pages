@@ -151,12 +151,12 @@ export interface ArPage {
 }
 
 export const ar_pages: Record<ArPageSlug, ArPage> = {
-  candles:    { slug: 'candles',    path: '/es_ar/candles/',    title: 'Velas',        courses: ['ar-velas', 'ar-velas-prof'] },
-  resin:      { slug: 'resin',      path: '/es_ar/resin/',      title: 'Resinas',      courses: ['ar-resinas', 'ar-resinas-prof'] },
-  macrame:    { slug: 'macrame',    path: '/es_ar/macrame/',    title: 'Macramé',      courses: ['ar-macrame', 'ar-macrame-prof'] },
-  textil:     { slug: 'textil',     path: '/es_ar/textil/',     title: 'Estampas textiles', courses: ['ar-estampas'] },
-  interiores: { slug: 'interiores', path: '/es_ar/interiores/', title: 'Diseño de interiores', courses: ['ar-interiores'] },
-  mixmedia:   { slug: 'mixmedia',   path: '/es_ar/mixmedia/',   title: 'Arte mix media', courses: ['ar-mixmedia'] },
+  candles:    { slug: 'candles',    path: '/es-ar/carreras/tecnicatura-arte-diseno-velas/',    title: 'Velas',        courses: ['ar-velas', 'ar-velas-prof'] },
+  resin:      { slug: 'resin',      path: '/es-ar/carreras/tecnicatura-arte-decoracion-resinas/',      title: 'Resinas',      courses: ['ar-resinas', 'ar-resinas-prof'] },
+  macrame:    { slug: 'macrame',    path: '/es-ar/carreras/tecnicatura-macrame/',    title: 'Macramé',      courses: ['ar-macrame', 'ar-macrame-prof'] },
+  textil:     { slug: 'textil',     path: '/es-ar/carreras/tecnicatura-estampas-textiles/',     title: 'Estampas textiles', courses: ['ar-estampas'] },
+  interiores: { slug: 'interiores', path: '/es-ar/carreras/tecnicatura-diseno-interiores/', title: 'Diseño de interiores', courses: ['ar-interiores'] },
+  mixmedia:   { slug: 'mixmedia',   path: '/es-ar/carreras/profesorado-arte-mix-media/',   title: 'Arte mix media', courses: ['ar-mixmedia'] },
 };
 
 /** Carreras de entrada (as 6 da vitrine), na ordem da página inicial. */

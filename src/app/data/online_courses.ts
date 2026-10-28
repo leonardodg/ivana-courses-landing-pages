@@ -1,4 +1,4 @@
-// Páginas de venda dos cursos online e da apostila (Hotmart): /velas/, /saboaria/ e /apostila/.
+// Páginas de venda dos cursos online e da apostila (Hotmart): /pt-br/cursos/online/velas-aromaticas/, /pt-br/cursos/online/saboaria-com-extratos-naturais/ e /pt-br/apostilas/60-receitas-de-sabonetes/.
 // Conteúdo migrado das antigas páginas estáticas (public/<slug>/index.html) para o padrão do site:
 // a página é montada por pages/OnlineCoursePageApp.tsx só com componentes de ui/.
 // Títulos aceitam *destaque* (itálico Rosé Profundo). Preço e links da Hotmart ficam aqui, num lugar só.
@@ -40,7 +40,7 @@ export interface OnlineCourse {
 export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
   "velas": {
     "slug": "velas",
-    "path": "/velas/",
+    "path": "/pt-br/cursos/online/velas-aromaticas/",
     "title": "Velas Aromáticas Online | Ivana Academy",
     "name": "Curso online de Velas Aromáticas, com moldes e wax melts",
     "desc": "Aprenda velas aromáticas, velas em moldes e wax melts do zero, com videoaulas passo a passo da Ivana Lerea. 12x R$ 16,42 ou R$ 197. Garantia de 7 dias.",
@@ -282,7 +282,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
   },
   "saboaria": {
     "slug": "saboaria",
-    "path": "/saboaria/",
+    "path": "/pt-br/cursos/online/saboaria-com-extratos-naturais/",
     "title": "Saboaria com Extratos Naturais | Ivana Academy",
     "name": "Curso online de Saboaria com Extratos Naturais",
     "desc": "Aprenda a fazer sabonetes de base glicerinada com extratos e tinturas naturais, no seu ritmo, com a Ivana Lerea. 12x R$ 16,42 ou R$ 197. Garantia de 7 dias.",
@@ -558,7 +558,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
   },
   "apostila": {
     "slug": "apostila",
-    "path": "/apostila/",
+    "path": "/pt-br/apostilas/60-receitas-de-sabonetes/",
     "title": "Apostila 60 Receitas de Sabonetes | Ivana Academy",
     "name": "Apostila 60 receitas de sabonetes Melt & Pour (PDF)",
     "desc": "60 receitas de sabonetes Melt & Pour com quantidades prontas para 1 kg de base glicerinada, em PDF, pela Ivana Lerea. R$ 37, acesso imediato.",

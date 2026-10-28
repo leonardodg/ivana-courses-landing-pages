@@ -1,5 +1,5 @@
 // src/app/lang/candles_lead_form.ts
-// Textos exclusivos da página /pt_br/candles — formulário de captura
+// Textos exclusivos da página /pt-br/candles — formulário de captura
 // de leads com geração de cupom de boas-vindas (10% OFF).
 
 export const candles_lead_text = {
@@ -47,7 +47,7 @@ export const candles_lead_text = {
   errPhoneShort: 'Número muito curto',
 };
 
-// Textos da mesma secao para /es_ar/candles — mesma estrutura, mercado AR.
+// Textos da mesma secao para /es-ar/candles — mesma estrutura, mercado AR.
 export const candles_lead_text_es = {
   tagLabel: 'CONTACTANOS',
   title: 'Asegurá tu Cupón de Bienvenida',

@@ -42,7 +42,7 @@ const UI = {
     intro1: 'Use este formulário para pedir acesso, correção, eliminação ou outro direito sobre os seus dados pessoais. Pedimos só o necessário para localizar o seu cadastro e responder. Respondemos em até 15 dias, no e-mail informado. Também aceitamos o pedido por',
     intro2: 'Veja como tratamos os dados na',
     policy: 'Política de Privacidade',
-    policyHref: '/pt_br/privacidade/',
+    policyHref: '/pt-br/privacidade/',
     okTitle: 'Pedido recebido',
     okText: 'Vamos responder no e-mail informado em até 15 dias. Se precisarmos confirmar a sua identidade, escreveremos para você.',
     name: 'Nome completo *',
@@ -55,14 +55,14 @@ const UI = {
     send: 'Enviar pedido',
     sending: 'Enviando…',
     other: 'Español (Argentina)',
-    otherHref: '/es_ar/derechos/',
+    otherHref: '/es-ar/derechos/',
   },
   es: {
     title: 'Derechos sobre tus datos personales',
     intro1: 'Usá este formulario para pedir acceso, rectificación, supresión u otro derecho sobre tus datos personales (Ley 25.326). Pedimos solo lo necesario para ubicar tu registro y responderte. Respondemos en un máximo de 10 días corridos (acceso) o 5 días hábiles (rectificación o supresión), al correo que indiques. También aceptamos el pedido por',
     intro2: 'Mirá cómo tratamos los datos en la',
     policy: 'Política de Privacidad',
-    policyHref: '/es_ar/privacidad/',
+    policyHref: '/es-ar/privacidad/',
     okTitle: 'Pedido recibido',
     okText: 'Vamos a responderte al correo indicado dentro de los plazos legales. Si necesitamos confirmar tu identidad, te escribiremos.',
     name: 'Nombre completo *',
@@ -75,7 +75,7 @@ const UI = {
     send: 'Enviar pedido',
     sending: 'Enviando…',
     other: 'Português (Brasil)',
-    otherHref: '/pt_br/lgpd/',
+    otherHref: '/pt-br/lgpd/',
   },
 } as const;
 
@@ -121,9 +121,9 @@ export default function LgpdApp({ language = 'pt' }: { language?: Language }) {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
       {es ? (
-        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
+        <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
       ) : (
-        <CandlesNavbar base="/pt_br/candles/" />
+        <CandlesNavbar base="/pt-br/cursos/velas/" />
       )}
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <div className="max-w-xl mx-auto">

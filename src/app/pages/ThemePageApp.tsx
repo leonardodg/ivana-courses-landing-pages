@@ -37,8 +37,8 @@ const THEMES: Record<'saboaria' | 'aromas' | 'resina', ThemeConfig> = {
     intro: 'Aprenda do zero, pelo método melt and pour, e leve para casa os sabonetes que você produzir.',
     heroImage: '/images/courses/saboaria.jpg',
     online: [
-      { title: 'Curso online de Saboaria', text: 'Aulas gravadas para aprender no seu ritmo.', href: '/saboaria/', cta: 'Conhecer o curso' },
-      { title: 'Apostila de 60 receitas', text: 'Receitas de saboaria para começar a produzir.', href: '/apostila/', cta: 'Ver a apostila' },
+      { title: 'Curso online de Saboaria', text: 'Aulas gravadas para aprender no seu ritmo.', href: '/pt-br/cursos/online/saboaria-com-extratos-naturais/', cta: 'Conhecer o curso' },
+      { title: 'Apostila de 60 receitas', text: 'Receitas de saboaria para começar a produzir.', href: '/pt-br/apostilas/60-receitas-de-sabonetes/', cta: 'Ver a apostila' },
     ],
   },
   aromas: {
@@ -96,7 +96,7 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
           title="Ficou com alguma dúvida?"
           text="Fale com a gente pelo WhatsApp."
           action={{ label: 'Chamar no WhatsApp', href: WHATSAPP_URL }}
-          below={<p className="mt-4 text-xs"><a href="/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
+          below={<p className="mt-4 text-xs"><a href="/pt-br/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
         />
       </main>
 

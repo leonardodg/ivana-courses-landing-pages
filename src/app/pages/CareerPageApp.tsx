@@ -29,7 +29,7 @@ import {
 } from '../components/theme/CareerSections';
 
 // Páginas que têm par no Brasil (seletor PT | ES e hreflang).
-const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt_br/candles/', resin: '/pt_br/resin/' };
+const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt-br/cursos/velas/', resin: '/pt-br/cursos/resinas/' };
 
 
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {

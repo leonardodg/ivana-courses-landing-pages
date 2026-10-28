@@ -25,7 +25,7 @@ export interface NavMenu {
 }
 
 // base: caminho da página das âncoras (#cursos, #contato). Vazio na própria página de velas;
-// nas páginas legais aponta para /pt_br/candles/.
+// nas páginas legais aponta para /pt-br/cursos/velas/.
 // language: 'es' nas páginas da Argentina (mesmo desenho, só os textos mudam).
 const TEXT = {
   pt: { home: 'Ivana Academy - página inicial', portal: 'Portal do Aluno', close: 'Fechar menu', open: 'Abrir menu', courses: 'Cursos', contact: 'Fale Conosco', platform: 'Plataforma de Ensino', coursesId: 'cursos', contactId: 'contato' },
@@ -161,7 +161,7 @@ export default function CandlesNavbar({
 
   return (
     <NavHeader
-      homeHref={language === 'es' ? '/es_ar/' : '/'}
+      homeHref={language === 'es' ? '/es-ar/' : '/pt-br/'}
       homeLabel={t.home}
       center={center}
       right={right}

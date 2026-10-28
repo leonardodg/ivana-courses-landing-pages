@@ -51,7 +51,7 @@ export default function ArrepentimientoApp() {
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
-      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es_ar/')} />
+      <CandlesNavbar language="es" menu={buildArMenu(undefined, '/es-ar/')} />
       <main id="conteudo" tabIndex={-1} className="grow pt-28 pb-16 px-6 focus:outline-none">
         <div className="max-w-xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif leading-tight">Botón de arrepentimiento</h1>
@@ -59,7 +59,7 @@ export default function ArrepentimientoApp() {
             Si compraste un curso y querés revocar la compra, podés hacerlo acá sin explicar el motivo y sin registrarte, dentro de los 10 días corridos desde la
             contratación o desde que recibís el servicio, lo que ocurra último (art. 34 de la Ley 24.240). Te enviamos el código de tu pedido por este mismo medio y por
             correo dentro de las 24 horas. Más detalles en la{' '}
-            <a href="/es_ar/reembolso/" className="underline text-primary">Política de Reembolso y Cancelación</a>.
+            <a href="/es-ar/reembolso/" className="underline text-primary">Política de Reembolso y Cancelación</a>.
           </p>
 
           {status === 'success' ? (

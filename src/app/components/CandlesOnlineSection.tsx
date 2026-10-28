@@ -1,6 +1,6 @@
 // src/app/components/candles/CandlesOnlineSection.tsx
 //
-// Bloco "Cursos Online" — exclusivo da página /pt_br/candles.
+// Bloco "Cursos Online" — exclusivo da página /pt-br/candles.
 // Cards horizontais com imagem, título, descrição, duração e botões
 // "GRADE" (syllabus modal) + "MATRÍCULA" (link Moodle ou checkout).
 // Filtra apenas cursos online de velas.

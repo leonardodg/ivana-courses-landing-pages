@@ -1,6 +1,6 @@
 // Fonte unica de valores reais usados nos blocos JSON-LD dos 4 HTMLs estaticos
-// (src/index.html, src/interest.html, src/pt_br/candles/index.html,
-// src/es_ar/candles/index.html) e no sitemap.xml. Nao e importado em runtime —
+// (src/pt-br/index.html, src/pt-br/interesse/index.html, src/pt-br/cursos/velas/index.html,
+// src/es-ar/carreras/tecnicatura-arte-diseno-velas/index.html) e no sitemap.xml. Nao e importado em runtime —
 // os HTMLs sao estaticos — serve so para evitar que os mesmos valores
 // divirjam entre copias manuais.
 

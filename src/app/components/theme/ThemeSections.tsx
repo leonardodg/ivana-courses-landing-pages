@@ -66,7 +66,7 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
             Esgotado · Lista de espera
           </a>
         ) : (
-          <a href={course ? lojaLink(course, theme.utm, e.id) : '/interest'} className={btnPrimary}>
+          <a href={course ? lojaLink(course, theme.utm, e.id) : '/pt-br/interesse/'} className={btnPrimary}>
             Garantir minha vaga <ArrowRight className="w-3.5 h-3.5" />
           </a>
         )
@@ -100,8 +100,8 @@ export function TurmasSection({ theme }: { theme: PresencialTheme }) {
           </p>
           <p className="text-xs text-on-surface-variant mt-1">Veja a agenda completa ou peça para ser avisada.</p>
           <div className="flex flex-wrap justify-center gap-3 mt-4">
-            <a href="/agenda/" className={btnPrimary}>Ver agenda completa</a>
-            <a href="/interest" className={btnOutline}>Quero ser avisada</a>
+            <a href="/pt-br/agenda/" className={btnPrimary}>Ver agenda completa</a>
+            <a href="/pt-br/interesse/" className={btnOutline}>Quero ser avisada</a>
           </div>
           {status === 'error' && (
             <div className="mt-5 pt-4 border-t border-muted text-xs text-on-surface-variant">
@@ -118,7 +118,7 @@ export function TurmasSection({ theme }: { theme: PresencialTheme }) {
 
       {events.length > 0 && (
         <a
-          href="/agenda/"
+          href="/pt-br/agenda/"
           className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-primary hover:underline"
         >
           Agenda completa e sempre atualizada <ArrowRight className="w-3.5 h-3.5" />
@@ -151,7 +151,7 @@ export function CursoCard({ c, utm, events, feedError, loading, turmas }: CursoC
       ? { href: WHATSAPP_URL, label: 'Esgotado · Lista de espera' }
       : feedError && c.naLoja
         ? { href: lojaLink(c, utm), label: 'Ver na loja' }
-        : { href: '/interest', label: 'Quero ser avisada' };
+        : { href: '/pt-br/interesse/', label: 'Quero ser avisada' };
   const primary = !!next || cta.label === 'Ver na loja';
 
   return (

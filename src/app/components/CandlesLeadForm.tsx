@@ -1,6 +1,6 @@
 // src/app/components/candles/CandlesLeadForm.tsx
 //
-// Formulário de captura de leads exclusivo da página /pt_br/candles.
+// Formulário de captura de leads exclusivo da página /pt-br/candles.
 // Mantém a experiência de geração de cupom de boas-vindas (diferencial
 // de conversão), mas envia o lead pelo webhook real do projeto
 // (useSubmitContact), em vez do mock em localStorage do protótipo.

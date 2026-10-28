@@ -1,4 +1,4 @@
-// Páginas de venda dos cursos online e da apostila (/velas/, /saboaria/, /apostila/).
+// Páginas de venda dos cursos online e da apostila (/pt-br/cursos/online/velas-aromaticas/, /pt-br/cursos/online/saboaria-com-extratos-naturais/, /pt-br/apostilas/60-receitas-de-sabonetes/).
 // Conteúdo em data/online_courses.ts; o visual vem só dos componentes de ui/ (mesmo padrão do resto do site).
 // A compra é na Hotmart: o botão abre o checkout em nova aba.
 

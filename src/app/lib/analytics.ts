@@ -19,7 +19,7 @@ export function trackEvent(name: string, params: Params = {}) {
   window.gtag('event', name, params);
 }
 
-/** Origem do clique, por caminho da página (ex.: /pt_br/soap/ → "pt_br/soap"). */
+/** Origem do clique, por caminho da página (ex.: /pt-br/cursos/sabonetes/ → "pt_br/soap"). */
 export const pageName = () => location.pathname.replace(/^\/|\/$/g, '') || 'home';
 
 /** Interesse numa carreira (botão "Ver valores e inscribirme"). Sem preço nem dados pessoais. */
