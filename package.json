@@ -21,7 +21,8 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "check:urls": "node tests/scripts/check-urls.mjs",
-    "og": "node scripts/og/generate.mjs"
+    "og": "node scripts/og/generate.mjs",
+    "sitemap": "node scripts/sitemap-lastmod.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

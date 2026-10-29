@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<urlset xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-home-v2.jpg</image:loc>
+      <image:title>Carreras online con título del Conservatorio Grassi | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/"/>
@@ -11,6 +17,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-diseno-velas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-velas-v2.jpg</image:loc>
+      <image:title>Tecnicatura en arte y diseño de velas | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/cursos/velas/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-diseno-velas/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/cursos/velas/"/>
@@ -18,6 +29,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-decoracion-resinas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-resinas-v2.jpg</image:loc>
+      <image:title>Tecnicatura en arte y decoración con resinas | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/cursos/resinas/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-decoracion-resinas/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/cursos/resinas/"/>
@@ -25,26 +41,56 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/tecnicatura-macrame/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-macrame-v2.jpg</image:loc>
+      <image:title>Tecnicatura en macramé | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/tecnicatura-estampas-textiles/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-estampas-v2.jpg</image:loc>
+      <image:title>Tecnicatura en estampas textiles | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/tecnicatura-diseno-interiores/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-interiores-v2.jpg</image:loc>
+      <image:title>Tecnicatura en diseño de interiores | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/carreras/profesorado-arte-mix-media/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-mixmedia-v2.jpg</image:loc>
+      <image:title>Profesorado en arte mix media | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/agenda/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-agenda-v2.jpg</image:loc>
+      <image:title>Agenda de la Cohorte 2027: carreras online | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/interes/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-interes-v2.jpg</image:loc>
+      <image:title>Interés: novedades de las carreras online | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/interesse/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/interes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/interesse/"/>
@@ -52,6 +98,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/privacidad/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-padrao-v2.jpg</image:loc>
+      <image:title>Política de Privacidad | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/privacidade/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/privacidad/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/privacidade/"/>
@@ -59,6 +110,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/terminos/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-padrao-v2.jpg</image:loc>
+      <image:title>Términos de Uso | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/termos/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/terminos/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/termos/"/>
@@ -66,6 +122,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/reembolso/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-padrao-v2.jpg</image:loc>
+      <image:title>Política de Reembolso y Cancelación | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/reembolso/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/reembolso/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/reembolso/"/>
@@ -73,6 +134,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/derechos/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-padrao-v2.jpg</image:loc>
+      <image:title>Derechos sobre tus datos personales | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/lgpd/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/derechos/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/lgpd/"/>
@@ -80,6 +146,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/es-ar/arrepentimiento/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/ar-padrao-v2.jpg</image:loc>
+      <image:title>Botón de arrepentimiento | Ivana Academy</image:title>
+    </image:image>
   </url>
 
 </urlset>

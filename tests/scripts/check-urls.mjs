@@ -140,6 +140,20 @@ for (const [url, file] of pages) {
   if (!/name="twitter:card"\s+content="summary_large_image"/.test(html)) err(`${url}: twitter:card deve ser summary_large_image`);
 }
 
+// 7) sitemaps: todo <url> com <lastmod> válido (AAAA-MM-DD, não no futuro) e imagem de prévia existente (rode `npm run sitemap` se falhar)
+for (const f of walk(DIST).filter((x) => /sitemap-[\w-]+\.xml$/.test(x))) {
+  const xml = fs.readFileSync(f, 'utf8');
+  const today = new Date().toISOString().slice(0, 10);
+  for (const [, block] of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    const lm = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+    if (!lm || !/^\d{4}-\d{2}-\d{2}$/.test(lm) || lm > today) err(`${path.basename(f)}: ${loc} com lastmod ausente ou inválido (${lm})`);
+    const img = block.match(/<image:loc>([^<]+)<\/image:loc>/)?.[1];
+    if (!img) err(`${path.basename(f)}: ${loc} sem image:loc`);
+    else if (!fs.existsSync(path.join(DIST, img.replace(SITE, '')))) err(`${path.basename(f)}: imagem do sitemap não existe (${img})`);
+  }
+}
+
 if (errors.length) {
   console.error(`✗ ${errors.length} problema(s):\n` + errors.map((e) => `  - ${e}`).join('\n'));
   process.exit(1);
