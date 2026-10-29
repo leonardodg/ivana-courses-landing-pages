@@ -22,7 +22,8 @@ import CandlesCheckoutModal from '../components/CandlesCheckoutModal';
 import CandlesStudentPortal from '../components/CandlesStudentPortal';
 
 import Footer from "../components/Footer";
-import { BrazilFlag, Hero, HeroBadgeText } from '../ui';
+import { BrazilFlag, Hero, HeroBadgeText, WhatsAppFab, whatsappHref } from '../ui';
+import { WHATSAPP_URL } from '../data/presencial';
 import { hero_stats_br } from '../data/hero_stats';
 
 import { Menu, SquarePen } from "lucide-react";
@@ -110,6 +111,8 @@ export default function CandlesBrApp() {
       </main>
 
       {/* Footer */}
+      <WhatsAppFab href={whatsappHref(WHATSAPP_URL, 'Oi! Vim pela página de velas e quero saber mais sobre os cursos.')} label="Falar no WhatsApp" />
+
       <Footer />
 
       {/* Modais */}

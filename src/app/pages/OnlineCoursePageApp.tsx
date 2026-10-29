@@ -32,6 +32,8 @@ import {
   Section,
   SectionHeader,
   StickyBuyBar,
+  WhatsAppFab,
+  whatsappHref,
   emphasis,
 } from '../ui';
 
@@ -197,6 +199,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
       </main>
 
       <StickyBuyBar price={c.price_label.main} buy={c.buy} shortLabel={shortLabel} />
+      <WhatsAppFab href={whatsappHref(WHATSAPP_URL, `Oi! Vim pela página do ${c.name} e quero tirar uma dúvida.`)} label="Falar no WhatsApp" raised />
       <Footer />
     </div>
   );

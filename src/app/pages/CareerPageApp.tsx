@@ -16,7 +16,7 @@ import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
 import { hero_stats_ar } from '../data/hero_stats';
 import { GRASSI_SEAL } from '../data/hero_seals';
-import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
+import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader, WhatsAppFab, whatsappHref } from '../ui';
 import {
   CarrerasGrid,
   CohorteSection,
@@ -81,6 +81,8 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
         <ContactForm language="es" coursePage="carreras_ar" />
         <WhatsAppFooterCta />
       </main>
+
+      <WhatsAppFab href={whatsappHref(WHATSAPP_AR, `¡Hola! Quiero saber más sobre ${carrera.nombre}.`)} label="Hablar por WhatsApp" />
 
       <Footer />
     </div>

@@ -7,7 +7,7 @@ import { Language } from '../classes/types';
 import { presencial_themes, PresencialTheme, WHATSAPP_URL } from '../data/presencial';
 import SiteNavbar from '../components/SiteNavbar';
 import FAQSection from '../components/FAQSection';
-import { ContactCta, Hero, HeroBadgeText } from '../ui';
+import { ContactCta, Hero, HeroBadgeText, WhatsAppFab, whatsappHref } from '../ui';
 import { hero_stats_br } from '../data/hero_stats';
 import Footer from '../components/Footer';
 import {
@@ -101,6 +101,8 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
           below={<p className="mt-4 text-xs"><a href="/pt-br/agenda/" className="inline-flex min-h-11 items-center underline text-primary">Agenda completa</a></p>}
         />
       </main>
+
+      <WhatsAppFab href={whatsappHref(WHATSAPP_URL, `Oi! Vim pela página de ${cfg.title} e quero saber mais.`)} label="Falar no WhatsApp" />
 
       <Footer />
     </div>
