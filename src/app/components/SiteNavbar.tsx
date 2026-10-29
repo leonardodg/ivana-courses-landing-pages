@@ -9,12 +9,12 @@ import { useState } from 'react';
 import { CalendarDays, GraduationCap, Heart, MessageCircle } from 'lucide-react';
 import type { CategoryId } from '../classes/types';
 import { ArgentinaFlag, BrazilFlag, NavHeader, NavDropdown, LangSwitch, drawerItem, nav_icons, navGroupClass, navPill } from '../ui';
-import { nav_agenda, nav_argentina, nav_brasil, nav_contato, nav_interesse, nav_portal, label, pairFor, type NavItem } from '../data/site_nav';
+import { nav_agenda, nav_argentina, nav_brasil, nav_brasil_todos, nav_contato, nav_interesse, nav_portal, label, pairFor, type NavItem } from '../data/site_nav';
 import { setPageLanguage, usePageLanguage } from '../lib/lang';
 
 const T = {
-  pt: { home: 'Ivana Academy - página inicial', open: 'Abrir menu', close: 'Fechar menu', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda', all: 'Todos os cursos' },
-  es: { home: 'Ivana Academy - inicio', open: 'Abrir menú', close: 'Cerrar menú', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda', all: 'Todos los cursos' },
+  pt: { home: 'Ivana Academy - página inicial', open: 'Abrir menu', close: 'Fechar menu', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda' },
+  es: { home: 'Ivana Academy - inicio', open: 'Abrir menú', close: 'Cerrar menú', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda' },
 } as const;
 
 export default function SiteNavbar({
@@ -32,7 +32,11 @@ export default function SiteNavbar({
 
   const pick = (it: NavItem, done: () => void) => (e: React.MouseEvent) => {
     done();
-    if (it.category && onSelectCategory) {
+    if (it === nav_brasil_todos && onSelectCategory) {
+      e.preventDefault();
+      onSelectCategory(null);
+      document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (it.category && onSelectCategory) {
       e.preventDefault();
       onSelectCategory(it.category);
       document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' });
@@ -59,21 +63,13 @@ export default function SiteNavbar({
       <NavDropdown label={t.brasil} icon={<BrazilFlag />} wide>
         {(done) => (
           <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-2 border-b border-muted pb-2">{link(nav_brasil_todos, done, panelLink)}</div>
             {nav_brasil.map((g) => (
               <div key={g.title.pt}>
                 <p className="px-3 pb-1 text-micro uppercase font-mono tracking-wider font-semibold text-gray-500">{g.title[language]}</p>
                 {g.items.map((it) => link(it, done, panelLink))}
               </div>
             ))}
-            {onSelectCategory && (
-              <button
-                type="button"
-                onClick={() => { done(); onSelectCategory(null); document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className={`${panelLink} text-left col-span-2 border-t border-muted rounded-none`}
-              >
-                {t.all}
-              </button>
-            )}
           </div>
         )}
       </NavDropdown>
@@ -124,6 +120,7 @@ export default function SiteNavbar({
       </div>
 
       {heading(<BrazilFlag />, t.brasil)}
+      {drawerLink(nav_brasil_todos)}
       {nav_brasil.map((g) => (
         <div key={g.title.pt} className="flex flex-col gap-2">
           <p className="text-micro font-semibold text-gray-600">{g.title[language]}</p>

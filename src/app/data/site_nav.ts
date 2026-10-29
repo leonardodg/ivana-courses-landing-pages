@@ -17,6 +17,9 @@ export interface NavItem {
 }
 export interface NavGroup { title: L; items: NavItem[] }
 
+/** Brasil ▾: primeira opção, leva à home do Brasil (na própria home, tira o filtro e mostra todos os cursos). */
+export const nav_brasil_todos: NavItem = { label: { pt: 'Todos os cursos', es: 'Todos los cursos' }, href: '/pt-br/', icon: 'grid' };
+
 /** Brasil ▾: cursos por modalidade (presencial e online) e, dentro delas, os segmentos. */
 export const nav_brasil: NavGroup[] = [
   {
