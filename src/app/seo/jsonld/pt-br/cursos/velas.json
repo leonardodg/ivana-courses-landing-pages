@@ -1,0 +1,102 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://courses.ivana.academy/#organization",
+      "name": "Ivana Academy",
+      "legalName": "Ivana Lerea LTDA",
+      "url": "https://ivana.academy",
+      "logo": "https://courses.ivana.academy/images/logo.svg",
+      "sameAs": [
+        "https://wa.me/5548991671659",
+        "https://wa.me/5493757201014"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+55 48 99167-1659",
+          "email": "contato@ivana.academy",
+          "areaServed": "BR",
+          "contactType": "customer support"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://courses.ivana.academy/#website",
+      "url": "https://courses.ivana.academy/",
+      "name": "Ivana Academy",
+      "publisher": {
+        "@id": "https://courses.ivana.academy/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/velas/#webpage",
+      "url": "https://courses.ivana.academy/pt-br/cursos/velas/",
+      "name": "Curso de Velas Artesanais | Ivana Academy",
+      "description": "Aprenda a fazer velas artesanais profissionais com Ivana Lerea. Cursos presenciais em Florianópolis e online com acesso vitalício. Inscrições abertas.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://courses.ivana.academy/#website"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/velas/#service",
+      "name": "Curso de Velas Artesanais",
+      "description": "Formação completa em velas aromáticas, terapêuticas e gourmet. Presencial e online.",
+      "provider": {
+        "@id": "https://courses.ivana.academy/#organization"
+      },
+      "areaServed": "BR"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/velas/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Preciso de experiência prévia para participar de algum curso?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não! Absolutamente todos os nossos módulos, presenciais e virtuais, são estruturados com metodologia passo a passo, facilitando o aprendizado saudável para quem nunca segurou uma balança na vida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como funcionam os materiais nos workshops presenciais?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Todos os insumos (ceras vegetais, pavios importados, essências concentradas, recipientes de vidro de luxo e corantes químicos seguros) estão inclusos no preço da inscrição. Você só precisa trazer sua criatividade e interesse!"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Recebo certificado ao concluir o curso?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim! Os cursos online e os workshops presenciais da Ivana Academy emitem certificado oficial da Ivana Academy após a conclusão."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O suporte via WhatsApp realmente funciona? Como tiro minhas dúvidas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim! As alunas da Ivana Academy recebem um link com senha para entrar em contato com um canal exclusivo. Suas dúvidas de formulação, cálculo de essências ou imperfeições estéticas podem ser enviadas por foto/áudio e são respondidas pessoalmente pela Ivana Lerea."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "É possível pagar parcelado com cartão de crédito?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim! Nos cursos presenciais, o sinal reserva a vaga e é pago por Pix; o restante pode ser Pix ou cartão no dia do curso. O parcelamento em até 12x no cartão vale apenas para os cursos de imersão. Nos cursos online, o pagamento é feito na página de compra."
+          }
+        }
+      ]
+    }
+  ]
+}

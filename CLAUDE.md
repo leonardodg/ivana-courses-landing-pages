@@ -5,7 +5,8 @@ Frontend for Ivana Academy's course landing pages (React 19 + Vite 6 + Tailwind 
 ## Adding a New Course Page
 1. Create the page under `src/` as `index.html`: **the folder path is the public URL** (e.g. `src/pt-br/cursos/sabonetes/index.html` → `/pt-br/cursos/sabonetes/`; Brazil lives in `src/pt-br/`, Argentina in `src/es-ar/`). Follow `docs/URLS.md`.
 2. `vite.config.ts` registers every folder with an `index.html` (add the page to the sitemap and run `npm run check:urls`).
-3. Run `npm run build` to confirm it lands in `dist/`.
+3. Structured data (JSON-LD) does NOT go in the HTML: create `src/app/seo/jsonld/<page-path>.json` (e.g. `pt-br/cursos/velas.json`); the `inject-json-ld` plugin in `vite.config.ts` adds it to `<head>` in dev and build.
+4. Run `npm run build` to confirm it lands in `dist/`.
 
 ## Notes
 - Dev server runs on port 3003 (Nginx preview on 8088) inside the DevContainer.

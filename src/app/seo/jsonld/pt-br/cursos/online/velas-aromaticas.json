@@ -1,0 +1,101 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://courses.ivana.academy/#organization",
+      "name": "Ivana Academy",
+      "legalName": "Ivana Lerea LTDA",
+      "url": "https://ivana.academy",
+      "logo": "https://courses.ivana.academy/images/logo.svg",
+      "sameAs": [
+        "https://wa.me/5548991671659",
+        "https://wa.me/5493757201014"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://courses.ivana.academy/#website",
+      "url": "https://courses.ivana.academy/",
+      "name": "Ivana Academy",
+      "publisher": {
+        "@id": "https://courses.ivana.academy/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/online/velas-aromaticas/#webpage",
+      "url": "https://courses.ivana.academy/pt-br/cursos/online/velas-aromaticas/",
+      "name": "Velas Aromáticas Online | Ivana Academy",
+      "description": "Aprenda velas aromáticas, velas em moldes e wax melts do zero, com videoaulas passo a passo da Ivana Lerea. 12x R$ 16,42 ou R$ 197. Garantia de 7 dias.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://courses.ivana.academy/#website"
+      }
+    },
+    {
+      "@type": "Course",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/online/velas-aromaticas/#course",
+      "name": "Curso online de Velas Aromáticas, com moldes e wax melts",
+      "description": "Aprenda velas aromáticas, velas em moldes e wax melts do zero, com videoaulas passo a passo da Ivana Lerea. 12x R$ 16,42 ou R$ 197. Garantia de 7 dias.",
+      "inLanguage": "pt-BR",
+      "provider": {
+        "@id": "https://courses.ivana.academy/#organization"
+      },
+      "image": "https://courses.ivana.academy/images/online/velas-03.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": "197",
+        "priceCurrency": "BRL",
+        "availability": "https://schema.org/InStock",
+        "url": "https://pay.hotmart.com/L107965905C"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "instructor": {
+          "@type": "Person",
+          "name": "Ivana Lerea"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://courses.ivana.academy/pt-br/cursos/online/velas-aromaticas/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Como recebo o acesso?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depois da compra na Hotmart você recebe a aula \"Como acessar o curso na plataforma\". Ela tem o link, o passo a passo para criar sua conta e a chave de inscrição."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Por quanto tempo posso assistir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As aulas são gravadas. Você assiste no seu ritmo, quantas vezes quiser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso ter experiência?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. O curso foi feito para quem quer começar, com videoaulas passo a passo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "E se eu não gostar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Você tem 7 dias para pedir o reembolso direto pela Hotmart."
+          }
+        }
+      ]
+    }
+  ]
+}

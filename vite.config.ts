@@ -46,6 +46,27 @@ function discoverPages(dir: string, root = dir): Record<string, string> {
 }
 const pages: Record<string, string> = discoverPages(path.resolve(__dirname, "src"));
 
+// Dados estruturados (JSON-LD) ficam FORA do HTML: um arquivo por página em src/app/seo/jsonld/<caminho-da-pagina>.json
+// (ex.: src/pt-br/cursos/velas/index.html → src/app/seo/jsonld/pt-br/cursos/velas.json). Este plugin os coloca no <head>
+// no dev e no build, então o HTML publicado continua com o JSON-LD (bom para SEO) e o código-fonte só tem layout.
+const injectJsonLd = () => ({
+  name: "inject-json-ld",
+  transformIndexHtml: {
+    order: "pre" as const,
+    handler(html: string, ctx: { filename?: string }) {
+      if (!ctx.filename) return html;
+      const srcDir = path.resolve(__dirname, "src");
+      const dir = path.relative(srcDir, path.dirname(ctx.filename)).split(path.sep).join("/");
+      if (!dir) return html;
+      const file = path.resolve(srcDir, "app/seo/jsonld", `${dir}.json`);
+      if (!fs.existsSync(file)) return html;
+      const data = JSON.parse(fs.readFileSync(file, "utf8")); // JSON inválido derruba o build, de propósito
+      const tag = `    <script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>\n  </head>`;
+      return html.replace("</head>", tag);
+    },
+  },
+});
+
 // Dev: páginas estáticas que ficam em public/ (ex.: /pt-br/links/, a "bio" do Instagram) não são páginas do Vite.
 // Sem isto o servidor de desenvolvimento não acha o index.html da pasta e cai na home (seletor de país).
 // Em produção (dist/) a pasta já tem o index.html e funciona sem este plugin.
@@ -111,7 +132,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    plugins: [react(), tailwindcss(), servePublicIndex()],
+    plugins: [react(), tailwindcss(), injectJsonLd(), servePublicIndex()],
     envDir,
     root: "src",
     define: Object.fromEntries(

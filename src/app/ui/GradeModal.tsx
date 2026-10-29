@@ -1,6 +1,8 @@
 // Modal "Ver grade": foto, etiqueta, título, dados rápidos e blocos de conteúdo (lista ou texto).
 // Único modal de detalhes dos cards (presencial, online e carreras). Fecha com Esc, botão ou clique fora.
-import { useEffect, useRef, type ReactNode } from 'react';
+// Vai para o <body> (portal), prende o foco enquanto aberto e devolve o foco ao botão que o abriu.
+import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { CheckSquare, X } from 'lucide-react';
 
 export interface GradeSection {
@@ -30,9 +32,32 @@ export default function GradeModal({
   closeLabel: string;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose; // o efeito abaixo roda uma vez só, mesmo que o pai recrie onClose a cada render
+  const titleId = useId();
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const opener = document.activeElement as HTMLElement | null;
+    const focusable = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? [],
+      );
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') return onCloseRef.current();
+      if (e.key !== 'Tab') return;
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -40,18 +65,20 @@ export default function GradeModal({
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prev;
+      opener?.focus();
     };
-  }, [onClose]);
+  }, []);
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
-      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
+      onMouseDown={(e) => e.target === e.currentTarget && onCloseRef.current()}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={content.title}
+        aria-labelledby={titleId}
         className="bg-white rounded-2xl w-full max-w-[620px] max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-gray-200 animate-slide-up"
       >
         <div className="relative aspect-[16/7] shrink-0 bg-surface-cream">
@@ -59,12 +86,12 @@ export default function GradeModal({
             src={content.image}
             alt=""
             style={content.imagePos ? { objectPosition: content.imagePos } : undefined}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20" />
           <div className="absolute bottom-5 left-6 right-14 text-white">
             <span className="text-micro uppercase font-mono tracking-widest text-inverse-primary font-bold">{content.tag}</span>
-            <h3 className="text-xl md:text-2xl font-serif font-semibold mt-1 leading-tight">{content.title}</h3>
+            <h3 id={titleId} className="text-xl md:text-2xl font-serif font-semibold mt-1 leading-tight">{content.title}</h3>
           </div>
           <button
             ref={closeRef}
@@ -116,6 +143,7 @@ export default function GradeModal({
           {content.action}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

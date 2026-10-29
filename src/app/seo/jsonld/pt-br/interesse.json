@@ -1,0 +1,49 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://courses.ivana.academy/#organization",
+      "name": "Ivana Academy",
+      "legalName": "Ivana Lerea LTDA",
+      "url": "https://ivana.academy",
+      "logo": "https://courses.ivana.academy/images/logo.svg",
+      "sameAs": [
+        "https://wa.me/5548991671659",
+        "https://wa.me/5493757201014"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+55 48 99167-1659",
+          "email": "contato@ivana.academy",
+          "areaServed": [
+            "BR",
+            "AR"
+          ],
+          "contactType": "customer support"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://courses.ivana.academy/#website",
+      "url": "https://courses.ivana.academy/",
+      "name": "Ivana Academy",
+      "publisher": {
+        "@id": "https://courses.ivana.academy/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://courses.ivana.academy/pt-br/interesse/#webpage",
+      "url": "https://courses.ivana.academy/pt-br/interesse/",
+      "name": "Ivana Academy - Registration of interest in courses",
+      "description": "Aprenda a criar velas, sabonetes e resinas com a Ivana Academy.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://courses.ivana.academy/#website"
+      }
+    }
+  ]
+}
