@@ -12,6 +12,7 @@ export default function CountrySelectApp() {
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none flex items-center">
         <Section bg="cream" width="narrow" className="w-full">
           <SectionHeader
+            as="h1"
             kicker="IVANA ACADEMY"
             title="Escolha seu país · Elegí tu país"
             sub="Cada país tem a sua oferta de cursos. / Cada país tiene su propia oferta."

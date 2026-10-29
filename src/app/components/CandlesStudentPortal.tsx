@@ -75,7 +75,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Award className="text-primary-fixed-dim w-6 h-6" />
-              <span className="font-display text-lg font-bold text-white tracking-tight">Ivana Portal</span>
+              <span className="font-serif text-lg font-bold text-white tracking-tight">Ivana Portal</span>
             </div>
             <button
               onClick={onClose}
@@ -141,8 +141,8 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
 
         <div className="h-20 border-b border-[#31302e] px-6 sm:px-10 flex items-center justify-between shrink-0">
           <div>
-            <h1 className="text-white text-lg font-bold font-display">Minha Área do Aluno</h1>
-            <p className="text-white/50 text-[10.5px] uppercase tracking-wide font-label">Demonstração — Ivana Academy</p>
+            <h1 className="text-white text-lg font-bold font-serif">Minha Área do Aluno</h1>
+            <p className="text-white/50 text-[10.5px] uppercase tracking-wide font-label">Demonstração · Ivana Academy</p>
           </div>
           <button
             onClick={onClose}
@@ -188,9 +188,9 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
                 <div className="bg-[#282725] p-6 rounded-2xl border border-[#3d3a37] space-y-3">
                   <div className="flex gap-2 text-primary-fixed-dim text-xs font-semibold font-label uppercase">
                     <Calendar className="w-4 h-4" />
-                    <span>Módulo II — Ciência dos Aromas</span>
+                    <span>Módulo II: Ciência dos Aromas</span>
                   </div>
-                  <h3 className="text-white text-xl font-bold font-display">
+                  <h3 className="text-white text-xl font-bold font-serif">
                     Fórmula Integrada de Concentração e Absorção Lipofílica
                   </h3>
                   <p className="text-white/60 text-sm font-body leading-relaxed">
@@ -244,7 +244,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
           {activeTab === 'downloads' && (
             <div className="space-y-6">
               <div className="p-6 bg-[#282725] rounded-2xl border border-[#3d3a37]">
-                <h3 className="text-white text-lg font-bold font-display mb-2">Materiais de Apoio</h3>
+                <h3 className="text-white text-lg font-bold font-serif mb-2">Materiais de Apoio</h3>
                 <p className="text-white/60 text-sm font-body leading-relaxed">
                   Planilhas, guias e fichas técnicas exclusivas para alunas matriculadas.
                 </p>
@@ -254,7 +254,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
                 {downloads.map((dl, i) => (
                   <div key={i} className="p-5 bg-[#282725] hover:bg-[#32312e] rounded-xl border border-[#3d3a37] flex items-center justify-between gap-4 transition-colors">
                     <div>
-                      <h4 className="text-white text-sm font-bold font-display">{dl.title}</h4>
+                      <h4 className="text-white text-sm font-bold font-serif">{dl.title}</h4>
                       <div className="flex gap-2 text-[10px] text-white/50 font-label uppercase mt-1">
                         <span className="bg-[#1c1c1a] px-2 py-0.5 rounded-sm font-mono text-primary-fixed-dim">{dl.type}</span>
                         <span>{dl.size}</span>
@@ -272,7 +272,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
           {activeTab === 'suppliers' && (
             <div className="space-y-6">
               <div className="p-6 bg-[#282725] rounded-2xl border border-[#3d3a37]">
-                <h3 className="text-white text-lg font-bold font-display mb-2">Fornecedores Exclusivos</h3>
+                <h3 className="text-white text-lg font-bold font-serif mb-2">Fornecedores Exclusivos</h3>
                 <p className="text-white/60 text-sm font-body leading-relaxed">
                   Lista validada de fornecedores recomendados no Brasil e na Argentina.
                 </p>
@@ -283,7 +283,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
                   <div key={i} className="p-6 bg-[#282725] rounded-xl border border-[#3d3a37] space-y-4">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="text-white text-base font-bold font-display">{sup.name}</h4>
+                        <h4 className="text-white text-base font-bold font-serif">{sup.name}</h4>
                         <span className="text-[10px] font-label text-white/50 uppercase flex items-center gap-1 mt-1">
                           <MapPin className="w-3 h-3 text-primary-fixed-dim" />
                           {sup.region}
@@ -304,7 +304,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
 
                     <div className="pt-3 border-t border-[#3d3a37] flex items-center justify-between text-xs">
                       <span className="text-white/50 font-label">Contato:</span>
-                      <a href={`tel:${sup.contact}`} className="text-primary-fixed-dim font-bold hover:underline py-1 flex items-center gap-1">
+                      <a href={`tel:${String(sup.contact).replace(/[^\d+]/g, '')}`} className="text-primary-fixed-dim font-bold hover:underline py-1 flex items-center gap-1">
                         <Phone className="w-3.5 h-3.5" />
                         {sup.contact}
                       </a>
@@ -333,7 +333,7 @@ export default function CandlesStudentPortal({ onClose }: CandlesStudentPortalPr
                   </div>
 
                   <div className="space-y-2">
-                    <h4 className="text-white text-base font-bold font-display">{post.title}</h4>
+                    <h4 className="text-white text-base font-bold font-serif">{post.title}</h4>
                     <p className="text-white/80 text-sm font-body leading-relaxed">{post.content}</p>
                   </div>
 

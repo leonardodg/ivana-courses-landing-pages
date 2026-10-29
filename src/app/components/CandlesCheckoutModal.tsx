@@ -207,7 +207,7 @@ export default function CandlesCheckoutModal({ course, initialCoupon = '', onClo
                   {couponApplied && (
                     <span className="text-[11px] text-primary font-semibold flex items-center gap-1 mt-1.5 font-label">
                       <Tag className="w-3.5 h-3.5" />
-                      Cupom registrado — nossa equipe confirma o desconto no contato
+                      Cupom registrado: nossa equipe confirma o desconto no contato
                     </span>
                   )}
                 </div>

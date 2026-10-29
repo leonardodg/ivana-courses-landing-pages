@@ -38,9 +38,9 @@ export default function AboutSection({ language }: AboutSectionProps) {
         <div className="lg:col-span-7">
           <span className="text-xs font-bold text-primary uppercase tracking-[0.25em] block mb-2">{about_text.tag}</span>
           <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight mb-4">{about_text.title}</h2>
-          <h3 className="text-lg text-gray-700 font-sans font-medium mb-6 leading-relaxed border-l-2 border-primary/40 pl-4">
+          <p className="text-lg text-gray-700 font-sans font-medium mb-6 leading-relaxed border-l-2 border-primary/40 pl-4">
             {about_text.subtitle}
-          </h3>
+          </p>
 
           <div className="space-y-4 text-on-surface-variant leading-relaxed text-sm md:text-base">
             <p>{about_text.bio1}</p>
