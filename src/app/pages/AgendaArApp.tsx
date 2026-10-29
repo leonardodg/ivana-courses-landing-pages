@@ -141,8 +141,8 @@ export default function AgendaArApp() {
                           100% online · inscripción abierta todo el año
                         </>,
                       ]}
-                      actions={inicio ? <InscribirmeButton carrera={carrera} /> : undefined}
-                      quickAction={inicio ? <InscribirmeButton carrera={carrera} /> : undefined}
+                      actions={inicio ? <InscribirmeButton carrera={carrera} label="Inscribirme" /> : undefined}
+                      quickAction={inicio ? <InscribirmeButton carrera={carrera} label="Inscribirme" /> : undefined}
                     />
                   );
                 })}

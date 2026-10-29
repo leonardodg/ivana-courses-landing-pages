@@ -39,8 +39,10 @@ export function InscribirmeButton({
   carrera,
   variant = 'primary',
   className = '',
+  label = 'Ver valores e inscribirme',
 }: {
   carrera: CarreraAr;
+  label?: string;
   variant?: 'primary' | 'outline';
   className?: string;
 }) {
@@ -50,7 +52,7 @@ export function InscribirmeButton({
       onClick={() => trackSelectCareer(carrera.course)}
       className={`${variant === 'primary' ? btnPrimary : btnOutline} ${className}`}
     >
-      Ver valores e inscribirme <ArrowRight className="w-3.5 h-3.5" />
+      {label} <ArrowRight className="w-3.5 h-3.5" />
     </a>
   );
 }
@@ -220,8 +222,8 @@ export function CohorteRow({ carrera, etapas, tone = 'cream' }: { carrera: Carre
               </>,
             ]}
             tone={tone}
-            quickAction={<InscribirmeButton carrera={carrera} />}
-            actions={<InscribirmeButton carrera={carrera} />}
+            quickAction={<InscribirmeButton carrera={carrera} label="Inscribirme" />}
+            actions={<InscribirmeButton carrera={carrera} label="Inscribirme" />}
             footer={
               <>
                 <button

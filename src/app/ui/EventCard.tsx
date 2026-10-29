@@ -79,7 +79,7 @@ export default function EventCard({
           <time
             dateTime={date}
             className={`shrink-0 rounded-xl ${tone === 'cream' ? 'bg-white' : 'bg-surface-cream'} border border-muted flex flex-col items-center text-gray-900 ${
-              compact ? 'w-14 py-1.5 self-start' : 'w-16 md:w-[72px] py-2.5 self-start'
+              compact ? 'w-14 py-1.5' : 'w-16 md:w-[72px] py-2.5 self-start'
             }`}
           >
             <span className="text-micro font-mono font-bold uppercase tracking-wider text-primary">{weekday}</span>
@@ -116,7 +116,7 @@ export default function EventCard({
               onClick={() => setOpen(!open)}
               aria-expanded={open}
               aria-label={open ? (es ? 'Ver menos detalles' : 'Ver menos detalhes') : es ? 'Ver más detalles' : 'Ver mais detalhes'}
-              className="shrink-0 self-start inline-flex items-center justify-center w-11 h-11 rounded-full border border-subtle text-primary hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer"
+              className={`shrink-0 ${compact ? '' : 'self-start'} inline-flex items-center justify-center w-11 h-11 rounded-full border border-subtle text-primary hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer`}
             >
               <ChevronDown className={`w-5 h-5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
             </button>
