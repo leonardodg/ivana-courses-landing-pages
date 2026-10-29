@@ -164,7 +164,7 @@ export default function Card({
             type="button"
             onClick={() => setDetailsOpen(!details_open)}
             aria-expanded={details_open}
-            aria-label={details_open ? (es ? 'Ver menos detalles' : 'Ver menos detalhes') : es ? 'Ver más detalles' : 'Ver mais detalhes'}
+            aria-label={`${details_open ? (es ? 'Ver menos detalles' : 'Ver menos detalhes') : es ? 'Ver más detalles' : 'Ver mais detalhes'}: ${title}`}
             className="order-2 sm:order-3 shrink-0 self-start sm:self-center inline-flex items-center justify-center w-11 h-11 rounded-full border border-subtle text-primary hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer"
           >
             <ChevronDown className={`w-5 h-5 transition-transform ${details_open ? 'rotate-180' : ''}`} aria-hidden />

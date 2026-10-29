@@ -45,6 +45,7 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
   ) : (
     <a href={course ? lojaLink(course, theme.utm, e.id) : '/pt-br/interesse/'} className={btnPrimary}>
       Garantir minha vaga <ArrowRight className="w-3.5 h-3.5" />
+      <span className="sr-only">: {e.title}, {e.date.split('-').reverse().slice(0, 2).join('/')}</span>
     </a>
   );
 
@@ -55,6 +56,7 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
       density="compact"
       badges={e.status === 'ultimas-vagas' ? [{ label: 'Últimas vagas', tone: 'accent' }] : undefined}
       title={e.title}
+      ariaTitle={e.title}
       summary={[e.time && `${e.time}${e.end_time ? ` às ${e.end_time}` : ''}`, place].filter(Boolean).join(' · ')}
       lines={[
         <>
@@ -205,6 +207,7 @@ export function CursoCard({ c, utm, events, feedError, loading, details }: Curso
         ) : (
           <a href={cta.href} className={`${btn} w-full`}>
             {cta.label} <ArrowRight className="w-3.5 h-3.5" />
+            <span className="sr-only">: {c.name}</span>
           </a>
         )
       }
