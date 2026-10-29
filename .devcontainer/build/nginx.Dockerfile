@@ -72,6 +72,7 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 # Nginx configuration
 COPY .devcontainer/nginx/nginx.conf      /etc/nginx/nginx.conf
 COPY .devcontainer/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY .devcontainer/nginx/snippets/security-headers.conf /etc/nginx/snippets/security-headers.conf
 
 # Copy built static files
 COPY --from=node-builder /app/dist /usr/share/nginx/html
