@@ -74,6 +74,12 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
   let n = 0;
   const next = () => (n++ % 2 === 0 ? 'cream' : 'white') as 'cream' | 'white';
 
+  // Depoimentos ficam no fim da página, logo antes das perguntas frequentes (a ordem em online_courses.ts não importa).
+  const rest = c.sections.filter((b) => b.type !== 'reviews');
+  const reviews = c.sections.filter((b) => b.type === 'reviews');
+  const faqAt = rest.findIndex((b) => b.type === 'faq');
+  const ordered = faqAt < 0 ? [...rest, ...reviews] : [...rest.slice(0, faqAt), ...reviews, ...rest.slice(faqAt)];
+
   const render = (b: OnlineBlock, i: number) => {
     switch (b.type) {
       case 'reviews':
@@ -173,7 +179,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
           }
         />
 
-        {c.sections.map(render)}
+        {ordered.map(render)}
 
         <PurchaseCta
           id="cursos"
