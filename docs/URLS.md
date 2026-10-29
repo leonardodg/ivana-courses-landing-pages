@@ -27,7 +27,7 @@ vira `https://courses.ivana.academy/pt-br/cursos/velas/`. Uma página nova é um
 | `/pt-br/cursos/online/saboaria-com-extratos-naturais/` | Curso online de saboaria (Hotmart) |
 | `/pt-br/apostilas/60-receitas-de-sabonetes/` | Apostila em PDF (Hotmart) |
 | `/pt-br/agenda/` | Agenda de turmas presenciais |
-| `/pt-br/interesse/` | Cadastro de interesse (é o canal de contato) |
+| `/pt-br/interesse/` | Cadastro de interesse (é o canal de contato). Mesmo componente da versão AR (`pages/InterestApp`, `country="BR"`) |
 | `/pt-br/links/` | Links da bio do Instagram |
 | `/pt-br/privacidade/` · `/termos/` · `/reembolso/` · `/lgpd/` | Páginas legais |
 
@@ -42,7 +42,7 @@ vira `https://courses.ivana.academy/pt-br/cursos/velas/`. Uma página nova é um
 | `/es-ar/carreras/tecnicatura-diseno-interiores/` | Tecnicatura en diseño de interiores |
 | `/es-ar/carreras/profesorado-arte-mix-media/` | Profesorado en arte mix media |
 | `/es-ar/agenda/` | Calendario de la Cohorte 2027 |
-| `/es-ar/interes/` | Interés: dejá tus datos y te avisamos (equivale a `/pt-br/interesse/`) |
+| `/es-ar/interes/` | Interés: dejá tus datos y te avisamos (equivale a `/pt-br/interesse/`; `pages/InterestApp` com `country="AR"`: áreas e carreras em `data/interest_options.ts`) |
 | `/es-ar/links/` | Links da bio do Instagram |
 | `/es-ar/privacidad/` · `/terminos/` · `/reembolso/` · `/derechos/` · `/arrepentimiento/` | Páginas legales |
 

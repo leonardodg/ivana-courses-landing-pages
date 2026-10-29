@@ -121,7 +121,7 @@ export const lead_text = {
     headerSaboaria: "Jabonería",
     headerResinas: "Resinas",
     sectionSubtitle: "CONTACTANOS",
-    mainHeading: "Registrar Mi Interés en Curso",
+    mainHeading: "Registrar Mi Interés en una Carrera",
     whatsappLabel: "WHATSAPP / LLAMADA",
     emailLabel: "CORREO ELECTRÓNICO",
     atelierLabel: "TALLERES",

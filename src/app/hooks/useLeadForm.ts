@@ -8,7 +8,6 @@
 
 import { useState, useCallback } from 'react';
 import { sanitize, validateField as validateContactField } from './useContactForm';
-import type { CategoryId } from '../classes/types';
 
 // ─── Re-exporta sanitize para uso no componente ────────────────────────────────
 export { sanitize };
@@ -17,7 +16,8 @@ export { sanitize };
 
 export type LeadModalidade = 'online' | 'presencial';
 
-export type LeadInterests = Record<CategoryId | 'todas', boolean>;
+// Chaves das áreas de interesse de cada país (data/interest_options.ts), mais 'todas'.
+export type LeadInterests = Record<string, boolean>;
 
 export interface LeadFormData {
   fullName:   string;
@@ -37,32 +37,17 @@ export interface LeadFieldErrors {
 
 // ─── Estado inicial ────────────────────────────────────────────────────────────
 
-const EMPTY_INTERESTS: LeadInterests = {
-  velas:            false,
-  saboaria:         false,
-  resinas:          false,
-  macrame:          false,
-  aromas_incensos:  false,
-  todas:            false,
-};
-
-const MAIN_CATEGORIES: CategoryId[] = [
-  'velas',
-  'saboaria',
-  'resinas',
-  'macrame',
-  'aromas_incensos',
-];
+const emptyInterests = (keys: string[]): LeadInterests => Object.fromEntries([...keys, 'todas'].map((k) => [k, false]));
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
-export function useLeadForm(defaultDdi = '+55') {
+export function useLeadForm(defaultDdi = '+55', optionKeys: string[] = []) {
   const [form, setForm] = useState<LeadFormData>({
     fullName:   '',
     email:      '',
     ddi:        defaultDdi,
     phone:      '',
-    interests:  { ...EMPTY_INTERESTS },
+    interests:  emptyInterests(optionKeys),
     modalidade: 'online',
     courseId:   '',
   });
@@ -98,7 +83,7 @@ export function useLeadForm(defaultDdi = '+55') {
 
   // ── Interesses (checkboxes) ────────────────────────────────────────────────
 
-  const toggleInterest = useCallback((key: CategoryId | 'todas', checked: boolean) => {
+  const toggleInterest = useCallback((key: string, checked: boolean) => {
     setForm(f => {
       if (key === 'todas') {
         const next = Object.fromEntries(
@@ -108,18 +93,18 @@ export function useLeadForm(defaultDdi = '+55') {
       }
 
       const next = { ...f.interests, [key]: checked };
-      const allMain = MAIN_CATEGORIES.every(k => next[k]);
+      const allMain = optionKeys.every(k => next[k]);
       next.todas = allMain;
       return { ...f, interests: next };
     });
-  }, []);
+  }, [optionKeys]);
 
   // ── Derivados ─────────────────────────────────────────────────────────────
 
   /** Categorias activas para filtrar cursos no dropdown */
-  const activeCategories: CategoryId[] = form.interests.todas
-    ? MAIN_CATEGORIES
-    : MAIN_CATEGORIES.filter(k => form.interests[k]);
+  const activeCategories: string[] = form.interests.todas
+    ? optionKeys
+    : optionKeys.filter(k => form.interests[k]);
 
   /** Formulário válido: nome + email + telefone sem erros */
   const isValid = (['fullName', 'email', 'phone'] as const).every(
@@ -134,13 +119,13 @@ export function useLeadForm(defaultDdi = '+55') {
       email:      '',
       ddi:        defaultDdi,
       phone:      '',
-      interests:  { ...EMPTY_INTERESTS },
+      interests:  emptyInterests(optionKeys),
       modalidade: 'online',
       courseId:   '',
     });
     setErrors({});
     setTouched(new Set());
-  }, [defaultDdi]);
+  }, [defaultDdi, optionKeys]);
 
   return {
     form,

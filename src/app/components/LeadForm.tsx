@@ -18,7 +18,7 @@
 //   • Dropdown de cursos filtrado pelas categorias marcadas
 //   • Spinner no botão durante loading, estados idle/loading/success/error/rate_limited
 
-import { useState, useCallback, useEffect }     from 'react';
+import { useState, useMemo }                     from 'react';
 import {
   Send,
   MessageCircle,
@@ -28,7 +28,7 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
-import { Language, Course }          from '../classes/types';
+import { interest_config, type InterestCountry } from '../data/interest_options';
 import { useLeadForm, sanitize }                 from '../hooks/useLeadForm';
 import { applyPhoneMask, DDI_OPTIONS }           from '../hooks/usePhoneMask';
 import { submitContact }                         from '../hooks/useSubmitContact';
@@ -39,12 +39,10 @@ import { lead_text as text }                     from '../lang/lead_form';
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface LeadFormProps {
-  language:               Language;
-  courses:                Course[];
-  /** Curso pré-selecionado via click no CourseGrid — scroll automático ao form */
-  selectedCourseForForm?: Course | null;
-  /** Identificador de origem para o webhook (ex: 'homepage', 'candles') */
-  formSource?:            string;
+  /** Versão da página: BR (/pt-br/interesse/) ou AR (/es-ar/interes/). Define idioma, áreas, cursos e contato. */
+  country:     InterestCountry;
+  /** Identificador de origem para o webhook (ex: 'interest') */
+  formSource?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -157,16 +155,12 @@ function ModalidadeRadio({ label, value, current, onChange }: ModalidadeRadioPro
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
-export default function LeadForm({
-  language,
-  courses,
-  selectedCourseForForm,
-  formSource = 'homepage',
-}: LeadFormProps) {
+export default function LeadForm({ country, formSource = 'interest' }: LeadFormProps) {
+  const config   = interest_config[country];
+  const language = config.language;
   const t = text[language];
 
-  // País local — altera apenas o DDI; não muda o idioma (homepage é bilíngue)
-  const [country, setCountry] = useState<'BR' | 'AR'>(language === 'pt' ? 'BR' : 'AR');
+  const optionKeys = useMemo(() => config.options.map(o => o.key), [config]);
 
   const {
     form,
@@ -179,36 +173,20 @@ export default function LeadForm({
     activeCategories,
     isValid,
     reset,
-  } = useLeadForm(country === 'BR' ? '+55' : '+54');
+  } = useLeadForm(config.ddi, optionKeys);
 
   const [honeypot, setHoneypot] = useState('');
   const [status,   setStatus]   = useState<SubmitStatus>('idle');
   const [cooldown, setCooldown] = useState(0);
   const [consent, setConsent]   = useState(false);
 
-  // ── Scroll automático quando curso é selecionado externamente ───────────────
-  useEffect(() => {
-    if (selectedCourseForForm) {
-      setField('courseId', selectedCourseForForm.id);
-      document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [selectedCourseForForm, setField]);
-
-  // ── País picker alinha DDI ────────────────────────────────────────────────
-  const handleCountryChange = useCallback((c: 'BR' | 'AR') => {
-    setCountry(c);
-    setField('ddi', c === 'BR' ? '+55' : '+54');
-    setField('phone', '');   // reset mask ao mudar país
-  }, [setField]);
-
-  // ── Cursos filtrados pelas categorias selecionadas ────────────────────────
-  const filteredCourses = courses.filter(c =>
-    form.modalidade === 'online'
-      ? c.modalidade === 'online' || c.modalidade === 'hibrido'
-      : c.modalidade === 'presencial' || c.modalidade === 'hibrido',
-  ).filter(c =>
-    activeCategories.length === 0 || activeCategories.includes(c.categoryId),
-  );
+  // ── Cursos (BR) ou carreras (AR) filtrados pelas áreas marcadas e, no Brasil, pela modalidade ──
+  const filteredCourses = config.courses
+    .filter(c => !config.showModalidade
+      || (form.modalidade === 'online'
+        ? c.modalidade === 'online' || c.modalidade === 'hibrido'
+        : c.modalidade === 'presencial' || c.modalidade === 'hibrido'))
+    .filter(c => activeCategories.length === 0 || c.interests.some(i => activeCategories.includes(i)));
 
   // ── Submit ────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
@@ -228,14 +206,14 @@ export default function LeadForm({
       full_name:   sanitize(form.fullName, 150),
       email:       sanitize(form.email, 254).toLowerCase(),
       phone:       `${form.ddi} ${form.phone.replace(/\D/g, '')}`,
-      subject:     `Interesse: ${interestList || 'geral'} — ${form.modalidade}`,
+      subject:     `Interesse: ${interestList || 'geral'}${config.showModalidade ? ` — ${form.modalidade}` : ''}`,
       message:     [
-        `Modalidade: ${form.modalidade}`,
+        config.showModalidade ? `Modalidade: ${form.modalidade}` : 'Modalidade: online (carreras)',
         `Interesses: ${interestList || 'geral'}`,
-        form.courseId ? `Curso: ${form.courseId}` : '',
+        form.courseId ? `${country === 'AR' ? 'Carrera' : 'Curso'}: ${form.courseId}` : '',
         `País: ${country}`,
       ].filter(Boolean).join('\n'),
-      form_source: formSource,
+      form_source: country === 'AR' ? `${formSource}_ar` : formSource,
       consent:     CONSENT_TEXT_VERSION,
     });
 
@@ -279,7 +257,7 @@ export default function LeadForm({
     <section
       id="contato"
       className="py-16 md:py-24 bg-surface-form border-t border-subtle"
-      aria-label="Formulário de cadastro de interesse"
+      aria-label={t.badge}
     >
       <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* ── Coluna esquerda: narrativa ───────────────────────────────────── */}
@@ -339,12 +317,12 @@ export default function LeadForm({
                     {t.whatsappLabel}
                   </span>
                   <a
-                    href="https://wa.me/5548991671659"
+                    href={config.whatsapp.url}
                     target="_blank"
                     referrerPolicy="no-referrer"
                     className="font-sans text-lg font-bold text-brand-dark hover:text-brand-primary transition-colors duration-200 block"
                   >
-                    +55 48 99167-1659
+                    {config.whatsapp.label}
                   </a>
                 </div>
               </div>
@@ -373,7 +351,8 @@ export default function LeadForm({
                 </div>
               </div>
 
-              {/* Atelier */}
+              {/* Atelier: só no Brasil */}
+              {config.showLocation && (
               <div
                 className="flex items-start gap-4 p-1 group"
                 id="contact-row-atelier"
@@ -393,6 +372,7 @@ export default function LeadForm({
                   </span>
                 </div>
               </div>
+              )}
             </div>
           </div>
 
@@ -449,19 +429,18 @@ export default function LeadForm({
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {(["BR", "AR"] as const).map((c) => (
-                    <button
+                    <a
                       key={c}
-                      type="button"
-                      onClick={() => handleCountryChange(c)}
+                      href={interest_config[c].path}
+                      aria-current={country === c ? "page" : undefined}
                       className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-xs font-semibold transition-all duration-200 ${
                         country === c
                           ? "border-primary bg-primary/5 text-primary shadow-sm scale-[1.02]"
                           : "border-muted bg-transparent text-on-surface-variant hover:bg-surface-container-low"
                       }`}
-                      aria-pressed={country === c}
                     >
                       {c === "BR" ? t.countryBR : t.countryAR}
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -525,7 +504,7 @@ export default function LeadForm({
               >
                 <div className="flex gap-2">
                   <select
-                    aria-label="Código do país (DDI)"
+                    aria-label={language === "es" ? "Código de país (DDI)" : "Código do país (DDI)"}
                     value={form.ddi}
                     autoComplete="tel-country-code"
                     onChange={(e) => {
@@ -565,40 +544,24 @@ export default function LeadForm({
                   {t.labelInterests}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {config.options.map((o) => (
+                    <InterestCheckbox
+                      key={o.key}
+                      label={o.label}
+                      checked={!!form.interests[o.key]}
+                      onChange={(v) => toggleInterest(o.key, v)}
+                    />
+                  ))}
                   <InterestCheckbox
-                    label={t.interestVelas}
-                    checked={form.interests.velas}
-                    onChange={(v) => toggleInterest("velas", v)}
-                  />
-                  <InterestCheckbox
-                    label={t.interestSaboaria}
-                    checked={form.interests.saboaria}
-                    onChange={(v) => toggleInterest("saboaria", v)}
-                  />
-                  <InterestCheckbox
-                    label={t.interestResinas}
-                    checked={form.interests.resinas}
-                    onChange={(v) => toggleInterest("resinas", v)}
-                  />
-                  <InterestCheckbox
-                    label={t.interestMacrame}
-                    checked={form.interests.macrame}
-                    onChange={(v) => toggleInterest("macrame", v)}
-                  />
-                  <InterestCheckbox
-                    label={t.interestAromas}
-                    checked={form.interests.aromas_incensos}
-                    onChange={(v) => toggleInterest("aromas_incensos", v)}
-                  />
-                  <InterestCheckbox
-                    label={t.interestTodas}
-                    checked={form.interests.todas}
+                    label={config.allLabel}
+                    checked={!!form.interests.todas}
                     onChange={(v) => toggleInterest("todas", v)}
                   />
                 </div>
               </div>
 
-              {/* ── Modalidade ─────────────────────────────────────────────── */}
+              {/* ── Modalidade (só Brasil) ─────────────────────────────────── */}
+              {config.showModalidade && (
               <div>
                 <p className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-2 font-mono">
                   {t.labelModalidade}
@@ -618,26 +581,24 @@ export default function LeadForm({
                   />
                 </div>
               </div>
+              )}
 
               {/* ── Dropdown de cursos (opcional) ──────────────────────────── */}
               {filteredCourses.length > 0 && (
                 <div className="border-t border-subtle pt-5">
                   <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
-                    {t.labelCourse}
+                    {config.courseLabel}
                   </label>
                   <select
-                    aria-label="Curso de interesse"
+                    aria-label={config.courseLabel}
                     value={form.courseId}
                     onChange={(e) => setField("courseId", e.target.value)}
                     className="input-minimal font-sans"
                   >
-                    <option value="">{t.courseSelectDefault}</option>
+                    <option value="">{config.courseDefault}</option>
                     {filteredCourses.map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.title[language]} —{" "}
-                        {c.modalidade === "presencial"
-                          ? t.courseTagPresencial
-                          : t.courseTagOnline}
+                        {c.label}
                       </option>
                     ))}
                   </select>
