@@ -94,7 +94,7 @@ pares de idioma) fica em `data/site_nav.ts`; os ícones, em `ui/navIcons.tsx`. *
 - **Menu principal (pílulas, a partir de 1280 px; abaixo disso, gaveta):**
   **Brasil ▾** (Cursos presenciais por segmento: velas, sabonetes, aromas e incensos, resina e decoração · Cursos online:
   velas aromáticas, saboaria com extratos naturais, apostila 60 receitas) · **Argentina ▾** (todas as carreras e cada uma,
-  com o nome oficial) · **Agenda ▾** (Brasil e Argentina) · **Contato** (WhatsApp do país do idioma) · **Interesse / Interés**
+  com o nome oficial) · **Agenda ▾** (Brasil e Argentina) · **Interesse / Interés**
   (uma página por país: `/pt-br/interesse/` e `/es-ar/interes/`). Cada opção tem um ícone; Brasil e Argentina usam a bandeira.
 - **Direita:** seletor **PT (bandeira do Brasil) | ES (bandeira da Argentina)** e a pílula **Portal do Aluno**.
 - **PT | ES:** se a página tem equivalente no outro idioma (`lang_pairs` em `site_nav.ts`), vira link e muda de página;
