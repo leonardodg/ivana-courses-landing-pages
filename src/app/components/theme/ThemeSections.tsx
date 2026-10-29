@@ -43,7 +43,7 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
       Esgotado · Lista de espera
     </a>
   ) : (
-    <a href={course?.naLoja ? lojaLink(course, theme.utm, e.id) : WHATSAPP_URL} className={btnPrimary}>
+    <a href={course ? lojaLink(course, theme.utm, e.id) : '/pt-br/interesse/'} className={btnPrimary}>
       Garantir minha vaga <ArrowRight className="w-3.5 h-3.5" />
       <span className="sr-only">: {e.title}, {e.date.split('-').reverse().slice(0, 2).join('/')}</span>
     </a>
@@ -147,12 +147,12 @@ export interface CursoCardProps {
 export function CursoCard({ c, utm, events, feedError, loading, details }: CursoCardProps) {
   // Compra só em turma com vagas; esgotada vai para a lista de espera.
   const open = events.filter(e => e.status !== 'esgotado');
-  const next = c.naLoja ? open[0] : undefined; // fora da loja: sem link de compra (a página da loja ainda não existe)
+  const next = open[0];
   // Com turma → loja na próxima turma. Feed fora do ar → página do curso na loja.
   // Sem turma → "Quero ser avisada".
   const cta = next
     ? { href: lojaLink(c, utm, next.id), label: 'Garantir minha vaga' }
-    : events.length > 0 && c.naLoja
+    : events.length > 0
       ? { href: WHATSAPP_URL, label: 'Esgotado · Lista de espera' }
       : feedError && c.naLoja
         ? { href: lojaLink(c, utm), label: 'Ver na loja' }
@@ -192,7 +192,7 @@ export function CursoCard({ c, utm, events, feedError, loading, details }: Curso
             day: Number(day),
             month: MESES[Number(m) - 1],
             label: `${e.time} · ${e.city}${esgotada ? ' · esgotada (lista de espera)' : ''}`,
-            href: esgotada || !c.naLoja ? WHATSAPP_URL : lojaLink(c, utm, e.id),
+            href: esgotada ? WHATSAPP_URL : lojaLink(c, utm, e.id),
           };
         }),
         moreHref: details?.href ?? '#turmas',
