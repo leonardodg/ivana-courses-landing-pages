@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<urlset xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-home-v2.jpg</image:loc>
+      <image:title>Ivana Academy - Cursos de Velas, Saboaria e Resinas</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/"/>
@@ -11,6 +17,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/velas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-velas-v2.jpg</image:loc>
+      <image:title>Curso de Velas Artesanais | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/cursos/velas/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-diseno-velas/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/cursos/velas/"/>
@@ -18,14 +29,29 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/sabonetes/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-sabonetes-v2.jpg</image:loc>
+      <image:title>Cursos de Saboaria e Extratos Naturais | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/aromas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-aromas-v2.jpg</image:loc>
+      <image:title>Cursos de Aromatizantes, Perfumes e Incensos | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/resinas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-resinas-v2.jpg</image:loc>
+      <image:title>Cursos de Resina e Decoração | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/cursos/resinas/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-decoracion-resinas/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/cursos/resinas/"/>
@@ -33,22 +59,47 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/online/velas-aromaticas/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-online-velas-v2.jpg</image:loc>
+      <image:title>Velas Aromáticas Online | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/cursos/online/saboaria-com-extratos-naturais/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-online-saboaria-v2.jpg</image:loc>
+      <image:title>Saboaria com Extratos Naturais | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/apostilas/60-receitas-de-sabonetes/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-apostila-v2.jpg</image:loc>
+      <image:title>Apostila 60 Receitas de Sabonetes | Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/agenda/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-agenda-v2.jpg</image:loc>
+      <image:title>Agenda de cursos presenciais - Ivana Academy</image:title>
+    </image:image>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/interesse/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-interesse-v2.jpg</image:loc>
+      <image:title>Registrar interesse em cursos | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/interesse/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/interes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/interesse/"/>
@@ -56,6 +107,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/privacidade/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-padrao-v2.jpg</image:loc>
+      <image:title>Política de Privacidade | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/privacidade/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/privacidad/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/privacidade/"/>
@@ -63,6 +119,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/termos/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-padrao-v2.jpg</image:loc>
+      <image:title>Termos de Uso | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/termos/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/terminos/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/termos/"/>
@@ -70,6 +131,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/reembolso/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-padrao-v2.jpg</image:loc>
+      <image:title>Política de Reembolso e Cancelamento | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/reembolso/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/reembolso/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/reembolso/"/>
@@ -77,6 +143,11 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/lgpd/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <image:image>
+      <image:loc>https://courses.ivana.academy/images/og/br-padrao-v2.jpg</image:loc>
+      <image:title>Direitos do titular de dados (LGPD) | Ivana Academy</image:title>
+    </image:image>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/lgpd/"/>
     <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/derechos/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/lgpd/"/>
