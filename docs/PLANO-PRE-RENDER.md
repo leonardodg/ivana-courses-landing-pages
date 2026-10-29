@@ -1,6 +1,8 @@
 # Plano de pré-renderização, SEO, Analytics e prévia de links
 
-Status: **plano, nada implementado**. Ordem de execução na seção 7. Decisões que dependem da Ivana na seção 9.
+Status: **plano, nada implementado**. Ordem de execução na seção 8. Decisões na seção 9.
+
+**Decisão (2026-10-29): nada novo é instalado na VPS.** O build e a pré-renderização rodam no **GitHub Actions** a cada deploy; a VPS só recebe o `dist/` pronto e o serve com Nginx.
 
 ## 1. Objetivo
 
@@ -44,7 +46,7 @@ Escolhida por não alterar componentes (formulários, carrossel e modais seguem 
 Fluxo: `vite build` → `scripts/prerender.mjs` → pós-processamento → verificação → `dist/` final.
 
 1. **Páginas:** a mesma lista do `discoverPages` do `vite.config.ts` (30 páginas), mais `404.html`.
-2. **Servidor:** serve `dist/` localmente em porta efêmera (sem Nginx); abre cada URL num Chromium sem janela (`puppeteer-core`, mesmo Chromium em dev, CI e Docker).
+2. **Servidor:** serve `dist/` localmente em porta efêmera (sem Nginx); abre cada URL num Chrome sem janela via `puppeteer-core` (no GitHub Actions o `ubuntu-latest` já traz o Google Chrome; em dev usa o Chrome do Mac).
 3. **Ambiente determinístico do navegador:**
    - Viewport **1280x900** (desktop): cards completos, textos de grade e turmas **no DOM**, que é o que o Google precisa ler.
    - Fuso `America/Sao_Paulo`, idioma por página (`pt-BR`/`es-AR`), `prefers-reduced-motion: reduce` (sem animações no instante da captura), perfil limpo.
@@ -58,6 +60,15 @@ Fluxo: `vite build` → `scripts/prerender.mjs` → pós-processamento → verif
 6. **Pós-processamento do HTML:** manter exatamente um `<script type="application/ld+json">` por página, os `<script type="module">` e `<link>` do Vite; remover scripts/estilos injetados em runtime que não sejam do Vite; marcar `<html data-prerendered>`; `lang` intacto.
 7. **Montagem no cliente:** continuar com `createRoot` (substitui o HTML pré-renderizado ao montar). Sem hidratação, sem risco de "texto diferente". Como o HTML é o mesmo componente, o conteúdo não pisca. Fica como melhoria futura trocar para `hydrateRoot` página a página.
 8. **Fail-open:** erro em qualquer página mantém o `index.html` original dela; o relatório lista o que ficou sem pré-render e o build **não** falha (configurável: `PRERENDER_STRICT=1` falha no CI).
+
+### Entrega com build no GitHub Actions (sem Chromium nem Node na VPS)
+
+Fluxo novo do workflow (`deploy.yml`):
+1. **Job `build`** (ubuntu-latest): `npm ci` → `npm run build` com os segredos `VITE_*` do GitHub → `node scripts/prerender.mjs` → verificações da seção 5 → sobe `dist/` como artefato.
+2. **Job `deploy`** (depende do `build`): baixa o artefato e envia `dist/` para a VPS por SSH (`rsync`/`scp`, mesma chave `SSH_PRIVATE_KEY` de hoje) para uma pasta de release; troca o `dist` ativo (`mv` atômico) e sobe o container Nginx.
+3. **Dockerfile da VPS:** novo alvo `production-prebuilt`, só com `FROM nginx` + `COPY dist/` + configs; **sem estágio Node**. A VPS deixa de rodar `npm ci` e `vite build`, e os segredos do webhook deixam de passar pelo `docker compose build`.
+4. Ganhos: VPS com menos software e menos superfície de ataque, deploy mais rápido (sem build na VPS), build reprodutível e testado no CI antes de qualquer publicação.
+5. Rollback: manter as 3 últimas releases na VPS (`releases/AAAA-MM-DD-hhmm`); voltar é trocar o link `current` e reiniciar o container.
 
 ### Pontos de atenção
 - **Mobile depois do JS:** quem abre no celular vê, por um instante, o HTML completo e em seguida a lista compacta. Mitigar: garantir mesma altura dos blocos acima da dobra e medir CLS; se piorar, esconder os cards pré-renderizados no mobile com CSS até a montagem.
@@ -112,7 +123,7 @@ Teste de aceitação: enviar o link de 6 páginas (2 por país e tipo) pelo What
 | **0. Prévia e sitemap** (independente, pode ir primeiro) | Imagens OG por página, atributos `og:image:*`/`alt` completos, `lastmod` nos sitemaps | Baixo | Teste manual no WhatsApp e no Depurador do Facebook; `npm run check:urls` valida OG e sitemap |
 | **1. Script de pré-render local** | `scripts/prerender.mjs` com `puppeteer-core` e Chrome local; relatório por página | Baixo | `dist/` com corpo em 30/30 páginas; HTML sem GA, sem banner, sem dados do feed |
 | **2. Teste de paridade e desempenho** | Script que compara o texto do HTML pré-renderizado com o DOM montado no cliente; PageSpeed antes/depois | Baixo | Paridade >= 95% do texto visível; LCP/CLS iguais ou melhores |
-| **3. Docker da VPS** | `apk add chromium` no estágio `node-builder` e `PUPPETEER_SKIP_DOWNLOAD`; etapa de pré-render dentro de `npm run build` | **Médio** (build da VPS) | `docker build --target production` local gera o mesmo `dist/`; imagem final do Nginx não muda de tamanho |
+| **3. Build no GitHub Actions + entrega do `dist/`** | Job `build` com pré-render e artefato; job `deploy` envia `dist/` por SSH; alvo `production-prebuilt` no Dockerfile (sem Node); releases com rollback | **Médio** (muda o pipeline) | Deploy de teste num caminho paralelo na VPS (ex.: porta 8089) antes de trocar o ativo; site idêntico ao de hoje e Nginx com os mesmos cabeçalhos |
 | **4. CI** | O job "Build & Lint Check" roda o pré-render em modo estrito e as verificações da seção 5 | Baixo | Pipeline falha se faltar `h1`, JSON-LD duplicado, GA no HTML, preço na Argentina |
 | **5. Publicação e acompanhamento** | Deploy; Inspeção de URL no Search Console (teste ao vivo, "ver página testada") nas 6 páginas principais; solicitar indexação; GA4 Tempo real/DebugView | Médio | HTML renderizado do Google mostra o corpo; GA4 recebe `page_view` e eventos; sem aumento de erros no Search Console |
 | **6. Melhoria opcional** | `hydrateRoot` nas páginas mais simples; fatiar conteúdo por idioma | Baixo | Sem erro de hidratação no console |
@@ -121,11 +132,11 @@ Teste de aceitação: enviar o link de 6 páginas (2 por país e tipo) pelo What
 
 ## 9. Decisões e pendências
 
-1. **Dockerfile de build da VPS (fase 3):** confirmar com a Ivana/Leo que pode instalar o Chromium no estágio de build (+~200 MB, +1 a 2 min por deploy; não entra na imagem final).
+1. ~~Chromium na VPS~~ **Resolvido:** nada é instalado na VPS; build e pré-render no GitHub Actions (seção 4).
 2. **Arte das imagens de prévia:** seguir o padrão do site (ilustrações dos heróis + serifa) ou usar fotos reais dos cursos? Recomendado: fotos reais onde existirem (velas, sabonetes, resinas, macramé) com a faixa de título do design system.
 3. **Eventos da agenda como dados estruturados:** manter no cliente (recomendado) ou gerar no build (ficaria desatualizado até o próximo deploy).
 4. **Sem pré-render no celular?** Se o CLS piorar, avaliar esconder o HTML pré-renderizado no mobile até o React montar.
 
 ## 10. Estimativa
 
-Fase 0: 0,5 dia. Fases 1 e 2: 1 dia. Fase 3: 0,5 dia. Fase 4: 0,5 dia. Fase 5: 0,5 dia de acompanhamento. Total aproximado: 3 dias, publicável em duas entregas (fase 0 primeiro; depois 1 a 5).
+Fase 0: 0,5 a 1 dia (imagens). Fases 1 e 2: 1 dia. Fase 3: 1 dia (pipeline e teste paralelo). Fase 4: 0,5 dia. Fase 5: 0,5 dia de acompanhamento. Total aproximado: 3 dias, publicável em duas entregas (fase 0 primeiro; depois 1 a 5).
