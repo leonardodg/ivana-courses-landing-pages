@@ -1,12 +1,12 @@
 // Blocos das páginas de tema do Brasil (velas, saboaria, aromas, resina).
 // Estrutura da proposta em conteudo/ORGANIZACAO.md. Toda compra termina na loja.
 //
-// Visual SEMPRE pelos componentes de ../../ui (Section, SectionHeader, Card, EventCard, Steps, FeatureList):
+// Visual SEMPRE pelos componentes de ../../ui (Section, SectionHeader, Card, EventCard, InfoBlocks):
 // para mudar o desenho de um bloco, edite o componente em ui/, não esta página.
 // Dados: texto, valores e imagens em data/presencial.ts; datas e locais vêm do feed da agenda
 // (useAgenda) e mudam sozinhos. Não escreva data à mão aqui.
 
-import { CalendarDays, MapPin, Clock, ArrowRight, CreditCard, Mail, Users } from 'lucide-react';
+import { CalendarDays, MapPin, Clock, ArrowRight, CreditCard, Gift, Mail, Users } from 'lucide-react';
 import { useAgenda, AgendaEvent } from '../../hooks/useAgenda';
 import {
   PresencialTheme,
@@ -17,7 +17,7 @@ import {
   WHATSAPP_URL,
 } from '../../data/presencial';
 import { FAQItem } from '../../classes/types';
-import { Card, CardGrid, EventCard, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
+import { Card, CardGrid, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary, textLink } from '../../ui';
 
 const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 
@@ -297,7 +297,7 @@ export function ComoFuncionaSection() {
   return (
     <Section id="como-funciona" bg="white" border="top" width="mid">
       <SectionHeader kicker="COMO FUNCIONA" title="Reservar a sua vaga é simples" />
-      <Steps items={steps} tone="cream" />
+      <InfoBlocks layout="stack" numbered items={steps} tone="stone" />
       <p className="text-xs text-on-surface-variant text-center mt-8 max-w-xl mx-auto leading-relaxed">
         A loja cobra o valor cheio do curso. Prefere reservar com sinal por Pix? Isso é feito só pelo atendimento no{' '}
         <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="underline text-primary">WhatsApp</a>.
@@ -311,7 +311,7 @@ export function InclusoSection() {
   return (
     <Section id="incluso" bg="cream" pad="md">
       <SectionHeader kicker="INCLUSO EM TODOS" title="Você só precisa chegar" />
-      <FeatureList items={['Todos os materiais', 'Apostila e material de apoio', 'Certificado Ivana Academy', 'Café']} tone="white" />
+      <InfoBlocks layout="compact" tone="white" items={['Todos os materiais', 'Apostila e material de apoio', 'Certificado Ivana Academy', 'Café'].map((title) => ({ icon: Gift, title }))} />
     </Section>
   );
 }

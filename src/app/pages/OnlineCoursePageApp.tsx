@@ -22,17 +22,15 @@ import Footer from '../components/Footer';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import {
   ContactCta,
-  FeatureList,
   Gallery,
   Hero,
   HeroBadgeText,
-  InfoGrid,
+  InfoBlocks,
   PriceBlock,
   Profile,
   PurchaseCta,
   Section,
   SectionHeader,
-  Steps,
   StickyBuyBar,
   emphasis,
 } from '../ui';
@@ -75,7 +73,6 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
   // Fundos alternados (creme/branco), sem contar o carrossel de depoimentos (que tem fundo próprio).
   let n = 0;
   const next = () => (n++ % 2 === 0 ? 'cream' : 'white') as 'cream' | 'white';
-  const opposite = (bg: 'cream' | 'white') => (bg === 'cream' ? 'white' : 'cream');
 
   const render = (b: OnlineBlock, i: number) => {
     switch (b.type) {
@@ -99,7 +96,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
         return (
           <Section key={i} id={id} bg={bg} border="top" width="narrow">
             {head}
-            <FeatureList items={b.items} tone={opposite(bg)} icon={Check} />
+            <InfoBlocks layout="compact" tone={bg === 'cream' ? 'white' : 'stone'} items={b.items.map((title) => ({ icon: Check, title }))} />
           </Section>
         );
       case 'gallery':
@@ -113,16 +110,16 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
         return (
           <Section key={i} id={id} bg={bg} border="top" width="mid">
             {head}
-            <InfoGrid items={b.items.map((m) => ({ eyebrow: m.eyebrow, title: m.title, lessons: m.lessons }))} />
+            <InfoBlocks tone={bg === 'cream' ? 'white' : 'stone'} items={b.items.map((m) => ({ tile: m.eyebrow.match(/\d+/)?.[0], kicker: m.eyebrow, title: m.title, list: m.lessons }))} />
           </Section>
         );
       case 'groups':
         return (
           <Section key={i} id={id} bg={bg} border="top" width="mid">
             {head}
-            <InfoGrid cols={3} items={b.groups.map((g) => ({ big: g.n, title: g.title, text: g.text }))} />
+            <InfoBlocks layout="stack" columns={3} tone={bg === 'cream' ? 'white' : 'stone'} items={b.groups.map((g) => ({ tile: g.n, tint: 'gold', title: g.title, text: g.text }))} />
             <div className="mt-10">
-              <FeatureList items={b.learn} tone={opposite(bg)} icon={Check} />
+              <InfoBlocks layout="compact" tone={bg === 'cream' ? 'white' : 'stone'} items={b.learn.map((title) => ({ icon: Check, title }))} />
             </div>
           </Section>
         );
@@ -130,10 +127,9 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
         return (
           <Section key={i} id={id} bg={bg} border="top" width="mid">
             {head}
-            <Steps
-              numbered={false}
-              tone={opposite(bg)}
-              items={b.items.map((it, k) => ({ icon: INCLUDED_ICONS[k % INCLUDED_ICONS.length] ?? ListChecks, title: it.title, text: it.text }))}
+            <InfoBlocks
+              tone={bg === 'cream' ? 'white' : 'stone'}
+              items={b.items.map((it, k) => ({ icon: INCLUDED_ICONS[k % INCLUDED_ICONS.length] ?? ListChecks, tint: k % 2 ? 'gold' : 'rose', title: it.title, text: it.text }))}
             />
           </Section>
         );
@@ -141,7 +137,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
         return (
           <Section key={i} id={id} bg={bg} border="top" width="narrow">
             {head}
-            <FeatureList items={b.items} tone={opposite(bg)} icon={Check} />
+            <InfoBlocks layout="compact" tone={bg === 'cream' ? 'white' : 'stone'} items={b.items.map((title) => ({ icon: Check, title }))} />
           </Section>
         );
       case 'profile':

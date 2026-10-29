@@ -1,6 +1,6 @@
 // Blocos das páginas de carreras online da Argentina (espanhol rioplatense).
 // Visual SEMPRE pelos componentes de ../../ui (os mesmos do Brasil): Section, SectionHeader, Card, EventCard,
-// Steps, FeatureList, ContactCta. Para mudar o desenho de um bloco, edite o componente em ui/.
+// InfoBlocks, ContactCta. Para mudar o desenho de um bloco, edite o componente em ui/.
 //
 // REGRAS: nenhum preço (nem o campo `price` do feed). O valor só aparece na tienda.
 // Datas vêm do feed (useAgenda('AR')); textos e temario, de data/carreras_ar.ts.
@@ -13,6 +13,7 @@ import {
   ChevronDown,
   Clock,
   CreditCard,
+  Gift,
   GraduationCap,
   Mail,
   Monitor,
@@ -23,7 +24,7 @@ import type { AgendaEvent, AgendaState } from '../../hooks/useAgenda';
 import { CarreraAr, carreras_ar, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
 import { trackSelectCareer } from '../../lib/analytics';
 import type { FAQItem } from '../../classes/types';
-import { Card, CardGrid, ContactCta, EventCard, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
+import { Card, CardGrid, ContactCta, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary, textLink } from '../../ui';
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 export const fmtDay = (iso: string) =>
@@ -327,14 +328,14 @@ export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
   );
 }
 
-/* ── Cómo es la cursada (Steps sin número) ──────────────────────────── */
+/* ── Cómo es la cursada (InfoBlocks sin número) ──────────────────────────── */
 export function CursadaSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
   return (
     <Section id="cursada" bg={bg} border="top" width="mid">
       <SectionHeader kicker="CÓMO ES LA CURSADA" title="100% online, con acompañamiento" />
-      <Steps
-        numbered={false}
-        tone={bg === 'cream' ? 'white' : 'cream'}
+      <InfoBlocks
+        layout="stack"
+        tone={bg === 'cream' ? 'white' : 'stone'}
         items={[
           { icon: CalendarDays, title: 'Un módulo por mes', text: 'Avanzás a tu ritmo dentro de cada módulo, con una propuesta clara por mes.' },
           { icon: Monitor, title: 'Campus virtual', text: 'Las clases están en el campus virtual de Ivana Academy, disponibles cuando te quede cómodo.' },
@@ -354,8 +355,10 @@ export function ComoInscribirmeSection({ bg = 'cream' }: { bg?: 'cream' | 'white
   return (
     <Section id="inscripcion" bg={bg} border="top" width="mid">
       <SectionHeader kicker="CÓMO INSCRIBIRME" title="Inscribirte es simple" />
-      <Steps
-        tone={bg === 'cream' ? 'white' : 'cream'}
+      <InfoBlocks
+        layout="stack"
+        numbered
+        tone={bg === 'cream' ? 'white' : 'stone'}
         items={[
           { icon: GraduationCap, title: 'Elegís la carrera', text: 'Mirá el plan y la fecha de inicio y tocá "Ver valores e inscribirme".' },
           { icon: Mail, title: 'Te registrás en la tienda', text: 'Creás tu cuenta con tus datos, en la tienda de Ivana Academy.' },
@@ -376,9 +379,10 @@ export function InclusoSection({ bg = 'white' }: { bg?: 'cream' | 'white' }) {
   return (
     <Section id="incluido" bg={bg} border="top" pad="md">
       <SectionHeader kicker="INCLUIDO EN TODAS" title="Todo lo que necesitás para cursar" />
-      <FeatureList
-        tone={bg === 'cream' ? 'white' : 'cream'}
-        items={['Clases en el campus virtual', 'Grupo de la carrera', 'Evaluación y seguimiento', 'Título del Conservatorio Grassi']}
+      <InfoBlocks
+        layout="compact"
+        tone={bg === 'cream' ? 'white' : 'stone'}
+        items={['Clases en el campus virtual', 'Grupo de la carrera', 'Evaluación y seguimiento', 'Título del Conservatorio Grassi'].map((title) => ({ icon: Gift, title }))}
       />
     </Section>
   );
