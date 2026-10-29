@@ -97,7 +97,17 @@ export default function Hero(props: HeroProps) {
           }`}
         >
           <div className="space-y-4 md:space-y-6">
-            <div className={heroBadge}>{s.badge}</div>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className={heroBadge}>{s.badge}</div>
+              {s.seal && (
+                <img
+                  src={s.seal.src}
+                  alt={s.seal.alt}
+                  onError={(e) => (e.currentTarget.style.display = 'none')}
+                  className="h-12 w-auto rounded-xl bg-primary border border-primary-container/40 shadow-md px-2.5 py-1.5"
+                />
+              )}
+            </div>
             <Title className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-950 font-bold leading-tight tracking-tight">{s.title}</Title>
             <p className="text-xs sm:text-sm md:text-base text-gray-800 leading-relaxed max-w-xl font-sans font-medium">{s.text}</p>
             <div className="pt-2 pb-4 flex flex-wrap gap-4 items-center">
@@ -127,15 +137,6 @@ export default function Hero(props: HeroProps) {
             </div>
           )}
         </div>
-
-        {s.seal && (
-          <img
-            src={s.seal.src}
-            alt={s.seal.alt}
-            onError={(e) => (e.currentTarget.style.display = 'none')}
-            className="absolute z-10 right-6 md:right-12 top-24 md:top-28 h-12 md:h-16 w-auto rounded-xl bg-white/90 backdrop-blur-md border border-subtle shadow-sm p-2"
-          />
-        )}
 
         {carousel && (
           <div className="absolute z-20 bottom-5 inset-x-0 flex items-center justify-center gap-3">
