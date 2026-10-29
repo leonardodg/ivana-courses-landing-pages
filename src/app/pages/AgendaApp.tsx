@@ -5,7 +5,7 @@ import SiteNavbar from "../components/SiteNavbar";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 import { useDensity } from "../hooks/useDensity";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
-import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from "../ui";
+import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, MonthNav, WhatsAppFab, btnOutline, btnPrimary } from "../ui";
 
 const WHATSAPP = "5548991671659";
 const SP = { timeZone: "America/Sao_Paulo" } as const;
@@ -269,6 +269,8 @@ export default function AgendaApp() {
           )}
         </AgendaLayout>
       </main>
+
+      <WhatsAppFab href={whatsappGeneral} label="Falar no WhatsApp" />
 
       <Footer />
     </div>

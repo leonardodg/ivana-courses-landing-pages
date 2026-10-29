@@ -12,7 +12,7 @@ import { useDensity } from '../hooks/useDensity';
 import { monthTitle, useMonthPager } from '../hooks/useMonthPager';
 import { carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { InscribirmeButton, etapaLabel, fmtRange, nivelLabel } from '../components/theme/CareerSections';
-import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from '../ui';
+import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, MonthNav, WhatsAppFab, whatsappHref, btnOutline, btnPrimary } from '../ui';
 
 const isInicio = (e: AgendaEvent) => /^modulo\s+1\//i.test(e.etapa ?? '');
 
@@ -151,6 +151,8 @@ export default function AgendaArApp() {
           )}
         </AgendaLayout>
       </main>
+
+      <WhatsAppFab href={whatsappHref(WHATSAPP_AR, '¡Hola! Vengo de la agenda y quiero saber más sobre las fechas de inicio.')} label="Hablar por WhatsApp" />
 
       <Footer />
     </div>
