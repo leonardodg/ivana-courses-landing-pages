@@ -110,6 +110,36 @@ for (const f of walk(DIST)) {
   if (/(["'(\s=])\/(pt_br|es_ar)\//.test(t) || /academy\/(pt_br|es_ar)\//.test(t)) err(`${path.relative(DIST, f)}: ainda cita /pt_br/ ou /es_ar/`);
 }
 
+// 6) prévia de link (WhatsApp, Facebook, LinkedIn, X): og:image em JPG/PNG 1200x630, até 300 KB, com tipo, largura, altura e alt
+const jpegSize = (buf) => {
+  let i = 2;
+  while (i < buf.length) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const m = buf[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(m)) return { h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) };
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  return null;
+};
+for (const [url, file] of pages) {
+  if (NOT_INDEXED(url) || url === '/404/') continue;
+  const html = read(file);
+  const img = attr(html, /property="og:image"\s+content="([^"]+)"/g)[0];
+  if (!img) { err(`${url}: sem og:image`); continue; }
+  if (!img.startsWith(`${SITE}/`)) { err(`${url}: og:image precisa de URL absoluta em ${SITE} (${img})`); continue; }
+  const local = path.join(DIST, img.slice(SITE.length));
+  if (!/\.(jpe?g|png)$/i.test(local)) err(`${url}: og:image deve ser JPG ou PNG, não WebP (${img})`);
+  if (!fs.existsSync(local)) { err(`${url}: og:image não existe no build (${img})`); continue; }
+  const buf = fs.readFileSync(local);
+  if (buf.length > 300 * 1024) err(`${url}: og:image com ${Math.round(buf.length / 1024)} KB (máximo 300 KB)`);
+  if (/\.jpe?g$/i.test(local)) {
+    const d = jpegSize(buf);
+    if (!d || d.w !== 1200 || d.h !== 630) err(`${url}: og:image deve ter 1200x630 (tem ${d ? `${d.w}x${d.h}` : '?'})`);
+  }
+  for (const k of ['type', 'width', 'height', 'alt']) if (!new RegExp(`property="og:image:${k}"`).test(html)) err(`${url}: falta og:image:${k}`);
+  if (!/name="twitter:card"\s+content="summary_large_image"/.test(html)) err(`${url}: twitter:card deve ser summary_large_image`);
+}
+
 if (errors.length) {
   console.error(`✗ ${errors.length} problema(s):\n` + errors.map((e) => `  - ${e}`).join('\n'));
   process.exit(1);
