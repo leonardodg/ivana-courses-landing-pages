@@ -56,18 +56,30 @@
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/privacidade/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/privacidad/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/privacidade/"/>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/termos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/termos/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/terminos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/termos/"/>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/reembolso/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/reembolso/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/reembolso/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/reembolso/"/>
   </url>
 
   <url>
     <loc>https://courses.ivana.academy/pt-br/lgpd/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://courses.ivana.academy/pt-br/lgpd/"/>
+    <xhtml:link rel="alternate" hreflang="es-AR" href="https://courses.ivana.academy/es-ar/derechos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://courses.ivana.academy/pt-br/lgpd/"/>
   </url>
 
 </urlset>

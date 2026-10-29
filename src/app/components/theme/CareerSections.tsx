@@ -54,6 +54,7 @@ export function InscribirmeButton({
       className={`${variant === 'primary' ? btnPrimary : btnOutline} ${className}`}
     >
       {label} <ArrowRight className="w-3.5 h-3.5" />
+      <span className="sr-only">: {carrera.nombre}</span>
     </a>
   );
 }
@@ -211,6 +212,7 @@ export function CohorteRow({ carrera, etapas, tone = 'cream' }: { carrera: Carre
             locale="es-AR"
             density="compact"
             title={`Inicio de cursada · ${turma}`}
+            ariaTitle={`${carrera.nombre}, inicio de cursada`}
             summary={`${etapaLabel(inicio)} · desde el ${fmtFull(inicio.date)}`}
             lines={[
               <>

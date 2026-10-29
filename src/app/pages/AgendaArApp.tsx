@@ -130,6 +130,7 @@ export default function AgendaArApp() {
                       featured={inicio}
                       badges={badges}
                       title={carrera.nombre}
+                      ariaTitle={`${carrera.nombre}, ${etapaLabel(e)}`}
                       subtitle={etapaLabel(e)}
                       lines={[
                         <>

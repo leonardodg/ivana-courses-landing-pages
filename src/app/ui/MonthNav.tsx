@@ -25,7 +25,7 @@ export default function MonthNav({
       <button type="button" onClick={onPrev} disabled={!onPrev} aria-label={prevLabel} className={arrow}>
         <ChevronLeft className="w-5 h-5" aria-hidden />
       </button>
-      <div className="text-center min-w-0">
+      <div className="text-center min-w-0" aria-live="polite" aria-atomic="true">
         <h2 className="font-serif text-xl md:text-2xl text-gray-900 leading-tight first-letter:uppercase">{label}</h2>
         {count && <p className="text-micro font-mono uppercase tracking-wider text-on-surface-variant mt-0.5">{count}</p>}
       </div>

@@ -34,6 +34,7 @@ export default function EventCard({
   footer,
   featured = false,
   tone = 'white',
+  ariaTitle,
 }: {
   date: string; // YYYY-MM-DD
   locale: string; // "pt-BR" | "es-AR"
@@ -49,6 +50,7 @@ export default function EventCard({
   footer?: ReactNode; // ex.: cronograma; só na versão completa
   featured?: boolean; // próximo evento: borda na cor da marca
   tone?: 'white' | 'cream'; // cor do cartão: oposta à do fundo da seção
+  ariaTitle?: string; // nome do evento para leitor de tela (o título pode ser JSX)
 }) {
   const [open, setOpen] = useState(false);
   const compact = density === 'compact' && !open;
@@ -115,7 +117,7 @@ export default function EventCard({
               type="button"
               onClick={() => setOpen(!open)}
               aria-expanded={open}
-              aria-label={open ? (es ? 'Ver menos detalles' : 'Ver menos detalhes') : es ? 'Ver más detalles' : 'Ver mais detalhes'}
+              aria-label={`${open ? (es ? 'Ver menos detalles' : 'Ver menos detalhes') : es ? 'Ver más detalles' : 'Ver mais detalhes'}${ariaTitle ? `: ${ariaTitle}` : ''}`}
               className={`shrink-0 ${compact ? '' : 'self-start'} inline-flex items-center justify-center w-11 h-11 rounded-full border border-subtle text-primary hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer`}
             >
               <ChevronDown className={`w-5 h-5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />

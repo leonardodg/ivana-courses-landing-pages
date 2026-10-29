@@ -25,7 +25,7 @@ export default function AgendaLayout({
           {aside}
         </div>
       </aside>
-      <section className="min-w-0 space-y-6 lg:col-span-8" aria-live="polite">
+      <section className="min-w-0 space-y-6 lg:col-span-8">
         {children}
       </section>
     </div>

@@ -76,6 +76,7 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
       featured={featured}
       badges={badges}
       title={event.title}
+      ariaTitle={event.title}
       lines={[
         <>
           <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
