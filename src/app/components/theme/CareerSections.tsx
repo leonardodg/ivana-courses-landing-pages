@@ -1,5 +1,5 @@
 // Blocos das páginas de carreras online da Argentina (espanhol rioplatense).
-// Visual SEMPRE pelos componentes de ../../ui (os mesmos do Brasil): Section, SectionHeader, Card, DateRow,
+// Visual SEMPRE pelos componentes de ../../ui (os mesmos do Brasil): Section, SectionHeader, Card, EventCard,
 // Steps, FeatureList, ContactCta. Para mudar o desenho de um bloco, edite o componente em ui/.
 //
 // REGRAS: nenhum preço (nem o campo `price` do feed). O valor só aparece na tienda.
@@ -23,7 +23,7 @@ import type { AgendaEvent, AgendaState } from '../../hooks/useAgenda';
 import { CarreraAr, carreras_ar, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
 import { trackSelectCareer } from '../../lib/analytics';
 import type { FAQItem } from '../../classes/types';
-import { Card, CardGrid, ContactCta, DateRow, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
+import { Card, CardGrid, ContactCta, EventCard, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 export const fmtDay = (iso: string) =>
@@ -186,7 +186,7 @@ export function CarrerasGrid({
   );
 }
 
-/* ── Cohorte (= TurmasSection do Brasil, com o mesmo DateRow) ─────────── */
+/* ── Cohorte (= TurmasSection do Brasil, com o mesmo EventCard) ─────────── */
 export const etapaLabel = (e: AgendaEvent) => {
   const raw = (e.etapa ?? '').toLowerCase();
   const m = raw.match(/^modulo\s+(\d+)\/(\d+)/);
@@ -202,24 +202,26 @@ export function CohorteRow({ carrera, etapas, tone = 'cream' }: { carrera: Carre
   const [open, setOpen] = useState(false);
   const inicio = etapas.find((e) => /^modulo\s+1\//i.test(e.etapa ?? '')) ?? etapas[0];
   const turma = inicio?.turma ?? 'Cohorte 2027';
-  const [, m, day] = inicio.date.split('-');
   return (
-    <DateRow
-            day={Number(day)}
-            month={MESES[Number(m) - 1]}
+    <EventCard
+            date={inicio.date}
+            locale="es-AR"
+            density="compact"
             title={`Inicio de cursada · ${turma}`}
+            summary={`${etapaLabel(inicio)} · desde el ${fmtFull(inicio.date)}`}
             lines={[
               <>
-                <Clock className="w-3 h-3 text-primary shrink-0" />
+                <Clock className="w-3.5 h-3.5 mt-0.5 text-primary shrink-0" />
                 {etapaLabel(inicio)} · desde el {fmtFull(inicio.date)}
               </>,
               <>
-                <Monitor className="w-3 h-3 text-primary shrink-0" />
+                <Monitor className="w-3.5 h-3.5 mt-0.5 text-primary shrink-0" />
                 100% online · inscripción abierta todo el año
               </>,
             ]}
             tone={tone}
-            action={<InscribirmeButton carrera={carrera} />}
+            quickAction={<InscribirmeButton carrera={carrera} />}
+            actions={<InscribirmeButton carrera={carrera} />}
             footer={
               <>
                 <button

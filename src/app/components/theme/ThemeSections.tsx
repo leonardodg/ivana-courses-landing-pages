@@ -1,7 +1,7 @@
 // Blocos das páginas de tema do Brasil (velas, saboaria, aromas, resina).
 // Estrutura da proposta em conteudo/ORGANIZACAO.md. Toda compra termina na loja.
 //
-// Visual SEMPRE pelos componentes de ../../ui (Section, SectionHeader, Card, DateRow, Steps, FeatureList):
+// Visual SEMPRE pelos componentes de ../../ui (Section, SectionHeader, Card, EventCard, Steps, FeatureList):
 // para mudar o desenho de um bloco, edite o componente em ui/, não esta página.
 // Dados: texto, valores e imagens em data/presencial.ts; datas e locais vêm do feed da agenda
 // (useAgenda) e mudam sozinhos. Não escreva data à mão aqui.
@@ -17,7 +17,7 @@ import {
   WHATSAPP_URL,
 } from '../../data/presencial';
 import { FAQItem } from '../../classes/types';
-import { Card, CardGrid, DateRow, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
+import { Card, CardGrid, EventCard, FeatureList, Section, SectionHeader, Steps, btnOutline, btnPrimary, textLink } from '../../ui';
 
 const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 
@@ -36,41 +36,44 @@ export function useThemeEvents(theme: PresencialTheme) {
 /* ── 2. Próximas turmas ─────────────────────────────────────────────── */
 function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
   const course = presencial_courses[e.course];
-  const [, m, day] = e.date.split('-');
   const soldOut = e.status === 'esgotado';
+  const place = e.venue ? `${e.venue}, ${e.city}` : e.city;
+  const reserve = soldOut ? (
+    <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className={btnOutline}>
+      Esgotado · Lista de espera
+    </a>
+  ) : (
+    <a href={course ? lojaLink(course, theme.utm, e.id) : '/pt-br/interesse/'} className={btnPrimary}>
+      Garantir minha vaga <ArrowRight className="w-3.5 h-3.5" />
+    </a>
+  );
 
   return (
-    <DateRow
-      day={Number(day)}
-      month={MESES[Number(m) - 1]}
+    <EventCard
+      date={e.date}
+      locale="pt-BR"
+      density="compact"
+      badges={e.status === 'ultimas-vagas' ? [{ label: 'Últimas vagas', tone: 'accent' }] : undefined}
       title={e.title}
+      summary={[e.time && `${e.time}${e.end_time ? ` às ${e.end_time}` : ''}`, place].filter(Boolean).join(' · ')}
       lines={[
         <>
-          <Clock className="w-3 h-3 text-primary shrink-0" />
+          <Clock className="w-3.5 h-3.5 mt-0.5 text-primary shrink-0" />
           {e.time}{e.end_time && ` às ${e.end_time}`}
         </>,
         <>
-          <MapPin className="w-3 h-3 text-primary shrink-0" />
-          {e.venue ? `${e.venue}, ${e.city}` : e.city}
-          {e.maps_url && (
-            <a href={e.maps_url} target="_blank" rel="noreferrer" className="underline ml-1">mapa</a>
-          )}
+          <MapPin className="w-3.5 h-3.5 mt-0.5 text-primary shrink-0" />
+          <span>
+            {place}
+            {e.maps_url && (
+              <a href={e.maps_url} target="_blank" rel="noreferrer" className="underline ml-1 text-primary">Ver no mapa</a>
+            )}
+          </span>
         </>,
-        ...(e.status === 'ultimas-vagas'
-          ? [<span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-700">Últimas vagas</span>]
-          : []),
       ]}
-      action={
-        soldOut ? (
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className={btnOutline}>
-            Esgotado · Lista de espera
-          </a>
-        ) : (
-          <a href={course ? lojaLink(course, theme.utm, e.id) : '/pt-br/interesse/'} className={btnPrimary}>
-            Garantir minha vaga <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        )
-      }
+      note={e.note}
+      quickAction={reserve}
+      actions={reserve}
     />
   );
 }

@@ -3,8 +3,9 @@ import { CalendarDays, CalendarPlus, Clock, ExternalLink, MapPin, MessageCircle 
 import Footer from "../components/Footer";
 import SiteNavbar from "../components/SiteNavbar";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
+import { useEventDensity } from "../hooks/useEventDensity";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
-import { AgendaLayout, EventBadge, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from "../ui";
+import { AgendaLayout, DensityToggle, EventBadge, EventDensity, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from "../ui";
 
 const WHATSAPP = "5548991671659";
 const SP = { timeZone: "America/Sao_Paulo" } as const;
@@ -62,7 +63,7 @@ function eventJsonLd(events: AgendaEvent[]) {
   }));
 }
 
-function EventItem({ event, featured }: { event: AgendaEvent; featured: boolean }) {
+function EventItem({ event, featured, density }: { event: AgendaEvent; featured: boolean; density: EventDensity }) {
   const soldOut = event.status === "esgotado";
   const cta = event.link ?? whatsappLink(event);
   const addToCalendar = calendarLink(event);
@@ -76,10 +77,19 @@ function EventItem({ event, featured }: { event: AgendaEvent; featured: boolean 
     ...(soldOut ? [{ label: "Esgotado", tone: "alert" as const }] : []),
   ];
 
+  const reserve = (
+    <a href={cta} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
+      {event.link ? <ExternalLink className="h-4 w-4" aria-hidden /> : <MessageCircle className="h-4 w-4" aria-hidden />}
+      Quero minha vaga
+      <span className="sr-only">: {event.title}, {shortDate(event.date)}</span>
+    </a>
+  );
+
   return (
     <EventCard
       date={event.date}
       locale="pt-BR"
+      density={density}
       featured={featured}
       badges={badges}
       title={event.title}
@@ -113,15 +123,13 @@ function EventItem({ event, featured }: { event: AgendaEvent; featured: boolean 
             ]
           : []),
       ]}
+      summary={[timeLabel, event.venue || event.city].filter(Boolean).join(" · ")}
       note={event.note}
+      quickAction={!soldOut && reserve}
       actions={
         !soldOut && (
           <>
-            <a href={cta} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
-              {event.link ? <ExternalLink className="h-4 w-4" aria-hidden /> : <MessageCircle className="h-4 w-4" aria-hidden />}
-              Quero minha vaga
-              <span className="sr-only">: {event.title}, {shortDate(event.date)}</span>
-            </a>
+            {reserve}
             {addToCalendar && (
               <a href={addToCalendar} target="_blank" rel="noopener noreferrer" className={btnOutline}>
                 <CalendarPlus className="h-4 w-4" aria-hidden />
@@ -150,6 +158,7 @@ export default function AgendaApp() {
   );
 
   const pager = useMonthPager(visible, todayIso());
+  const { density, setDensity } = useEventDensity();
 
   useEffect(() => {
     if (agenda.status !== "ready" || agenda.events.length === 0) return;
@@ -232,6 +241,9 @@ export default function AgendaApp() {
 
           {pager.month && (
             <>
+              <div className="flex justify-end">
+                <DensityToggle value={density} onChange={setDensity} labels={{ group: "Tamanho dos cards", full: "Completo", compact: "Resumido" }} />
+              </div>
               <MonthNav
                 label={monthTitle(pager.month, "pt-BR")}
                 count={`${pager.items.length} ${pager.items.length === 1 ? "turma" : "turmas"}`}
@@ -242,7 +254,7 @@ export default function AgendaApp() {
               />
               <ul className="space-y-4">
                 {pager.items.map((e) => (
-                  <EventItem key={e.id} event={e} featured={e.id === nextId} />
+                  <EventItem key={e.id} event={e} featured={e.id === nextId} density={density} />
                 ))}
               </ul>
             </>
