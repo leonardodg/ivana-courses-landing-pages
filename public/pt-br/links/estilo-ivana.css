@@ -1,13 +1,7 @@
-/* Página de links BR, versão "Ivana": fundo creme liso, foto, botões em pílula (rosa nos destaques, contorno nos demais). */
+/* Página de links BR: mesma base do style.css (design system do site); aqui só a foto no lugar da logo. */
 body::before { display: none; }
+body { background: linear-gradient(180deg, #FCF9F5, #F7EFE4); background-attachment: fixed; }
 .foto {
   width: 112px; height: 112px; margin: 0 auto 18px; display: block; border-radius: 9999px;
-  object-fit: cover; object-position: 50% 20%; border: 3px solid var(--rose);
+  object-fit: cover; object-position: 50% 20%; border: 3px solid var(--primary-container); box-shadow: var(--shadow-sm);
 }
-.btn { border-radius: 9999px; box-shadow: none; }
-.btn-primary { background: var(--rose); color: var(--ink); }
-.btn-primary:hover { box-shadow: var(--shadow-soft); }
-.btn-secondary { background: var(--paper); border: 1.5px solid var(--rose); color: var(--ink); }
-.btn-secondary.hl { background: var(--rose); }
-.btn-secondary:hover { background: var(--paper); border-color: var(--rose-deep); }
-.btn-secondary.hl:hover { background: var(--rose); }
