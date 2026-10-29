@@ -12,7 +12,7 @@ refeitas com os componentes de `ui/`: `OnlineCoursePageApp` (`src/app/pages/`) m
 conteúdo em `src/app/data/online_courses.ts` (textos, preço, links da Hotmart, fotos em `public/images/online/`).
 Navbar, herói, faixa de números, depoimentos, perguntas, contato e rodapé são os mesmos do resto do site.
 **Para mudar texto, preço ou link de compra, edite só `online_courses.ts`; para mudar o visual, edite `ui/`.**
-Componentes novos desta migração: `StatsBar`, `Gallery`, `InfoGrid`, `Profile`, `PriceBlock`, `PurchaseCta`,
+Componentes novos desta migração: `StatsBar`, `Gallery`, `InfoBlocks`, `Profile`, `PriceBlock`, `PurchaseCta`,
 `StickyBuyBar`, `emphasis` (títulos com *destaque*).
 
 ## Regra de ouro: um componente, um lugar
