@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import SiteNavbar from "../components/SiteNavbar";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 import { useDensity } from "../hooks/useDensity";
+import { eventJsonLd } from "../seo/events";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
 import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, MonthNav, WhatsAppFab, btnOutline, btnPrimary } from "../ui";
 
@@ -43,24 +44,6 @@ function calendarLink(e: AgendaEvent): string | null {
     location: [e.venue, e.address].filter(Boolean).join(", "),
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
-}
-
-function eventJsonLd(events: AgendaEvent[]) {
-  return events.map((e) => ({
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: e.title,
-    startDate: e.start,
-    endDate: e.end,
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    location: {
-      "@type": "Place",
-      name: e.venue || e.city || "Ivana Academy",
-      address: e.address || e.city,
-    },
-    organizer: { "@type": "Organization", name: "Ivana Academy", url: "https://courses.ivana.academy/" },
-  }));
 }
 
 function EventItem({ event, featured, density }: { event: AgendaEvent; featured: boolean; density: Density }) {

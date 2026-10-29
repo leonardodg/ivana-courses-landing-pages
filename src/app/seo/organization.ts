@@ -1,8 +1,6 @@
-// Fonte unica de valores reais usados nos blocos JSON-LD dos 4 HTMLs estaticos
-// (src/pt-br/index.html, src/pt-br/interesse/index.html, src/pt-br/cursos/velas/index.html,
-// src/es-ar/carreras/tecnicatura-arte-diseno-velas/index.html) e no sitemap.xml. Nao e importado em runtime —
-// os HTMLs sao estaticos — serve so para evitar que os mesmos valores
-// divirjam entre copias manuais.
+// Valores reais de referência da organização (URL, razão social, contatos), para conferir os JSON-LD em
+// src/app/seo/jsonld/*.json (um arquivo por página, injetados no <head> pelo plugin inject-json-ld do vite.config.ts)
+// e o sitemap. Ao mudar telefone, e-mail ou endereço, atualize aqui e nos JSON-LD.
 
 export const baseUrl = "https://courses.ivana.academy";
 export const platformUrl = "https://ivana.academy";

@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://courses.ivana.academy/#organization",
+      "name": "Ivana Academy",
+      "legalName": "Ivana Lerea LTDA",
+      "url": "https://ivana.academy",
+      "logo": "https://courses.ivana.academy/images/logo.svg",
+      "sameAs": [
+        "https://wa.me/5548991671659",
+        "https://wa.me/5493757201014"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+54 3757 20-1014",
+          "email": "contacto@ivana.academy",
+          "areaServed": "AR",
+          "contactType": "customer support"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://courses.ivana.academy/#website",
+      "url": "https://courses.ivana.academy/",
+      "name": "Ivana Academy",
+      "publisher": {
+        "@id": "https://courses.ivana.academy/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://courses.ivana.academy/es-ar/agenda/#webpage",
+      "url": "https://courses.ivana.academy/es-ar/agenda/",
+      "name": "Agenda de la Cohorte 2027: carreras online | Ivana Academy",
+      "description": "Calendario de la Cohorte 2027 de las carreras online de Ivana Academy: inicio de cursada, módulos, repaso, receso y cierre. Inscripción abierta todo el año.",
+      "inLanguage": "es-AR",
+      "isPartOf": {
+        "@id": "https://courses.ivana.academy/#website"
+      }
+    }
+  ]
+}
