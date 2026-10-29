@@ -4,7 +4,7 @@ export * from './styles';
 export { default as SectionHeader } from './SectionHeader';
 export { default as Section } from './Section';
 export { default as Hero, HeroBadgeText } from './Hero';
-export type { HeroAction } from './Hero';
+export type { HeroAction, HeroSlide, HeroProps } from './Hero';
 export { default as Card, CardGrid, cardGridClass } from './Card';
 export type { CardProps, CardTurma } from './Card';
 export { default as GradeModal } from './GradeModal';
