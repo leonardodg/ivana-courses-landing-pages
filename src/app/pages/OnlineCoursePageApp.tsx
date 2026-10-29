@@ -32,7 +32,6 @@ import {
   PurchaseCta,
   Section,
   SectionHeader,
-  StatsBar,
   Steps,
   StickyBuyBar,
   emphasis,
@@ -168,14 +167,15 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
           primary={{ label: c.buy.label, href: c.buy.href, icon: ListChecks, external: true }}
           secondary={{ label: 'Ver o conteúdo', href: firstAnchor ? `#${firstAnchor}` : '#cursos', icon: ListChecks }}
           photo={{ src: c.hero_img.src, alt: c.hero_img.alt, position: 'top' }}
-          stats={
+          backdrop={{ src: c.slug === 'velas' ? '/images/courses/velas-pavio-madeira.jpg' : '/images/courses/saboaria.jpg', alt: c.name }}
+          stats={c.stats}
+          extra={
             <div className="space-y-2">
               <PriceBlock main={c.price_label.main} sub={c.price_label.sub} />
               <p className="text-xs text-on-surface-variant">{c.guarantee}</p>
             </div>
           }
         />
-        <StatsBar items={c.stats} />
 
         {c.sections.map(render)}
 

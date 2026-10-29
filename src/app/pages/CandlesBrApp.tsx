@@ -22,7 +22,8 @@ import CandlesCheckoutModal from '../components/CandlesCheckoutModal';
 import CandlesStudentPortal from '../components/CandlesStudentPortal';
 
 import Footer from "../components/Footer";
-import { BrazilFlag, Hero, HeroBadgeText, StatsBar } from '../ui';
+import { BrazilFlag, Hero, HeroBadgeText } from '../ui';
+import { hero_stats_br } from '../data/hero_stats';
 
 import { Menu, SquarePen } from "lucide-react";
 
@@ -82,15 +83,7 @@ export default function CandlesBrApp() {
           secondary={{ label: courses_text.btnContact, href: '#contato', icon: SquarePen }}
           photo={{ src: '/images/ivana-com-velas.jpg', alt: 'Ivana Lerea segurando velas artesanais feitas na aula', position: 'top' }}
           backdrop={{ src: heroContent.imageUrl, alt: heroContent.title[LANGUAGE], gradientClass: activeCategory.heroBgClass }}
-        />
-
-        {/* Faixa de números */}
-        <StatsBar
-          items={[
-            { value: '+3.000', label: courses_text.statsAlunas },
-            { value: '6+ Anos', label: courses_text.statsExp },
-            { value: 'BR & AR', label: courses_text.statsPort },
-          ]}
+          stats={hero_stats_br}
         />
 
         {/* Presenciais: turmas da agenda e cursos, com compra na loja */}

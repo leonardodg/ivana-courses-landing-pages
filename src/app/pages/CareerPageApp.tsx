@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { CalendarDays, MessageCircle } from 'lucide-react';
 import type { Language } from '../classes/types';
-import { ar_pages, ArPageSlug, carreras_ar, WHATSAPP_AR } from '../data/carreras_ar';
+import { ar_hero, ar_pages, ArPageSlug, carreras_ar, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
 import { useAgenda } from '../hooks/useAgenda';
 import SiteNavbar from '../components/SiteNavbar';
@@ -14,6 +14,8 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
+import { hero_stats_ar } from '../data/hero_stats';
+import { GRASSI_SEAL } from '../data/hero_seals';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
 import {
   CarrerasGrid,
@@ -57,6 +59,9 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
           primary={{ label: 'Ver cohorte 2027', href: '#cohorte', icon: CalendarDays }}
           secondary={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true }}
           photo={{ src: carrera.image, alt: carrera.nombre, position: carrera.imagePos }}
+          backdrop={{ src: ar_hero[carrera.page], alt: carrera.nombre, position: '78% center' }}
+          seal={GRASSI_SEAL}
+          stats={hero_stats_ar}
         />
 
         <CohorteSection carrera={carrera} agenda={agenda} />

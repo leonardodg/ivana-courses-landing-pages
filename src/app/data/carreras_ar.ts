@@ -170,6 +170,17 @@ export const ar_pages: Record<ArPageSlug, ArPage> = {
   mixmedia:   { slug: 'mixmedia',   path: '/es-ar/carreras/profesorado-arte-mix-media/',   title: 'Arte mix media', courses: ['ar-mixmedia'] },
 };
 
+/** Fundo do herói de cada página de carreras (ilustração da marca, em public/images/ar/). */
+export const ar_hero: Record<ArPageSlug, string> = {
+  candles: '/images/ar/hero-velas.svg',
+  resin: '/images/ar/hero-resinas.svg',
+  macrame: '/images/ar/hero-macrame.svg',
+  textil: '/images/ar/hero-estampas.svg',
+  interiores: '/images/ar/hero-interiores.svg',
+  mixmedia: '/images/ar/hero-mixmedia.svg',
+};
+export const ar_hero_general = '/images/ar/hero-carreras.svg';
+
 /** Carreras de entrada (as 6 da vitrine), na ordem da página inicial. */
 export const carreras_principales = [
   'ar-velas',

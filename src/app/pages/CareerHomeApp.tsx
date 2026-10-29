@@ -2,9 +2,9 @@
 // Segue docs/GUIA-DE-ESTILO.md (mesma navbar, herói, grade de cards e passos das páginas pt_BR).
 
 import { useState } from 'react';
-import { GraduationCap, MessageCircle } from 'lucide-react';
+import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react';
 import type { Language } from '../classes/types';
-import { ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
+import { ar_hero, ar_hero_general, ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
 import SiteNavbar from '../components/SiteNavbar';
 import { useAgenda } from '../hooks/useAgenda';
@@ -13,7 +13,9 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
-import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader } from '../ui';
+import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader, type HeroSlide } from '../ui';
+import { hero_stats_ar } from '../data/hero_stats';
+import { GRASSI_SEAL } from '../data/hero_seals';
 import {
   CarrerasGrid,
   ComoInscribirmeSection,
@@ -24,6 +26,45 @@ import {
 } from '../components/theme/CareerSections';
 
 
+const heroLabels = { prev: 'Slide anterior', next: 'Siguiente slide', carousel: 'Carreras destacadas', slide: 'Ir al slide' };
+
+// Primeiro slide: apresentação geral; depois, um slide por carrera, com link para a página dela.
+const heroSlides: HeroSlide[] = [
+  {
+    id: 'inicio',
+    badge: (
+      <>
+        <ArgentinaFlag />
+        <HeroBadgeText>100% online · Conservatorio Grassi</HeroBadgeText>
+      </>
+    ),
+    title: 'Carreras online con título del Conservatorio Grassi',
+    text: 'Estudiás desde tu casa, con un módulo por mes y el acompañamiento de la profesora Ivana Lerea. La inscripción está abierta todo el año.',
+    primary: { label: 'Ver carreras', href: '#carreras', icon: GraduationCap },
+    secondary: { label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true },
+    backdrop: { src: ar_hero_general, alt: 'Carreras online de Ivana Academy', position: '78% center' },
+    seal: GRASSI_SEAL,
+  },
+  ...carreras_principales.map((c): HeroSlide => {
+    const carrera = carreras_ar[c];
+    return {
+      id: c,
+      badge: (
+        <>
+          <ArgentinaFlag />
+          <HeroBadgeText>{carrera.nivel === 'tecnicatura' ? 'Tecnicatura' : 'Profesorado'} · {carrera.meses} meses · 100% online</HeroBadgeText>
+        </>
+      ),
+      title: carrera.nombre,
+      text: `Un módulo por mes, con evaluación y el acompañamiento de la profesora Ivana Lerea. Título del Conservatorio Grassi.`,
+      primary: { label: 'Ver la carrera', href: ar_pages[carrera.page].path, icon: ArrowRight },
+      secondary: { label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true },
+      backdrop: { src: ar_hero[carrera.page], alt: carrera.nombre, position: '78% center' },
+      seal: GRASSI_SEAL,
+    };
+  }),
+];
+
 export default function CareerHomeApp() {
   const language: Language = 'es';
   const agenda = useAgenda('AR');
@@ -33,19 +74,7 @@ export default function CareerHomeApp() {
       <SiteNavbar />
 
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
-        <Hero
-          badge={
-            <>
-              <ArgentinaFlag />
-              <HeroBadgeText>100% online · Conservatorio Grassi</HeroBadgeText>
-            </>
-          }
-          title="Carreras online con título del Conservatorio Grassi"
-          text="Estudiás desde tu casa, con un módulo por mes y el acompañamiento de la profesora Ivana Lerea. La inscripción está abierta todo el año."
-          primary={{ label: 'Ver carreras', href: '#carreras', icon: GraduationCap }}
-          secondary={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true }}
-          photo={{ src: '/images/ar/velas.jpg', alt: 'Ivana Lerea, profesora de las carreras online', position: 'center 30%' }}
-        />
+        <Hero slides={heroSlides} stats={hero_stats_ar} labels={heroLabels} />
 
         <Section id="carreras" bg="white" border="y" width="wide">
           <SectionHeader kicker="LAS CARRERAS" title="Elegí tu carrera" sub="Todas son 100% online y terminan con el título del Conservatorio Grassi." />
