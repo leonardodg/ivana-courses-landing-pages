@@ -24,7 +24,7 @@ import type { AgendaEvent, AgendaState } from '../../hooks/useAgenda';
 import { CarreraAr, carreras_ar, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
 import { trackSelectCareer } from '../../lib/analytics';
 import type { FAQItem } from '../../classes/types';
-import { Card, CardGrid, ContactCta, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary, textLink } from '../../ui';
+import { Card, CardGrid, ContactCta, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary } from '../../ui';
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 export const fmtDay = (iso: string) =>
@@ -331,10 +331,9 @@ export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
 /* ── Cómo es la cursada (InfoBlocks sin número) ──────────────────────────── */
 export function CursadaSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
   return (
-    <Section id="cursada" bg={bg} border="top" width="mid">
+    <Section id="cursada" bg={bg} border="top" width="wide">
       <SectionHeader kicker="CÓMO ES LA CURSADA" title="100% online, con acompañamiento" />
       <InfoBlocks
-        layout="stack"
         tone={bg === 'cream' ? 'white' : 'stone'}
         items={[
           { icon: CalendarDays, title: 'Un módulo por mes', text: 'Avanzás a tu ritmo dentro de cada módulo, con una propuesta clara por mes.' },
@@ -343,9 +342,6 @@ export function CursadaSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
           { icon: Medal, title: 'Evaluación y seguimiento', text: 'Cada módulo tiene evaluación, y los exámenes pueden rendirse online.' },
         ]}
       />
-      <p className="text-center mt-8">
-        <a href="https://ivana.academy" target="_blank" rel="noreferrer" className={textLink}>Campus virtual</a>
-      </p>
     </Section>
   );
 }
@@ -353,17 +349,15 @@ export function CursadaSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
 /* ── Cómo inscribirme (= ComoFuncionaSection do Brasil) ─────────────── */
 export function ComoInscribirmeSection({ bg = 'cream' }: { bg?: 'cream' | 'white' }) {
   return (
-    <Section id="inscripcion" bg={bg} border="top" width="mid">
+    <Section id="inscripcion" bg={bg} border="top" width="wide">
       <SectionHeader kicker="CÓMO INSCRIBIRME" title="Inscribirte es simple" />
       <InfoBlocks
-        layout="stack"
-        numbered
         tone={bg === 'cream' ? 'white' : 'stone'}
         items={[
-          { icon: GraduationCap, title: 'Elegís la carrera', text: 'Mirá el plan y la fecha de inicio y tocá "Ver valores e inscribirme".' },
-          { icon: Mail, title: 'Te registrás en la tienda', text: 'Creás tu cuenta con tus datos, en la tienda de Ivana Academy.' },
-          { icon: CreditCard, title: 'Te suscribís con Mercado Pago', text: 'Pagás una cuota mensual con Mercado Pago.' },
-          { icon: Monitor, title: 'Recibís el acceso', text: 'Entrás al campus virtual y al grupo de tu carrera.' },
+          { icon: GraduationCap, kicker: 'PASO 1', title: 'Elegís la carrera', text: 'Mirá el plan y la fecha de inicio y tocá "Ver valores e inscribirme".' },
+          { icon: Mail, kicker: 'PASO 2', title: 'Te registrás en la tienda', text: 'Creás tu cuenta con tus datos, en la tienda de Ivana Academy.' },
+          { icon: CreditCard, kicker: 'PASO 3', title: 'Te suscribís con Mercado Pago', text: 'Pagás una cuota mensual con Mercado Pago.' },
+          { icon: Monitor, kicker: 'PASO 4', title: 'Recibís el acceso', text: 'Entrás al campus virtual y al grupo de tu carrera.' },
         ]}
       />
       <p className="text-xs text-on-surface-variant text-center mt-8 max-w-xl mx-auto leading-relaxed">
