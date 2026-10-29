@@ -68,6 +68,9 @@ for (const [url, file] of pages) {
   }
 }
 
+// Arquivos opcionais: o componente funciona sem eles (o selo do herói some se o logo não existir).
+const OPTIONAL = new Set(['/images/ar/grassi-logo.png']);
+
 // 3) caminhos escritos nos arquivos de src/ (links dos componentes React)
 for (const f of walk(SRC)) {
   if (!/\.(tsx?|html)$/.test(f)) continue;
@@ -75,7 +78,7 @@ for (const f of walk(SRC)) {
   const txt = fs.readFileSync(f, 'utf8');
   for (const m of txt.matchAll(/['"`](\/(?:pt-br|es-ar|images|assets)\/[A-Za-z0-9\-_/.#?=&%]*)['"`]/g)) {
     if (/\$\{/.test(m[1]) || /\.tsx?$/.test(m[1])) continue; // template ou módulo de origem (<script src="…/main.tsx">)
-    if (!exists(m[1])) err(`${rel}: caminho inexistente ${m[1]}`);
+    if (!OPTIONAL.has(m[1]) && !exists(m[1])) err(`${rel}: caminho inexistente ${m[1]}`);
   }
   for (const m of txt.matchAll(/['"`](\/(?:agenda|interest|links|velas|saboaria|apostila)\/?)['"`]/g)) err(`${rel}: caminho ANTIGO ${m[1]}`);
   if (/\/(pt_br|es_ar)\//.test(txt) && !rel.includes('check-urls')) err(`${rel}: ainda usa /pt_br/ ou /es_ar/`);
