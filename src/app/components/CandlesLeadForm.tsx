@@ -90,7 +90,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
               <span className="text-primary font-label text-xs uppercase tracking-widest font-bold block mb-3">
                 {t.tagLabel}
               </span>
-              <h2 className="font-display text-4xl text-primary leading-tight font-semibold">
+              <h2 className="font-serif text-4xl text-primary leading-tight font-semibold">
                 {t.title}
               </h2>
               <p className="text-on-surface-variant text-base mt-4 leading-relaxed font-body">
@@ -100,7 +100,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
 
             <div className="space-y-4 pt-4 border-t border-outline-variant/30">
               <a
-                href={`tel:${t.contactPhoneDisplay}`}
+                href={`tel:${t.contactPhoneDisplay.replace(/[^\d+]/g, '')}`}
                 className="flex items-center gap-4 text-on-surface hover:text-primary group transition-colors cursor-pointer"
               >
                 <div className="w-11 h-11 rounded-lg bg-surface flex items-center justify-center text-primary shadow-xs group-hover:scale-105 transition-transform">
@@ -262,7 +262,7 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
                     </div>
 
                     <div>
-                      <h3 className="font-display text-2xl font-bold text-primary mb-2">
+                      <h3 className="font-serif text-2xl font-bold text-primary mb-2">
                         {t.successTitle}
                       </h3>
                       <p className="text-on-surface-variant text-sm font-body max-w-md mx-auto">

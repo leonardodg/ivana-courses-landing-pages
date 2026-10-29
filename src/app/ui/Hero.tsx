@@ -47,7 +47,7 @@ export const HeroBadgeText = ({ children }: { children: ReactNode }) => <span cl
 const defaultLabels = { prev: 'Slide anterior', next: 'Próximo slide', carousel: 'Destaques', slide: 'Ir para o slide' };
 
 const arrow =
-  'inline-flex items-center justify-center w-11 h-11 rounded-full border border-subtle bg-white/90 backdrop-blur-md text-primary hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm cursor-pointer';
+  'inline-flex shrink-0 items-center justify-center w-11 h-11 rounded-full border border-subtle bg-white/90 backdrop-blur-md text-primary hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm cursor-pointer';
 
 export default function Hero(props: HeroProps) {
   const slides: HeroSlide[] = props.slides ?? [props];
@@ -151,7 +151,7 @@ export default function Hero(props: HeroProps) {
                   onClick={() => go(i)}
                   aria-label={`${labels.slide} ${i + 1}`}
                   aria-current={i === index}
-                  className="inline-flex items-center justify-center min-w-11 h-11 cursor-pointer"
+                  className="inline-flex items-center justify-center min-w-8 sm:min-w-11 h-11 cursor-pointer"
                 >
                   <span className={`block h-2 rounded-full transition-all ${i === index ? 'w-6 bg-primary' : 'w-2 bg-primary/30'}`} />
                 </button>

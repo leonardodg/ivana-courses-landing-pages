@@ -372,7 +372,7 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
                     {t.atelierLabel}
                   </span>
                   <span className="font-sans text-lg font-bold text-brand-dark block">
-                    Florianópolis, SC — Brasil
+                    Florianópolis, SC, Brasil
                   </span>
                 </div>
               </div>

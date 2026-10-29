@@ -12,7 +12,7 @@ export const candles_lead_text = {
   locationLabel: 'Ateliês',
   contactPhoneDisplay: '+55 48 99167-1659',
   contactEmailDisplay: 'contato@ivana.academy',
-  contactLocationDisplay: 'Florianópolis, SC — Brasil',
+  contactLocationDisplay: 'Florianópolis, SC, Brasil',
 
   formName: 'Nome completo',
   formNamePlaceholder: 'Seu nome completo',

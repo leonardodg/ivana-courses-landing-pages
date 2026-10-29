@@ -65,7 +65,7 @@ body::before {
 }
 .mark img { width: 84px; height: auto; display: block; }
 h1 {
-  font-family: var(--serif); font-weight: 700; color: var(--ink);
+  font-family: var(--serif); font-weight: 400; color: var(--ink);
   font-size: 34px; line-height: 40px; letter-spacing: -0.02em; margin: 0 0 12px;
 }
 h1 em { color: var(--primary); font-style: italic; font-weight: 400; }
@@ -117,9 +117,9 @@ h1 em { color: var(--primary); font-style: italic; font-weight: 400; }
 }
 .card-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; padding: 14px 12px 6px; }
 .card-head h2 { white-space: nowrap; }
-.card-head h2 { margin: 0; font-family: var(--serif); font-weight: 700; font-size: 22px; line-height: 30px; letter-spacing: -0.01em; }
+.card-head h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 30px; letter-spacing: -0.01em; }
 .card-head h2 em { color: var(--primary); font-weight: 400; }
-.kicker { font-family: var(--mono); font-size: 10px; line-height: 16px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.kicker { font-family: var(--mono); font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
 
 /* evento em destaque = EventCard "featured" */
 .feature {
@@ -133,7 +133,7 @@ h1 em { color: var(--primary); font-style: italic; font-weight: 400; }
 .when {
   display: inline-block; padding: 4px 10px; border-radius: 9999px; background: rgba(128, 82, 82, .1); color: var(--primary);
   border: 1px solid rgba(128, 82, 82, .2);
-  font-family: var(--mono); font-size: 10px; line-height: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
 }
 .feature h3 { margin: 12px 0 4px; font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 30px; letter-spacing: -0.01em; color: var(--ink); }
 .feature p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
@@ -149,11 +149,11 @@ h1 em { color: var(--primary); font-style: italic; font-weight: 400; }
 .event { display: grid; grid-template-columns: 52px 1fr 20px; gap: 14px; align-items: center; padding: 12px; margin: 0 4px; border-radius: 12px; text-decoration: none; color: inherit; transition: background-color .2s; }
 .event:hover { background: var(--surface); }
 .date { text-align: center; border-radius: 12px; padding: 6px 0; background: var(--surface); border: 1px solid var(--line); color: var(--ink); font-family: var(--serif); font-size: 22px; line-height: 24px; }
-.date small { display: block; font-family: var(--mono); font-size: 10px; line-height: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); }
+.date small { display: block; font-family: var(--mono); font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); }
 .ev-title { font-family: var(--serif); font-size: 17px; font-weight: 400; display: block; line-height: 22px; color: var(--ink); }
 .ev-meta { color: var(--ink-soft); font-size: 13px; line-height: 20px; display: block; }
 .event .chev { width: 18px; height: 18px; fill: none; stroke: var(--primary); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
-.tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 9999px; background: rgba(128, 82, 82, .1); color: var(--primary); border: 1px solid rgba(128, 82, 82, .2); font-family: var(--mono); font-size: 10px; line-height: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; vertical-align: 1px; }
+.tag { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 9999px; background: rgba(128, 82, 82, .1); color: var(--primary); border: 1px solid rgba(128, 82, 82, .2); font-family: var(--mono); font-size: 11px; line-height: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; vertical-align: 1px; }
 .more { display: flex; align-items: center; justify-content: center; min-height: 44px; margin: 4px 4px 8px; padding: 12px; text-align: center; color: var(--primary); font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; border-radius: 12px; }
 .more:hover { background: var(--surface); text-decoration: underline; }
 
@@ -163,7 +163,7 @@ h1 em { color: var(--primary); font-style: italic; font-weight: 400; }
 .social a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 .social svg { width: 20px; height: 20px; fill: currentColor; }
 
-footer { margin-top: 28px; text-align: center; color: var(--ink-soft); font-family: var(--mono); font-size: 10px; line-height: 16px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
+footer { margin-top: 28px; text-align: center; color: var(--ink-soft); font-family: var(--mono); font-size: 11px; line-height: 16px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
 .leaf { display: block; width: 28px; height: auto; margin: 0 auto 10px; opacity: .8; }
 
 @media (max-width: 360px) { h1 { font-size: 30px; line-height: 36px; } .page { padding-inline: 16px; } .btn { font-size: 11px; } }

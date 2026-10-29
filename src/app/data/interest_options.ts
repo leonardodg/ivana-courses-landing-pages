@@ -48,7 +48,7 @@ const brInterest = (c: (typeof courses_list_br)[number]): string =>
 
 const BR_COURSES: InterestCourse[] = courses_list_br.map((c) => ({
   id: c.id,
-  label: `${c.title.pt} — ${c.modalidade === 'presencial' ? 'Presencial' : 'Online'}`,
+  label: `${c.title.pt} (${c.modalidade === 'presencial' ? 'Presencial' : 'Online'})`,
   modalidade: c.modalidade,
   interests: [brInterest(c)],
 }));

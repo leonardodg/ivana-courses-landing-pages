@@ -70,19 +70,19 @@ export default function Footer() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-6 border-t border-muted mt-12 pt-6 text-center text-on-surface-variant text-[11px] space-y-3">
-        <nav aria-label={language === "es" ? "Información legal" : "Informações legais"} className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs">
+        <nav aria-label={language === "es" ? "Información legal" : "Informações legais"} className="flex flex-wrap justify-center gap-x-5 gap-y-0 text-xs">
           {legalLinks.map((l) => (
-            <a key={l.href} href={language === "es" ? l.hrefEs : l.href} className="underline hover:text-primary">{l.label[language]}</a>
+            <a key={l.href} href={language === "es" ? l.hrefEs : l.href} className="underline hover:text-primary inline-flex min-h-11 items-center">{l.label[language]}</a>
           ))}
           {language === "es" && (
             <>
-              <a href="/es-ar/arrepentimiento/" className="underline hover:text-primary">Botón de arrepentimiento</a>
-              <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noreferrer" className="underline hover:text-primary">
+              <a href="/es-ar/arrepentimiento/" className="underline hover:text-primary inline-flex min-h-11 items-center">Botón de arrepentimiento</a>
+              <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noreferrer" className="underline hover:text-primary inline-flex min-h-11 items-center">
                 Defensa de las y los Consumidores: para reclamos, ingresá acá
               </a>
             </>
           )}
-          <button type="button" onClick={openCookiePreferences} className="underline hover:text-primary cursor-pointer">
+          <button type="button" onClick={openCookiePreferences} className="underline hover:text-primary cursor-pointer inline-flex min-h-11 items-center">
             {language === "es" ? "Preferencias de cookies" : "Preferências de cookies"}
           </button>
         </nav>
