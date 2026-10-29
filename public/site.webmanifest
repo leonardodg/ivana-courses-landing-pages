@@ -1,0 +1,15 @@
+{
+  "name": "Ivana Academy",
+  "short_name": "Ivana Academy",
+  "description": "Cursos presenciais e online de velas, saboaria, aromas, resinas e macramê no Brasil, e carreras online com título do Conservatorio Grassi na Argentina.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#FCF9F5",
+  "theme_color": "#FCF9F5",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
