@@ -106,7 +106,7 @@ export default function EventCard({
                 </p>
               ))}
               {note && <p className="text-sm text-on-surface-variant">{note}</p>}
-              {actions && <div className="flex flex-wrap gap-3 pt-1">{actions}</div>}
+              {actions && <div className="flex flex-wrap justify-end gap-3 pt-1">{actions}</div>}
             </div>
           )}
 
