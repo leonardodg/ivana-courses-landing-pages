@@ -83,7 +83,7 @@ export default function App() {
       backdrop: { src: content.imageUrl, alt: content.title[language], gradientClass: cat.heroBgClass },
       photo:
         id === "velas"
-          ? { src: "/images/ivana-com-velas.jpg", alt: "Ivana Lerea segurando velas artesanais feitas na aula", position: "top" }
+          ? { src: "/images/ivana-com-velas.webp", alt: "Ivana Lerea segurando velas artesanais feitas na aula", position: "top" }
           : undefined,
     };
   });

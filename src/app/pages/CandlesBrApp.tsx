@@ -82,7 +82,7 @@ export default function CandlesBrApp() {
           text={heroContent.desc[LANGUAGE]}
           primary={{ label: courses_text.btnCourses, href: '#cursos', icon: Menu }}
           secondary={{ label: courses_text.btnContact, href: '#contato', icon: SquarePen }}
-          photo={{ src: '/images/ivana-com-velas.jpg', alt: 'Ivana Lerea segurando velas artesanais feitas na aula', position: 'top' }}
+          photo={{ src: '/images/ivana-com-velas.webp', alt: 'Ivana Lerea segurando velas artesanais feitas na aula', position: 'top' }}
           backdrop={{ src: heroContent.imageUrl, alt: heroContent.title[LANGUAGE], gradientClass: activeCategory.heroBgClass }}
           stats={hero_stats_br}
         />

@@ -36,7 +36,7 @@ const THEMES: Record<'saboaria' | 'aromas' | 'resina', ThemeConfig> = {
     kicker: 'Cursos presenciais de saboaria',
     title: 'Saboaria e Extratos Naturais',
     intro: 'Aprenda do zero, pelo método melt and pour, e leve para casa os sabonetes que você produzir.',
-    heroImage: '/images/courses/saboaria.jpg',
+    heroImage: '/images/courses/saboaria.webp',
     online: [
       { title: 'Curso online de Saboaria', text: 'Aulas gravadas para aprender no seu ritmo.', href: '/pt-br/cursos/online/saboaria-com-extratos-naturais/', cta: 'Conhecer o curso' },
       { title: 'Apostila de 60 receitas', text: 'Receitas de saboaria para começar a produzir.', href: '/pt-br/apostilas/60-receitas-de-sabonetes/', cta: 'Ver a apostila' },
@@ -47,7 +47,7 @@ const THEMES: Record<'saboaria' | 'aromas' | 'resina', ThemeConfig> = {
     kicker: 'Cursos presenciais de aromas',
     title: 'Aromatizantes, Perfumes e Incensos',
     intro: 'Crie os seus próprios aromas e leve os produtos para casa, em encontros práticos e do zero.',
-    heroImage: '/images/courses/aromatizantes-difusor.jpg',
+    heroImage: '/images/courses/aromatizantes-difusor.webp',
     online: [],
   },
   resina: {
@@ -55,7 +55,7 @@ const THEMES: Record<'saboaria' | 'aromas' | 'resina', ThemeConfig> = {
     kicker: 'Cursos presenciais de resina e decoração',
     title: 'Resina e Decoração',
     intro: 'Resina, pedras, concreto e tricô gigante: peças de decoração feitas por você, no seu ritmo.',
-    heroImage: '/images/courses/resina-bandeja-flores.jpg',
+    heroImage: '/images/courses/resina-bandeja-flores.webp',
     online: [],
   },
 };

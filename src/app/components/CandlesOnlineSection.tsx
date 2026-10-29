@@ -15,9 +15,9 @@ interface CandlesOnlineSectionProps {
 }
 
 const IMAGES: Record<string, string> = {
-  'profesorado-velas-ar':   '/images/courses/velas-maos.jpg',
-  'tecnicatura-velas-ar':   '/images/courses/velas-online.jpg',
-  'curso-velas-virtual-br': '/images/courses/velas-online.jpg',
+  'profesorado-velas-ar':   '/images/courses/velas-maos.webp',
+  'tecnicatura-velas-ar':   '/images/courses/velas-online.webp',
+  'curso-velas-virtual-br': '/images/courses/velas-online.webp',
 };
 
 const BADGES: Record<string, { label: string; color: string }> = {
@@ -60,7 +60,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
         {/* Cards — layout horizontal */}
         <div className="space-y-6">
           {online.map((course) => {
-            const img   = IMAGES[course.id] ?? '/images/courses/velas-pavio-madeira.jpg';
+            const img   = IMAGES[course.id] ?? '/images/courses/velas-pavio-madeira.webp';
             const badge = BADGES[course.id];
 
             return (
@@ -162,7 +162,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
 
             <div className="relative aspect-[16/7] bg-gray-200">
               <img loading="lazy" decoding="async"
-                src={IMAGES[selectedCourse.id] ?? '/images/courses/velas-pavio-madeira.jpg'}
+                src={IMAGES[selectedCourse.id] ?? '/images/courses/velas-pavio-madeira.webp'}
                 alt=""
                 className="w-full h-full object-cover"
               />

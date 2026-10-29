@@ -18,8 +18,10 @@ export default function AboutSection({ language }: AboutSectionProps) {
           <div className="aspect-[3/4] max-w-[420px] mx-auto rounded-2xl overflow-hidden shadow-lg border border-faint relative z-10 bg-surface-hero">
             <img loading="lazy" decoding="async"
               alt="Ivana Lerea - Mentora"
+              width={832}
+              height={1248}
               className="w-full h-full object-cover select-none"
-              src="/images/portfolio/ivana-servindo-cera.jpg"
+              src="/images/portfolio/ivana-servindo-cera.webp"
             />
             {/* Elegant Caption Overlay */}
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">

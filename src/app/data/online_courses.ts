@@ -61,7 +61,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
     "guarantee": "Garantia de 7 dias. Se não gostar, você pede o reembolso.",
     "hero_img": {
       "alt": "Ivana Lerea de avental, segurando duas velas em copo",
-      "src": "/images/online/velas-03.jpg"
+      "src": "/images/online/velas-03.webp"
     },
     "stats": [
       {
@@ -135,31 +135,31 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "type": "gallery",
         "items": [
           {
-            "src": "/images/online/velas-04.jpg",
+            "src": "/images/online/velas-04.webp",
             "alt": "Velas moldáveis brancas em formatos variados",
             "caption": "Velas moldáveis em formatos variados",
             "wide": true
           },
           {
-            "src": "/images/online/velas-05.jpg",
+            "src": "/images/online/velas-05.webp",
             "alt": "Vela de cera cremosa em pote de madeira com pavio de madeira",
             "caption": "Vela aromática, com diversos pavios",
             "wide": false
           },
           {
-            "src": "/images/online/velas-06.jpg",
+            "src": "/images/online/velas-06.webp",
             "alt": "Vela espiral branca sobre bandeja de bambu",
             "caption": "",
             "wide": false
           },
           {
-            "src": "/images/online/velas-07.jpg",
+            "src": "/images/online/velas-07.webp",
             "alt": "Vela em copo com pavio de madeira e logo da Ivana Academy",
             "caption": "Vela aromática, com diversos pavios",
             "wide": false
           },
           {
-            "src": "/images/online/velas-08.jpg",
+            "src": "/images/online/velas-08.webp",
             "alt": "Velas em formato de rosas e ursinho em caixas rosa",
             "caption": "",
             "wide": false
@@ -245,7 +245,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "title": "Ivana Lerea, da *Ivana Academy*",
         "type": "profile",
         "img": {
-          "src": "/images/online/velas-09.jpg",
+          "src": "/images/online/velas-09.webp",
           "alt": "Ivana Lerea sorrindo, com velas e wax melts sobre a mesa"
         },
         "text": "Mais de 3.000 alunas já aprenderam com a Ivana, online e em cursos presenciais em Florianópolis, em outras cidades do Brasil e na Argentina. Agora você leva o jeito dela de ensinar, com linguagem simples e passo a passo, para assistir em casa, no seu ritmo."
@@ -303,7 +303,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
     "guarantee": "Garantia de 7 dias. Se não gostar, você pede o reembolso.",
     "hero_img": {
       "alt": "Ivana Lerea de avental, segurando uma barra de base glicerinada perolada",
-      "src": "/images/online/saboaria-03.jpg"
+      "src": "/images/online/saboaria-03.webp"
     },
     "stats": [
       {
@@ -377,13 +377,13 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "type": "gallery",
         "items": [
           {
-            "src": "/images/online/saboaria-04.jpg",
+            "src": "/images/online/saboaria-04.webp",
             "alt": "Sabonete massageador de melancia",
             "caption": "Sabonete massageador de melancia",
             "wide": false
           },
           {
-            "src": "/images/online/saboaria-05.jpg",
+            "src": "/images/online/saboaria-05.webp",
             "alt": "Sabonete esfoliante de maracujá com óleo de amêndoas",
             "caption": "Maracujá com óleo de amêndoas, esfoliante e hidratante",
             "wide": false
@@ -396,13 +396,13 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "type": "gallery",
         "items": [
           {
-            "src": "/images/online/saboaria-06.jpg",
+            "src": "/images/online/saboaria-06.webp",
             "alt": "Sabonete de aveia e mel com bucha vegetal ao fundo",
             "caption": "Sabonete de aveia e mel",
             "wide": false
           },
           {
-            "src": "/images/online/saboaria-07.jpg",
+            "src": "/images/online/saboaria-07.webp",
             "alt": "Sabonetes de alecrim com bucha vegetal ao fundo",
             "caption": "Sabonetes de alecrim",
             "wide": false
@@ -521,7 +521,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "title": "Ivana Lerea, da *Ivana Academy*",
         "type": "profile",
         "img": {
-          "src": "/images/online/saboaria-08.jpg",
+          "src": "/images/online/saboaria-08.webp",
           "alt": "Ivana Lerea sorrindo no ateliê"
         },
         "text": "Mais de 3.000 alunas já aprenderam com a Ivana, online e em cursos presenciais em Florianópolis, em outras cidades do Brasil e na Argentina. Agora você leva o jeito dela de ensinar, com linguagem simples e passo a passo, para assistir em casa, no seu ritmo."
@@ -579,7 +579,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
     "guarantee": "Acesso imediato em PDF. Garantia de 7 dias.",
     "hero_img": {
       "alt": "Capa da apostila 60 receitas de sabonetes",
-      "src": "/images/online/apostila-03.jpg"
+      "src": "/images/online/apostila-03.webp"
     },
     "stats": [
       {
@@ -602,13 +602,13 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "type": "gallery",
         "items": [
           {
-            "src": "/images/online/saboaria-06.jpg",
+            "src": "/images/online/saboaria-06.webp",
             "alt": "Sabonete de aveia e mel com bucha vegetal ao fundo",
             "caption": "Sabonete de aveia e mel",
             "wide": false
           },
           {
-            "src": "/images/online/saboaria-07.jpg",
+            "src": "/images/online/saboaria-07.webp",
             "alt": "Sabonetes de alecrim com bucha vegetal ao fundo",
             "caption": "Sabonetes de alecrim",
             "wide": false
@@ -693,7 +693,7 @@ export const online_courses: Record<OnlineCourse['slug'], OnlineCourse> = {
         "title": "Ivana Lerea, da *Ivana Academy*",
         "type": "profile",
         "img": {
-          "src": "/images/online/saboaria-08.jpg",
+          "src": "/images/online/saboaria-08.webp",
           "alt": "Ivana Lerea sorrindo no ateliê"
         },
         "text": "Mais de 3.000 alunas já aprenderam com a Ivana, online e em cursos presenciais em Florianópolis, em outras cidades do Brasil e na Argentina. As receitas desta apostila vêm do jeito dela de ensinar: simples, com medidas claras e passo a passo."

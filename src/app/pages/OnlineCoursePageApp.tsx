@@ -171,7 +171,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
           primary={{ label: c.buy.label, href: c.buy.href, icon: ListChecks, external: true }}
           secondary={{ label: 'Ver o conteúdo', href: firstAnchor ? `#${firstAnchor}` : '#cursos', icon: ListChecks }}
           photo={{ src: c.hero_img.src, alt: c.hero_img.alt, position: 'top' }}
-          backdrop={{ src: c.slug === 'velas' ? '/images/courses/velas-pavio-madeira.jpg' : '/images/courses/saboaria.jpg', alt: c.name }}
+          backdrop={{ src: c.slug === 'velas' ? '/images/courses/velas-pavio-madeira.webp' : '/images/courses/saboaria.webp', alt: c.name }}
           stats={c.stats}
           extra={
             <div className="space-y-2">

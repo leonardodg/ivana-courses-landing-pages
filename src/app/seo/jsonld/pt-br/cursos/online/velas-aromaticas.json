@@ -42,7 +42,7 @@
       "provider": {
         "@id": "https://courses.ivana.academy/#organization"
       },
-      "image": "https://courses.ivana.academy/images/online/velas-03.jpg",
+      "image": "https://courses.ivana.academy/images/online/velas-03.webp",
       "offers": {
         "@type": "Offer",
         "price": "197",
