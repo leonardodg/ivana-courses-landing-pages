@@ -6,7 +6,7 @@ import { category_images } from '../data/category_images';
 import { MapPin, Calendar } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { CursoCard } from './theme/ThemeSections';
-import { Card, Section, SectionHeader, btnPrimary, cardGridClass } from '../ui';
+import { Card, CardGrid, Section, SectionHeader, btnPrimary } from '../ui';
 import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
 
 interface CourseGridProps {
@@ -60,7 +60,7 @@ export default function CourseGrid({
           sub={courses_text.description}
         />
 
-        {categoryIds.map((categoryId) => {
+        {categoryIds.map((categoryId, groupIndex) => {
           const homeTheme = language === 'pt' ? home_category_themes[categoryId] : undefined;
           const theme = homeTheme ? presencial_themes[homeTheme.theme] : undefined;
           const themeEvents = theme ? futureEvents.filter(e => theme.courses.includes(e.course)) : [];
@@ -74,7 +74,7 @@ export default function CourseGrid({
                   {CATEGORIES[categoryId].badgeLogo} {CATEGORIES[categoryId].name[language]}
                 </h3>
               )}
-            <div className={cardGridClass}>
+            <CardGrid count={(theme && homeTheme ? theme.courses.length : 0) + categoryCourses.length} toggle={groupIndex === 0}>
               {theme && homeTheme && theme.courses.map(key => (
                 <CursoCard
                   key={key}
@@ -142,7 +142,7 @@ export default function CourseGrid({
                   />
                 );
               })}
-            </div>
+            </CardGrid>
             </div>
           );
         })}

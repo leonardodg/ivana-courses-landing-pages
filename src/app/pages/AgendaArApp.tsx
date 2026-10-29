@@ -8,7 +8,7 @@ import { CalendarDays, Clock, MessageCircle, Monitor } from 'lucide-react';
 import Footer from '../components/Footer';
 import SiteNavbar from '../components/SiteNavbar';
 import { AgendaEvent, useAgenda } from '../hooks/useAgenda';
-import { useEventDensity } from '../hooks/useEventDensity';
+import { useDensity } from '../hooks/useDensity';
 import { monthTitle, useMonthPager } from '../hooks/useMonthPager';
 import { carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { InscribirmeButton, etapaLabel, fmtRange, nivelLabel } from '../components/theme/CareerSections';
@@ -30,7 +30,7 @@ export default function AgendaArApp() {
     [agenda.events, filtro],
   );
   const pager = useMonthPager(visibles, today);
-  const { density, setDensity } = useEventDensity();
+  const { density, setDensity } = useDensity();
   const sinEventos = agenda.status === 'ready' && agenda.events.length === 0;
   const emptyBox = 'space-y-4 rounded-2xl border border-muted bg-white p-8 text-center shadow-sm';
 

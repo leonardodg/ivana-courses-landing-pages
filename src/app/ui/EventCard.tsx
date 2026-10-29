@@ -1,12 +1,12 @@
 // Card de evento/turma (agendas BR e AR, páginas de curso e de carrera): data à esquerda, selos, título,
 // linhas com ícone, observação, ações e rodapé opcional.
 // Duas versões: `full` (completa, ocupa mais espaço) e `compact` (uma linha de resumo, com botão para expandir).
-// Quem escolhe a versão é a página (ver hooks/useEventDensity e ui/DensityToggle).
+// Quem escolhe a versão é a página (ver hooks/useDensity e ui/DensityToggle).
 import { useState, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
+import type { Density } from './DensityToggle';
 
 export type EventBadgeTone = 'neutral' | 'accent' | 'alert';
-export type EventDensity = 'full' | 'compact';
 
 export interface EventBadge {
   label: string;
@@ -37,7 +37,7 @@ export default function EventCard({
 }: {
   date: string; // YYYY-MM-DD
   locale: string; // "pt-BR" | "es-AR"
-  density?: EventDensity;
+  density?: Density;
   badges?: EventBadge[];
   title: ReactNode;
   subtitle?: ReactNode;

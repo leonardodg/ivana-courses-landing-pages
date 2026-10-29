@@ -1,17 +1,17 @@
 // Seletor da versão do card de evento: completa ou compacta.
 import { Rows3, StretchHorizontal } from 'lucide-react';
-import type { EventDensity } from './EventCard';
+export type Density = 'full' | 'compact';
 
 export default function DensityToggle({
   value,
   onChange,
   labels,
 }: {
-  value: EventDensity;
-  onChange: (d: EventDensity) => void;
+  value: Density;
+  onChange: (d: Density) => void;
   labels: { group: string; full: string; compact: string };
 }) {
-  const btn = (d: EventDensity, label: string, Icon: typeof Rows3) => (
+  const btn = (d: Density, label: string, Icon: typeof Rows3) => (
     <button
       type="button"
       onClick={() => onChange(d)}
