@@ -3,9 +3,9 @@ import { CalendarDays, CalendarPlus, Clock, ExternalLink, MapPin, MessageCircle 
 import Footer from "../components/Footer";
 import SiteNavbar from "../components/SiteNavbar";
 import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
-import { useEventDensity } from "../hooks/useEventDensity";
+import { useDensity } from "../hooks/useDensity";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
-import { AgendaLayout, DensityToggle, EventBadge, EventDensity, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from "../ui";
+import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from "../ui";
 
 const WHATSAPP = "5548991671659";
 const SP = { timeZone: "America/Sao_Paulo" } as const;
@@ -63,7 +63,7 @@ function eventJsonLd(events: AgendaEvent[]) {
   }));
 }
 
-function EventItem({ event, featured, density }: { event: AgendaEvent; featured: boolean; density: EventDensity }) {
+function EventItem({ event, featured, density }: { event: AgendaEvent; featured: boolean; density: Density }) {
   const soldOut = event.status === "esgotado";
   const cta = event.link ?? whatsappLink(event);
   const addToCalendar = calendarLink(event);
@@ -158,7 +158,7 @@ export default function AgendaApp() {
   );
 
   const pager = useMonthPager(visible, todayIso());
-  const { density, setDensity } = useEventDensity();
+  const { density, setDensity } = useDensity();
 
   useEffect(() => {
     if (agenda.status !== "ready" || agenda.events.length === 0) return;
