@@ -8,10 +8,11 @@ import { CalendarDays, Clock, MessageCircle, Monitor } from 'lucide-react';
 import Footer from '../components/Footer';
 import SiteNavbar from '../components/SiteNavbar';
 import { AgendaEvent, useAgenda } from '../hooks/useAgenda';
+import { useEventDensity } from '../hooks/useEventDensity';
 import { monthTitle, useMonthPager } from '../hooks/useMonthPager';
 import { carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { InscribirmeButton, etapaLabel, fmtRange, nivelLabel } from '../components/theme/CareerSections';
-import { AgendaLayout, EventBadge, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from '../ui';
+import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, MonthNav, btnOutline, btnPrimary } from '../ui';
 
 const isInicio = (e: AgendaEvent) => /^modulo\s+1\//i.test(e.etapa ?? '');
 
@@ -29,6 +30,7 @@ export default function AgendaArApp() {
     [agenda.events, filtro],
   );
   const pager = useMonthPager(visibles, today);
+  const { density, setDensity } = useEventDensity();
   const sinEventos = agenda.status === 'ready' && agenda.events.length === 0;
   const emptyBox = 'space-y-4 rounded-2xl border border-muted bg-white p-8 text-center shadow-sm';
 
@@ -98,6 +100,9 @@ export default function AgendaArApp() {
 
           {pager.month && (
             <>
+              <div className="flex justify-end">
+                <DensityToggle value={density} onChange={setDensity} labels={{ group: 'Tamaño de las tarjetas', full: 'Completa', compact: 'Resumida' }} />
+              </div>
               <MonthNav
                 label={monthTitle(pager.month, 'es-AR')}
                 count={`${pager.items.length} ${pager.items.length === 1 ? 'etapa' : 'etapas'}`}
@@ -120,6 +125,8 @@ export default function AgendaArApp() {
                       key={e.id}
                       date={e.date}
                       locale="es-AR"
+                      density={density}
+                      summary={`${carrera.nombre} · ${fmtRange(e.date, e.end_date)}`}
                       featured={inicio}
                       badges={badges}
                       title={etapaLabel(e)}
@@ -135,6 +142,7 @@ export default function AgendaArApp() {
                         </>,
                       ]}
                       actions={inicio ? <InscribirmeButton carrera={carrera} /> : undefined}
+                      quickAction={inicio ? <InscribirmeButton carrera={carrera} /> : undefined}
                     />
                   );
                 })}

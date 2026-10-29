@@ -28,8 +28,7 @@ Argentina) acompanham.
 | `SectionHeader` | rótulo (opcional) + título + subtítulo | todas as seções |
 | `Hero` (+ `HeroBadgeText`) | herói com selo, 2 botões em pílula e foto/fundo (3 composições) | BR: velas, soap, aromas, resin · AR: todas |
 | `Card` e `CardGrid`, `cardGridClass` | card 16/10 com `h-full`; grade de 2 colunas; aceita descrição, selo de nota e metadados | cursos BR, carreras AR, **cards online e presenciais da home (mesma grade)**. Um só card: foto · título · tópicos · turmas (presencial BR e carreras AR; online BR não mostra) · preço (só BR) · CTA · **"Ver grade" / "Ver plan de estudios" (modal `GradeModal`) só quando há conteúdo programático** · "ver detalhes" |
-| `DateRow` | item de lista com data (turma / início de cohorte) | turmas BR, cohorte AR |
-| `AgendaLayout`, `EventCard`, `MonthNav`, `FilterChips` | agenda em duas colunas (título, ação e filtro fixos; navegação de mês com setas e cards de evento), mesmo desenho para turmas BR e etapas das carreras AR; `hooks/useMonthPager` separa por mês | `/pt-br/agenda/`, `/es-ar/agenda/` |
+| `AgendaLayout`, `EventCard`, `DensityToggle`, `MonthNav`, `FilterChips` | agenda em duas colunas (título, ação e filtro fixos; navegação de mês com setas e cards de evento), mesmo desenho para turmas BR e etapas das carreras AR; `hooks/useMonthPager` separa por mês. **EventCard tem 2 versões**: `full` (completa) e `compact` (resumo + botão de expandir); `hooks/useEventDensity` escolhe sozinho (celular = compacta, tela maior = completa) e o `DensityToggle` deixa a pessoa trocar. Páginas de curso e de carrera usam `compact` com expandir (turmas do curso, início de cohorte) | `/pt-br/agenda/`, `/es-ar/agenda/` |
 | `Steps` | 4 passos em colunas, com ou sem número | como funciona, cursada |
 | `FeatureList` | grade 2 colunas "incluso" | incluso BR, incluido AR |
 | `ContactCta` | bloco final de contato | todas as páginas de tema |
