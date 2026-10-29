@@ -46,6 +46,25 @@ function discoverPages(dir: string, root = dir): Record<string, string> {
 }
 const pages: Record<string, string> = discoverPages(path.resolve(__dirname, "src"));
 
+// Dev: páginas estáticas que ficam em public/ (ex.: /pt-br/links/, a "bio" do Instagram) não são páginas do Vite.
+// Sem isto o servidor de desenvolvimento não acha o index.html da pasta e cai na home (seletor de país).
+// Em produção (dist/) a pasta já tem o index.html e funciona sem este plugin.
+const servePublicIndex = () => ({
+  name: "serve-public-index",
+  configureServer(server: import("vite").ViteDevServer) {
+    server.middlewares.use((req, res, next) => {
+      const url = (req.url ?? "").split("?")[0];
+      if (req.method !== "GET" || !url.endsWith("/") && /\.[a-z0-9]+$/i.test(url)) return next();
+      const rel = decodeURIComponent(url).replace(/^\/+|\/+$/g, "");
+      if (!rel || fs.existsSync(path.resolve(__dirname, "src", rel, "index.html"))) return next();
+      const file = path.resolve(__dirname, "public", rel, "index.html");
+      if (!file.startsWith(path.resolve(__dirname, "public")) || !fs.existsSync(file)) return next();
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.end(fs.readFileSync(file));
+    });
+  },
+});
+
 export default defineConfig(({ mode }) => {
   const envDir = path.resolve(__dirname, "src");
   const envFiles = [
@@ -92,7 +111,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), servePublicIndex()],
     envDir,
     root: "src",
     define: Object.fromEntries(
