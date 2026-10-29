@@ -45,16 +45,22 @@ export const site_link_groups: SiteLinkGroup[] = [
       { href: '/pt-br/apostilas/60-receitas-de-sabonetes/', label: { pt: 'Apostila de 60 receitas', es: 'Apostilla de 60 recetas' } },
       { href: company.store, label: { pt: 'Loja (compre seu curso)', es: 'Tienda (compra tu curso)' }, external: true },
       { href: company.platform, label: { pt: 'Plataforma de ensino', es: 'Plataforma de aprendizaje' }, external: true },
+      { href: '/pt-br/interesse/', hrefEs: '/es-ar/interes/', label: { pt: 'Registrar interesse', es: 'Registrar interés' } },
     ],
   },
-  {
-    title: { pt: 'Links e contato', es: 'Enlaces y contacto' },
-    links: [
-      { href: '/pt-br/links/', label: { pt: 'Links do Instagram (Brasil)', es: 'Enlaces de Instagram (Brasil)' } },
-      { href: '/es-ar/links/', label: { pt: 'Links do Instagram (Argentina)', es: 'Enlaces de Instagram (Argentina)' } },
-      { href: '/pt-br/interesse/', label: { pt: 'Registrar interesse', es: 'Registrar interés' } },
-      { href: `mailto:${company.email}`, hrefEs: `mailto:${company.ar.email}`, label: { pt: company.email, es: company.ar.email } },
-      { href: company.whatsappUrl, hrefEs: company.ar.whatsappUrl, label: { pt: `WhatsApp ${company.whatsappLabel}`, es: `WhatsApp ${company.ar.whatsappLabel}` }, external: true },
-    ],
-  },
+];
+
+/** Redes e contato do rodapé, em ícones: o link de cada um segue o idioma da página. */
+export interface SocialLink {
+  icon: 'instagram' | 'whatsapp' | 'mail';
+  label: Label;
+  href: string;
+  hrefEs: string;
+  external?: boolean;
+}
+
+export const social_links: SocialLink[] = [
+  { icon: 'instagram', label: { pt: 'Instagram (links do Brasil)', es: 'Instagram (enlaces de Argentina)' }, href: '/pt-br/links/', hrefEs: '/es-ar/links/' },
+  { icon: 'whatsapp', label: { pt: `WhatsApp ${company.whatsappLabel}`, es: `WhatsApp ${company.ar.whatsappLabel}` }, href: company.whatsappUrl, hrefEs: company.ar.whatsappUrl, external: true },
+  { icon: 'mail', label: { pt: company.email, es: company.ar.email }, href: `mailto:${company.email}`, hrefEs: `mailto:${company.ar.email}` },
 ];
