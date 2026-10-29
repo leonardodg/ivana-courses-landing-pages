@@ -126,11 +126,11 @@ export default function AgendaArApp() {
                       date={e.date}
                       locale="es-AR"
                       density={density}
-                      summary={`${carrera.nombre} · ${fmtRange(e.date, e.end_date)}`}
+                      summary={`${etapaLabel(e)} · ${fmtRange(e.date, e.end_date)}`}
                       featured={inicio}
                       badges={badges}
-                      title={etapaLabel(e)}
-                      subtitle={carrera.nombre}
+                      title={carrera.nombre}
+                      subtitle={etapaLabel(e)}
                       lines={[
                         <>
                           <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
