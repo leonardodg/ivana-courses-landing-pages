@@ -18,7 +18,7 @@
 //   • Dropdown de cursos filtrado pelas categorias marcadas
 //   • Spinner no botão durante loading, estados idle/loading/success/error/rate_limited
 
-import { useState, useMemo }                     from 'react';
+import { useId, useState, useMemo, isValidElement, cloneElement, type ReactElement } from 'react';
 import {
   Send,
   MessageCircle,
@@ -64,13 +64,16 @@ interface FieldProps {
 }
 
 function Field({ label, required, error, children }: FieldProps) {
+  const id = useId();
+  // o filho (input) recebe o id; o rótulo aponta para ele
+  const child = isValidElement(children) && children.type !== 'div' ? cloneElement(children as ReactElement<{ id?: string }>, { id }) : children;
   return (
     <div>
-      <label className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
+      <label htmlFor={id} className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">
         {label}
         {required && <span className="text-rose-600 ml-0.5">*</span>}
       </label>
-      {children}
+      {child}
       <div className="min-h-[16px] mt-1">
         {error && <p className="text-xs text-error">{error}</p>}
       </div>
@@ -89,7 +92,7 @@ interface InterestCheckboxProps {
 function InterestCheckbox({ label, checked, onChange }: InterestCheckboxProps) {
   return (
     <label
-      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all duration-200 ${
+      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all duration-200 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tertiary ${
         checked
           ? 'bg-primary/5 border-primary/40 text-primary font-semibold'
           : 'bg-surface-container-low border-muted hover:bg-surface-container text-on-surface'
@@ -129,7 +132,7 @@ interface ModalidadeRadioProps {
 function ModalidadeRadio({ label, value, current, onChange }: ModalidadeRadioProps) {
   const active = current === value;
   return (
-    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+    <label className="flex items-center gap-2.5 cursor-pointer select-none rounded-md has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tertiary">
       <input
         type="radio"
         name="lead-modalidade"
@@ -211,7 +214,7 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
       message:     [
         config.showModalidade ? (form.modalidade ? `Modalidade: ${form.modalidade}` : '') : 'Modalidade: online (carreras)',
         `Interesses: ${interestList || 'geral'}`,
-        form.courseId ? `${country === 'AR' ? 'Carrera' : 'Curso'}: ${form.courseId}` : '',
+        form.courseId && filteredCourses.some(c => c.id === form.courseId) ? `${country === 'AR' ? 'Carrera' : 'Curso'}: ${form.courseId}` : '',
         `País: ${country}`,
       ].filter(Boolean).join('\n'),
       form_source: country === 'AR' ? `${formSource}_ar` : formSource,
@@ -501,6 +504,7 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
                     type="tel"
                     required
                     autoComplete="tel-national"
+                    aria-label={t.labelPhone}
                     maxLength={20}
                     value={form.phone}
                     placeholder={t.placeholderPhone}

@@ -43,7 +43,7 @@ export function NavDropdown({ label, icon, wide = false, children }: { label: st
 }
 
 const langBtn = (active: boolean) =>
-  `px-3 py-1.5 min-h-9 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer inline-flex items-center gap-2 ${
+  `px-3 py-1.5 min-h-11 rounded-full text-xs font-mono font-bold transition-all duration-300 cursor-pointer inline-flex items-center gap-2 ${
     active ? 'bg-primary text-white shadow-xs' : 'text-gray-600 hover:bg-gray-200/50'
   }`;
 

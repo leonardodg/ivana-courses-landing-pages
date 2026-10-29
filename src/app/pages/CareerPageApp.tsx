@@ -2,7 +2,6 @@
 // Segue docs/GUIA-DE-ESTILO.md: navbar de tema, herói dividido com 2 botões em pílula, cards em 2 colunas,
 // passos em 4 colunas. Sem preço: o botão leva à tienda (ou ao WhatsApp AR).
 
-import { useState } from 'react';
 import { CalendarDays, MessageCircle } from 'lucide-react';
 import type { Language } from '../classes/types';
 import { ar_hero, ar_pages, ArPageSlug, carreras_ar, WHATSAPP_AR } from '../data/carreras_ar';
@@ -30,7 +29,6 @@ import {
 } from '../components/theme/CareerSections';
 
 // Páginas que têm par no Brasil (seletor PT | ES e hreflang).
-const PT_PAIR: Partial<Record<ArPageSlug, string>> = { candles: '/pt-br/cursos/velas/', resin: '/pt-br/cursos/resinas/' };
 
 
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {

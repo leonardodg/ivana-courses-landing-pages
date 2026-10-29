@@ -16,7 +16,7 @@ export const company = {
   ar: {
     email: 'contacto@ivana.academy',
     whatsappLabel: '+54 3757 20-1014',
-    whatsappUrl: 'https://wa.me/543757201014',
+    whatsappUrl: 'https://wa.me/5493757201014',
   },
 } as const;
 

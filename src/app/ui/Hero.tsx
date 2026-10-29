@@ -66,7 +66,7 @@ export default function Hero(props: HeroProps) {
 
   const s = slides[index];
   const ext = (a: HeroAction) => (a.external ? { target: '_blank', rel: 'noreferrer' } : {});
-  const Title = index === 0 ? 'h1' : 'h2'; // um h1 por página: o do primeiro slide
+  const Title = 'h1'; // só o slide ativo existe no DOM: sempre um único h1
   const hasPhoto = !!s.photo;
 
   return (
@@ -151,7 +151,7 @@ export default function Hero(props: HeroProps) {
                   onClick={() => go(i)}
                   aria-label={`${labels.slide} ${i + 1}`}
                   aria-current={i === index}
-                  className="inline-flex items-center justify-center w-6 h-11 cursor-pointer"
+                  className="inline-flex items-center justify-center min-w-11 h-11 cursor-pointer"
                 >
                   <span className={`block h-2 rounded-full transition-all ${i === index ? 'w-6 bg-primary' : 'w-2 bg-primary/30'}`} />
                 </button>
