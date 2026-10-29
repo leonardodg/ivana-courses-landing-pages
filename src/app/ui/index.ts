@@ -30,3 +30,4 @@ export { PriceBlock, PurchaseCta, StickyBuyBar } from './Purchase';
 export { default as LinkCard } from './LinkCard';
 export { NavDropdown, LangSwitch } from './NavMenu';
 export { nav_icons } from './navIcons';
+export { default as WhatsAppFab, whatsappHref } from './WhatsAppFab';

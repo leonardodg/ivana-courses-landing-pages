@@ -21,7 +21,8 @@ import ReviewsCarousel from "./components/ReviewsCarousel";
 import FAQSection from "./components/FAQSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
-import { Hero, HeroBadgeText, type HeroSlide } from "./ui";
+import { Hero, HeroBadgeText, WhatsAppFab, whatsappHref, type HeroSlide } from "./ui";
+import { company } from "./legal/company";
 import { hero_stats_br } from "./data/hero_stats";
 import { home_category_themes } from "./data/presencial";
 import { trackOutbound } from "./lib/analytics";
@@ -119,12 +120,14 @@ export default function App() {
         {/* Dynamic reviews matching testimonials requirement */}
         <ReviewsCarousel language={language} reviews={REVIEWS} />
 
-        {/* Flexible lead capture form */}
-        <ContactForm language={language} coursePage="homepage" />
-
         {/* Detailed FAQ */}
         <FAQSection language={language} faqs={FAQS} />
+
+        {/* Contato: última seção antes do rodapé */}
+        <ContactForm language={language} coursePage="homepage" />
       </main>
+
+      <WhatsAppFab href={whatsappHref(company.whatsappUrl, 'Oi! Vim pelo site da Ivana Academy e quero saber mais sobre os cursos.')} label="Falar no WhatsApp" />
 
       {/* Footer */}
       <Footer />

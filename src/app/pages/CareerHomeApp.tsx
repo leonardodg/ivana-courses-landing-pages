@@ -13,7 +13,7 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
-import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader, type HeroSlide } from '../ui';
+import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader, WhatsAppFab, whatsappHref, type HeroSlide } from '../ui';
 import { hero_stats_ar } from '../data/hero_stats';
 import { GRASSI_SEAL } from '../data/hero_seals';
 import {
@@ -94,6 +94,8 @@ export default function CareerHomeApp() {
         <ContactForm language="es" coursePage="carreras_ar" />
         <WhatsAppFooterCta />
       </main>
+
+      <WhatsAppFab href={whatsappHref(WHATSAPP_AR, '¡Hola! Vengo del sitio y quiero saber más sobre las carreras online.')} label="Hablar por WhatsApp" />
 
       <Footer />
     </div>
