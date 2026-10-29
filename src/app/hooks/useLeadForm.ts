@@ -14,7 +14,7 @@ export { sanitize };
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
-export type LeadModalidade = 'online' | 'presencial';
+export type LeadModalidade = 'online' | 'presencial' | ''; // '' = sem preferência (campo opcional)
 
 // Chaves das áreas de interesse de cada país (data/interest_options.ts), mais 'todas'.
 export type LeadInterests = Record<string, boolean>;
@@ -48,7 +48,7 @@ export function useLeadForm(defaultDdi = '+55', optionKeys: string[] = []) {
     ddi:        defaultDdi,
     phone:      '',
     interests:  emptyInterests(optionKeys),
-    modalidade: 'online',
+    modalidade: '',
     courseId:   '',
   });
 
@@ -120,7 +120,7 @@ export function useLeadForm(defaultDdi = '+55', optionKeys: string[] = []) {
       ddi:        defaultDdi,
       phone:      '',
       interests:  emptyInterests(optionKeys),
-      modalidade: 'online',
+      modalidade: '',
       courseId:   '',
     });
     setErrors({});

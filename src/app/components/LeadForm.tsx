@@ -29,7 +29,7 @@ import {
   Phone,
 } from "lucide-react";
 import { interest_config, type InterestCountry } from '../data/interest_options';
-import { useLeadForm, sanitize }                 from '../hooks/useLeadForm';
+import { useLeadForm, sanitize, type LeadModalidade } from '../hooks/useLeadForm';
 import { applyPhoneMask, DDI_OPTIONS }           from '../hooks/usePhoneMask';
 import { submitContact }                         from '../hooks/useSubmitContact';
 import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
@@ -122,8 +122,8 @@ function InterestCheckbox({ label, checked, onChange }: InterestCheckboxProps) {
 interface ModalidadeRadioProps {
   label:    string;
   value:    'online' | 'presencial';
-  current:  'online' | 'presencial';
-  onChange: (v: 'online' | 'presencial') => void;
+  current:  LeadModalidade;
+  onChange: (v: LeadModalidade) => void;
 }
 
 function ModalidadeRadio({ label, value, current, onChange }: ModalidadeRadioProps) {
@@ -135,7 +135,8 @@ function ModalidadeRadio({ label, value, current, onChange }: ModalidadeRadioPro
         name="lead-modalidade"
         value={value}
         checked={active}
-        onChange={() => onChange(value)}
+        onChange={() => {}}
+        onClick={() => onChange(active ? '' : value)}   // clicar de novo desmarca: a escolha é opcional
         className="sr-only"
       />
       <span
@@ -182,7 +183,7 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
 
   // ── Cursos (BR) ou carreras (AR) filtrados pelas áreas marcadas e, no Brasil, pela modalidade ──
   const filteredCourses = config.courses
-    .filter(c => !config.showModalidade
+    .filter(c => !config.showModalidade || !form.modalidade
       || (form.modalidade === 'online'
         ? c.modalidade === 'online' || c.modalidade === 'hibrido'
         : c.modalidade === 'presencial' || c.modalidade === 'hibrido'))
@@ -206,9 +207,9 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
       full_name:   sanitize(form.fullName, 150),
       email:       sanitize(form.email, 254).toLowerCase(),
       phone:       `${form.ddi} ${form.phone.replace(/\D/g, '')}`,
-      subject:     `Interesse: ${interestList || 'geral'}${config.showModalidade ? ` — ${form.modalidade}` : ''}`,
+      subject:     `Interesse: ${interestList || 'geral'}${config.showModalidade && form.modalidade ? ` — ${form.modalidade}` : ''}`,
       message:     [
-        config.showModalidade ? `Modalidade: ${form.modalidade}` : 'Modalidade: online (carreras)',
+        config.showModalidade ? (form.modalidade ? `Modalidade: ${form.modalidade}` : '') : 'Modalidade: online (carreras)',
         `Interesses: ${interestList || 'geral'}`,
         form.courseId ? `${country === 'AR' ? 'Carrera' : 'Curso'}: ${form.courseId}` : '',
         `País: ${country}`,
@@ -421,29 +422,6 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
                 autoComplete="off"
                 aria-hidden="true"
               />
-
-              {/* ── País ──────────────────────────────────────────────────── */}
-              <div>
-                <p className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-2 font-mono">
-                  {t.labelCountry}
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {(["BR", "AR"] as const).map((c) => (
-                    <a
-                      key={c}
-                      href={interest_config[c].path}
-                      aria-current={country === c ? "page" : undefined}
-                      className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-xs font-semibold transition-all duration-200 ${
-                        country === c
-                          ? "border-primary bg-primary/5 text-primary shadow-sm scale-[1.02]"
-                          : "border-muted bg-transparent text-on-surface-variant hover:bg-surface-container-low"
-                      }`}
-                    >
-                      {c === "BR" ? t.countryBR : t.countryAR}
-                    </a>
-                  ))}
-                </div>
-              </div>
 
               {/* ── Nome + Email ───────────────────────────────────────────── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

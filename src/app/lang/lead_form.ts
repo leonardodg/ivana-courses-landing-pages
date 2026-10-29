@@ -77,7 +77,7 @@ export const lead_text = {
     interestTodas: "✨ Todas as áreas",
 
     // ── Modalidade ───────────────────────────────────────────────────────────
-    labelModalidade: "Modalidade de preferência",
+    labelModalidade: "Modalidade de preferência (opcional)",
     modalidadeOnline: "Online (ao vivo / gravado)",
     modalidadePresencial: "Presencial (workshop)",
 
@@ -188,7 +188,7 @@ export const lead_text = {
     interestTodas: "✨ Todas las áreas",
 
     // ── Modalidade ───────────────────────────────────────────────────────────
-    labelModalidade: "Modalidad preferida",
+    labelModalidade: "Modalidad preferida (opcional)",
     modalidadeOnline: "Online (en vivo / grabado)",
     modalidadePresencial: "Presencial (taller)",
 
