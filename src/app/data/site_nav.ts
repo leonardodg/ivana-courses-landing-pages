@@ -62,12 +62,6 @@ export const nav_agenda: NavItem[] = [
   { label: { pt: 'Agenda Argentina (Cohorte 2027)', es: 'Agenda Argentina (Cohorte 2027)' }, href: '/es-ar/agenda/', icon: 'ar' },
 ];
 
-/** Contato: WhatsApp do país do idioma da página. */
-export const nav_contato = {
-  label: { pt: 'Contato', es: 'Contacto' },
-  href: { pt: company.whatsappUrl, es: company.ar.whatsappUrl },
-};
-
 /** Interesse / Interés: uma página por país. */
 export const nav_interesse = { label: { pt: 'Interesse', es: 'Interés' }, href: { pt: '/pt-br/interesse/', es: '/es-ar/interes/' } };
 
