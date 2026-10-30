@@ -15,6 +15,9 @@ export function setPageLanguage(language: Language) {
   window.dispatchEvent(new Event(LANG_EVENT));
 }
 
+/** Escolhe o texto pelo idioma: tr(language, 'espanhol', 'português'). */
+export const tr = <T,>(l: Language, es: T, pt: T): T => (l === 'es' ? es : pt);
+
 export function usePageLanguage(): Language {
   const [lang, setLang] = useState<Language>(pageLanguage);
   useEffect(() => {

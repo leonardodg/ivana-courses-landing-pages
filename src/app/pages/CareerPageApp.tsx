@@ -3,7 +3,7 @@
 // passos em 4 colunas. Sem preço: o botão leva à tienda (ou ao WhatsApp AR).
 
 import { CalendarDays, MessageCircle } from 'lucide-react';
-import type { Language } from '../classes/types';
+import { tr, usePageLanguage } from '../lib/lang';
 import { ar_hero, ar_pages, ArPageSlug, carreras_ar, WHATSAPP_AR } from '../data/carreras_ar';
 import { reviews_list } from '../data/reviews';
 import { useAgenda } from '../hooks/useAgenda';
@@ -13,7 +13,7 @@ import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import ContactForm from '../components/ContactForm';
-import { hero_stats_ar } from '../data/hero_stats';
+import { hero_stats_ar, hero_stats_ar_pt } from '../data/hero_stats';
 import { GRASSI_SEAL } from '../data/hero_seals';
 import { ArgentinaFlag, Hero, HeroBadgeText, Section, SectionHeader, WhatsAppFab, whatsappHref } from '../ui';
 import {
@@ -32,7 +32,7 @@ import {
 
 
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
-  const language: Language = 'es';
+  const language = usePageLanguage();
   const agenda = useAgenda('AR');
   const page = ar_pages[slug];
   const carrera = carreras_ar[page.courses[0]];
@@ -49,23 +49,31 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
           badge={
             <>
               <ArgentinaFlag />
-              <HeroBadgeText>100% online · Conservatorio Grassi</HeroBadgeText>
+              <HeroBadgeText>{tr(language, '100% online · Conservatorio Grassi', '100% online · Conservatório Grassi')}</HeroBadgeText>
             </>
           }
           title={carrera.nombre}
-          text={`${nivelLabel(carrera)} de ${carrera.meses} meses, con un módulo por mes. Estudiás desde tu casa, con acompañamiento de la profesora Ivana Lerea.`}
-          primary={{ label: 'Ver cohorte 2027', href: '#cohorte', icon: CalendarDays }}
-          secondary={{ label: 'Hablar por WhatsApp', href: WHATSAPP_AR, icon: MessageCircle, external: true }}
+          text={tr(
+            language,
+            `${nivelLabel(carrera)} de ${carrera.meses} meses, con un módulo por mes. Estudiás desde tu casa, con acompañamiento de la profesora Ivana Lerea.`,
+            `${nivelLabel(carrera)} de ${carrera.meses} meses, com um módulo por mês. Você estuda de casa, com o acompanhamento da professora Ivana Lerea.`,
+          )}
+          primary={{ label: tr(language, 'Ver cohorte 2027', 'Ver turma 2027'), href: '#cohorte', icon: CalendarDays }}
+          secondary={{ label: tr(language, 'Hablar por WhatsApp', 'Falar pelo WhatsApp'), href: WHATSAPP_AR, icon: MessageCircle, external: true }}
           photo={{ src: carrera.image, alt: carrera.nombre, position: carrera.imagePos }}
           backdrop={{ src: ar_hero[carrera.page], alt: carrera.nombre, position: '78% center' }}
           seal={GRASSI_SEAL}
-          stats={hero_stats_ar}
+          stats={tr(language, hero_stats_ar, hero_stats_ar_pt)}
         />
 
         <CohorteSection carrera={carrera} agenda={agenda} />
 
         <Section id="carreras" bg="cream" border="y" width="wide">
-          <SectionHeader kicker="LA CARRERA" title="Elegí cómo seguir" sub="100% online, con el título del Conservatorio Grassi." />
+          <SectionHeader
+            kicker={tr(language, 'LA CARRERA', 'A CARREIRA')}
+            title={tr(language, 'Elegí cómo seguir', 'Escolha como seguir')}
+            sub={tr(language, '100% online, con el título del Conservatorio Grassi.', '100% online, com o título do Conservatório Grassi.')}
+          />
           <CarrerasGrid items={cards} agenda={agenda} />
         </Section>
 
@@ -73,14 +81,14 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
         <ComoInscribirmeSection bg="cream" />
         <InclusoSection bg="white" />
         <SalidaLaboralSection />
-        <AboutSection language="es" />
-        <ReviewsCarousel language="es" reviews={reviews_list} />
-        <FAQSection language="es" faqs={faqs_carreras_ar} />
-        <ContactForm language="es" coursePage="carreras_ar" />
+        <AboutSection language={language} />
+        <ReviewsCarousel language={language} reviews={reviews_list} />
+        <FAQSection language={language} faqs={faqs_carreras_ar} />
+        <ContactForm language={language} coursePage="carreras_ar" />
         <WhatsAppFooterCta />
       </main>
 
-      <WhatsAppFab href={whatsappHref(WHATSAPP_AR, `¡Hola! Quiero saber más sobre ${carrera.nombre}.`)} label="Hablar por WhatsApp" />
+      <WhatsAppFab href={whatsappHref(WHATSAPP_AR, tr(language, `¡Hola! Quiero saber más sobre ${carrera.nombre}.`, `Olá! Quero saber mais sobre ${carrera.nombre}.`))} label={tr(language, 'Hablar por WhatsApp', 'Falar pelo WhatsApp')} />
 
       <Footer />
     </div>
