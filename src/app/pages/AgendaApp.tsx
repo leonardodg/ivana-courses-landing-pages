@@ -6,7 +6,7 @@ import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 import { useDensity } from "../hooks/useDensity";
 import { eventJsonLd } from "../seo/events";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
-import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, InfoBlocks, MonthNav, WhatsAppFab, btnOutline, btnPrimary, nav_icons } from "../ui";
+import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, InfoBlocks, SegmentFilter, MonthNav, WhatsAppFab, btnOutline, btnPrimary, nav_icons } from "../ui";
 import { nav_brasil } from "../data/site_nav";
 
 const WHATSAPP = "5548991671659";
@@ -178,12 +178,13 @@ export default function AgendaApp() {
                 <MessageCircle className="h-4 w-4" aria-hidden /> Falar com a Ivana
               </a>
               {cities.length > 1 && (
-                <FilterChips
+                <SegmentFilter
+                  fullWidth
                   options={cities.map((c) => ({ value: c, label: c }))}
                   value={city}
                   onChange={setCity}
                   allLabel="Todas as cidades"
-                  ariaLabel="Filtrar por cidade"
+                  label="Filtrar por cidade"
                 />
               )}
             </>
