@@ -9,9 +9,7 @@ Estado: `main` e `development` no mesmo commit (`304103e`), em produção. Deplo
   Detalhes: `SegmentFilter`, `CardToolbar`, `useSegmentFilter`, guia de estilo atualizado.
 
 ## 1. Conteúdo (depende da Ivana / do usuário)
-- Fotos reais para 5 cards sem foto: **Peças em Concreto** e **Tricô Gigante** (BR, presencial); **Tecnicatura en estampas textiles**,
-  **Tecnicatura en diseño de interiores** e **Profesorado en arte mix media** (AR, online). Hoje usam capa de marca/placa.
-  O Drive só tem peças de divulgação; fotos do iCloud só se o usuário indicar o álbum/pasta. Depois: atualizar cards e regerar `npm run og`.
+- Fotos dos 5 cards (Concreto, Tricô, Estampas, Interiores, Mix media): **feitas em 2026-10-30** (fotos enviadas pela Ivana). Card AR de velas usa foto de vela (`cardImage`); o herói segue com a foto da Ivana. Opcional: conferir se o `npm run og` usa essas fotos (hoje não usa).
 - Temario confirmado de resinas, macramé, estampas, interiores, mix media e dos Profesorados (`src/app/data/carreras_ar.ts`, campo `temario`).
   Só `ar-velas` está publicado (lista do rascunho com ortografia corrigida). `carreras_ar_temario.ts` (rascunho, só DEV) é lista bruta
   de nomes de arquivo ("Untitled", "ultimo TP resina"): não publicar sem limpar.

@@ -137,9 +137,9 @@ export function CarreraCard({ carrera, agenda, href }: { carrera: CarreraAr; age
   return (
     <Card
       id={carrera.course}
-      image={carrera.image}
+      image={carrera.cardImage ?? carrera.image}
       alt={carrera.nombre}
-      imagePos={carrera.imagePos}
+      imagePos={carrera.cardImage ? carrera.cardImagePos : carrera.imagePos}
       tag="100% online"
       titleHref={href}
       title={carrera.nombre}
@@ -163,8 +163,8 @@ export function CarreraCard({ carrera, agenda, href }: { carrera: CarreraAr; age
         label: tr(l, 'Ver plan de estudios', 'Ver plano de estudos'),
         closeLabel: tr(l, 'Cerrar', 'Fechar'),
         content: {
-          image: carrera.image,
-          imagePos: carrera.imagePos,
+          image: carrera.cardImage ?? carrera.image,
+          imagePos: carrera.cardImage ? carrera.cardImagePos : carrera.imagePos,
           tag: '100% online',
           title: carrera.nombre,
           intro: tr(l, `${nivelLabel(carrera)} de ${carrera.meses} meses, con un módulo por mes y el acompañamiento de la profesora Ivana Lerea.`, `${nivelLabel(carrera)} de ${carrera.meses} meses, com um módulo por mês e o acompanhamento da professora Ivana Lerea.`),
