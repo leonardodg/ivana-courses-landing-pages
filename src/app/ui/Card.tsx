@@ -107,7 +107,7 @@ export default function Card({
           {rest > 0 && turmas.moreHref && (
             <li>
               <a href={turmas.moreHref} className="inline-flex min-h-11 items-center text-xs text-primary underline">
-                + {rest} {turmas.moreLabel ?? 'turmas'}
+                + {rest} {turmas.moreLabel ?? (es ? 'grupos' : 'turmas')}
               </a>
             </li>
           )}
