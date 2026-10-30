@@ -1,6 +1,8 @@
 // Temario RASCUNHO das carreras (títulos das apostilas do Drive). Só existe em DEV: é carregado por import
 // dinâmico atrás de import.meta.env.DEV (ver QueAprenderSection) e não entra no build de produção.
 // Só publique algo daqui depois que a Ivana confirmar o temario de cada carreira.
+// "ar-velas" já foi para src/app/data/carreras_ar.ts (campo temario, com ortografia corrigida) e está em produção;
+// a entrada abaixo é só o rascunho original, que o dev ignora quando há temario confirmado.
 export const temario_borrador: Record<string, string[]> = {
   "ar-velas": [
     "Aditivos",
