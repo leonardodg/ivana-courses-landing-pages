@@ -58,7 +58,7 @@ Fluxo: `vite build` → `scripts/prerender.mjs` → pós-processamento → verif
    - Qualquer texto relativo à data ("Em 8 dias", "Hoje"): só pode aparecer depois do carregamento no cliente.
    - Carrossel: só o primeiro slide (já é assim, só o ativo existe no DOM).
 6. **Pós-processamento do HTML:** manter exatamente um `<script type="application/ld+json">` por página, os `<script type="module">` e `<link>` do Vite; remover scripts/estilos injetados em runtime que não sejam do Vite; marcar `<html data-prerendered>`; `lang` intacto.
-7. **Montagem no cliente:** continuar com `createRoot` (substitui o HTML pré-renderizado ao montar). Sem hidratação, sem risco de "texto diferente". Como o HTML é o mesmo componente, o conteúdo não pisca. Fica como melhoria futura trocar para `hydrateRoot` página a página.
+7. **Montagem no cliente (`src/app/lib/mount.tsx`):** páginas com `data-prerendered` são **hidratadas** (`hydrateRoot`), mantendo os nós já pintados; sem pré-render (dev), `createRoot` como sempre. O aviso de cookies fica numa raiz separada (`#consent-root`), porque depende do consentimento salvo no navegador e não pode estar no HTML pré-renderizado. Na captura, textos vizinhos ganham `<!-- -->` entre eles (como o `renderToString` faz), senão o `innerHTML` os junta e a hidratação reclama (erro #418).
 8. **Fail-open:** erro em qualquer página mantém o `index.html` original dela; o relatório lista o que ficou sem pré-render e o build **não** falha (configurável: `PRERENDER_STRICT=1` falha no CI).
 
 ### Entrega com build no GitHub Actions (sem Chromium nem Node na VPS)
@@ -122,11 +122,11 @@ Teste de aceitação: enviar o link de 6 páginas (2 por país e tipo) pelo What
 |---|---|---|---|
 | **0. Prévia e sitemap** ✅ **concluída em 2026-10-29** | Imagens OG por página (`npm run og`), atributos `og:image:*`/`alt` completos, `lastmod` e `image:image` nos sitemaps (`npm run sitemap`) | Baixo | Teste manual no WhatsApp e no Depurador do Facebook; `npm run check:urls` valida OG e sitemap |
 | **1. Script de pré-render local** ✅ **concluída em 2026-10-29** (`npm run build:ssg`, `scripts/prerender.mjs`) | `scripts/prerender.mjs` com `puppeteer-core` e Chrome local; relatório por página | Baixo | `dist/` com corpo em 30/30 páginas; HTML sem GA, sem banner, sem dados do feed |
-| **2. Teste de paridade e desempenho** | Script que compara o texto do HTML pré-renderizado com o DOM montado no cliente; PageSpeed antes/depois | Baixo | Paridade >= 95% do texto visível; LCP/CLS iguais ou melhores |
+| **2. Teste de paridade e desempenho** ✅ **concluída em 2026-10-29** (`scripts/prerender-audit.mjs`, resultados na seção 11) | Script que compara o texto do HTML pré-renderizado com o DOM montado no cliente; PageSpeed antes/depois | Baixo | Paridade >= 95% do texto visível; LCP/CLS iguais ou melhores |
 | **3. Build no GitHub Actions + entrega do `dist/`** | Job `build` com pré-render e artefato; job `deploy` envia `dist/` por SSH; alvo `production-prebuilt` no Dockerfile (sem Node); releases com rollback | **Médio** (muda o pipeline) | Deploy de teste num caminho paralelo na VPS (ex.: porta 8089) antes de trocar o ativo; site idêntico ao de hoje e Nginx com os mesmos cabeçalhos |
 | **4. CI** | O job "Build & Lint Check" roda o pré-render em modo estrito e as verificações da seção 5 | Baixo | Pipeline falha se faltar `h1`, JSON-LD duplicado, GA no HTML, preço na Argentina |
 | **5. Publicação e acompanhamento** | Deploy; Inspeção de URL no Search Console (teste ao vivo, "ver página testada") nas 6 páginas principais; solicitar indexação; GA4 Tempo real/DebugView | Médio | HTML renderizado do Google mostra o corpo; GA4 recebe `page_view` e eventos; sem aumento de erros no Search Console |
-| **6. Melhoria opcional** | `hydrateRoot` nas páginas mais simples; fatiar conteúdo por idioma | Baixo | Sem erro de hidratação no console |
+| **6. Hidratação** ✅ **feita junto com a fase 2** | `hydrateRoot` em todas as páginas (`lib/mount.tsx`) | Médio | 29 páginas x desktop e celular sem erro de hidratação (confirmado) |
 
 **Reversão:** a variável `PRERENDER=off` pula a etapa e entrega o `dist/` de hoje; reverter o commit da fase 3 volta o Dockerfile ao estado anterior. Publicar a fase 0 sozinha já melhora a prévia de links e não depende do resto.
 
@@ -140,3 +140,27 @@ Teste de aceitação: enviar o link de 6 páginas (2 por país e tipo) pelo What
 ## 10. Estimativa
 
 Fase 0: 0,5 a 1 dia (imagens). Fases 1 e 2: 1 dia. Fase 3: 1 dia (pipeline e teste paralelo). Fase 4: 0,5 dia. Fase 5: 0,5 dia de acompanhamento. Total aproximado: 3 dias, publicável em duas entregas (fase 0 primeiro; depois 1 a 5).
+
+## 11. Resultados da fase 2 (medidos em 2026-10-29)
+
+Como medir: `npm run build` → copiar `dist/` para uma pasta (sem pré-render) → `npm run prerender` → `node scripts/prerender-audit.mjs --base <pasta> --pre dist`. Celular simulado: 390x844, CPU 4x mais lenta, rede 4G lenta, mediana de 3 execuções, feed da agenda sem resposta.
+
+**Paridade (texto do HTML cru x página montada):** 100% nas 7 páginas testadas, em desktop. No celular (cards em lista, detalhes recolhidos) o HTML cru cobre 74% a 99% do texto visível: a home do Brasil é a que mais perde (74%) porque os cards compactos escondem benefícios e turmas.
+
+**Hidratação:** 29 páginas x 2 telas sem nenhum erro.
+
+**Desempenho (ms; CLS sem unidade):**
+
+| Página | FCP sem → com | LCP sem → com | CLS |
+|---|---|---|---|
+| `/pt-br/` | 2904 → 2544 | 4048 → 3252 | 0 → 0 |
+| `/es-ar/` | 2696 → 2380 | 3052 → 2380 | 0,035 → 0,035 |
+| `/pt-br/cursos/velas/` | 3672 → 2680 | 4776 → 3788 | 0 → 0 |
+| `/es-ar/carreras/tecnicatura-macrame/` | 2684 → 2184 | 4464 → 3808 | 0 → 0 |
+| `/pt-br/cursos/online/velas-aromaticas/` | 2572 → 2412 | 3744 → 2424 | 0,023 → 0,023 |
+| `/pt-br/interesse/` | 2636 → 2116 | 2656 → 3568 | 0 → 0 |
+| `/pt-br/agenda/` | 2400 → 1784 | 2416 → 3368 | 0,028 → 0,028 |
+
+Leitura: o **FCP melhora em todas** (0,2 a 1,0 s) e o **LCP melhora nas páginas com herói** (0,7 a 1,3 s). **CLS não piora** em nenhuma, inclusive no celular, apesar de o HTML ser de desktop. Em `/interesse/` e `/agenda/` o LCP "piora" por um efeito de medição: o conteúdo real aparece mais cedo (2,2 s), mas o **parágrafo do aviso de cookies**, maior que o do conteúdo, monta depois e vira o candidato a LCP (3,6 s); sem pré-render ele aparecia junto do conteúdo. Só ocorre na primeira visita (sem consentimento salvo). Melhorar exigiria encurtar o texto do aviso no celular, o que muda texto legal; decisão adiada.
+
+**Decisões ainda abertas:** agenda sem turmas no HTML (esqueleto de carregamento); cobertura de 74% da home no celular (se importar, renderizar os detalhes dos cards em lista no DOM, escondidos, em vez de montar só ao expandir).

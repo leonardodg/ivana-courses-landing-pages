@@ -92,6 +92,12 @@ async function render(p) {
       const root = document.getElementById('root');
       // o aviso de cookies não é conteúdo da página
       root.querySelectorAll('[role="dialog"][aria-labelledby="consent-title"]').forEach((e) => e.remove());
+      // Textos vizinhos (ex.: {ícone} {rótulo}) são nós separados no React, mas o innerHTML os junta. Marcamos a fronteira
+      // com <!-- --> (o mesmo que o renderToString do React faz) para a hidratação reconhecer cada nó de texto.
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      for (const t of texts) if (t.previousSibling?.nodeType === Node.TEXT_NODE) t.parentNode.insertBefore(document.createComment(' '), t);
       return { html: root.innerHTML, h1: root.querySelectorAll('h1').length, text: root.innerText.replace(/\s+/g, ' ').trim().length, main: !!root.querySelector('main') };
     });
 
