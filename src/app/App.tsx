@@ -24,27 +24,41 @@ import Footer from "./components/Footer";
 import { Hero, HeroBadgeText, WhatsAppFab, whatsappHref, type HeroSlide } from "./ui";
 import { company } from "./legal/company";
 import { hero_stats_br } from "./data/hero_stats";
-import { home_category_themes } from "./data/presencial";
+import { home_category_themes, presencial_themes } from "./data/presencial";
+import { useSegmentFilter } from "./hooks/useSegmentFilter";
 import { trackOutbound } from "./lib/analytics";
 
 import { Menu, SquarePen } from "lucide-react";
 
+// Segmento (categoria) de um card pelo id: presenciais da loja pelo tema; cursos antigos pela categoria.
+function segmentOfCard(id: string): string | undefined {
+  for (const [category, { theme }] of Object.entries(home_category_themes)) {
+    if (presencial_themes[theme].courses.includes(id)) return category;
+  }
+  return courses_list_br.find((c) => c.id === id)?.categoryId;
+}
+
 export default function App() {
   // A home do Brasil é em português; o ES do menu leva à home da Argentina (/es-ar/).
   const language: Language = "pt";
-  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null); // null = todos os cards, sem filtro (primeiro acesso)
 
   const CATEGORIES: Record<string, CategorySpec> = categories_data;
   const REVIEWS: Review[] = reviews_list_br;
   const FAQS: FAQItem[] = faqs_list_br;
   const COURSES: Course[] = courses_list_br;
 
-  // Herói: slide mostrado (começa em velas). Escolher um segmento no menu leva o herói para ele.
+  // Herói: slide mostrado (começa em velas).
   const [heroId, setHeroId] = useState<CategoryId>("velas");
-  const selectCategory = (id: CategoryId | null) => {
-    setActiveCategoryId(id);
-    if (id) setHeroId(id);
-  };
+
+  // Filtro dos cards por segmento (select ao lado de Completo | Lista), sincronizado com o #hash:
+  // /pt-br/#velas filtra e rola; /pt-br/#imersao-velas mostra o segmento do card e rola até ele.
+  const [categoryFilter, setCategoryFilter] = useSegmentFilter({
+    keys: Object.keys(categories_data),
+    aliases: { aromas: "aromas_incensos", incensos: "aromas_incensos", sabonetes: "saboaria", resina: "resinas" },
+    cardSegment: segmentOfCard,
+    sectionId: "cursos",
+  });
+  const activeCategoryId = (categoryFilter || null) as CategoryId | null; // null = todos os cards (primeiro acesso)
 
   const handleEnrollClick = (course: Course) => {
     const title = course.title[language];
@@ -91,7 +105,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans selection:bg-velas-accent flex flex-col justify-between">
       {/* Sticky Navigation Bar */}
-      <SiteNavbar onSelectCategory={selectCategory} />
+      <SiteNavbar onSelectCategory={() => setCategoryFilter("")} />
 
       {/* Main Sections */}
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
@@ -107,6 +121,7 @@ export default function App() {
         <CourseGrid
           language={language}
           activeCategoryId={activeCategoryId}
+          onCategoryChange={(id) => setCategoryFilter(id ?? "")}
           courses={COURSES}
           onSelectEnroll={handleEnrollClick}
         />

@@ -20,7 +20,7 @@ const T = {
 export default function SiteNavbar({
   onSelectCategory,
 }: {
-  /** Home do Brasil: os segmentos do menu filtram os cards da própria página. */
+  /** Home do Brasil: "Todos os cursos" limpa o filtro dos cards sem recarregar. Os demais itens sempre levam à página do curso. */
   onSelectCategory?: (id: CategoryId | null) => void;
 }) {
   const language = usePageLanguage();
@@ -35,10 +35,6 @@ export default function SiteNavbar({
     if (it === nav_brasil_todos && onSelectCategory) {
       e.preventDefault();
       onSelectCategory(null);
-      document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (it.category && onSelectCategory) {
-      e.preventDefault();
-      onSelectCategory(it.category);
       document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' });
     }
   };

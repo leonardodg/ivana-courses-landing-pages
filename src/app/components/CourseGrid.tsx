@@ -6,12 +6,13 @@ import { category_images } from '../data/category_images';
 import { MapPin, Calendar } from 'lucide-react';
 import { useAgenda } from '../hooks/useAgenda';
 import { CursoCard } from './theme/ThemeSections';
-import { Card, CardGrid, Section, SectionHeader, btnPrimary } from '../ui';
+import { Card, CardGrid, Section, SectionHeader, btnPrimary, CardToolbar } from '../ui';
 import { home_category_themes, presencial_themes, presencial_courses } from '../data/presencial';
 
 interface CourseGridProps {
   language: Language;
   activeCategoryId: CategoryId | null; // null = sem filtro (todos os cards)
+  onCategoryChange: (id: CategoryId | null) => void;
   courses: Course[];
   onSelectEnroll: (course: Course) => void;
 }
@@ -19,6 +20,7 @@ interface CourseGridProps {
 export default function CourseGrid({
   language,
   activeCategoryId,
+  onCategoryChange,
   courses,
   onSelectEnroll,
 }: CourseGridProps) {
@@ -60,7 +62,18 @@ export default function CourseGrid({
           sub={courses_text.description}
         />
 
-        {categoryIds.map((categoryId, groupIndex) => {
+        {/* Barra de ferramentas: filtro por segmento + Completo | Lista (vale para todos os grupos abaixo) */}
+        <CardToolbar
+          filter={{
+            value: activeCategoryId ?? '',
+            onChange: (v) => onCategoryChange((v || null) as CategoryId | null),
+            options: Object.keys(CATEGORIES).map((id) => ({ value: id, label: CATEGORIES[id].name[language] })),
+            label: language === 'pt' ? 'Filtrar por segmento' : 'Filtrar por segmento',
+            allLabel: language === 'pt' ? 'Todos os segmentos' : 'Todos los segmentos',
+          }}
+        />
+
+        {categoryIds.map((categoryId) => {
           const homeTheme = language === 'pt' ? home_category_themes[categoryId] : undefined;
           const theme = homeTheme ? presencial_themes[homeTheme.theme] : undefined;
           const themeEvents = theme ? futureEvents.filter(e => theme.courses.includes(e.course)) : [];
@@ -74,7 +87,7 @@ export default function CourseGrid({
                   {CATEGORIES[categoryId].badgeLogo} {CATEGORIES[categoryId].name[language]}
                 </h3>
               )}
-            <CardGrid count={(theme && homeTheme ? theme.courses.length : 0) + categoryCourses.length} toggle={groupIndex === 0}>
+            <CardGrid count={(theme && homeTheme ? theme.courses.length : 0) + categoryCourses.length} toggle={false}>
               {theme && homeTheme && theme.courses.map(key => (
                 <CursoCard
                   key={key}
@@ -95,6 +108,7 @@ export default function CourseGrid({
                 );
                 return (
                   <Card
+                    id={course.id}
                     key={course.id}
                     image={getCourseImage(course)}
                     alt={course.title[language]}

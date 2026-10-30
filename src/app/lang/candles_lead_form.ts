@@ -56,7 +56,7 @@ export const candles_lead_text_es = {
   whatsappLabel: 'WhatsApp / Llamada',
   emailLabel: 'Email',
   locationLabel: 'Talleres',
-  contactPhoneDisplay: '+54 3757 20-1014',
+  contactPhoneDisplay: '+54 9 3757 20-1014',
   contactEmailDisplay: 'contacto@ivana.academy',
   contactLocationDisplay: 'Buenos Aires, Argentina',
 

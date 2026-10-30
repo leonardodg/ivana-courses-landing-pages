@@ -24,7 +24,7 @@ import type { AgendaEvent, AgendaState } from '../../hooks/useAgenda';
 import { CarreraAr, carreras_ar, tiendaLink, whatsappInscripcion, WHATSAPP_AR } from '../../data/carreras_ar';
 import { trackSelectCareer } from '../../lib/analytics';
 import type { FAQItem } from '../../classes/types';
-import { Card, CardGrid, ContactCta, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary } from '../../ui';
+import { Card, CardGrid, ContactCta, EventCard, InfoBlocks, Section, SectionHeader, btnOutline, btnPrimary, type SegmentFilterProps } from '../../ui';
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 export const fmtDay = (iso: string) =>
@@ -176,13 +176,15 @@ export function CarrerasGrid({
   items,
   agenda,
   linkTo,
+  filter,
 }: {
   items: CarreraAr[];
   agenda: AgendaState;
   linkTo?: (c: CarreraAr) => string | undefined;
+  filter?: SegmentFilterProps; // home: filtro por carrera ao lado de Completa | Lista
 }) {
   return (
-    <CardGrid count={items.length}>
+    <CardGrid count={items.length} filter={filter}>
       {items.map((c) => (
         <CarreraCard key={c.course} carrera={c} agenda={agenda} href={linkTo?.(c)} />
       ))}

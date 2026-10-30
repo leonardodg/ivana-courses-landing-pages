@@ -9,7 +9,9 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 import { ArrowRight, Check, ChevronDown } from 'lucide-react';
 import { btnOutline, cardTag } from './styles';
 import GradeModal, { type GradeContent } from './GradeModal';
-import DensityToggle, { type Density } from './DensityToggle';
+import { type Density } from './DensityToggle';
+import CardToolbar from './CardToolbar';
+import type { SegmentFilterProps } from './SegmentFilter';
 import { useDensity } from '../hooks/useDensity';
 import { usePageLanguage } from '../lib/lang';
 
@@ -235,28 +237,20 @@ export default function Card({
 /** Classe da grade padrão (também usada na home, sem a regra de largura). */
 export const cardGridClass = 'grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10';
 
-const toggleLabels = {
-  pt: { group: 'Formato dos cards', full: 'Completo', compact: 'Lista' },
-  es: { group: 'Formato de las tarjetas', full: 'Completa', compact: 'Lista' },
-};
-
 /**
  * Grade padrão: no formato completo, SEMPRE 2 colunas (gap-8 lg:gap-10), nunca 3; com um card só, ele fica
  * centralizado e com a mesma largura de uma coluna. No formato lista, uma coluna.
- * `toggle`: mostra o seletor Completo | Lista (a escolha vale para todas as grades da página).
+ * `toggle`: mostra a barra com o seletor Completo | Lista (a escolha vale para todas as grades da página).
+ * `filter`: acrescenta o filtro por segmento na mesma barra (páginas com cards de vários segmentos).
  */
-export function CardGrid({ count, children, toggle = true }: { count: number; children: ReactNode; toggle?: boolean }) {
-  const { density, setDensity } = useDensity();
-  const language = usePageLanguage();
+export function CardGrid({ count, children, toggle = true, filter }: { count: number; children: ReactNode; toggle?: boolean; filter?: SegmentFilterProps }) {
+  const { density } = useDensity();
   const compact = density === 'compact';
   const single = count === 1 && !compact ? ' md:*:col-span-2 md:*:justify-self-center md:*:w-[calc(50%-1rem)] lg:*:w-[calc(50%-1.25rem)]' : '';
+  const showDensity = toggle && count > 1;
   return (
     <DensityContext.Provider value={density}>
-      {toggle && count > 1 && (
-        <div className="flex justify-end mb-6">
-          <DensityToggle value={density} onChange={setDensity} labels={toggleLabels[language]} />
-        </div>
-      )}
+      {(filter || showDensity) && <CardToolbar filter={filter} density={showDensity} />}
       <div className={`${compact ? 'grid grid-cols-1 gap-4' : cardGridClass} mx-auto${single}`}>{children}</div>
     </DensityContext.Provider>
   );
