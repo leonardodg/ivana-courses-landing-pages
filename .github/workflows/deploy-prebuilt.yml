@@ -157,6 +157,16 @@ jobs:
             if [ -d dist ]; then mv dist "dist.prev.$DEPLOY_TARGET"; fi
             cp -R "$REL/dist" dist
 
+            # Abas abertas antes do deploy ainda pedem os arquivos com hash da versão anterior (JS e CSS). Mantemos os
+            # das 2 releases anteriores (as cópias originais, sem mesclar, para a lista não crescer sem parar).
+            BEFORE=$(find dist/app dist/styles -type f | wc -l)
+            for PREV in $(ls -1dt releases/*/ 2>/dev/null | sed 's#/$##' | grep -vx "$REL" | head -2); do
+              for d in app styles; do
+                if [ -d "$PREV/dist/$d" ]; then mkdir -p "dist/$d"; cp -Rn "$PREV/dist/$d/." "dist/$d/" 2>/dev/null || true; fi
+              done
+            done
+            echo "Arquivos antigos mantidos para abas abertas: $(( $(find dist/app dist/styles -type f | wc -l) - BEFORE ))"
+
             deploy() {
               docker compose -p "$PROJECT" -f "$COMPOSE" build
               docker compose -p "$PROJECT" -f "$COMPOSE" down --remove-orphans || true
@@ -171,6 +181,12 @@ jobs:
               [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/nao-existe-$RANDOM/")" = "404" ] || return 1
               curl -sI "http://127.0.0.1:$PORT/pt-br/" | grep -qi '^permissions-policy:' || return 1
               curl -s "http://127.0.0.1:$PORT/version.txt" | head -1 | grep -q "$RELEASE_SHA" || return 1
+              # um arquivo com hash que só existia na release anterior ainda precisa responder 200
+              PREV1=$(ls -1dt releases/*/ 2>/dev/null | sed 's#/$##' | grep -vx "$REL" | head -1 || true)
+              if [ -n "$PREV1" ] && [ -d "$PREV1/dist/app" ]; then
+                OLD=$(cd "$PREV1/dist/app" && for f in *; do [ -e "$REL/dist/app/$f" ] || { echo "$f"; break; }; done || true)
+                if [ -n "$OLD" ]; then curl -sf -o /dev/null "http://127.0.0.1:$PORT/app/$OLD" || return 1; fi
+              fi
             }
 
             echo "===== [4/6] Subir o container ($DEPLOY_TARGET, porta $PORT) ====="
