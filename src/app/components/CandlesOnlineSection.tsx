@@ -104,10 +104,10 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
                       </span>
                     </div>
 
-                    <div className="flex gap-2.5">
+                    <div className="flex gap-2.5 w-full sm:w-auto">
                       <button
                         onClick={() => setSelectedCourse(course)}
-                        className="flex items-center gap-1.5 border border-muted hover:border-primary text-on-surface-variant hover:text-primary text-xs font-bold font-mono uppercase tracking-wider px-4 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
+                        className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 border border-muted hover:border-primary text-on-surface-variant hover:text-primary text-xs font-bold font-mono uppercase tracking-wider px-3 sm:px-4 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
                       >
                         <BookOpen className="w-3.5 h-3.5" />
                         GRADE
@@ -117,7 +117,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
                           href={course.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold font-mono uppercase tracking-wider px-5 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
+                          className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold font-mono uppercase tracking-wider px-3 sm:px-5 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                           MATRÍCULA
@@ -125,7 +125,7 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
                       ) : (
                         <button
                           onClick={() => onEnroll(course)}
-                          className="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold font-mono uppercase tracking-wider px-5 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
+                          className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold font-mono uppercase tracking-wider px-3 sm:px-5 py-2 min-h-11 rounded-lg transition-all cursor-pointer"
                         >
                           MATRÍCULA
                         </button>
