@@ -56,10 +56,9 @@ Estado: `main` e `development` no mesmo commit (`304103e`), em produção. Deplo
 - GradeModal e aria-live já corrigidos; restam melhorias menores de a11y listadas no code review.
 
 ## 4. VPS / operação
-- Limpar Docker da VPS (por SSH): `docker system df`, `docker builder prune -af`, `docker image prune -f` (o fluxo antigo deixou camadas de Node e cache).
-  Opcional: acrescentar prune automático e seguro ao script de deploy.
-- Staging (`courses-nginx-staging`, porta 8089 só no localhost) continua rodando; remover se não for mais usar.
-- `deploy.yml` (antigo) é só reserva manual.
+- ✅ Docker da VPS limpo e staging removido (2026-10-30, feito pelo usuário). Opcional: acrescentar prune automático e seguro ao script de deploy.
+- Deploy de reserva (se o fluxo novo estiver fora do ar): `gh workflow run deploy.yml` (a VPS constrói o site como antes, sem pré-render).
+  Deploy normal manual: `gh workflow run deploy-prebuilt.yml -f target=production -f confirm_production=sim`. Detalhes em `docs/DEPLOY.md`.
 
 ## 5. Arquivos locais não versionados
 - `conteudo/` e `ivana.png` (do usuário) ficam fora do git. `public/es-ar/links/index.html` já está commitado.

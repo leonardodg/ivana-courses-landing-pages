@@ -13,7 +13,7 @@ Decisão (2026-10-29): **nada é instalado na VPS** para construir o site. O Git
 | Compose | `prod-prebuilt.yml` | `prod.yml` |
 | Volta atrás | automática em production se a verificação falhar; manual com as releases guardadas | refazer o build do commit anterior |
 
-Use o `deploy.yml` (Actions > Run workflow) só se o novo estiver fora do ar: ele constrói na VPS como antes. Os dois usam o mesmo container (`courses-nginx`) e o mesmo projeto do compose, então um assume o lugar do outro.
+Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml`, ou Actions > "Deploy MAIN → Oracle VPS" > Run workflow, branch `main`): ele constrói na VPS como antes. Os dois usam o mesmo container (`courses-nginx`) e o mesmo projeto do compose, então um assume o lugar do outro.
 
 ## O que o fluxo novo faz
 
@@ -49,4 +49,19 @@ npm run build:ssg && node scripts/verify-dist.mjs
 printf 'TESTE\n' > dist/version.txt
 CONTAINER_NAME=courses-nginx-local HOST_PORT=18089 BIND_ADDR=127.0.0.1: IMAGE_TAG=local LOGS_DIR=/tmp/logs \
   docker compose -p courses-local -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+```
+
+## Comandos úteis (GitHub CLI)
+
+```
+# Deploy de RESERVA (a VPS constrói o site sozinha; sem pré-render). Só se o fluxo novo estiver fora do ar:
+gh workflow run deploy.yml --ref main
+gh run watch                       # acompanhar (escolha a execução na lista)
+
+# Deploy normal manual (o push em main já faz isso sozinho):
+gh workflow run deploy-prebuilt.yml --ref main -f target=production -f confirm_production=sim
+
+# Ver as últimas execuções e o resultado:
+gh run list --limit 5
+gh run view <id> --log-failed      # só os logs que falharam
 ```
