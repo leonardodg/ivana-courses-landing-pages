@@ -331,6 +331,44 @@ export function CohorteSection({ carrera, agenda }: { carrera: CarreraAr; agenda
   );
 }
 
+/* ── Próximas cohortes (home): uma linha por carrera com início no calendário ─────────── */
+export function ProximasCohortesSection({ items, agenda }: { items: CarreraAr[]; agenda: AgendaState }) {
+  const l = usePageLanguage();
+  const rows = items
+    .map((c) => ({ c, etapas: agenda.events.filter((e) => e.course === c.course).sort((a, b) => a.date.localeCompare(b.date)) }))
+    .filter((r) => r.etapas.length > 0);
+  return (
+    <Section id="cohortes" bg="white" border="top" width="mid">
+      <SectionHeader
+        kicker={tr(l, 'PRÓXIMAS COHORTES', 'PRÓXIMAS TURMAS')}
+        title={tr(l, 'Elegí tu fecha de inicio', 'Escolha a sua data de início')}
+        sub={tr(l, 'La inscripción está abierta todo el año. Podés sumarte en cualquier momento.', 'As inscrições estão abertas o ano todo. Você pode entrar a qualquer momento.')}
+      />
+      {agenda.status === 'loading' && (
+        <p className="text-center text-sm text-on-surface-variant">{tr(l, 'Cargando el calendario…', 'Carregando o calendário…')}</p>
+      )}
+      {agenda.status !== 'loading' && rows.length > 0 && (
+        <ul className="space-y-4">
+          {rows.map((r) => <CohorteRow key={r.c.course} carrera={r.c} etapas={r.etapas} tone="cream" />)}
+        </ul>
+      )}
+      {agenda.status !== 'loading' && rows.length === 0 && (
+        <p className="text-center text-sm text-on-surface-variant">
+          {agenda.status === 'error'
+            ? tr(l, 'No pudimos cargar el calendario ahora.', 'Não conseguimos carregar o calendário agora.')
+            : tr(l, 'Próximamente el calendario de la Cohorte 2027.', 'Em breve o calendário da Turma 2027.')}
+        </p>
+      )}
+      <a
+        href={tr(l, '/es-ar/agenda/', '/pt-br/agenda/')}
+        className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-primary hover:underline"
+      >
+        {tr(l, 'Agenda completa y siempre actualizada', 'Agenda completa e sempre atualizada')} <ArrowRight className="w-3.5 h-3.5" />
+      </a>
+    </Section>
+  );
+}
+
 /* ── Qué vas a aprender ─────────────────────────────────────────────── */
 export function QueAprenderSection({ carrera }: { carrera: CarreraAr }) {
   const l = usePageLanguage();

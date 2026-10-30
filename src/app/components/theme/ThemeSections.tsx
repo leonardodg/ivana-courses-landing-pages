@@ -84,7 +84,7 @@ export function TurmasSection({ theme }: { theme: PresencialTheme }) {
   const { events, status } = useThemeEvents(theme);
 
   return (
-    <Section id="turmas" bg="cream" width="narrow">
+    <Section id="turmas" bg="white" border="top" width="mid">
       <SectionHeader kicker="PRÓXIMAS TURMAS" title="Escolha a sua data" sub="Vagas limitadas por turma, para acompanhar cada aluna de perto." />
 
       {status === 'loading' && (
@@ -98,7 +98,7 @@ export function TurmasSection({ theme }: { theme: PresencialTheme }) {
       )}
 
       {status !== 'loading' && events.length === 0 && (
-        <div className="bg-white rounded-2xl border border-muted p-6 text-center">
+        <div className="bg-surface-cream rounded-2xl border border-muted p-6 text-center">
           <CalendarDays className="w-6 h-6 text-primary mx-auto mb-2" />
           <p className="text-sm text-gray-900 font-semibold">
             {status === 'error' ? 'Não conseguimos carregar as turmas agora.' : 'Ainda não há turmas marcadas neste tema.'}
@@ -243,7 +243,7 @@ export function CursosSection({ theme, id }: { theme: PresencialTheme; id?: stri
   const { events, status } = useThemeEvents(theme);
 
   return (
-    <Section id={id ?? 'cursos'} bg="white" border="y" width="wide">
+    <Section id={id ?? 'cursos'} bg="cream" width="mid">
       <SectionHeader kicker="CURSOS PRESENCIAIS" title="Do zero, com a mão na massa" sub="Cada curso termina em um encontro e você sai com o que produziu, apostila e certificado." />
       <CardGrid count={theme.courses.length}>
         {theme.courses.map(key => (

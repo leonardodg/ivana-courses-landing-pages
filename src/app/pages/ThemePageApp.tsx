@@ -84,8 +84,8 @@ export default function ThemePageApp({ themeId }: { themeId: keyof typeof THEMES
           stats={hero_stats_br}
         />
 
-        <TurmasSection theme={cfg.theme} />
         <CursosSection theme={cfg.theme} />
+        <TurmasSection theme={cfg.theme} />
         <OnlineThemeBlock items={cfg.online} />
         <ComoFuncionaSection />
         <InclusoSection />

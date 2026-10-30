@@ -21,6 +21,7 @@ import {
   CarrerasGrid,
   ComoInscribirmeSection,
   CursadaSection,
+  ProximasCohortesSection,
   InclusoSection,
   WhatsAppFooterCta,
   faqs_carreras_ar,
@@ -89,7 +90,7 @@ export default function CareerHomeApp() {
       <main id="conteudo" tabIndex={-1} className="grow focus:outline-none">
         <Hero slides={heroSlides} stats={hero_stats_ar} labels={heroLabels} />
 
-        <Section id="carreras" bg="white" border="y" width="wide">
+        <Section id="carreras" bg="cream" width="mid">
           <SectionHeader kicker="LAS CARRERAS" title="Elegí tu carrera" sub="Todas son 100% online y terminan con el título del Conservatorio Grassi." />
           <CarrerasGrid
             agenda={agenda}
@@ -105,6 +106,7 @@ export default function CareerHomeApp() {
           />
         </Section>
 
+        <ProximasCohortesSection items={carreras_principales.map((c) => carreras_ar[c])} agenda={agenda} />
         <CursadaSection bg="cream" />
         <ComoInscribirmeSection bg="white" />
         <InclusoSection bg="cream" />
