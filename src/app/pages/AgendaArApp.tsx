@@ -1,5 +1,5 @@
 // Agenda da Argentina (/es-ar/agenda/): a Cohorte 2027 das carreras online, vinda do feed (pais=AR).
-// Mesmo layout e mesmo EventCard da agenda do Brasil (ui/AgendaLayout, ui/EventCard, ui/MonthNav, ui/FilterChips):
+// Mesmo layout e mesmo EventCard da agenda do Brasil (ui/AgendaLayout, ui/EventCard, ui/MonthNav, ui/SegmentFilter):
 // cada etapa do cronograma (módulos, repaso, receso, cierre) é um card, separada por mês.
 // Sem preço: o feed traz `price` ("$40.000 por mes") e este arquivo NUNCA o lê.
 
@@ -12,7 +12,7 @@ import { useDensity } from '../hooks/useDensity';
 import { monthTitle, useMonthPager } from '../hooks/useMonthPager';
 import { ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { InscribirmeButton, etapaLabel, fmtRange, nivelLabel } from '../components/theme/CareerSections';
-import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, InfoBlocks, MonthNav, WhatsAppFab, whatsappHref, btnOutline, btnPrimary } from '../ui';
+import { AgendaLayout, DensityToggle, EventBadge, EventCard, InfoBlocks, SegmentFilter, MonthNav, WhatsAppFab, whatsappHref, btnOutline, btnPrimary } from '../ui';
 
 const isInicio = (e: AgendaEvent) => /^modulo\s+1\//i.test(e.etapa ?? '');
 
@@ -48,12 +48,13 @@ export default function AgendaArApp() {
               <a href={WHATSAPP_AR} target="_blank" rel="noopener noreferrer" className={`${btnOutline} inline-flex`}>
                 <MessageCircle className="h-4 w-4" aria-hidden /> Hablar con Ivana
               </a>
-              <FilterChips
-                options={carreras_principales.map((c) => ({ value: c, label: carreras_ar[c].nombre }))}
+              <SegmentFilter
+                fullWidth
+                options={carreras_principales.map((c) => ({ value: c, label: ar_pages[carreras_ar[c].page].title }))}
                 value={filtro}
                 onChange={setFiltro}
                 allLabel="Todas las carreras"
-                ariaLabel="Filtrar por carrera"
+                label="Filtrar por carrera"
               />
             </>
           }

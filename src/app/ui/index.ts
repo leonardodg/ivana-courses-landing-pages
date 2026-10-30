@@ -14,7 +14,6 @@ export type { EventBadge } from './EventCard';
 export { default as DensityToggle } from './DensityToggle';
 export type { Density } from './DensityToggle';
 export { default as MonthNav } from './MonthNav';
-export { default as FilterChips } from './FilterChips';
 export { default as AgendaLayout } from './AgendaLayout';
 export { default as InfoBlocks } from './InfoBlock';
 export type { InfoBlockItem, InfoTint } from './InfoBlock';
