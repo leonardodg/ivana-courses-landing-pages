@@ -378,6 +378,12 @@ h1.font-serif, h2.font-serif, h3.font-serif {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+/* Contêineres que só recebem foco por código (tabindex="-1": <main> do atalho "pular para o conteúdo" e o painel de
+   cookies) não são controles: sem anel de foco, senão aparece uma linha na largura toda (o painel é fixo e ocupa a tela). */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
