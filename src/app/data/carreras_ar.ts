@@ -21,6 +21,8 @@ export interface CarreraAr {
   enCalendario2027: boolean;
   image: string;
   imagePos: string;
+  cardImage?: string; // foto só do card (o herói da página usa `image`)
+  cardImagePos?: string;
   /** Temario CONFIRMADO pela Ivana (um módulo por mês). Vazio = não publicado: o card não mostra "Ver plan de estudios". */
   temario: string[];
 }
@@ -38,6 +40,8 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: true,
     image: '/images/ar/velas.webp',
     imagePos: 'center 30%',
+    cardImage: '/images/ar/velas-card.webp',
+    cardImagePos: 'center 55%',
     temario: [
       'Aula 1: Velas aromáticas artesanales',
       'Aula 2: Velas terapéuticas',
@@ -63,6 +67,8 @@ export const carreras_ar: Record<string, CarreraAr> = {
     enCalendario2027: false,
     image: '/images/ar/velas.webp',
     imagePos: 'center 30%',
+    cardImage: '/images/ar/velas-card.webp',
+    cardImagePos: 'center 55%',
     temario: [],
   },
   'ar-resinas': {
@@ -131,7 +137,7 @@ export const carreras_ar: Record<string, CarreraAr> = {
     page: 'textil',
     sku: 'AR-TEC-ESTAMPAS',
     enCalendario2027: true,
-    image: '/images/ar/estampas.webp',
+    image: '/images/ar/estampas-foto.webp',
     imagePos: 'center',
     temario: [],
   },
@@ -145,8 +151,8 @@ export const carreras_ar: Record<string, CarreraAr> = {
     page: 'interiores',
     sku: 'AR-TEC-INTERIORES',
     enCalendario2027: true,
-    image: '/images/ar/interiores.webp',
-    imagePos: 'center',
+    image: '/images/ar/interiores-foto.webp',
+    imagePos: 'center 30%',
     temario: [],
   },
   'ar-mixmedia': {
@@ -159,8 +165,8 @@ export const carreras_ar: Record<string, CarreraAr> = {
     page: 'mixmedia',
     sku: 'AR-PROF-MIXMEDIA',
     enCalendario2027: false,
-    image: '/images/ar/mixmedia.webp',
-    imagePos: 'center',
+    image: '/images/ar/mixmedia-foto.webp',
+    imagePos: 'center 55%',
     temario: [],
   },
 };
