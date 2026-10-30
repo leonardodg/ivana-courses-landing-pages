@@ -6,7 +6,8 @@ import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
 import { useDensity } from "../hooks/useDensity";
 import { eventJsonLd } from "../seo/events";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
-import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, MonthNav, WhatsAppFab, btnOutline, btnPrimary } from "../ui";
+import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, FilterChips, InfoBlocks, MonthNav, WhatsAppFab, btnOutline, btnPrimary, nav_icons } from "../ui";
+import { nav_brasil } from "../data/site_nav";
 
 const WHATSAPP = "5548991671659";
 const SP = { timeZone: "America/Sao_Paulo" } as const;
@@ -243,6 +244,19 @@ export default function AgendaApp() {
               </ul>
             </>
           )}
+
+          {/* Conteúdo fixo (não depende do feed): fica no HTML pré-renderizado e leva aos cursos */}
+          <section aria-labelledby="cursos-da-agenda" className="space-y-4 pt-4">
+            <h2 id="cursos-da-agenda" className="font-serif text-2xl text-gray-900">Cursos com turmas presenciais e online</h2>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              As datas acima mudam sozinhas, conforme a agenda da Ivana. Veja o que cada curso inclui e escolha a sua turma.
+            </p>
+            <InfoBlocks
+              layout="compact"
+              tone="white"
+              items={nav_brasil.flatMap((g) => g.items).map((it) => ({ icon: it.icon ? nav_icons[it.icon] : undefined, title: typeof it.label === "string" ? it.label : it.label.pt, href: it.href }))}
+            />
+          </section>
 
           {agenda.status === "ready" && visible.length > 0 && (
             <div className="lg:hidden">

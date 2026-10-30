@@ -17,6 +17,7 @@ export interface InfoBlockItem {
   title?: string;
   text?: string;
   list?: string[]; // lista numerada (aulas do módulo)
+  href?: string; // cartão inteiro vira link (o título é o link, esticado sobre o cartão)
 }
 
 const tint: Record<InfoTint, string> = {
@@ -52,6 +53,9 @@ export default function InfoBlocks({
       {items.map((it, i) => {
         const Icon = it.icon;
         const small = layout === 'compact';
+        const link = it.href ? 'relative hover:shadow-md hover:border-primary/40 transition-all' : '';
+        const stretch = 'after:absolute after:inset-0 after:content-[""] focus-visible:outline-2 focus-visible:outline-tertiary';
+        const label = (t?: string) => (it.href && t ? <a href={it.href} className={stretch}>{t}</a> : t);
         const tileBox = (Icon || it.tile) && (
           <span
             className={`${tint[it.tint ?? 'rose']} flex items-center justify-center shrink-0 ${
@@ -65,7 +69,7 @@ export default function InfoBlocks({
         const body = (
           <div className="min-w-0">
             {it.kicker && <span className="block text-micro font-mono font-bold tracking-widest text-primary uppercase mb-1.5">{it.kicker}</span>}
-            {it.title && <h3 className="text-lg font-serif font-bold text-gray-950 mb-2 leading-snug">{it.title}</h3>}
+            {it.title && <h3 className="text-lg font-serif font-bold text-gray-950 mb-2 leading-snug">{label(it.title)}</h3>}
             {it.text && <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">{it.text}</p>}
             {it.list && (
               <ol className="mt-3 list-decimal pl-5 space-y-1 text-xs md:text-sm text-on-surface-variant leading-relaxed">
@@ -79,15 +83,15 @@ export default function InfoBlocks({
 
         if (small) {
           return (
-            <li key={it.text ?? it.title} className={`${card} rounded-xl border p-4 flex items-center gap-3 text-sm text-gray-900`}>
+            <li key={it.text ?? it.title} className={`${card} ${link} rounded-xl border p-4 flex items-center gap-3 text-sm text-gray-900`}>
               {tileBox}
-              <span>{it.title ?? it.text}</span>
+              <span>{label(it.title ?? it.text)}</span>
             </li>
           );
         }
         if (layout === 'stack') {
           return (
-            <li key={it.title ?? i} className={`${card} rounded-2xl border p-6 space-y-4`}>
+            <li key={it.title ?? i} className={`${card} ${link} rounded-2xl border p-6 space-y-4`}>
               <div className="flex items-center justify-between">
                 {tileBox}
                 {numbered && <span className="font-mono text-xs font-bold text-primary/70">{String(i + 1).padStart(2, '0')}</span>}
@@ -97,7 +101,7 @@ export default function InfoBlocks({
           );
         }
         return (
-          <li key={it.title ?? i} className={`${card} rounded-2xl border p-6 md:p-8 flex items-start gap-4`}>
+          <li key={it.title ?? i} className={`${card} ${link} rounded-2xl border p-6 md:p-8 flex items-start gap-4`}>
             {tileBox}
             {body}
           </li>

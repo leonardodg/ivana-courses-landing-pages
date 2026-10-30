@@ -4,15 +4,15 @@
 // Sem preço: o feed traz `price` ("$40.000 por mes") e este arquivo NUNCA o lê.
 
 import { useMemo, useState } from 'react';
-import { CalendarDays, Clock, MessageCircle, Monitor } from 'lucide-react';
+import { CalendarDays, Clock, GraduationCap, MessageCircle, Monitor } from 'lucide-react';
 import Footer from '../components/Footer';
 import SiteNavbar from '../components/SiteNavbar';
 import { AgendaEvent, useAgenda } from '../hooks/useAgenda';
 import { useDensity } from '../hooks/useDensity';
 import { monthTitle, useMonthPager } from '../hooks/useMonthPager';
-import { carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
+import { ar_pages, carreras_ar, carreras_principales, WHATSAPP_AR } from '../data/carreras_ar';
 import { InscribirmeButton, etapaLabel, fmtRange, nivelLabel } from '../components/theme/CareerSections';
-import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, MonthNav, WhatsAppFab, whatsappHref, btnOutline, btnPrimary } from '../ui';
+import { AgendaLayout, DensityToggle, EventBadge, EventCard, FilterChips, InfoBlocks, MonthNav, WhatsAppFab, whatsappHref, btnOutline, btnPrimary } from '../ui';
 
 const isInicio = (e: AgendaEvent) => /^modulo\s+1\//i.test(e.etapa ?? '');
 
@@ -150,6 +150,23 @@ export default function AgendaArApp() {
               </ul>
             </>
           )}
+
+          {/* Conteúdo fixo (não depende do feed): fica no HTML pré-renderizado e leva a cada carrera */}
+          <section aria-labelledby="carreras-de-la-agenda" className="space-y-4 pt-4">
+            <h2 id="carreras-de-la-agenda" className="font-serif text-2xl text-gray-900">Las carreras de la Cohorte 2027</h2>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              La inscripción está abierta todo el año. Elegí una carrera para ver el plan, la fecha de inicio y cómo inscribirte.
+            </p>
+            <InfoBlocks
+              tone="white"
+              items={carreras_principales.map((c) => ({
+                icon: GraduationCap,
+                title: carreras_ar[c].nombre,
+                text: `${nivelLabel(carreras_ar[c])} · ${carreras_ar[c].meses} meses · 100% online`,
+                href: ar_pages[carreras_ar[c].page].path,
+              }))}
+            />
+          </section>
         </AgendaLayout>
       </main>
 
