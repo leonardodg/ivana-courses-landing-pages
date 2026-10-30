@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Frontend for Ivana Academy's course landing pages (React 19 + Vite 6 + Tailwind v4), built as a Multi-Page Application and deployed by GitHub Actions to the Oracle VPS (Docker + Nginx) on every push to `main`.
+Frontend for Ivana Academy's course landing pages (React 19 + Vite 6 + Tailwind v4), built as a Multi-Page Application and deployed by GitHub Actions to the Oracle VPS (Docker + Nginx) on every push to `main`: the build and the prerender (`scripts/prerender.mjs`) run in the Actions runner and only the finished `dist/` is sent to the VPS (see `docs/DEPLOY.md`; `deploy.yml` is a manual fallback).
 
 ## Adding a New Course Page
 1. Create the page under `src/` as `index.html`: **the folder path is the public URL** (e.g. `src/pt-br/cursos/sabonetes/index.html` → `/pt-br/cursos/sabonetes/`; Brazil lives in `src/pt-br/`, Argentina in `src/es-ar/`). Follow `docs/URLS.md`.
