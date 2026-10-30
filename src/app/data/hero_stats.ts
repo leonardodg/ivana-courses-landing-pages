@@ -20,3 +20,10 @@ export const hero_stats_ar_pt: Stat[] = [
   { value: '6+ Anos', label: home_text.pt.statsExp },
   { value: 'Título Grassi', label: home_text.pt.statsPort },
 ];
+
+// Versão em espanhol das páginas do Brasil (troca de idioma numa página sem par).
+export const hero_stats_br_es: Stat[] = [
+  { value: '+3.000', label: home_text.es.statsAlunas },
+  { value: '6+ Años', label: home_text.es.statsExp },
+  { value: 'BR & AR', label: home_text.es.statsPort },
+];

@@ -196,3 +196,98 @@ export const home_category_themes: Record<string, { theme: PresencialTheme['id']
   aromas_incensos: { theme: 'aromas',   page: '/pt-br/cursos/aromas/' },
   resinas:         { theme: 'resina',   page: '/pt-br/cursos/resinas/' },
 };
+
+// Versão em espanhol (quando a pessoa troca para ES numa página sem par). Só os textos; preço, foto e loja são os mesmos.
+export interface PresencialCourseText {
+  name: string;
+  tag: string;
+  subtitle: string;
+  takesHome: string[];
+  duration: string;
+  includes: string[];
+}
+
+const TAG_W = 'Workshop presencial';
+export const presencial_es: Record<string, PresencialCourseText> = {
+  'saboaria-extratos': {
+    name: 'Jabonería y Extractos Naturales', tag: TAG_W,
+    subtitle: 'Desde cero, con el método melt and pour, en unas 3 h',
+    takesHome: ['Varios tipos de jabón para llevar a casa', 'Tinturas madre y extractos naturales', 'Apunte con recetas, materiales y proveedores'],
+    duration: 'unas 3 horas',
+    includes: ['Todos los materiales', 'Desayuno en los grupos de la mañana; cafecito en los demás', 'Apunte con recetas, lista de materiales y proveedores', 'Certificado Ivana Academy'],
+  },
+  'velas-aromaticas-moldes': {
+    name: 'Velas Aromáticas y de Moldes', tag: TAG_W,
+    subtitle: 'Desde cero, en un encuentro de 3 h 30',
+    takesHome: ['Cada alumna se lleva 2 velas aromáticas y 2 de molde', 'Todos los materiales incluidos', 'Apunte y certificado'],
+    duration: '3 h 30',
+    includes: ['Todos los materiales', 'Apunte', 'Certificado Ivana Academy'],
+  },
+  'aromatizantes-perfumes': {
+    name: 'Aromatizantes y Perfumes', tag: TAG_W,
+    subtitle: '6 productos listos para llevar, en 3 h',
+    takesHome: ['Home spray, agua para telas, varillas, body splash, difusor de auto y sachet', 'Todos los materiales incluidos y kit listo', 'Apunte, lista de proveedores y certificado'],
+    duration: '3 horas',
+    includes: ['Todos los materiales y el kit listo', 'Apunte y lista de proveedores', 'Certificado Ivana Academy', 'Café'],
+  },
+  'imersao-velas': {
+    name: 'Inmersión de Velas', tag: 'Curso presencial',
+    subtitle: 'Desde cero a todos los tipos de vela, con ceras vegetales',
+    takesHome: ['Velas aromáticas, terapéuticas, de molde, wax melts, de masaje y gourmet', 'Todas las velas que hagas, listas', 'Apunte completo y lista de materiales y proveedores'],
+    duration: 'todo el día, de 9:30 a 16:30',
+    includes: ['Todos los materiales', 'Desayuno y merienda', 'Apunte completo, lista de materiales y proveedores', 'Certificado Ivana Academy'],
+  },
+  'velas-oratorio': {
+    name: 'Velas de Oratorio', tag: TAG_W,
+    subtitle: 'Resina, moldes y velas con piedras, en 3 h',
+    takesHome: ['Te llevás 4 velas y los moldes', 'Aprendés a trabajar con resina y a crear tus moldes', 'Apunte completo'],
+    duration: '3 horas',
+    includes: ['Todos los materiales', 'Los moldes que hagas', 'Apunte completo y cafecito', 'Certificado Ivana Academy'],
+  },
+  'velas-gel': {
+    name: 'Velas de Gel', tag: TAG_W,
+    subtitle: 'Desde cero, en unas 4 h, con desayuno',
+    takesHome: ['Velas en vasos estilo latte, tragos, lámparas y autoportantes', 'Todos los materiales incluidos', 'Te llevás un kit de velas completo'],
+    duration: 'unas 4 horas',
+    includes: ['Todos los materiales', 'Kit de velas completo para llevar', 'Desayuno', 'Apunte y material de apoyo', 'Certificado Ivana Academy'],
+  },
+  'resina-pedras': {
+    name: 'Resina con Piedras', tag: TAG_W,
+    subtitle: 'Sin necesidad de experiencia, en unas 3 h 30',
+    takesHome: ['Hacés y te llevás un kit para el baño', 'Todos los materiales disponibles', 'Apunte completo'],
+    duration: 'unas 3 h 30',
+    includes: ['Todos los materiales', 'Apunte completo', 'Cafecito', 'Certificado Ivana Academy'],
+  },
+  'workshop-resina': {
+    name: 'Workshop de Resina', tag: TAG_W,
+    subtitle: 'Resina epoxi desde cero, en unas 3 h',
+    takesHome: ['Lapiceras, llaveros y joyas con moldes', 'Laminados para cuadros, relojes y bandejas', 'Lapicera, llavero, señalador y bandeja'],
+    duration: 'unas 3 horas',
+    includes: ['Todos los materiales', 'Apunte y material de apoyo', 'Certificado Ivana Academy'],
+  },
+  'incensaria-natural': {
+    name: 'Incienso Natural', tag: TAG_W,
+    subtitle: 'Varios tipos de incienso para llevar, en unas 3 h',
+    takesHome: ['Varillas, conos y palo santo', 'Todos los materiales incluidos', 'Apunte con paso a paso y recetas'],
+    duration: 'unas 3 horas',
+    includes: ['Todos los materiales', 'Apunte con paso a paso y recetas', 'Certificado Ivana Academy'],
+  },
+  'pecas-concreto': {
+    name: 'Piezas en Cemento', tag: TAG_W,
+    subtitle: 'Mezclas, acabados, curado y secado, en 3 h',
+    takesHome: ['Te llevás vasos, bandejas y macetitas', 'Diversos materiales y acabados', 'Apunte completo'],
+    duration: '3 horas',
+    includes: ['Todos los materiales', 'Apunte completo', 'Certificado Ivana Academy'],
+  },
+  'trico-gigante': {
+    name: 'Tejido Gigante', tag: TAG_W,
+    subtitle: 'Tu manta de lana 100% merino, en unas 2 h',
+    takesHome: ['Manta de ~0,90 x 1,70 m (1 kg de lana)', 'No hace falta tener experiencia', 'Cafecito incluido'],
+    duration: 'unas 2 horas',
+    includes: ['La lana 100% merino (1 kg)', 'Cafecito', 'Apunte y material de apoyo', 'Certificado Ivana Academy'],
+  },
+};
+
+/** Textos do curso no idioma da página (espanhol quando houver tradução; senão o original em português). */
+export const courseText = (c: PresencialCourse, l: 'pt' | 'es'): PresencialCourseText =>
+  (l === 'es' && presencial_es[c.key]) || c;
