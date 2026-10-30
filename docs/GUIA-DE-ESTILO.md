@@ -255,3 +255,11 @@ mesmo tempo e registre aqui.
 1. ~~Alinhar as páginas `es_ar` a este guia~~ (feito em 27/10/2026, ver seção 4). Falta conferir no celular real e com a Ivana.
 2. ~~Refazer as páginas de curso online `/pt-br/cursos/online/velas-aromaticas/`, `/pt-br/cursos/online/saboaria-com-extratos-naturais/` e `/pt-br/apostilas/60-receitas-de-sabonetes/`~~ (feito em 27/10/2026, ver o início do guia).
 3. ~~Extrair os blocos repetidos para um módulo compartilhado~~ (feito: `src/app/ui/`). ~~Migrar navbar da home, cards online da home, sobre, "por que nós", depoimentos e perguntas~~ (feito em 27/10/2026). **Ainda com `<section>` próprio** (migrar na próxima rodada): `ContactForm` e `CandlesLeadForm` (formulários), `CandlesOnlineSection` (cards online horizontais de velas), `AgendaApp` (agenda do Brasil; a da Argentina já usa `ui/`) e as páginas legais (que já usam a navbar padrão).
+
+## Páginas sem versão no outro idioma (PT | ES)
+
+Quando a página não tem par em `lang_pairs`, o seletor PT | ES troca o texto na própria página (sem recarregar):
+- Componentes usam `usePageLanguage()` e `tr(l, 'espanhol', 'português')` (`lib/lang.ts`). Texto novo em página sem par **sempre** nos dois idiomas.
+- Cursos presenciais: `presencial_es` em `data/presencial.ts` (`courseText`). Cursos online e apostila: dicionário em `data/online_courses_es.ts`.
+- Nomes oficiais (Tecnicatura, Profesorado) e depoimentos reais ficam no idioma original. A página de Arrepentimiento (jurídica da Argentina) fica em espanhol.
+- Datas, turmas e notas vêm do feed da agenda e não são traduzidas (só os rótulos).

@@ -13,7 +13,9 @@ import {
   Store,
   Users,
 } from 'lucide-react';
-import type { Language, FAQItem, Review } from '../classes/types';
+import type { FAQItem, Review } from '../classes/types';
+import { tr, usePageLanguage } from '../lib/lang';
+import { localizeOnline } from '../data/online_courses_es';
 import { online_courses, OnlineBlock } from '../data/online_courses';
 import { WHATSAPP_URL } from '../data/presencial';
 import SiteNavbar from '../components/SiteNavbar';
@@ -65,12 +67,12 @@ const toReviews = (items: { text: string; cite: string }[]): Review[] =>
   });
 
 export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboaria' | 'apostila' }) {
-  const language: Language = 'pt';
-  const c = online_courses[slug];
+  const language = usePageLanguage();
+  const c = localizeOnline(online_courses[slug], language);
 
   const firstAnchor = c.sections.map((s) => ANCHOR[s.type]).find(Boolean);
   const final = c.sections.find((s) => s.type === 'final');
-  const shortLabel = slug === 'apostila' ? 'Quero a apostila' : 'Quero entrar';
+  const shortLabel = slug === 'apostila' ? tr(language, 'Quiero el apunte', 'Quero a apostila') : tr(language, 'Quiero entrar', 'Quero entrar');
 
   // Fundos alternados (creme/branco), sem contar o carrossel de depoimentos (que tem fundo próprio).
   let n = 0;
@@ -85,11 +87,11 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
   const render = (b: OnlineBlock, i: number) => {
     switch (b.type) {
       case 'reviews':
-        return <ReviewsCarousel key={i} language="pt" reviews={toReviews(b.items)} note={b.note} />;
+        return <ReviewsCarousel key={i} language={language} reviews={toReviews(b.items)} note={b.note} />;
       case 'faq': {
         const faqs: FAQItem[] = b.items.map((f, k) => ({ id: `f${k}`, question: { pt: f.q, es: f.q }, answer: { pt: f.a, es: f.a } }));
         next();
-        return <FAQSection key={i} language="pt" faqs={faqs} />;
+        return <FAQSection key={i} language={language} faqs={faqs} />;
       }
       case 'final':
         return null; // renderizado depois, no bloco de compra
@@ -169,7 +171,7 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
           title={emphasis(c.h1)}
           text={c.lead}
           primary={{ label: c.buy.label, href: c.buy.href, icon: ListChecks, external: true }}
-          secondary={{ label: 'Ver o conteúdo', href: firstAnchor ? `#${firstAnchor}` : '#cursos', icon: ListChecks }}
+          secondary={{ label: tr(language, 'Ver el contenido', 'Ver o conteúdo'), href: firstAnchor ? `#${firstAnchor}` : '#cursos', icon: ListChecks }}
           photo={{ src: c.hero_img.src, alt: c.hero_img.alt, position: 'top' }}
           backdrop={{ src: c.slug === 'velas' ? '/images/courses/velas-pavio-madeira.webp' : '/images/courses/saboaria.webp', alt: c.name }}
           stats={c.stats}
@@ -192,14 +194,14 @@ export default function OnlineCoursePageApp({ slug }: { slug: 'velas' | 'saboari
         />
         <ContactCta
           id="contato"
-          title="Ficou com alguma dúvida?"
-          text="Fale com a gente pelo WhatsApp."
-          action={{ label: 'Chamar no WhatsApp', href: WHATSAPP_URL }}
+          title={tr(language, '¿Te quedó alguna duda?', 'Ficou com alguma dúvida?')}
+          text={tr(language, 'Escribinos por WhatsApp.', 'Fale com a gente pelo WhatsApp.')}
+          action={{ label: tr(language, 'Escribir por WhatsApp', 'Chamar no WhatsApp'), href: WHATSAPP_URL }}
         />
       </main>
 
       <StickyBuyBar price={c.price_label.main} buy={c.buy} shortLabel={shortLabel} />
-      <WhatsAppFab href={whatsappHref(WHATSAPP_URL, `Oi! Vim pela página do ${c.name} e quero tirar uma dúvida.`)} label="Falar no WhatsApp" raised />
+      <WhatsAppFab href={whatsappHref(WHATSAPP_URL, tr(language, `¡Hola! Vengo de la página de ${c.name} y quiero consultar una duda.`, `Oi! Vim pela página do ${c.name} e quero tirar uma dúvida.`))} label={tr(language, 'Hablar por WhatsApp', 'Falar no WhatsApp')} raised />
       <Footer />
     </div>
   );
