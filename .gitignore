@@ -139,6 +139,7 @@ dist
 
 
 build/
+!.devcontainer/build/
 dist/
 coverage/
 .DS_Store

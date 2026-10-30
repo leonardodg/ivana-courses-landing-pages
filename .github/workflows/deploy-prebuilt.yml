@@ -118,20 +118,20 @@ jobs:
       - name: Publicar na VPS
         uses: appleboy/ssh-action@v1.2.0
         env:
-          TARGET: ${{ inputs.target }}
-          SHA: ${{ github.sha }}
+          DEPLOY_TARGET: ${{ inputs.target }}
+          RELEASE_SHA: ${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_SSH_PORT || 22 }}
-          envs: TARGET,SHA
+          envs: DEPLOY_TARGET,RELEASE_SHA
           script: |
             set -euo pipefail
             REPO_DIR="${{ vars.REPO_PATH || '/home/ubuntu/pages-courses' }}"
             COMPOSE=".devcontainer/compose/prod-prebuilt.yml"
 
-            if [ "$TARGET" = "production" ]; then
+            if [ "$DEPLOY_TARGET" = "production" ]; then
               export CONTAINER_NAME=courses-nginx HOST_PORT=8088 BIND_ADDR="" IMAGE_TAG=main LOGS_DIR=./logs_nginx
               PROJECT=compose
             else
@@ -146,15 +146,15 @@ jobs:
             git reset --hard origin/main
 
             echo "===== [2/6] Desempacotar a release ====="
-            REL="releases/${SHA:0:8}-$(date +%Y%m%d%H%M%S)"
+            REL="releases/${RELEASE_SHA:0:8}-$(date +%Y%m%d%H%M%S)"
             mkdir -p "$REL"
-            tar -xzf "/tmp/courses-release-$SHA/release.tgz" -C "$REL"
-            rm -rf "/tmp/courses-release-$SHA"
+            tar -xzf "/tmp/courses-release-$RELEASE_SHA/release.tgz" -C "$REL"
+            rm -rf "/tmp/courses-release-$RELEASE_SHA"
             test -f "$REL/dist/version.txt"
 
             echo "===== [3/6] Colocar o dist no contexto do build (guarda o anterior para voltar) ====="
-            rm -rf "dist.prev.$TARGET"
-            if [ -d dist ]; then mv dist "dist.prev.$TARGET"; fi
+            rm -rf "dist.prev.$DEPLOY_TARGET"
+            if [ -d dist ]; then mv dist "dist.prev.$DEPLOY_TARGET"; fi
             cp -R "$REL/dist" dist
 
             deploy() {
@@ -170,10 +170,10 @@ jobs:
               curl -sf "http://127.0.0.1:$PORT/pt-br/" | grep -q 'data-prerendered="1"' || return 1
               [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/nao-existe-$RANDOM/")" = "404" ] || return 1
               curl -sI "http://127.0.0.1:$PORT/pt-br/" | grep -qi '^permissions-policy:' || return 1
-              curl -s "http://127.0.0.1:$PORT/version.txt" | head -1 | grep -q "$SHA" || return 1
+              curl -s "http://127.0.0.1:$PORT/version.txt" | head -1 | grep -q "$RELEASE_SHA" || return 1
             }
 
-            echo "===== [4/6] Subir o container ($TARGET, porta $PORT) ====="
+            echo "===== [4/6] Subir o container ($DEPLOY_TARGET, porta $PORT) ====="
             deploy
 
             echo "===== [5/6] Verificar ====="
@@ -181,9 +181,9 @@ jobs:
               echo "Verificação ok ✔"
             else
               echo "Verificação FALHOU"
-              if [ "$TARGET" = "production" ] && [ -d "dist.prev.$TARGET" ]; then
+              if [ "$DEPLOY_TARGET" = "production" ] && [ -d "dist.prev.$DEPLOY_TARGET" ]; then
                 echo "Voltando para a release anterior..."
-                rm -rf dist && mv "dist.prev.$TARGET" dist
+                rm -rf dist && mv "dist.prev.$DEPLOY_TARGET" dist
                 deploy
               fi
               exit 1
@@ -192,7 +192,7 @@ jobs:
             echo "===== [6/6] Limpeza (mantém as 3 últimas releases) ====="
             ls -1dt releases/* 2>/dev/null | tail -n +4 | xargs -r rm -rf
             docker ps --filter "name=$CONTAINER_NAME" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-            echo "Deploy ($TARGET) concluído ✔ release: $REL"
+            echo "Deploy ($DEPLOY_TARGET) concluído ✔ release: $REL"
 
       - name: Resumo
         if: always()
