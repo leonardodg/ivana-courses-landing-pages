@@ -170,6 +170,8 @@ jobs:
             deploy() {
               docker compose -p "$PROJECT" -f "$COMPOSE" build
               docker compose -p "$PROJECT" -f "$COMPOSE" down --remove-orphans || true
+              # container de outro projeto/fluxo com o mesmo nome (ex.: o antigo do prod.yml) travaria o "up"
+              docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
               docker compose -p "$PROJECT" -f "$COMPOSE" up -d
             }
             healthy() {
