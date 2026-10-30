@@ -88,8 +88,8 @@ export default function CandlesBrApp() {
         />
 
         {/* Presenciais: turmas da agenda e cursos, com compra na loja */}
-        <TurmasSection theme={presencial_themes.velas} />
         <CursosSection theme={presencial_themes.velas} />
+        <TurmasSection theme={presencial_themes.velas} />
 
         {/* Cursos online — cards horizontais com link Moodle */}
         <CandlesOnlineSection courses={courses} onEnroll={handleSelectEnroll} />
