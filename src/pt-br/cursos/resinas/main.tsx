@@ -1,12 +1,7 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 import ThemePageApp from '../../../app/pages/ThemePageApp.tsx';
-import ConsentManager from '../../../app/components/ConsentManager.tsx';
+import { mount } from '../../../app/lib/mount.tsx';
 import '../../../styles/index.css';
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ThemePageApp themeId="resina" />
-    <ConsentManager />
-  </StrictMode>,
+mount(
+  <ThemePageApp themeId="resina" />
 );
