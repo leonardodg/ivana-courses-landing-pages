@@ -149,3 +149,6 @@ coverage/
 # local secrets
 secrets.env
 secrets.app
+
+# Relatório da pré-renderização
+prerender-report.json

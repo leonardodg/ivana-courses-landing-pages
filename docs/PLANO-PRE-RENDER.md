@@ -121,7 +121,7 @@ Teste de aceitação: enviar o link de 6 páginas (2 por país e tipo) pelo What
 | Fase | O que entrega | Risco | Critério de aceite |
 |---|---|---|---|
 | **0. Prévia e sitemap** ✅ **concluída em 2026-10-29** | Imagens OG por página (`npm run og`), atributos `og:image:*`/`alt` completos, `lastmod` e `image:image` nos sitemaps (`npm run sitemap`) | Baixo | Teste manual no WhatsApp e no Depurador do Facebook; `npm run check:urls` valida OG e sitemap |
-| **1. Script de pré-render local** | `scripts/prerender.mjs` com `puppeteer-core` e Chrome local; relatório por página | Baixo | `dist/` com corpo em 30/30 páginas; HTML sem GA, sem banner, sem dados do feed |
+| **1. Script de pré-render local** ✅ **concluída em 2026-10-29** (`npm run build:ssg`, `scripts/prerender.mjs`) | `scripts/prerender.mjs` com `puppeteer-core` e Chrome local; relatório por página | Baixo | `dist/` com corpo em 30/30 páginas; HTML sem GA, sem banner, sem dados do feed |
 | **2. Teste de paridade e desempenho** | Script que compara o texto do HTML pré-renderizado com o DOM montado no cliente; PageSpeed antes/depois | Baixo | Paridade >= 95% do texto visível; LCP/CLS iguais ou melhores |
 | **3. Build no GitHub Actions + entrega do `dist/`** | Job `build` com pré-render e artefato; job `deploy` envia `dist/` por SSH; alvo `production-prebuilt` no Dockerfile (sem Node); releases com rollback | **Médio** (muda o pipeline) | Deploy de teste num caminho paralelo na VPS (ex.: porta 8089) antes de trocar o ativo; site idêntico ao de hoje e Nginx com os mesmos cabeçalhos |
 | **4. CI** | O job "Build & Lint Check" roda o pré-render em modo estrito e as verificações da seção 5 | Baixo | Pipeline falha se faltar `h1`, JSON-LD duplicado, GA no HTML, preço na Argentina |
