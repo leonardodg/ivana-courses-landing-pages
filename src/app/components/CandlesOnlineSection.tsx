@@ -1,13 +1,14 @@
 // src/app/components/candles/CandlesOnlineSection.tsx
 //
-// Bloco "Cursos Online" — exclusivo da página /pt-br/candles.
+// Bloco "Cursos Online" — home PT-BR e página de velas.
 // Cards horizontais com imagem, título, descrição, duração e botões
 // "GRADE" (syllabus modal) + "MATRÍCULA" (link Moodle ou checkout).
 // Filtra apenas cursos online de velas.
 
 import { useState } from 'react';
 import { Course } from '../classes/types';
-import { ExternalLink, BookOpen, Clock, CheckSquare, X, Star, Sparkles } from 'lucide-react';
+import { ExternalLink, BookOpen, Clock, CheckSquare, X, Star } from 'lucide-react';
+import { Section, SectionHeader } from '../ui';
 
 interface CandlesOnlineSectionProps {
   courses: Course[];
@@ -30,33 +31,16 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const online = courses.filter(c => c.modalidade === 'online');
+  if (online.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-28 bg-white border-t border-muted">
-      <div className="max-w-[1280px] mx-auto px-6">
-
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-          <div>
-            <span className="text-xs font-mono font-bold tracking-widest text-primary uppercase block mb-3">
-              APRENDA NO SEU RITMO
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif text-gray-900 leading-tight">
-              <span className="text-primary">Cursos Online</span>{' '}
-              Ivana Academy
-            </h2>
-            <p className="text-sm text-on-surface-variant mt-2 max-w-lg leading-relaxed">
-              Acesso vitalício e imediato, suporte direto aos alunos e materiais complementares detalhados.
-            </p>
-          </div>
-
-          {/* Highlight badge */}
-          <div className="shrink-0 inline-flex items-center gap-2 border border-primary/30 bg-primary/5 text-primary text-xs font-bold font-mono uppercase tracking-wider px-4 py-2.5 rounded-full">
-            <Sparkles className="w-4 h-4" />
-            ATELIER MASTERCLASS VIRTUAL
-          </div>
-        </div>
-
+    <Section id="online" bg="cream" width="mid">
+      <SectionHeader
+        kicker="APRENDA NO SEU RITMO"
+        title={<><span className="text-primary">Cursos Online</span> Ivana Academy</>}
+        sub="Acesso vitalício e imediato, suporte direto aos alunos e materiais complementares detalhados."
+      />
+      <div>
         {/* Cards — layout horizontal */}
         <div className="space-y-6">
           {online.map((course) => {
@@ -229,6 +213,6 @@ export default function CandlesOnlineSection({ courses, onEnroll }: CandlesOnlin
           </div>
         </div>
       )}
-    </section>
+    </Section>
   );
 }

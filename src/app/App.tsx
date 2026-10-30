@@ -16,6 +16,7 @@ import { heroContent as hero_content } from "./data/home";
 import SiteNavbar from "./components/SiteNavbar";
 import AboutSection from "./components/AboutSection";
 import CourseGrid from "./components/CourseGrid";
+import CandlesOnlineSection from "./components/CandlesOnlineSection";
 import WhyUsSection from "./components/WhyUsSection";
 import ReviewsCarousel from "./components/ReviewsCarousel";
 import FAQSection from "./components/FAQSection";
@@ -125,6 +126,11 @@ export default function App() {
           courses={COURSES}
           onSelectEnroll={handleEnrollClick}
         />
+
+        {/* Cursos online de velas (mesmo bloco da página de velas); some quando o filtro é de outro segmento */}
+        {(!activeCategoryId || activeCategoryId === "velas") && (
+          <CandlesOnlineSection courses={COURSES.filter((c) => c.categoryId === "velas")} onEnroll={handleEnrollClick} />
+        )}
 
         {/* Narrative / About Mentora */}
         <AboutSection language={language} />

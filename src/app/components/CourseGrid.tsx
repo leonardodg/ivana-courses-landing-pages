@@ -55,7 +55,7 @@ export default function CourseGrid({
 
   return (
     <>
-      <Section id="cursos" bg="hero" width="wide">
+      <Section id="cursos" bg="hero" width="mid">
         <SectionHeader
           kicker={activeCategoryId ? CATEGORIES[activeCategoryId].name[language] : undefined}
           title={courses_text.headline}
