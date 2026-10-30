@@ -65,3 +65,6 @@ gh workflow run deploy-prebuilt.yml --ref main -f target=production -f confirm_p
 gh run list --limit 5
 gh run view <id> --log-failed      # só os logs que falharam
 ```
+
+## Sitemaps (lastmod automático)
+O workflow roda `npm run sitemap` antes do build (checkout com histórico completo, `fetch-depth: 0`): o `<lastmod>` de cada URL é a data do último commit que mexeu nos arquivos DA PÁGINA (pasta em `src/`, JSON-LD e componente de página). Só muda quando a página muda; o Google ignora lastmod que muda sempre. O arquivo gerado vai no `dist/` do deploy; o `public/sitemap-*.xml` do repositório pode ser atualizado com o mesmo comando (`npm run sitemap`) e commitado, mas não é obrigatório.

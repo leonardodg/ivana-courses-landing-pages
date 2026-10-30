@@ -55,6 +55,8 @@ jobs:
       VITE_TIENDA_AR_URL: ${{ vars.VITE_TIENDA_AR_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o lastmod dos sitemaps vem do histórico do git
 
       - uses: actions/setup-node@v4
         with:
@@ -63,6 +65,9 @@ jobs:
 
       - name: Dependências
         run: npm ci
+
+      - name: Sitemaps (lastmod pela data do último commit de cada página)
+        run: npm run sitemap
 
       - name: Tipos (tsc)
         run: npm run lint
