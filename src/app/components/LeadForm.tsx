@@ -270,9 +270,10 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
             {t.badge}
           </span>
 
-          <h2 className="text-2xl md:text-3xl font-serif text-gray-950 font-bold leading-tight">
+          {/* chamada da página (visual de título, mas não é título: o h1 da página é "mainHeading", logo abaixo) */}
+          <p className="text-2xl md:text-3xl font-serif text-gray-950 font-bold leading-tight">
             {t.headline}
-          </h2>
+          </p>
 
           <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">
             {t.subtitle}
@@ -295,12 +296,6 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
               >
                 {t.mainHeading}
               </h1>
-              <p
-                className="text-brand-muted text-base leading-relaxed"
-                id="contact-subtitle-description"
-              >
-                {t.subtitle}
-              </p>
             </div>
 
             {/* Contact Cards */}
