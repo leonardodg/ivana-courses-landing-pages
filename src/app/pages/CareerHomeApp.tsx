@@ -8,6 +8,7 @@ import { ar_hero, ar_hero_general, ar_pages, carreras_ar, carreras_principales, 
 import { reviews_list } from '../data/reviews';
 import SiteNavbar from '../components/SiteNavbar';
 import { useAgenda } from '../hooks/useAgenda';
+import { useSegmentFilter } from '../hooks/useSegmentFilter';
 import AboutSection from '../components/AboutSection';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import FAQSection from '../components/FAQSection';
@@ -65,9 +66,21 @@ const heroSlides: HeroSlide[] = [
   }),
 ];
 
+// Segmento do filtro = carrera sin el prefijo "ar-" (velas, resinas, macrame, estampas, interiores, mixmedia).
+const segmentOf = (course: string) => course.replace(/^ar-/, '');
+
 export default function CareerHomeApp() {
   const language: Language = 'es';
   const agenda = useAgenda('AR');
+
+  // Filtro por carrera sincronizado con el #hash: /es-ar/#velas filtra y baja a las carreras; /es-ar/#ar-macrame va a esa tarjeta.
+  const [segmento, setSegmento] = useSegmentFilter({
+    keys: carreras_principales.map(segmentOf),
+    aliases: { textil: 'estampas' },
+    cardSegment: (id) => (carreras_principales.some((c) => c === id) ? segmentOf(id) : undefined),
+    sectionId: 'carreras',
+  });
+  const carreras = carreras_principales.filter((c) => !segmento || segmentOf(c) === segmento).map((c) => carreras_ar[c]);
 
   return (
     <div className="min-h-screen bg-surface-cream text-gray-900 font-sans flex flex-col justify-between">
@@ -80,8 +93,15 @@ export default function CareerHomeApp() {
           <SectionHeader kicker="LAS CARRERAS" title="Elegí tu carrera" sub="Todas son 100% online y terminan con el título del Conservatorio Grassi." />
           <CarrerasGrid
             agenda={agenda}
-            items={carreras_principales.map((c) => carreras_ar[c])}
+            items={carreras}
             linkTo={(c) => ar_pages[c.page].path}
+            filter={{
+              value: segmento,
+              onChange: setSegmento,
+              options: carreras_principales.map((c) => ({ value: segmentOf(c), label: ar_pages[carreras_ar[c].page].title })),
+              label: 'Filtrar por carrera',
+              allLabel: 'Todas las carreras',
+            }}
           />
         </Section>
 

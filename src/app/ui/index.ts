@@ -31,3 +31,6 @@ export { default as LinkCard } from './LinkCard';
 export { NavDropdown, LangSwitch } from './NavMenu';
 export { nav_icons } from './navIcons';
 export { default as WhatsAppFab, whatsappHref } from './WhatsAppFab';
+export { default as SegmentFilter } from './SegmentFilter';
+export type { SegmentFilterProps } from './SegmentFilter';
+export { default as CardToolbar } from './CardToolbar';
