@@ -1,0 +1,209 @@
+name: Deploy (build e pré-render no CI) → Oracle VPS
+
+# Fluxo novo (docs/DEPLOY.md): o GitHub Actions faz npm ci, vite build e a pré-renderização (Chrome do runner),
+# confere o resultado e envia só o dist/ pronto para a VPS. A VPS não instala nada: só monta a imagem do Nginx.
+# Por enquanto é MANUAL (workflow_dispatch). "staging" sobe um container separado na porta 8089 (só no localhost
+# da VPS) e NÃO toca na produção. "production" exige confirmar. O deploy automático do push em main continua sendo
+# o de deploy.yml até este fluxo ser aprovado.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Destino"
+        type: choice
+        options: [staging, production]
+        default: staging
+      confirm_production:
+        description: 'Para production, digite "sim"'
+        type: string
+        default: ""
+
+concurrency:
+  group: deploy-prebuilt-${{ inputs.target }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    name: Confirmação
+    runs-on: ubuntu-latest
+    steps:
+      - name: Production precisa de confirmação
+        if: ${{ inputs.target == 'production' && inputs.confirm_production != 'sim' }}
+        run: |
+          echo 'Para production, preencha confirm_production com "sim".' && exit 1
+
+  build:
+    name: Build, pré-render e verificações
+    needs: guard
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+      VITE_WEBHOOK_URL: ${{ secrets.VITE_WEBHOOK_URL }}
+      VITE_WEBHOOK_SECRET: ${{ secrets.VITE_WEBHOOK_SECRET }}
+      VITE_GA_ID: ${{ vars.VITE_GA_ID }}
+      VITE_TIENDA_AR_URL: ${{ vars.VITE_TIENDA_AR_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Tipos (tsc)
+        run: npm run lint
+
+      - name: Build (Vite)
+        run: |
+          test -n "$VITE_WEBHOOK_URL" && test -n "$VITE_WEBHOOK_SECRET" || (echo "Secrets VITE_WEBHOOK_* vazios" && exit 1)
+          npm run build
+
+      - name: Pré-renderização (Chrome do runner, modo estrito)
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          PRERENDER_STRICT: "1"
+        run: |
+          google-chrome --version
+          node scripts/prerender.mjs
+
+      - name: Verificações (URLs, prévia, sitemap, dist)
+        run: |
+          npm run check:urls
+          node scripts/verify-dist.mjs
+
+      - name: Versão do site
+        run: |
+          printf '%s\n%s\n' "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.txt
+          tar -czf release.tgz dist
+          ls -lh release.tgz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ github.sha }}
+          path: release.tgz
+          retention-days: 14
+
+  deploy:
+    name: Enviar para a VPS (${{ inputs.target }})
+    needs: build
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-${{ github.sha }}
+
+      - name: Segredos de acesso
+        run: |
+          [ -n "${{ secrets.VPS_HOST }}" ] && [ -n "${{ secrets.VPS_USER }}" ] && [ -n "${{ secrets.SSH_PRIVATE_KEY }}" ] \
+            || (echo "Secrets VPS_HOST, VPS_USER ou SSH_PRIVATE_KEY vazios" && exit 1)
+
+      - name: Enviar o pacote
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          source: release.tgz
+          target: /tmp/courses-release-${{ github.sha }}
+
+      - name: Publicar na VPS
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          TARGET: ${{ inputs.target }}
+          SHA: ${{ github.sha }}
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          envs: TARGET,SHA
+          script: |
+            set -euo pipefail
+            REPO_DIR="${{ vars.REPO_PATH || '/home/ubuntu/pages-courses' }}"
+            COMPOSE=".devcontainer/compose/prod-prebuilt.yml"
+
+            if [ "$TARGET" = "production" ]; then
+              export CONTAINER_NAME=courses-nginx HOST_PORT=8088 BIND_ADDR="" IMAGE_TAG=main LOGS_DIR=./logs_nginx
+              PROJECT=compose
+            else
+              export CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 BIND_ADDR="127.0.0.1:" IMAGE_TAG=staging LOGS_DIR=./logs_nginx_staging
+              PROJECT=courses-staging
+            fi
+            PORT="$HOST_PORT"
+
+            echo "===== [1/6] Repositório (compose e configs do Nginx) ====="
+            cd "$REPO_DIR"
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "===== [2/6] Desempacotar a release ====="
+            REL="releases/${SHA:0:8}-$(date +%Y%m%d%H%M%S)"
+            mkdir -p "$REL"
+            tar -xzf "/tmp/courses-release-$SHA/release.tgz" -C "$REL"
+            rm -rf "/tmp/courses-release-$SHA"
+            test -f "$REL/dist/version.txt"
+
+            echo "===== [3/6] Colocar o dist no contexto do build (guarda o anterior para voltar) ====="
+            rm -rf "dist.prev.$TARGET"
+            if [ -d dist ]; then mv dist "dist.prev.$TARGET"; fi
+            cp -R "$REL/dist" dist
+
+            deploy() {
+              docker compose -p "$PROJECT" -f "$COMPOSE" build
+              docker compose -p "$PROJECT" -f "$COMPOSE" down --remove-orphans || true
+              docker compose -p "$PROJECT" -f "$COMPOSE" up -d
+            }
+            healthy() {
+              for i in $(seq 1 30); do
+                if curl -sf -o /dev/null "http://127.0.0.1:$PORT/pt-br/"; then break; fi
+                sleep 2
+              done
+              curl -sf "http://127.0.0.1:$PORT/pt-br/" | grep -q 'data-prerendered="1"' || return 1
+              [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/nao-existe-$RANDOM/")" = "404" ] || return 1
+              curl -sI "http://127.0.0.1:$PORT/pt-br/" | grep -qi '^permissions-policy:' || return 1
+              curl -s "http://127.0.0.1:$PORT/version.txt" | head -1 | grep -q "$SHA" || return 1
+            }
+
+            echo "===== [4/6] Subir o container ($TARGET, porta $PORT) ====="
+            deploy
+
+            echo "===== [5/6] Verificar ====="
+            if healthy; then
+              echo "Verificação ok ✔"
+            else
+              echo "Verificação FALHOU"
+              if [ "$TARGET" = "production" ] && [ -d "dist.prev.$TARGET" ]; then
+                echo "Voltando para a release anterior..."
+                rm -rf dist && mv "dist.prev.$TARGET" dist
+                deploy
+              fi
+              exit 1
+            fi
+
+            echo "===== [6/6] Limpeza (mantém as 3 últimas releases) ====="
+            ls -1dt releases/* 2>/dev/null | tail -n +4 | xargs -r rm -rf
+            docker ps --filter "name=$CONTAINER_NAME" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            echo "Deploy ($TARGET) concluído ✔ release: $REL"
+
+      - name: Resumo
+        if: always()
+        env:
+          TARGET: ${{ inputs.target }}
+          SHA: ${{ github.sha }}
+          STATUS: ${{ job.status }}
+        run: |
+          {
+            echo "### Deploy (build no CI)"
+            echo "- **Destino:** $TARGET"
+            echo "- **Commit:** $SHA"
+            echo "- **Status:** $STATUS"
+          } >> "$GITHUB_STEP_SUMMARY"

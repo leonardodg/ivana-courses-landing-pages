@@ -1,0 +1,36 @@
+# =============================================================================
+# PRODUÇÃO com o site já construído pelo CI (ver docs/DEPLOY.md)
+# =============================================================================
+# Produção (projeto "compose", container courses-nginx, porta 8088: igual ao prod.yml):
+#     docker compose -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+# Homologação (porta 8089 só no localhost da VPS, não toca na produção):
+#     CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 BIND_ADDR=127.0.0.1: IMAGE_TAG=staging \
+#     LOGS_DIR=./logs_nginx_staging docker compose -p courses-staging -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+# =============================================================================
+
+services:
+  web:
+    build:
+      context: ../../
+      dockerfile: .devcontainer/build/nginx.prebuilt.Dockerfile
+    image: leodg/courses-landing-pages:${IMAGE_TAG:-main}
+    container_name: ${CONTAINER_NAME:-courses-nginx}
+    restart: unless-stopped
+    environment:
+      - APP_URL=https://courses.ivana.academy
+      - APP_ENV=production
+      - ENVIRONMENT=production
+    volumes:
+      - ${LOGS_DIR:-./logs_nginx}:/var/log/nginx
+    ports:
+      - "${BIND_ADDR:-}${HOST_PORT:-8088}:80"
+    networks:
+      - global-network
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+networks:
+  global-network:
+    external: true
