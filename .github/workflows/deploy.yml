@@ -1,9 +1,10 @@
 name: Deploy MAIN → Oracle VPS
 
+# RESERVA: fluxo antigo (a VPS constrói o site dentro do Docker, sem pré-renderização).
+# O deploy normal agora é deploy-prebuilt.yml (build e pré-render no GitHub Actions). Este só roda manualmente.
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 # Um deploy por vez: merges seguidos entram em fila (o mais recente roda por último)
 # em vez de disputar o mesmo container no VPS ("container name already in use").

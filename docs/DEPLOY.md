@@ -2,24 +2,26 @@
 
 Decisão (2026-10-29): **nada é instalado na VPS** para construir o site. O GitHub Actions faz `npm ci`, `vite build` e a pré-renderização (Chrome do próprio runner), confere o resultado e envia só o `dist/` pronto. A VPS monta uma imagem de Nginx com o `dist/` (sem Node, npm ou Chromium).
 
-## Dois fluxos
+## Fluxos
 
-| | Fluxo atual (`deploy.yml`) | Fluxo novo (`deploy-prebuilt.yml`) |
+| | Deploy normal (`deploy-prebuilt.yml`) | Reserva (`deploy.yml`) |
 |---|---|---|
-| Gatilho | push em `main` | manual (`workflow_dispatch`), por enquanto |
-| Quem constrói | a VPS, dentro do Docker (`nginx.Dockerfile`, estágio Node) | o GitHub Actions |
-| Pré-renderização | não | sim, em modo estrito |
-| Imagem | `.devcontainer/build/nginx.Dockerfile` | `.devcontainer/build/nginx.prebuilt.Dockerfile` |
-| Compose | `prod.yml` | `prod-prebuilt.yml` |
-| Volta atrás | refazer o build do commit anterior | automática em production se a verificação falhar; manual com as releases guardadas |
+| Gatilho | **push em `main`** (docs, `.md` e `conteudo/` não disparam) e manual | só manual |
+| Quem constrói | o GitHub Actions | a VPS, dentro do Docker (`nginx.Dockerfile`, estágio Node) |
+| Pré-renderização | sim, em modo estrito | não |
+| Imagem | `.devcontainer/build/nginx.prebuilt.Dockerfile` | `.devcontainer/build/nginx.Dockerfile` |
+| Compose | `prod-prebuilt.yml` | `prod.yml` |
+| Volta atrás | automática em production se a verificação falhar; manual com as releases guardadas | refazer o build do commit anterior |
+
+Use o `deploy.yml` (Actions > Run workflow) só se o novo estiver fora do ar: ele constrói na VPS como antes. Os dois usam o mesmo container (`courses-nginx`) e o mesmo projeto do compose, então um assume o lugar do outro.
 
 ## O que o fluxo novo faz
 
-1. **guard:** para `production`, exige `confirm_production = sim`.
+1. **guard:** no disparo manual com `production`, exige `confirm_production = sim` (o push em `main` já é a confirmação).
 2. **build** (ubuntu-latest, ambiente `development` do GitHub, de onde vêm os segredos):
    `npm run lint` → `npm run build` (com `VITE_WEBHOOK_*`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`) → `scripts/prerender.mjs` com `PRERENDER_STRICT=1` → `npm run check:urls` → `scripts/verify-dist.mjs` → grava `dist/version.txt` (SHA e hora) → artefato `release.tgz` (14 dias).
 3. **deploy:** envia o pacote por SCP para `/tmp` da VPS e roda um script por SSH:
-   `git reset --hard origin/main` (só para trazer compose e configs do Nginx) → desempacota em `releases/<sha>-<data>/` → coloca `dist/` na raiz do repositório (guarda o anterior em `dist.prev.<destino>`) → `docker compose build / down / up` → **verifica**: home com `data-prerendered`, 404 real, `Permissions-Policy` presente e `version.txt` com o SHA → mantém as 3 últimas releases.
+   `git reset --hard origin/main` (só para trazer compose e configs do Nginx) → desempacota em `releases/<sha>-<data>/` → coloca `dist/` na raiz do repositório (guarda o anterior em `dist.prev.<destino>`) e **copia para dentro dele os arquivos com hash (`app/` e `styles/`) das 2 releases anteriores**, para abas abertas antes do deploy não perderem JS/CSS → `docker compose build / down / up` → **verifica**: home com `data-prerendered`, 404 real, `Permissions-Policy` presente, `version.txt` com o SHA e um arquivo com hash da release anterior ainda respondendo 200 → mantém as 3 últimas releases.
 
 ## Destinos
 
@@ -30,12 +32,10 @@ Decisão (2026-10-29): **nada é instalado na VPS** para construir o site. O Git
 
 `VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`, `VPS_SSH_PORT` (opcional), `VITE_WEBHOOK_URL`, `VITE_WEBHOOK_SECRET`; variáveis `VITE_GA_ID`, `VITE_TIENDA_AR_URL`, `REPO_PATH`. Os `VITE_*` agora são usados no job de build do GitHub, e não mais pelo `docker compose` da VPS.
 
-## Como testar (fase 3a) e trocar (fase 3b)
+## Como testar antes de publicar
 
-1. Actions > "Deploy (build e pré-render no CI) → Oracle VPS" > Run workflow > `staging`.
-2. Abrir o staging pelo túnel SSH e conferir: páginas, formulário de interesse, carrossel, agenda, imagens de prévia, `view-source` com o corpo da página.
-3. Rodar `production` com `confirm_production = sim` uma vez, fora de horário de pico, e conferir `https://courses.ivana.academy`.
-4. **3b (troca):** em `deploy.yml`, trocar o gatilho para `workflow_run` do novo fluxo (ou copiar os jobs do novo para o `push` de `main`) e aposentar o build na VPS (`nginx.Dockerfile` estágio `node-builder`, `prod.yml`). Só depois do passo 3 dar certo.
+- **staging** (manual): Actions > "Deploy (build e pré-render no CI)…" > Run workflow > `staging`. Abra pelo túnel SSH e confira. Não toca na produção.
+- Push em `main` publica em produção sozinho. Para publicar sem disparar o deploy (ex.: ajuste só de workflow), ponha `[skip ci]` na mensagem do commit.
 
 ## Voltar atrás manualmente
 

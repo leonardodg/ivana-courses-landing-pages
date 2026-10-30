@@ -1,12 +1,19 @@
 name: Deploy (build e pré-render no CI) → Oracle VPS
 
-# Fluxo novo (docs/DEPLOY.md): o GitHub Actions faz npm ci, vite build e a pré-renderização (Chrome do runner),
+# Fluxo de deploy (docs/DEPLOY.md): o GitHub Actions faz npm ci, vite build e a pré-renderização (Chrome do runner),
 # confere o resultado e envia só o dist/ pronto para a VPS. A VPS não instala nada: só monta a imagem do Nginx.
-# Por enquanto é MANUAL (workflow_dispatch). "staging" sobe um container separado na porta 8089 (só no localhost
-# da VPS) e NÃO toca na produção. "production" exige confirmar. O deploy automático do push em main continua sendo
-# o de deploy.yml até este fluxo ser aprovado.
+#   • push em main  → publica em PRODUÇÃO (automático; docs e arquivos .md não disparam).
+#   • manual        → "staging" sobe um container separado na porta 8089 (só no localhost da VPS) e NÃO toca na
+#                     produção; "production" exige confirmar.
+# O fluxo antigo (build na VPS) ficou em deploy.yml, só manual, como reserva.
 
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+      - "conteudo/**"
   workflow_dispatch:
     inputs:
       target:
@@ -20,7 +27,7 @@ on:
         default: ""
 
 concurrency:
-  group: deploy-prebuilt-${{ inputs.target }}
+  group: deploy-prebuilt-${{ inputs.target || 'production' }}
   cancel-in-progress: false
 
 permissions:
@@ -32,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Production precisa de confirmação
-        if: ${{ inputs.target == 'production' && inputs.confirm_production != 'sim' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.target == 'production' && inputs.confirm_production != 'sim' }}
         run: |
           echo 'Para production, preencha confirm_production com "sim".' && exit 1
 
@@ -91,7 +98,7 @@ jobs:
           retention-days: 14
 
   deploy:
-    name: Enviar para a VPS (${{ inputs.target }})
+    name: Enviar para a VPS (${{ inputs.target || 'production' }})
     needs: build
     runs-on: ubuntu-latest
     environment: development
@@ -118,7 +125,7 @@ jobs:
       - name: Publicar na VPS
         uses: appleboy/ssh-action@v1.2.0
         env:
-          DEPLOY_TARGET: ${{ inputs.target }}
+          DEPLOY_TARGET: ${{ inputs.target || 'production' }}
           RELEASE_SHA: ${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -215,7 +222,7 @@ jobs:
       - name: Resumo
         if: always()
         env:
-          TARGET: ${{ inputs.target }}
+          TARGET: ${{ inputs.target || 'production' }}
           SHA: ${{ github.sha }}
           STATUS: ${{ job.status }}
         run: |
