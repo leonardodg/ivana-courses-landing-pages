@@ -73,7 +73,7 @@ jobs:
           echo "Secrets validados ✔"
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.5
         env:
           # Segredo do webhook: só no ambiente do container em runtime (nunca no build/bundle)
           WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
