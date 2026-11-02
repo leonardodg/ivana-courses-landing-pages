@@ -107,7 +107,7 @@ jobs:
           tar -czf release.tgz dist
           ls -lh release.tgz
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-${{ github.sha }}
           path: release.tgz
@@ -131,7 +131,7 @@ jobs:
             || (echo "Secret WEBHOOK_SECRET vazio (segredo do webhook do n8n, usado só no container em runtime)" && exit 1)
 
       - name: Enviar o pacote
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
