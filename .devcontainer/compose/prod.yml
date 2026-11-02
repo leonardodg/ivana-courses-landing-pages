@@ -24,7 +24,7 @@ services:
       - ENVIRONMENT=production
       # Só no ambiente do container em execução; o Nginx acrescenta ao encaminhar POST /api/contact ao n8n.
       - WEBHOOK_SECRET=${WEBHOOK_SECRET:?defina WEBHOOK_SECRET (segredo do webhook do n8n)}
-      - N8N_WEBHOOK_UPSTREAM=${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact}
+      - N8N_WEBHOOK_UPSTREAM=${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact-v2}
     # Logs em stdout/stderr (docker logs courses-nginx). Porta só em 127.0.0.1: o Nginx do host é a entrada pública.
     ports:
       - "127.0.0.1:8088:8080"
