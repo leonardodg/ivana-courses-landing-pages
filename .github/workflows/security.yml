@@ -1,0 +1,87 @@
+name: Segurança (dependências, imagem, SBOM)
+
+# Roda em PR e em push (main/development), toda segunda-feira (novas CVEs surgem sem mudar o código) e sob demanda.
+# Não faz deploy e não usa nenhum segredo.
+
+on:
+  pull_request:
+  push:
+    branches: [main, development]
+  schedule:
+    - cron: "17 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  npm-audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Produção (bloqueia high e critical)
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Completo, com ferramentas de build (informativo)
+        run: |
+          npm audit --audit-level=moderate && echo "Sem avisos." \
+            || echo "::warning::npm audit (completo) encontrou avisos: veja o log"
+
+  image-scan:
+    name: Imagem do Nginx (Trivy) + SBOM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Build do site (precisa do dist/ para montar a imagem)
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build da imagem (mesmo Dockerfile do deploy)
+        run: docker build -f .devcontainer/build/nginx.prebuilt.Dockerfile -t courses-landing-pages:scan .
+
+      - name: "Trivy: vulnerabilidades da imagem (bloqueia CRITICAL/HIGH que já têm correção)"
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: courses-landing-pages:scan
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
+          format: table
+
+      - name: "Trivy: segredos esquecidos no repositório"
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scanners: secret
+          scan-ref: .
+          skip-dirs: node_modules,dist,.git
+          exit-code: "1"
+          format: table
+
+      - name: SBOM (SPDX) da imagem
+        uses: anchore/sbom-action@v0.24.3
+        with:
+          image: courses-landing-pages:scan
+          format: spdx-json
+          artifact-name: sbom-courses-landing-pages.spdx.json
+          upload-artifact-retention: 90
