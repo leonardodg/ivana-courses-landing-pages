@@ -13,6 +13,10 @@ export interface ContactPayload {
   message:     string;
   form_source: string;
   consent?:    string; // versão da política aceita (prova do consentimento)
+  // Interesse estruturado (alimenta as planilhas por curso no n8n):
+  country?:    'BR' | 'AR';
+  interests?:  string; // áreas de interesse separadas por vírgula (chaves de data/interest_options.ts: velas, saboaria, ...)
+  course?:     string; // curso/carrera específico, em texto legível (ex.: "Técnico em Velas"); vazio = só a área
 }
 
 interface SubmitResult {

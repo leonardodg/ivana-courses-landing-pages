@@ -31,6 +31,11 @@ import {
 // Páginas que têm par no Brasil (seletor PT | ES e hreflang).
 
 
+// Área de interesse (chave de data/interest_options.ts) de cada página de carrera.
+const AR_PAGE_INTEREST: Record<ArPageSlug, string> = {
+  candles: 'velas', resin: 'resinas', macrame: 'macrame', textil: 'textil', interiores: 'interiores', mixmedia: 'mixmedia',
+};
+
 export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
   const language = usePageLanguage();
   const agenda = useAgenda('AR');
@@ -84,7 +89,7 @@ export default function CareerPageApp({ slug }: { slug: ArPageSlug }) {
         <AboutSection language={language} />
         <ReviewsCarousel language={language} reviews={reviews_list} />
         <FAQSection language={language} faqs={faqs_carreras_ar} />
-        <ContactForm language={language} coursePage="carreras_ar" />
+        <ContactForm language={language} coursePage="carreras_ar" interests={AR_PAGE_INTEREST[slug]} course={carrera.nombre} />
         <WhatsAppFooterCta />
       </main>
 
