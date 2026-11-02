@@ -1,0 +1,65 @@
+name: CI (lint, build e pré-renderização)
+
+# Roda em todo PR e em push nas branches de trabalho. É o mesmo caminho do deploy (deploy-prebuilt.yml) SEM publicar nada e
+# sem segredos: se isto passa, o build do deploy passa. Inclui o que o security.yml não cobre (tsc e pré-render em modo
+# estrito); assim PRs do Dependabot (React, Vite, Motion, TypeScript...) são validados de verdade antes do merge.
+
+on:
+  pull_request:
+  push:
+    branches: [development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint, build e pré-render
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o lastmod dos sitemaps vem do histórico do git
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Sitemaps (lastmod pela data do último commit de cada página)
+        run: npm run sitemap
+
+      - name: Tipos (tsc)
+        run: npm run lint
+
+      - name: Build (Vite)
+        run: npm run build
+
+      - name: Nenhum segredo/URL do webhook no bundle
+        run: |
+          if grep -rIlE "X-Webhook-Secret|webhook/contact|n8n\.ivana" dist; then
+            echo "ERRO: credencial ou URL do webhook apareceu no dist/." && exit 1
+          fi
+          echo "Bundle limpo ✔"
+
+      - name: Pré-renderização (Chrome do runner, modo estrito)
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          PRERENDER_STRICT: "1"
+        run: |
+          google-chrome --version
+          node scripts/prerender.mjs
+
+      - name: Verificações (URLs, prévia, sitemap, dist)
+        run: |
+          npm run check:urls
+          node scripts/verify-dist.mjs
