@@ -9,7 +9,7 @@
 set -eu
 
 OUT=/tmp/webhook-proxy.conf
-UPSTREAM="${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact}"
+UPSTREAM="${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact-v2}"
 SECRET="${WEBHOOK_SECRET:-}"
 
 if [ -z "$SECRET" ]; then
