@@ -15,6 +15,9 @@ import PrivacyConsent, { CONSENT_TEXT_VERSION } from './PrivacyConsent';
 interface ContactFormProps {
   language:   Language;
   coursePage: 'candles' | 'soap' | 'resins' | 'homepage' | 'carreras_ar';
+  /** Área (chave de interest_options) e curso da página, quando o formulário está numa página de curso. */
+  interests?: string;
+  course?:    string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -55,7 +58,7 @@ function Field({ label, required, error, hint, children }: FieldProps) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function ContactForm({ language, coursePage }: ContactFormProps) {
+export default function ContactForm({ language, coursePage, interests, course }: ContactFormProps) {
   const t = text[language];
   const errText = (key?: ContactErrorKey) => (key ? t[key] : undefined);
   const { form, errors, touched, setField, blurField, isValid } = useContactForm(language === 'es' ? '+54' : '+55');
@@ -81,6 +84,9 @@ export default function ContactForm({ language, coursePage }: ContactFormProps) 
       message:     sanitize(form.message, 2000),
       form_source: coursePage,
       consent:     CONSENT_TEXT_VERSION,
+      country:     language === 'es' ? 'AR' : 'BR',
+      ...(interests ? { interests } : {}),
+      ...(course ? { course } : {}),
     });
 
     setStatus(result.status);
