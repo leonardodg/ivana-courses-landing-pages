@@ -219,6 +219,9 @@ export default function LeadForm({ country, formSource = 'interest' }: LeadFormP
       ].filter(Boolean).join('\n'),
       form_source: country === 'AR' ? `${formSource}_ar` : formSource,
       consent:     CONSENT_TEXT_VERSION,
+      country,
+      interests:   Object.entries(form.interests).filter(([k, v]) => v && k !== 'todas').map(([k]) => k).join(','),
+      course:      filteredCourses.find(c => c.id === form.courseId)?.label ?? '',
     });
 
     setStatus(result.status);
