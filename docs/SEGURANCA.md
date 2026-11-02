@@ -35,9 +35,11 @@ Navegador ──POST /api/contact──▶ Nginx do container ──X-Webhook-Se
 ## Ordem para publicar (importante)
 
 1. Gerar um segredo **novo**: `openssl rand -hex 32`.
-2. n8n: configurar o Header Auth do Webhook com o valor novo (o antigo deixa de valer para chamadas diretas) e, quando for ligar
-   o Turnstile, o nó de validação.
-3. GitHub (ambiente `development`): secret `WEBHOOK_SECRET` = valor novo; variável `VITE_TURNSTILE_SITE_KEY`. Apagar
+2. n8n: **colar o valor novo na credencial Header Auth do Webhook** (Credentials, nome do header `X-Webhook-Secret`), como texto
+   fixo. Uma variável de ambiente do container (ex.: `N8N_WEBHOOK_SECRET`) NÃO basta: o n8n 2.x bloqueia `$env` em credenciais
+   e nós por padrão (`N8N_BLOCK_ENV_ACCESS_IN_NODE`), e liberar isso deixaria qualquer workflow ler todas as variáveis do
+   container (senha do banco, chave de criptografia). Quando for ligar o Turnstile, adicionar o nó de validação.
+3. GitHub (ambiente `production`): secret `WEBHOOK_SECRET` = valor novo; variável `VITE_TURNSTILE_SITE_KEY`. Apagar
    `VITE_WEBHOOK_URL` e `VITE_WEBHOOK_SECRET`.
 4. Rodar o deploy em **staging** primeiro (Actions > Run workflow > staging) e testar o envio de ponta a ponta.
 5. Deploy em produção. Conferir que o bundle antigo não está mais no ar.

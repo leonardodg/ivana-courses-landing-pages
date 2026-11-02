@@ -18,7 +18,7 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 ## O que o fluxo novo faz
 
 1. **guard:** no disparo manual com `production`, exige `confirm_production = sim` (o push em `main` já é a confirmação).
-2. **build** (ubuntu-latest, ambiente `development` do GitHub, de onde vêm os segredos):
+2. **build** (ubuntu-latest, ambiente `production` do GitHub, de onde vem o `WEBHOOK_SECRET`):
    `npm audit` (produção) → `npm run lint` → `npm run build` → guarda que falha se algum segredo/URL do webhook aparecer no `dist/` → (com `VITE_TURNSTILE_SITE_KEY`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`; todos públicos) → `scripts/prerender.mjs` com `PRERENDER_STRICT=1` → `npm run check:urls` → `scripts/verify-dist.mjs` → grava `dist/version.txt` (SHA e hora) → artefato `release.tgz` (14 dias).
 3. **deploy:** envia o pacote por SCP para `/tmp` da VPS e roda um script por SSH:
    `git reset --hard origin/main` (só para trazer compose e configs do Nginx) → desempacota em `releases/<sha>-<data>/` → coloca `dist/` na raiz do repositório (guarda o anterior em `dist.prev.<destino>`) e **copia para dentro dele os arquivos com hash (`app/` e `styles/`) das 2 releases anteriores**, para abas abertas antes do deploy não perderem JS/CSS → `docker compose build / down / up` → **verifica**: home com `data-prerendered`, 404 real, `Permissions-Policy` presente, `version.txt` com o SHA e um arquivo com hash da release anterior ainda respondendo 200 → mantém as 3 últimas releases.
@@ -28,7 +28,9 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 - **staging:** container `courses-nginx-staging`, projeto `courses-staging`, porta `127.0.0.1:8089` (não fica exposta na internet), logs em `logs_nginx_staging`. **Não toca na produção.** Para olhar: `ssh -L 8089:127.0.0.1:8089 <usuario>@<vps>` e abrir `http://localhost:8089/pt-br/`.
 - **production:** container `courses-nginx`, projeto `compose` (o mesmo do `prod.yml`), porta `127.0.0.1:8088` (só o Nginx do host alcança). O container roda sem root, com filesystem somente leitura; logs em `docker logs courses-nginx`. Se a verificação falhar, volta sozinho para o `dist` anterior.
 
-## Segredos e variáveis (já existem, ambiente `development`)
+## Segredos e variáveis
+
+`WEBHOOK_SECRET` e a variável `VITE_TURNSTILE_SITE_KEY` ficam no ambiente `production` (os jobs de build e deploy usam esse ambiente); `VPS_*` e `SSH_PRIVATE_KEY` estão no nível do repositório, que todos os ambientes enxergam.
 
 `VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`, `VPS_SSH_PORT` (opcional) e **`WEBHOOK_SECRET`** (segredo do webhook do n8n); variáveis `VITE_TURNSTILE_SITE_KEY`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`, `REPO_PATH`.
 
