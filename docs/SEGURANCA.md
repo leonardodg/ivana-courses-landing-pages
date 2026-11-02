@@ -68,12 +68,21 @@ deploy: faça 2 e 5 na mesma janela.
   Ao adicionar um domínio externo novo (script, fonte, API, imagem), inclua-o na política: o navegador bloqueia o que não estiver
   lá. Para conferir antes de publicar: `npm run build:ssg`, subir a imagem e abrir as páginas no Chrome vendo violações
   (`securitypolicyviolation`); a calibração inicial achou `data:` em fontes e `webhook.ivana.academy` (agenda).
+  **Beacon da Cloudflare:** o Web Analytics automático da Cloudflare injeta `static.cloudflareinsights.com/beacon.min.js` no edge
+  (não existe no HTML do repositório; só aparece testando pelo domínio público). O CSP o bloqueia, o que é coerente com a política
+  de só GA4 após consentimento; o único efeito é uma linha de erro no console. Para limpar o console, desligue o Web Analytics
+  automático no painel da Cloudflare (preferível); só libere `script-src static.cloudflareinsights.com` e
+  `connect-src cloudflareinsights.com` se decidirem usá-lo (e então cite-o na política de privacidade).
 
 ## Automação
 
 - `security.yml` (PR, push, segunda-feira 09:17 UTC): `npm audit` (produção bloqueia high/critical), Trivy na imagem (bloqueia
   CRITICAL/HIGH com correção), Trivy de segredos, SBOM SPDX como artefato (90 dias).
-- `dependabot.yml`: npm (minor/patch agrupados), docker (digests), github-actions, devcontainers.
+- `ci.yml` (todo PR): `npm run lint`, build, trava de vazamento, pré-renderização estrita, `check:urls` e `verify-dist`: o mesmo
+  caminho do deploy sem publicar. Exija-o verde antes de mergear (inclusive PRs do Dependabot).
+- `dependabot.yml`: npm (minor/patch agrupados), docker (digests), github-actions (**todas num PR só**), devcontainers. Ignora majors
+  que quebraram o projeto (lucide-react, @vitejs/plugin-react, typescript 7), Nginx fora da linha *stable* 1.30 e Node major
+  (mudar Node exige `.nvmrc`, CI e Dockerfiles juntos).
 - Ligue em Settings > Code security: Dependabot alerts, Dependabot security updates e secret scanning.
 
 ## Fora deste repositório (VPS)

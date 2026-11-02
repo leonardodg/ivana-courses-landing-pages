@@ -1,6 +1,8 @@
 # Atualizações automáticas (PRs semanais). Segurança: os avisos de vulnerabilidade do GitHub (Dependabot alerts / security
 # updates) abrem PRs fora desta agenda assim que saem, se estiverem ligados em Settings > Code security.
 # Versão do Node e do Nginx ficam fixadas por digest nos Dockerfiles: o ecossistema "docker" propõe o digest novo.
+#
+# O CI de PR (ci.yml) roda lint, build e pré-renderização: PR do Dependabot só deve ser mergeado com tudo verde.
 
 version: 2
 updates:
@@ -10,19 +12,38 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      # minor e patch juntos: um PR só por semana; majors (ex.: React, Vite) ficam separados para revisão
+      # minor e patch juntos: um PR só por semana; majors ficam separados para revisão
       npm-minor-patch:
         update-types: ["minor", "patch"]
+    ignore:
+      # Majors que quebraram o projeto no teste (reavaliar quando houver suporte):
+      - dependency-name: "lucide-react"            # 1.x remove/renomeia ícones: build falha
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitejs/plugin-react"    # 6.x exige Vite mais novo que o 6.x em uso
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"              # 7.x remove baseUrl do tsconfig: ajustar antes de subir
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "docker"
     directory: "/.devcontainer/build"   # nginx.Dockerfile e nginx.prebuilt.Dockerfile (Node e Nginx)
     schedule:
       interval: weekly
+    ignore:
+      # Nginx: ficamos na linha STABLE (1.30.x, numeração par); 1.31 é a mainline. Digest/patch da 1.30 continuam chegando.
+      - dependency-name: "nginxinc/nginx-unprivileged"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+      # Node: major só com mudança coordenada (.nvmrc, CI e Dockerfiles juntos). Hoje: 22 LTS.
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: weekly
+    groups:
+      # todas as actions num PR só (majors incluídas): o ci.yml valida o que dá; o deploy é o teste do restante
+      github-actions:
+        patterns: ["*"]
 
   - package-ecosystem: "devcontainers"
     directory: "/"
