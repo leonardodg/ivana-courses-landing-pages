@@ -53,8 +53,13 @@ deploy: faça 2 e 5 na mesma janela.
 - `nginxinc/nginx-unprivileged:1.30-alpine` e `node:22.23.4-alpine`, ambos por digest; `apk upgrade` no build aplica correções
   do Alpine posteriores ao digest (ex.: brotli CVE-2026-111497, curl).
 - Compose: `read_only`, `tmpfs /tmp`, `cap_drop: ALL`, `no-new-privileges`, 128 MB, 0,5 CPU, 100 PIDs, porta `127.0.0.1:8088:8080`.
-- Cabeçalhos em `.devcontainer/nginx/snippets/security-headers.conf`. **Pendente:** Content-Security-Policy (calibrar em
-  report-only por causa do GA4 e dos scripts inline antes de aplicar).
+- Cabeçalhos em `.devcontainer/nginx/snippets/security-headers.conf`, incluindo **Content-Security-Policy** (política em
+  `conf.d/default.conf`, variável `$csp_policy`): scripts só do site, do GA4 (depois do consentimento) e do Turnstile; sem
+  iframes além do Turnstile; `object-src 'none'`, `frame-ancestors 'self'`. `style-src` tem `'unsafe-inline'` (React/Motion usam
+  `style=`). Só `/pt-br/links/` (editada à mão, com script inline da agenda) recebe `'unsafe-inline'` em scripts.
+  Ao adicionar um domínio externo novo (script, fonte, API, imagem), inclua-o na política: o navegador bloqueia o que não estiver
+  lá. Para conferir antes de publicar: `npm run build:ssg`, subir a imagem e abrir as páginas no Chrome vendo violações
+  (`securitypolicyviolation`); a calibração inicial achou `data:` em fontes e `webhook.ivana.academy` (agenda).
 
 ## Automação
 
