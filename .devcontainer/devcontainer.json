@@ -81,7 +81,7 @@
 	},
 
 	"remoteEnv": {
-		"VITE_WEBHOOK_URL": "${localEnv:VITE_WEBHOOK_URL}",
-		"VITE_WEBHOOK_SECRET": "${localEnv:VITE_WEBHOOK_SECRET}"
+		"WEBHOOK_URL": "${localEnv:WEBHOOK_URL}",
+		"WEBHOOK_SECRET": "${localEnv:WEBHOOK_SECRET}"
 	}
 }

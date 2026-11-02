@@ -19,7 +19,8 @@
 # =============================================================================
 #  STAGE 1 - node-builder: transpile TypeScript + bundle Vite + Tailwind v4
 # =============================================================================
-FROM node:22-alpine AS node-builder
+# Node fixado (22.23.4 inclui as correções de segurança de out/2026) por digest; o Dependabot propõe atualizações.
+FROM node:22.23.4-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS node-builder
 
 WORKDIR /app
 
@@ -32,13 +33,12 @@ RUN npm ci
 # Copy source and build
 COPY . .
 
-# Variáveis passadas como build args
-ARG VITE_WEBHOOK_URL
-ARG VITE_WEBHOOK_SECRET
+# Variáveis VITE_* passadas como build args são PÚBLICAS (entram no bundle). O segredo do webhook NÃO passa por aqui:
+# é variável de runtime do container (WEBHOOK_SECRET), usada pelo Nginx em /api/contact.
+ARG VITE_TURNSTILE_SITE_KEY=
 ARG VITE_GA_ID=
 ARG VITE_TIENDA_AR_URL=
-ENV VITE_WEBHOOK_URL=$VITE_WEBHOOK_URL
-ENV VITE_WEBHOOK_SECRET=$VITE_WEBHOOK_SECRET
+ENV VITE_TURNSTILE_SITE_KEY=$VITE_TURNSTILE_SITE_KEY
 ENV VITE_GA_ID=$VITE_GA_ID
 ENV VITE_TIENDA_AR_URL=$VITE_TIENDA_AR_URL
 
@@ -48,7 +48,10 @@ RUN npm run build
 # =============================================================================
 #            STAGE 2 - Nginx base (shared between prod and dev)
 # =============================================================================
-FROM nginx:1.28-alpine AS base
+# Nginx sem root (stable 1.30), fixado por digest.
+FROM nginxinc/nginx-unprivileged:1.30-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03 AS base
+
+USER root
 
 # OCI metadata
 LABEL maintainer="LeoDG <callme@leodg.dev>" \
@@ -64,6 +67,9 @@ ENV ENVIRONMENT=development \
 WORKDIR /usr/share/nginx/html
 
 # Timezone
+# Correções de segurança do Alpine publicadas depois do digest da imagem base (ex.: brotli CVE-2026-111497, curl)
+RUN apk upgrade --no-cache
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Remove config default of nginx
@@ -73,15 +79,17 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 COPY .devcontainer/nginx/nginx.conf      /etc/nginx/nginx.conf
 COPY .devcontainer/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY .devcontainer/nginx/snippets/security-headers.conf /etc/nginx/snippets/security-headers.conf
+# Gera o proxy do formulário (com o segredo do ambiente, em runtime) antes do Nginx subir
+COPY --chmod=755 .devcontainer/nginx/docker-entrypoint.d/05-webhook-proxy.sh /docker-entrypoint.d/05-webhook-proxy.sh
 
-# Copy built static files
+# Copy built static files (o default.conf serve de /usr/share/nginx/html)
 COPY --from=node-builder /app/dist /usr/share/nginx/html
+RUN chmod -R a+rX /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 8080
 
-# Healthcheck - curl is available in alpine by default
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -qO- http://127.0.0.1/ || exit 1
+    CMD wget -qO- http://127.0.0.1:8080/health >/dev/null || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
 
@@ -93,12 +101,9 @@ FROM base AS production
 ENV ENVIRONMENT=production \
     DEBUG=false
 
-# O default.conf usa root /usr/share/nginx/html/dist (layout do estágio development).
-# Na produção o build só era copiado para /usr/share/nginx/html, o que dava 404 em tudo.
-COPY --from=node-builder /app/dist /usr/share/nginx/html/dist
-
 # Nothing extra to install - Alpine base is already minimal (~25 MB).
-# Built assets are already copied in the base stage above.
+# Built assets are already copied in the base stage above. Roda sem root (uid 101).
+USER 101
 
 # =============================================================================
 #            STAGE 3b - Development (hot-reload tools, Node available)
