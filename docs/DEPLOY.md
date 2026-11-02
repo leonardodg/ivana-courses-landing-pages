@@ -19,18 +19,20 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 
 1. **guard:** no disparo manual com `production`, exige `confirm_production = sim` (o push em `main` já é a confirmação).
 2. **build** (ubuntu-latest, ambiente `development` do GitHub, de onde vêm os segredos):
-   `npm run lint` → `npm run build` (com `VITE_WEBHOOK_*`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`) → `scripts/prerender.mjs` com `PRERENDER_STRICT=1` → `npm run check:urls` → `scripts/verify-dist.mjs` → grava `dist/version.txt` (SHA e hora) → artefato `release.tgz` (14 dias).
+   `npm audit` (produção) → `npm run lint` → `npm run build` → guarda que falha se algum segredo/URL do webhook aparecer no `dist/` → (com `VITE_TURNSTILE_SITE_KEY`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`; todos públicos) → `scripts/prerender.mjs` com `PRERENDER_STRICT=1` → `npm run check:urls` → `scripts/verify-dist.mjs` → grava `dist/version.txt` (SHA e hora) → artefato `release.tgz` (14 dias).
 3. **deploy:** envia o pacote por SCP para `/tmp` da VPS e roda um script por SSH:
    `git reset --hard origin/main` (só para trazer compose e configs do Nginx) → desempacota em `releases/<sha>-<data>/` → coloca `dist/` na raiz do repositório (guarda o anterior em `dist.prev.<destino>`) e **copia para dentro dele os arquivos com hash (`app/` e `styles/`) das 2 releases anteriores**, para abas abertas antes do deploy não perderem JS/CSS → `docker compose build / down / up` → **verifica**: home com `data-prerendered`, 404 real, `Permissions-Policy` presente, `version.txt` com o SHA e um arquivo com hash da release anterior ainda respondendo 200 → mantém as 3 últimas releases.
 
 ## Destinos
 
 - **staging:** container `courses-nginx-staging`, projeto `courses-staging`, porta `127.0.0.1:8089` (não fica exposta na internet), logs em `logs_nginx_staging`. **Não toca na produção.** Para olhar: `ssh -L 8089:127.0.0.1:8089 <usuario>@<vps>` e abrir `http://localhost:8089/pt-br/`.
-- **production:** container `courses-nginx`, projeto `compose` (o mesmo do `prod.yml`), porta `8088`. Se a verificação falhar, volta sozinho para o `dist` anterior.
+- **production:** container `courses-nginx`, projeto `compose` (o mesmo do `prod.yml`), porta `127.0.0.1:8088` (só o Nginx do host alcança). O container roda sem root, com filesystem somente leitura; logs em `docker logs courses-nginx`. Se a verificação falhar, volta sozinho para o `dist` anterior.
 
 ## Segredos e variáveis (já existem, ambiente `development`)
 
-`VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`, `VPS_SSH_PORT` (opcional), `VITE_WEBHOOK_URL`, `VITE_WEBHOOK_SECRET`; variáveis `VITE_GA_ID`, `VITE_TIENDA_AR_URL`, `REPO_PATH`. Os `VITE_*` agora são usados no job de build do GitHub, e não mais pelo `docker compose` da VPS.
+`VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`, `VPS_SSH_PORT` (opcional) e **`WEBHOOK_SECRET`** (segredo do webhook do n8n); variáveis `VITE_TURNSTILE_SITE_KEY`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`, `REPO_PATH`.
+
+`WEBHOOK_SECRET` **não entra no build**: é enviado por SSH só para o `docker compose` e vive no ambiente do container em execução; o Nginx o acrescenta ao encaminhar `POST /api/contact` ao n8n. Valores `VITE_*` são públicos (vão para o JavaScript). Detalhes, rotação e checklist em [SEGURANCA.md](SEGURANCA.md).
 
 ## Como testar antes de publicar
 
@@ -40,14 +42,14 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 ## Voltar atrás manualmente
 
 Na VPS, em `REPO_DIR`: `ls releases/` mostra as 3 últimas. Para voltar: `rm -rf dist && cp -R releases/<release-anterior>/dist dist`, depois
-`docker compose -p compose -f .devcontainer/compose/prod-prebuilt.yml up -d --build`.
+`WEBHOOK_SECRET=... docker compose -p compose -f .devcontainer/compose/prod-prebuilt.yml up -d --build`.
 
 ## Testar localmente (sem GitHub)
 
 ```
 npm run build:ssg && node scripts/verify-dist.mjs
 printf 'TESTE\n' > dist/version.txt
-CONTAINER_NAME=courses-nginx-local HOST_PORT=18089 BIND_ADDR=127.0.0.1: IMAGE_TAG=local LOGS_DIR=/tmp/logs \
+ALLOW_NO_WEBHOOK=1 WEBHOOK_SECRET=local-teste-0123456789abcdef CONTAINER_NAME=courses-nginx-local HOST_PORT=18089 IMAGE_TAG=local \
   docker compose -p courses-local -f .devcontainer/compose/prod-prebuilt.yml up -d --build
 ```
 
