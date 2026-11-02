@@ -55,7 +55,7 @@ jobs:
       VITE_GA_ID: ${{ vars.VITE_GA_ID }}
       VITE_TIENDA_AR_URL: ${{ vars.VITE_TIENDA_AR_URL }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # o lastmod dos sitemaps vem do histórico do git
 
