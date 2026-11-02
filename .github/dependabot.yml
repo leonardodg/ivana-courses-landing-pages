@@ -23,6 +23,10 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"              # 7.x remove baseUrl do tsconfig: ajustar antes de subir
         update-types: ["version-update:semver-major"]
+      - dependency-name: "vite"                    # 8.x muda os tipos do vite.config.ts e exige plugin-react 6: migrar junto, nao em bump isolado
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"             # manter na major do Node em uso (22): tipos a frente do runtime enganam o tsc
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "docker"
     directory: "/.devcontainer/build"   # nginx.Dockerfile e nginx.prebuilt.Dockerfile (Node e Nginx)
