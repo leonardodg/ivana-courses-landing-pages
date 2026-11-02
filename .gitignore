@@ -153,3 +153,6 @@ secrets.app
 
 # Relatório da pré-renderização
 prerender-report.json
+
+# Tokens locais do MCP do n8n (nunca commitar)
+n8n.env

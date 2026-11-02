@@ -12,8 +12,7 @@ services:
       dockerfile: .devcontainer/build/nginx.Dockerfile
       target: production
       args:
-        - VITE_WEBHOOK_URL=${VITE_WEBHOOK_URL}
-        - VITE_WEBHOOK_SECRET=${VITE_WEBHOOK_SECRET}
+        - VITE_TURNSTILE_SITE_KEY=${VITE_TURNSTILE_SITE_KEY:-}
         - VITE_GA_ID=${VITE_GA_ID:-}
         - VITE_TIENDA_AR_URL=${VITE_TIENDA_AR_URL:-}
     image: leodg/courses-landing-pages:main
@@ -23,12 +22,24 @@ services:
       - APP_URL=https://courses.ivana.academy
       - APP_ENV=production
       - ENVIRONMENT=production
-    volumes:
-      - ./logs_nginx:/var/log/nginx
+      # Só no ambiente do container em execução; o Nginx acrescenta ao encaminhar POST /api/contact ao n8n.
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET:?defina WEBHOOK_SECRET (segredo do webhook do n8n)}
+      - N8N_WEBHOOK_UPSTREAM=${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact}
+    # Logs em stdout/stderr (docker logs courses-nginx). Porta só em 127.0.0.1: o Nginx do host é a entrada pública.
     ports:
-      - "8088:80"
+      - "127.0.0.1:8088:8080"
     networks:
       - global-network
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=101,gid=101
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 100
 
     ulimits:
       nofile:

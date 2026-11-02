@@ -1,6 +1,7 @@
 // src/app/hooks/useSubmitContact.ts
 
 import { trackEvent } from '../lib/analytics';
+import { getTurnstileToken } from '../lib/turnstile';
 
 export type SubmitStatus = 'idle' | 'loading' | 'success' | 'error' | 'rate_limited';
 
@@ -19,15 +20,15 @@ interface SubmitResult {
   cooldown: number;
 }
 
-const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL;
-const WEBHOOK_SECRET = import.meta.env.VITE_WEBHOOK_SECRET;
-
-// console.log(import.meta.env.VITE_WEBHOOK_URL);
+// Os formulários enviam para /api/contact (mesma origem). O Nginx do container acrescenta o segredo do webhook e
+// encaminha ao n8n: nenhuma credencial é entregue ao navegador (ver .devcontainer/nginx/conf.d/default.conf).
+// Em desenvolvimento o vite.config.ts faz o mesmo papel (server.proxy).
+const CONTACT_ENDPOINT = '/api/contact';
 
 const MAX_RETRIES    = 3;
 const BASE_DELAY_MS  = 800; // 800ms → 1.6s → 3.2s
 
-// Rate limit no cliente: 3 submissões por 60s
+// Rate limit no cliente: 3 submissões por 60s. É só UX (o limite que protege de verdade é o do Nginx, por IP).
 // Array fora do hook para persistir entre re-renders sem useRef
 const submitHistory: number[] = [];
 
@@ -50,13 +51,16 @@ async function postWithRetry(
   attempt = 1,
 ): Promise<Response> {
   try {
-    const res = await fetch(WEBHOOK_URL, {
+    // Token do Turnstile é de uso único: um novo a cada tentativa (inclusive nos retries).
+    const token = await getTurnstileToken();
+    const res = await fetch(CONTACT_ENDPOINT, {
       method:  'POST',
-      headers: {
-        'Content-Type':     'application/json',
-        'X-Webhook-Secret': WEBHOOK_SECRET,
-      },
-      body:   JSON.stringify({ ...payload, timestamp: new Date().toISOString() }),
+      headers: { 'Content-Type': 'application/json' },
+      body:   JSON.stringify({
+        ...payload,
+        ...(token ? { cf_turnstile_token: token } : {}),
+        timestamp: new Date().toISOString(),
+      }),
       signal: AbortSignal.timeout(10_000),
     });
 
@@ -87,6 +91,8 @@ export async function submitContact(payload: ContactPayload): Promise<SubmitResu
 
   try {
     const res = await postWithRetry(payload);
+    // 429 = limite do servidor (Nginx, por IP)
+    if (res.status === 429) return { status: 'rate_limited', cooldown: 60 };
     if (res.ok) {
       // Pedido de direitos LGPD não é lead de marketing.
       if (!/^(lgpd|arrepentimiento)/.test(payload.form_source)) trackEvent('generate_lead', { form_source: payload.form_source });
