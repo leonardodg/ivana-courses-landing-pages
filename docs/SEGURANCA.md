@@ -24,12 +24,20 @@ Navegador ──POST /api/contact──▶ Nginx do container ──X-Webhook-Se
 
 ## Turnstile (anti-bot)
 
-- Widget carregado só no envio (`src/app/lib/turnstile.ts`); a site key (`VITE_TURNSTILE_SITE_KEY`) é pública.
-- Quem valida é o **n8n** com a secret key (nunca no repositório): logo depois do Webhook, um nó HTTP Request
-  `POST https://challenges.cloudflare.com/turnstile/v0/siteverify` com `secret`, `response` = `{{$json.body.cf_turnstile_token}}`
-  e `remoteip` = header `X-Real-IP`; um IF em `success == true`, senão responder 403 (e não seguir para o RabbitMQ/banco).
-- No nó Webhook, ligar **Header Auth** exigindo `X-Webhook-Secret` = valor do `WEBHOOK_SECRET`.
-- Teste: chaves de teste da Cloudflare (sempre passam): site `1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`.
+- Widget carregado só no envio (`src/app/lib/turnstile.ts`); a site key (`VITE_TURNSTILE_SITE_KEY`, variável do ambiente
+  `production` no GitHub) é pública. O hostname do widget no Cloudflare deve ser `courses.ivana.academy`.
+- Quem valida é o **n8n**, no workflow **`Contact - Receive [ivana] v2 (Turnstile)`** (webhook `/webhook/contact-v2`): Webhook (Header
+  Auth) → *Turnstile Verify* (`POST challenges.cloudflare.com/turnstile/v0/siteverify`, secret na credencial `Turnstile Secret`,
+  tipo Custom Auth, JSON `{"body":{"secret":"..."}}`) → *Turnstile OK?* → (403 `turnstile_failed` | *Validate & Sanitize* → RabbitMQ).
+  Falha fechada: sem token, token inválido ou Cloudflare fora do ar => 403 e nada entra na fila.
+- O v2 também aceita as origens `interest_ar`, `carreras_ar`, `lgpd`, `lgpd-ar` e `arrepentimiento-ar` (antes caíam como `unknown`)
+  e repassa o campo `consent` (versão da política aceita) na mensagem da fila. O Process ainda não grava o `consent` (não há coluna).
+- O proxy do container aponta para o v2 (`N8N_WEBHOOK_UPSTREAM`, padrão em `prod-prebuilt.yml`). O workflow antigo
+  (`Contact - Receive [ivana]`, `/webhook/contact`) continua publicado como reserva. **Voltar atrás:** definir
+  `N8N_WEBHOOK_UPSTREAM=http://n8n_main:5678/webhook/contact` e recriar o container (ou reverter o PR).
+- Trocar a chave: editar o JSON da credencial `Turnstile Secret` no n8n. Chaves de teste da Cloudflare (sempre passam):
+  site `1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`; só servem com widget/segredo de teste.
+- Efeito colateral aceito: abas abertas antes do deploy rodam o JavaScript antigo (sem token) e levam 403 ao enviar até recarregar.
 - A política de privacidade precisa citar o Cloudflare Turnstile (ele carrega no envio do formulário).
 
 ## Ordem para publicar (importante)
