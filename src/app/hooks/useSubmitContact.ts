@@ -50,9 +50,17 @@ async function postWithRetry(
   payload: ContactPayload,
   attempt = 1,
 ): Promise<Response> {
+  // Token do Turnstile é de uso único: um novo a cada tentativa (inclusive nos retries). Falha aqui (script bloqueado,
+  // Cloudflare inalcançável, desafio não concluído) NÃO é erro de rede: sem token o n8n recusaria de qualquer jeito, então
+  // não repetimos (antes eram 3 tentativas de até 30 s cada, com o botão preso em "Enviando...").
+  let token: string | null;
   try {
-    // Token do Turnstile é de uso único: um novo a cada tentativa (inclusive nos retries).
-    const token = await getTurnstileToken();
+    token = await getTurnstileToken();
+  } catch {
+    throw new Error('turnstile_error');
+  }
+
+  try {
     const res = await fetch(CONTACT_ENDPOINT, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
