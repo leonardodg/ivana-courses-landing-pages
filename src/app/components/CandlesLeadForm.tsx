@@ -59,6 +59,9 @@ export default function CandlesLeadForm({ onCouponAwarded, country = 'BR' }: Can
       message: `Lead capturado na página de velas ${country}. Interesse: ${interest}. Cupom gerado: ${couponCode}.`,
       form_source: formSource,
       consent: CONSENT_TEXT_VERSION,
+      country,
+      interests: 'velas',
+      course: interest,
     });
 
     if (result.status === 'success') {
