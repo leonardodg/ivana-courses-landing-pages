@@ -49,8 +49,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
-      VITE_WEBHOOK_URL: ${{ secrets.VITE_WEBHOOK_URL }}
-      VITE_WEBHOOK_SECRET: ${{ secrets.VITE_WEBHOOK_SECRET }}
+      # VITE_* são PÚBLICAS (entram no bundle). O segredo do webhook NÃO é usado aqui: ele só existe na VPS,
+      # no ambiente do container, e o Nginx o acrescenta ao encaminhar /api/contact (ver docs/DEPLOY.md).
+      VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
       VITE_GA_ID: ${{ vars.VITE_GA_ID }}
       VITE_TIENDA_AR_URL: ${{ vars.VITE_TIENDA_AR_URL }}
     steps:
@@ -60,7 +61,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Dependências
@@ -69,13 +70,23 @@ jobs:
       - name: Sitemaps (lastmod pela data do último commit de cada página)
         run: npm run sitemap
 
+      - name: "Auditoria de dependências (produção, bloqueia high e critical)"
+        run: npm audit --omit=dev --audit-level=high
+
       - name: Tipos (tsc)
         run: npm run lint
 
       - name: Build (Vite)
         run: |
-          test -n "$VITE_WEBHOOK_URL" && test -n "$VITE_WEBHOOK_SECRET" || (echo "Secrets VITE_WEBHOOK_* vazios" && exit 1)
+          [ -n "$VITE_TURNSTILE_SITE_KEY" ] || echo "::warning::VITE_TURNSTILE_SITE_KEY vazia: formulários vão sem anti-bot"
           npm run build
+
+      - name: Nenhum segredo/URL do webhook no bundle
+        run: |
+          if grep -rIlE "X-Webhook-Secret|webhook/contact|n8n\.ivana" dist; then
+            echo "ERRO: credencial ou URL do webhook apareceu no dist/." && exit 1
+          fi
+          echo "Bundle limpo ✔"
 
       - name: Pré-renderização (Chrome do runner, modo estrito)
         env:
@@ -116,6 +127,8 @@ jobs:
         run: |
           [ -n "${{ secrets.VPS_HOST }}" ] && [ -n "${{ secrets.VPS_USER }}" ] && [ -n "${{ secrets.SSH_PRIVATE_KEY }}" ] \
             || (echo "Secrets VPS_HOST, VPS_USER ou SSH_PRIVATE_KEY vazios" && exit 1)
+          [ -n "${{ secrets.WEBHOOK_SECRET }}" ] \
+            || (echo "Secret WEBHOOK_SECRET vazio (segredo do webhook do n8n, usado só no container em runtime)" && exit 1)
 
       - name: Enviar o pacote
         uses: appleboy/scp-action@v0.1.7
@@ -132,22 +145,25 @@ jobs:
         env:
           DEPLOY_TARGET: ${{ inputs.target || 'production' }}
           RELEASE_SHA: ${{ github.sha }}
+          # Só vai para o ambiente do container (docker compose); nunca para o build nem para a imagem.
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_SSH_PORT || 22 }}
-          envs: DEPLOY_TARGET,RELEASE_SHA
+          envs: DEPLOY_TARGET,RELEASE_SHA,WEBHOOK_SECRET
           script: |
             set -euo pipefail
             REPO_DIR="${{ vars.REPO_PATH || '/home/ubuntu/pages-courses' }}"
             COMPOSE=".devcontainer/compose/prod-prebuilt.yml"
 
             if [ "$DEPLOY_TARGET" = "production" ]; then
-              export CONTAINER_NAME=courses-nginx HOST_PORT=8088 BIND_ADDR="" IMAGE_TAG=main LOGS_DIR=./logs_nginx
+              # 127.0.0.1: só o Nginx do host (proxy reverso) alcança o container; nada de 0.0.0.0
+              export CONTAINER_NAME=courses-nginx HOST_PORT=8088 BIND_ADDR="127.0.0.1:" IMAGE_TAG=main
               PROJECT=compose
             else
-              export CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 BIND_ADDR="127.0.0.1:" IMAGE_TAG=staging LOGS_DIR=./logs_nginx_staging
+              export CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 BIND_ADDR="127.0.0.1:" IMAGE_TAG=staging
               PROJECT=courses-staging
             fi
             PORT="$HOST_PORT"
@@ -195,6 +211,10 @@ jobs:
               [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/nao-existe-$RANDOM/")" = "404" ] || return 1
               curl -sI "http://127.0.0.1:$PORT/pt-br/" | grep -qi '^permissions-policy:' || return 1
               curl -s "http://127.0.0.1:$PORT/version.txt" | head -1 | grep -q "$RELEASE_SHA" || return 1
+              # proxy do formulário carregado (Origin de fora → 403 pela regra do Nginx; sem a rota seria 404/405) e sem versão no Server
+              [ "$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Origin: https://invalido.example' -d '{}' "http://127.0.0.1:$PORT/api/contact")" = "403" ] || return 1
+              curl -sI "http://127.0.0.1:$PORT/pt-br/" | grep -i '^server:' | grep -q '[0-9]\.[0-9]' && return 1
+              [ "$(docker exec "$CONTAINER_NAME" id -u)" != "0" ] || return 1
               # um arquivo com hash que só existia na release anterior ainda precisa responder 200
               PREV1=$(ls -1dt releases/*/ 2>/dev/null | sed 's#/$##' | grep -vx "$REL" | head -1 || true)
               if [ -n "$PREV1" ] && [ -d "$PREV1/dist/app" ]; then

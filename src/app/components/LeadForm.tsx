@@ -9,7 +9,7 @@
 //   • Rate-limit client-side via submitContact (3 submissões / 60s)
 //   • Retry com backoff exponencial via postWithRetry (max 3 tentativas, 5xx)
 //   • Timeout de 10s por requisição (AbortSignal.timeout)
-//   • VITE_WEBHOOK_URL + VITE_WEBHOOK_SECRET via env vars
+//   • envio via POST /api/contact (o Nginx/Vite acrescenta o segredo; ver useSubmitContact)
 //
 // UI — elementos portados do protótipo AI Studio:
 //   • País picker (BR / AR) que alinha o DDI do telefone
