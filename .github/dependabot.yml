@@ -1,12 +1,30 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for more information:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-# https://containers.dev/guide/dependabot
+# Atualizações automáticas (PRs semanais). Segurança: os avisos de vulnerabilidade do GitHub (Dependabot alerts / security
+# updates) abrem PRs fora desta agenda assim que saem, se estiverem ligados em Settings > Code security.
+# Versão do Node e do Nginx ficam fixadas por digest nos Dockerfiles: o ecossistema "docker" propõe o digest novo.
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # minor e patch juntos: um PR só por semana; majors (ex.: React, Vite) ficam separados para revisão
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "docker"
+    directory: "/.devcontainer/build"   # nginx.Dockerfile e nginx.prebuilt.Dockerfile (Node e Nginx)
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
