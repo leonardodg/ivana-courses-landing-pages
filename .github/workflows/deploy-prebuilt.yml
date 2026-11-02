@@ -141,7 +141,7 @@ jobs:
           target: /tmp/courses-release-${{ github.sha }}
 
       - name: Publicar na VPS
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.5
         env:
           DEPLOY_TARGET: ${{ inputs.target || 'production' }}
           RELEASE_SHA: ${{ github.sha }}
