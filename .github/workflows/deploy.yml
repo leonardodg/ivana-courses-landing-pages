@@ -67,19 +67,17 @@ jobs:
           if [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
             echo "ERRO: Secret SSH_PRIVATE_KEY está vazio!" && exit 1
           fi
-          if [ -z "${{ secrets.VITE_WEBHOOK_URL }}" ]; then
-            echo "ERRO: Secret VITE_WEBHOOK_URL está vazio!" && exit 1
-          fi
-          if [ -z "${{ secrets.VITE_WEBHOOK_SECRET }}" ]; then
-            echo "ERRO: Secret VITE_WEBHOOK_SECRET está vazio!" && exit 1
+          if [ -z "${{ secrets.WEBHOOK_SECRET }}" ]; then
+            echo "ERRO: Secret WEBHOOK_SECRET está vazio!" && exit 1
           fi
           echo "Secrets validados ✔"
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
         env:
-          VITE_WEBHOOK_URL: ${{ secrets.VITE_WEBHOOK_URL }}
-          VITE_WEBHOOK_SECRET: ${{ secrets.VITE_WEBHOOK_SECRET }}
+          # Segredo do webhook: só no ambiente do container em runtime (nunca no build/bundle)
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
           # Opcional: sobrescreve o ID do GA4 (variável do repositório). 'off' desliga o rastreamento.
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
           # Opcional: base da tienda Argentina (ex.: https://tienda.ivana.academy). Vazia = botão leva ao WhatsApp AR.
@@ -89,11 +87,9 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_SSH_PORT || 22 }}
-          # Forward estes dois nomes de variavel (valores vem do `env:` acima,
-          # resolvidos a partir dos GitHub Secrets) para o ambiente da sessao
-          # SSH remota, onde o docker compose build os le via interpolacao
-          # ${VITE_WEBHOOK_URL}/${VITE_WEBHOOK_SECRET} no prod.yml.
-          envs: VITE_WEBHOOK_URL,VITE_WEBHOOK_SECRET,VITE_GA_ID,VITE_TIENDA_AR_URL
+          # Encaminha as variaveis (valores vem do `env:` acima) para a sessao SSH, onde o docker compose
+          # as le por interpolacao no prod.yml.
+          envs: WEBHOOK_SECRET,VITE_TURNSTILE_SITE_KEY,VITE_GA_ID,VITE_TIENDA_AR_URL
           script: |
             set -e
 
@@ -112,21 +108,18 @@ jobs:
             git reset --hard origin/main
             echo "Git pull e reset concluídos. Commit: $(git rev-parse --short HEAD)"
 
-            echo "===== [2/5] Validando variaveis de build ====="
-            if [ -z "$VITE_WEBHOOK_URL" ] || [ -z "$VITE_WEBHOOK_SECRET" ]; then
-              echo "ERRO: VITE_WEBHOOK_URL ou VITE_WEBHOOK_SECRET vazio na sessao SSH." && exit 1
+            echo "===== [2/5] Validando variaveis ====="
+            if [ -z "$WEBHOOK_SECRET" ]; then
+              echo "ERRO: WEBHOOK_SECRET vazio na sessao SSH." && exit 1
             fi
-            echo "Variaveis de build validadas ✔"
+            echo "Variaveis validadas ✔"
 
             echo "===== [3/5] Parando container anterior ====="
             docker compose -f "$COMPOSE_FILE" down --remove-orphans || true
 
             echo "===== [4/5] Build e subindo container ====="
-            # VITE_WEBHOOK_URL/VITE_WEBHOOK_SECRET ja estao no ambiente desta
-            # sessao (forwarded pelo `envs:` do appleboy/ssh-action a partir
-            # dos GitHub Secrets) — docker compose os le direto do ambiente
-            # pra resolver ${VITE_WEBHOOK_URL}/${VITE_WEBHOOK_SECRET} no
-            # build.args do prod.yml, sem precisar de .env em disco na VPS.
+            # WEBHOOK_SECRET ja esta no ambiente desta sessao (forwarded pelo `envs:` do appleboy/ssh-action a
+            # partir dos GitHub Secrets); o docker compose o le direto, sem .env em disco na VPS.
             docker compose -f "$COMPOSE_FILE" build --no-cache
             docker compose -f "$COMPOSE_FILE" up -d
 

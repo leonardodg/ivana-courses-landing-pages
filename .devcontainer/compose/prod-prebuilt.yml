@@ -2,10 +2,14 @@
 # PRODUÇÃO com o site já construído pelo CI (ver docs/DEPLOY.md)
 # =============================================================================
 # Produção (projeto "compose", container courses-nginx, porta 8088: igual ao prod.yml):
-#     docker compose -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+#     WEBHOOK_SECRET=... docker compose -f .devcontainer/compose/prod-prebuilt.yml up -d --build
 # Homologação (porta 8089 só no localhost da VPS, não toca na produção):
-#     CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 BIND_ADDR=127.0.0.1: IMAGE_TAG=staging \
-#     LOGS_DIR=./logs_nginx_staging docker compose -p courses-staging -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+#     WEBHOOK_SECRET=... CONTAINER_NAME=courses-nginx-staging HOST_PORT=8089 IMAGE_TAG=staging \
+#     docker compose -p courses-staging -f .devcontainer/compose/prod-prebuilt.yml up -d --build
+#
+# WEBHOOK_SECRET (obrigatório): segredo do webhook do n8n. Vive só no ambiente do container em execução, o Nginx o
+# acrescenta ao encaminhar POST /api/contact; o navegador nunca o recebe. N8N_WEBHOOK_UPSTREAM: URL interna do webhook.
+# A porta só escuta em 127.0.0.1: o Nginx do host (courses.conf) é a única entrada pública.
 # =============================================================================
 
 services:
@@ -20,12 +24,24 @@ services:
       - APP_URL=https://courses.ivana.academy
       - APP_ENV=production
       - ENVIRONMENT=production
-    volumes:
-      - ${LOGS_DIR:-./logs_nginx}:/var/log/nginx
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET:?defina WEBHOOK_SECRET (segredo do webhook do n8n)}
+      - N8N_WEBHOOK_UPSTREAM=${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact}
+    # Logs vão para stdout/stderr (docker logs courses-nginx): o container não grava em disco.
     ports:
-      - "${BIND_ADDR:-}${HOST_PORT:-8088}:80"
+      - "${BIND_ADDR:-127.0.0.1:}${HOST_PORT:-8088}:8080"
     networks:
       - global-network
+    # Hardening: sem root, filesystem somente leitura, sem capabilities, sem escalonamento, com limites.
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=101,gid=101
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 100
     ulimits:
       nofile:
         soft: 65536

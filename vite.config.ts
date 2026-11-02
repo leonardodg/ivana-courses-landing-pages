@@ -104,8 +104,8 @@ export default defineConfig(({ mode }) => {
   );
 
   const clientEnv = {
-    VITE_WEBHOOK_URL: loadedFileEnv.VITE_WEBHOOK_URL ?? "",
-    VITE_WEBHOOK_SECRET: loadedFileEnv.VITE_WEBHOOK_SECRET ?? "",
+    // Site key pública do Cloudflare Turnstile (anti-bot dos formulários). Vazio = envio sem token.
+    VITE_TURNSTILE_SITE_KEY: loadedFileEnv.VITE_TURNSTILE_SITE_KEY ?? "",
     // Google Analytics 4: vazio usa o ID padrão de lib/consent.ts; 'off' desliga.
     VITE_GA_ID: loadedFileEnv.VITE_GA_ID ?? "",
     // Base da tienda Argentina (ex.: https://tienda.ivana.academy). Vazio = botão leva ao WhatsApp AR.
@@ -122,14 +122,25 @@ export default defineConfig(({ mode }) => {
   if (mode === "development") {
     // eslint-disable-next-line no-console
     console.log("Vite envDir:", envDir);
+    // Nunca imprimir valores: o .env pode conter WEBHOOK_SECRET.
     // eslint-disable-next-line no-console
-    console.log("Vite loaded env files:", loadedFileEnv);
-    // eslint-disable-next-line no-console
-    console.log("Vite clientEnv:", {
-      VITE_WEBHOOK_URL: clientEnv.VITE_WEBHOOK_URL,
-      VITE_WEBHOOK_SECRET: clientEnv.VITE_WEBHOOK_SECRET ? "[redacted]" : "",
-    });
+    console.log("Vite loaded env files (chaves):", Object.keys(loadedFileEnv));
   }
+
+  // Dev: espelha o que o Nginx faz em produção. O formulário chama /api/contact e este proxy acrescenta o segredo.
+  // WEBHOOK_URL e WEBHOOK_SECRET NÃO têm prefixo VITE_: ficam só no Node do dev server, nunca vão para o bundle.
+  const webhookUrl = process.env.WEBHOOK_URL ?? loadedFileEnv.WEBHOOK_URL ?? "";
+  const webhookSecret = process.env.WEBHOOK_SECRET ?? loadedFileEnv.WEBHOOK_SECRET ?? "";
+  const devContactProxy = webhookUrl
+    ? {
+        "/api/contact": {
+          target: new URL(webhookUrl).origin,
+          changeOrigin: true,
+          rewrite: () => new URL(webhookUrl).pathname,
+          headers: (webhookSecret ? { "X-Webhook-Secret": webhookSecret } : {}) as Record<string, string>,
+        },
+      }
+    : undefined;
 
   return {
     plugins: [react(), tailwindcss(), injectJsonLd(), servePublicIndex()],
@@ -226,6 +237,7 @@ export default defineConfig(({ mode }) => {
     open: false, // não abre o browser automaticamente
     hmr: process.env.DISABLE_HMR !== "true",
     watch: process.env.DISABLE_HMR === "true" ? null : {},
+    proxy: devContactProxy,
   },
 
   // REMOVE Preview AND USE NGINX 8088 INSTEAD
