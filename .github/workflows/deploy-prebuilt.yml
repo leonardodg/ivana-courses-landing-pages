@@ -47,7 +47,7 @@ jobs:
     name: Build, pré-render e verificações
     needs: guard
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     env:
       # VITE_* são PÚBLICAS (entram no bundle). O segredo do webhook NÃO é usado aqui: ele só existe na VPS,
       # no ambiente do container, e o Nginx o acrescenta ao encaminhar /api/contact (ver docs/DEPLOY.md).
@@ -117,7 +117,7 @@ jobs:
     name: Enviar para a VPS (${{ inputs.target || 'production' }})
     needs: build
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     steps:
       - uses: actions/download-artifact@v4
         with:
