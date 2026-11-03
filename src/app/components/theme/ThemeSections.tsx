@@ -356,13 +356,26 @@ const LOCAIS = [
   { city: 'Rio de Janeiro', place: 'Espaço Moura · Flamengo', address: 'Rua Correa Dutra 149 - Flamengo, Rio de Janeiro' },
 ];
 
+// Florianópolis é a sede (sempre aparece); as outras cidades só enquanto tiverem turma na agenda.
+// Se o feed falhar, mostra todas: é melhor sobrar um endereço do que faltar o da turma.
+function useLocaisAtivos() {
+  const agenda = useAgenda();
+  if (agenda.status === 'error') return LOCAIS;
+  const today = todaySP();
+  const cidades = new Set(agenda.events.filter(e => e.date >= today).map(e => e.city));
+  return LOCAIS.filter((loc, i) => i === 0 || cidades.has(loc.city));
+}
+
 export function LocaisSection() {
   const l = usePageLanguage();
+  const locais = useLocaisAtivos();
+  const noRio = locais.some(loc => loc.city === 'Rio de Janeiro');
+  const colunas = locais.length === 3 ? 'md:grid-cols-3' : locais.length === 2 ? 'md:grid-cols-2' : 'max-w-md';
   return (
     <Section id="locais" bg="white" border="top" width="mid">
-      <SectionHeader kicker={tr(l, 'DÓNDE SON', 'ONDE ACONTECEM')} title={tr(l, 'En Santa Catarina y en Río', 'Em Santa Catarina e no Rio')} />
-      <div className="grid gap-6 md:grid-cols-3">
-        {LOCAIS.map(loc => (
+      <SectionHeader kicker={tr(l, 'DÓNDE SON', 'ONDE ACONTECEM')} title={noRio ? tr(l, 'En Santa Catarina y en Río', 'Em Santa Catarina e no Rio') : tr(l, 'En Santa Catarina', 'Em Santa Catarina')} />
+      <div className={`grid gap-6 ${colunas}`}>
+        {locais.map(loc => (
           <a
             key={loc.city}
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${loc.place}, ${loc.address}`)}`}
