@@ -66,7 +66,26 @@
           "@type": "Person",
           "name": "Ivana Lerea"
         }
-      }
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "category": "Paid",
+          "price": "40000",
+          "priceCurrency": "ARS",
+          "availability": "https://schema.org/InStock",
+          "url": "https://courses.ivana.academy/es-ar/carreras/profesorado-arte-mix-media/",
+          "description": "Cuota mensual, 18 cuotas",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "40000",
+            "priceCurrency": "ARS",
+            "billingDuration": 18,
+            "billingIncrement": 1,
+            "unitCode": "MON"
+          }
+        }
+      ]
     },
     {
       "@type": "FAQPage",

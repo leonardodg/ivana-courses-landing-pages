@@ -2,8 +2,8 @@
 // Fonte: conteudo/carreras-online-ar/carreras.json. Textos e temario vêm daqui; as DATAS vêm do
 // feed da agenda (useAgenda('AR')), nunca escritas à mão.
 //
-// REGRA DO CONSERVATORIO: nenhum preço neste arquivo, nem em qualquer texto, meta ou JSON-LD da
-// landing argentina. O valor só aparece na tienda.
+// REGRA DO CONSERVATORIO: nenhum preço neste arquivo nem em texto ou meta da
+// landing argentina. Exceção autorizada (12/11/2026): o JSON-LD Course (jsonld/es-ar/carreras) traz `offers` com a cuota mensal, exigida para o resultado rico de curso. Na página, o valor só aparece na tienda.
 
 import { TIENDA_AR_URL } from '../lib/tienda';
 
