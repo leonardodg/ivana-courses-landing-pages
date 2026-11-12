@@ -56,7 +56,8 @@
         "instructor": {
           "@type": "Person",
           "name": "Ivana Lerea"
-        }
+        },
+        "courseWorkload": "PT4H"
       }
     },
     {
