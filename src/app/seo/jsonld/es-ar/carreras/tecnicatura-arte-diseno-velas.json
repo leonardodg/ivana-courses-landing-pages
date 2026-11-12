@@ -71,14 +71,14 @@
         {
           "@type": "Offer",
           "category": "Paid",
-          "price": "40000",
+          "price": "50000",
           "priceCurrency": "ARS",
           "availability": "https://schema.org/InStock",
           "url": "https://courses.ivana.academy/es-ar/carreras/tecnicatura-arte-diseno-velas/",
           "description": "Cuota mensual, 9 cuotas",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
-            "price": "40000",
+            "price": "50000",
             "priceCurrency": "ARS",
             "billingDuration": 9,
             "billingIncrement": 1,
