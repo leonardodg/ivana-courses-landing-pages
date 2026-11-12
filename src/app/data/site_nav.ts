@@ -62,6 +62,12 @@ export const nav_agenda: NavItem[] = [
   { label: { pt: 'Agenda Argentina (Cohorte 2027)', es: 'Agenda Argentina (Cohorte 2027)' }, href: '/es-ar/agenda/', icon: 'ar' },
 ];
 
+/** Loja ▾ / Tienda ▾: vitrine de vendas de cada país (abre em outra aba). */
+export const nav_loja: NavItem[] = [
+  { label: { pt: 'Loja Brasil', es: 'Tienda Brasil' }, href: company.store, icon: 'br', external: true },
+  { label: { pt: 'Tienda Argentina', es: 'Tienda Argentina' }, href: 'https://tienda.ivana.academy', icon: 'ar', external: true },
+];
+
 /** Interesse / Interés: uma página por país. */
 export const nav_interesse = { label: { pt: 'Interesse', es: 'Interés' }, href: { pt: '/pt-br/interesse/', es: '/es-ar/interes/' } };
 

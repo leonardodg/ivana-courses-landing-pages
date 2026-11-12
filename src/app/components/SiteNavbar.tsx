@@ -1,20 +1,20 @@
 // Navbar única do site (todas as páginas, Brasil e Argentina). Conteúdo e pares de idioma em data/site_nav.ts;
 // peças visuais em ui/ (NavHeader, NavDropdown, LangSwitch). Ver docs/GUIA-DE-ESTILO.md.
 //
-// Menu: Brasil ▾ (cursos presenciais e online, por segmento) · Argentina ▾ (carreras) · Agenda ▾ · Interesse · Portal do Aluno.
+// Menu: Brasil ▾ (cursos presenciais e online, por segmento) · Argentina ▾ (carreras) · Agenda ▾ · Loja/Tienda ▾ · Interesse · Portal do Aluno.
 // À direita: PT | ES. O contato é o botão fixo de WhatsApp das páginas (ui/WhatsAppFab).
 // PT | ES: com versão equivalente da página no outro idioma, navega para ela; sem versão, só troca o
 // idioma do menu e do rodapé (lib/lang.ts).
 import { useState } from 'react';
-import { CalendarDays, GraduationCap, Heart } from 'lucide-react';
+import { CalendarDays, GraduationCap, Heart, ShoppingBag } from 'lucide-react';
 import type { CategoryId } from '../classes/types';
 import { ArgentinaFlag, BrazilFlag, NavHeader, NavDropdown, LangSwitch, drawerItem, nav_icons, navGroupClass, navPill } from '../ui';
-import { nav_agenda, nav_argentina, nav_brasil, nav_brasil_todos, nav_interesse, nav_portal, label, pairFor, type NavItem } from '../data/site_nav';
+import { nav_agenda, nav_argentina, nav_brasil, nav_brasil_todos, nav_interesse, nav_loja, nav_portal, label, pairFor, type NavItem } from '../data/site_nav';
 import { setPageLanguage, usePageLanguage } from '../lib/lang';
 
 const T = {
-  pt: { home: 'Ivana Academy - página inicial', open: 'Abrir menu', close: 'Fechar menu', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda' },
-  es: { home: 'Ivana Academy - inicio', open: 'Abrir menú', close: 'Cerrar menú', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda' },
+  pt: { home: 'Ivana Academy - página inicial', open: 'Abrir menu', close: 'Fechar menu', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda', loja: 'Loja' },
+  es: { home: 'Ivana Academy - inicio', open: 'Abrir menú', close: 'Cerrar menú', brasil: 'Brasil', argentina: 'Argentina', agenda: 'Agenda', loja: 'Tienda' },
 } as const;
 
 export default function SiteNavbar({
@@ -70,6 +70,7 @@ export default function SiteNavbar({
       </NavDropdown>
       <NavDropdown label={t.argentina} icon={<ArgentinaFlag />}>{(done) => nav_argentina.map((it) => link(it, done, panelLink))}</NavDropdown>
       <NavDropdown label={t.agenda} icon={<CalendarDays className="w-3.5 h-3.5 text-primary" />}>{(done) => nav_agenda.map((it) => link(it, done, panelLink))}</NavDropdown>
+      <NavDropdown label={t.loja} icon={<ShoppingBag className="w-3.5 h-3.5 text-primary" />}>{(done) => nav_loja.map((it) => link(it, done, panelLink))}</NavDropdown>
       <a href={nav_interesse.href[language]} className={navPill()}>
         <Heart className="w-3.5 h-3.5 text-primary" />
         {label(nav_interesse.label, language)}
@@ -99,7 +100,7 @@ export default function SiteNavbar({
     </p>
   );
   const drawerLink = (it: NavItem) => (
-    <a key={it.href} href={it.href} onClick={pick(it, close)} className={`${drawerItem} justify-start gap-3`}>
+    <a key={it.href} href={it.href} onClick={pick(it, close)} {...(it.external ? { target: '_blank', rel: 'noreferrer' } : {})} className={`${drawerItem} justify-start gap-3`}>
       {iconOf(it)}
       <span>{label(it.label, language)}</span>
     </a>
@@ -124,6 +125,9 @@ export default function SiteNavbar({
 
       {heading(<CalendarDays className="w-3.5 h-3.5 text-primary" />, t.agenda)}
       {nav_agenda.map(drawerLink)}
+
+      {heading(<ShoppingBag className="w-3.5 h-3.5 text-primary" />, t.loja)}
+      {nav_loja.map(drawerLink)}
 
       <a href={nav_interesse.href[language]} onClick={close} className={`${drawerItem} justify-start gap-3`}>
         <Heart className="w-4 h-4 text-primary shrink-0" />
