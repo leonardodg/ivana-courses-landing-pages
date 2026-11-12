@@ -156,8 +156,8 @@ prerender-report.json
 
 # Tokens locais do MCP do n8n (nunca commitar)
 n8n.env
-
-# segredos (n8n, etc.): nunca versionar
-*secret*.env
-*secrets*.env
-*.secret
+# Segredos do n8n (n8n_secret.env vazou em nov/2026; valores ja rotacionados)
+n8n_secret.env
+n8n_secrets.env
+*_secret.env
+*_secrets.env
