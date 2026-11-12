@@ -57,8 +57,8 @@ const injectJsonLd = () => ({
       if (!ctx.filename) return html;
       const srcDir = path.resolve(__dirname, "src");
       const dir = path.relative(srcDir, path.dirname(ctx.filename)).split(path.sep).join("/");
-      if (!dir) return html;
-      const file = path.resolve(srcDir, "app/seo/jsonld", `${dir}.json`);
+      // A raiz (src/index.html, o seletor de país) usa jsonld/index.json.
+      const file = path.resolve(srcDir, "app/seo/jsonld", dir ? `${dir}.json` : "index.json");
       if (!fs.existsSync(file)) return html;
       const data = JSON.parse(fs.readFileSync(file, "utf8")); // JSON inválido derruba o build, de propósito
       const tag = `    <script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>\n  </head>`;
