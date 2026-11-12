@@ -215,14 +215,27 @@ export const whatsappInscripcion = (c: CarreraAr) =>
   `${WHATSAPP_AR}?text=${encodeURIComponent(`¡Hola! Quiero inscribirme en ${c.nombre}`)}`;
 
 /**
+ * url_key do produto na tienda: o Magento cria a URL do nome oficial da carrera (translitUrl), não do SKU.
+ * "Tecnicatura en arte y diseño de velas" → "tecnicatura-en-arte-y-diseno-de-velas".
+ * Se a Ivana renomear a carrera no admin, o link muda junto com `nombre`: confira com `npm run check:tienda`.
+ */
+export const tiendaSlug = (c: CarreraAr): string =>
+  c.nombre
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+/**
  * Destino do botão "Ver valores e inscribirme".
- * Com VITE_TIENDA_AR_URL: <base>/<sku>.html?utm_source=landing&utm_campaign=<course>.
+ * Com VITE_TIENDA_AR_URL: <base>/<url_key>.html?utm_source=landing&utm_campaign=<course>.
  * Sem ela: WhatsApp AR. A inscrição vale o ano todo, então não há parâmetro de turma.
  */
 export function tiendaLink(c: CarreraAr, utm?: string): string {
   if (!TIENDA_AR_URL) return whatsappInscripcion(c);
   const params = new URLSearchParams({ utm_source: 'landing', utm_campaign: utm ?? c.course });
-  return `${TIENDA_AR_URL}/${c.sku.toLowerCase()}.html?${params.toString()}`;
+  return `${TIENDA_AR_URL}/${tiendaSlug(c)}.html?${params.toString()}`;
 }
 
 /** true quando o botão leva à tienda (e não ao WhatsApp provisório). */

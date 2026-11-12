@@ -21,6 +21,7 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "check:urls": "node tests/scripts/check-urls.mjs",
+    "check:tienda": "node scripts/check-tienda.mjs",
     "og": "node scripts/og/generate.mjs",
     "sitemap": "node scripts/sitemap-lastmod.mjs",
     "prerender": "node scripts/prerender.mjs",
