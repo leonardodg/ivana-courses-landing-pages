@@ -241,9 +241,9 @@ export const cardGridClass = 'grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10';
  * Grade padrão: no formato completo, SEMPRE 2 colunas (gap-8 lg:gap-10), nunca 3; com um card só, ele fica
  * centralizado e com a mesma largura de uma coluna. No formato lista, uma coluna.
  * `toggle`: mostra a barra com o seletor Completo | Lista (a escolha vale para todas as grades da página).
- * `filter`: acrescenta o filtro por segmento na mesma barra (páginas com cards de vários segmentos).
+ * `filter`: acrescenta o filtro (ou uma lista de filtros) na mesma barra (páginas com cards de vários segmentos).
  */
-export function CardGrid({ count, children, toggle = true, filter }: { count: number; children: ReactNode; toggle?: boolean; filter?: SegmentFilterProps }) {
+export function CardGrid({ count, children, toggle = true, filter }: { count: number; children: ReactNode; toggle?: boolean; filter?: SegmentFilterProps | SegmentFilterProps[] }) {
   const { density } = useDensity();
   const compact = density === 'compact';
   const single = count === 1 && !compact ? ' md:*:col-span-2 md:*:justify-self-center md:*:w-[calc(50%-1rem)] lg:*:w-[calc(50%-1.25rem)]' : '';

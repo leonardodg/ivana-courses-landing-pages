@@ -22,6 +22,18 @@ Navegador ──POST /api/contact──▶ Nginx do container ──X-Webhook-Se
 - IP real do visitante: o Nginx do container confia em `CF-Connecting-IP` só quando a conexão vem da rede Docker/host. Por isso a
   porta fica em `127.0.0.1` (ninguém de fora fala direto com o container).
 
+## Conteúdo gratuito (`/api/free-content`)
+
+Mesmo desenho do `/api/contact`, com **webhook e segredo próprios** (`FREE_CONTENT_WEBHOOK_SECRET`, secret do GitHub no ambiente `production`;
+`N8N_FREE_CONTENT_UPSTREAM`, padrão `http://n8n_main:5678/webhook/free-content`). O `05-webhook-proxy.sh` gera `/tmp/free-content-proxy.conf`;
+sem o segredo a rota responde 503 e o resto do site segue normal. Origin do site, 10 req/min por IP (rajada 5), corpo máx. 4 KB, Cookie/Authorization removidos.
+
+- Corpo enviado: `email`, `country` (BR|AR), `item_id`, `form_source` (`free_content_br|ar`), `consent`, `timestamp`, `cf_turnstile_token`. Resposta esperada: 200 com `{"ok":true}`; 403 (Turnstile) e 429 (limite) são tratados no front.
+- O n8n deve validar o Turnstile, fazer **upsert por e-mail** (repetir o e-mail não duplica nem revela se já existia: a resposta é sempre a mesma) e gravar na planilha.
+- O navegador guarda só o marcador `ivana:free-access=1` (sem e-mail). É um portão suave de captação: ID do vídeo e link da apostila estão no código público.
+- Dev: `FREE_CONTENT_WEBHOOK_URL` e `FREE_CONTENT_WEBHOOK_SECRET` em `src/.env` (ver `.env.example`). `npm run check:free` valida os dados e o script do proxy (roda no CI).
+- CSP: `frame-src` inclui `https://www.youtube-nocookie.com` (o player só é criado depois do e-mail). A trava do `deploy-prebuilt.yml` também barra `webhook/free-content` no `dist/`.
+
 ## Turnstile (anti-bot)
 
 - Widget carregado só no envio (`src/app/lib/turnstile.ts`); a site key (`VITE_TURNSTILE_SITE_KEY`, variável do ambiente

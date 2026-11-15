@@ -142,6 +142,20 @@ export default defineConfig(({ mode }) => {
       }
     : undefined;
 
+  // Conteúdo gratuito (dev): mesmo papel do Nginx, com webhook e segredo próprios (FREE_CONTENT_WEBHOOK_URL/SECRET, sem VITE_).
+  const freeUrl = process.env.FREE_CONTENT_WEBHOOK_URL ?? loadedFileEnv.FREE_CONTENT_WEBHOOK_URL ?? "";
+  const freeSecret = process.env.FREE_CONTENT_WEBHOOK_SECRET ?? loadedFileEnv.FREE_CONTENT_WEBHOOK_SECRET ?? "";
+  const devFreeProxy = freeUrl
+    ? {
+        "/api/free-content": {
+          target: new URL(freeUrl).origin,
+          changeOrigin: true,
+          rewrite: () => new URL(freeUrl).pathname,
+          headers: (freeSecret ? { "X-Webhook-Secret": freeSecret } : {}) as Record<string, string>,
+        },
+      }
+    : undefined;
+
   return {
     plugins: [react(), tailwindcss(), injectJsonLd(), servePublicIndex()],
     envDir,
@@ -237,7 +251,7 @@ export default defineConfig(({ mode }) => {
     open: false, // não abre o browser automaticamente
     hmr: process.env.DISABLE_HMR !== "true",
     watch: process.env.DISABLE_HMR === "true" ? null : {},
-    proxy: devContactProxy,
+    proxy: devContactProxy || devFreeProxy ? { ...devContactProxy, ...devFreeProxy } : undefined,
   },
 
   // REMOVE Preview AND USE NGINX 8088 INSTEAD

@@ -41,6 +41,7 @@ export const privacidadEs: LegalDoc = {
               <><strong>Reserva y compra de cursos (tienda):</strong> nombre, apellido, teléfono y correo; el documento de identidad se ingresa directamente en el pago. Lo usamos para confirmar tu lugar, emitir comprobantes y certificados y cumplir obligaciones fiscales. Base: ejecución del contrato y obligación legal.</>,
               <><strong>Pedidos por WhatsApp:</strong> tu número y los mensajes que nos envíes, para atenderte y reservar tu lugar.</>,
               <><strong>Registros de acceso:</strong> como en cualquier sitio, los servidores registran la IP, la fecha y la hora de cada acceso. Los guardamos por el plazo mínimo que exige la ley brasileña (6 meses) y solo los usamos para seguridad y para cumplir órdenes judiciales.</>,
+              <><strong>Contenido gratuito:</strong> el e-mail que dejás para habilitar video clases y apostillas gratuitas. Lo usamos para habilitar el acceso y, si lo aceptaste, enviarte novedades de los cursos. Los videos se muestran con el reproductor de YouTube (modo de privacidad ampliada), que solo se carga después de habilitar el acceso. Base legal: consentimiento.</>,
               <><strong>Seguridad del sitio:</strong> limitamos la cantidad de envíos de formulario por minuto y usamos un campo invisible contra robots. No te identifican.</>,
               <><strong>Estadísticas de visita (solo si aceptás):</strong> páginas vistas, tipo de dispositivo y origen aproximado, de forma agregada, mediante Google Analytics 4.</>,
             ]}
@@ -61,7 +62,7 @@ export const privacidadEs: LegalDoc = {
               'Cloudflare, que entrega y protege el sitio (red de distribución y seguridad) y mide el rendimiento de las páginas;',
               'Medios de pago de la tienda (Mercado Pago), que tratan los datos de pago según su propia política;',
               'WhatsApp (Meta), cuando nos escribís por ahí;',
-              'Google, solo si aceptás las cookies de estadísticas;',
+              'Google, solo si aceptás las cookies de estadísticas (y YouTube, cuando mirás un video del contenido gratuito);',
               'Autoridades, cuando exista una obligación legal u orden judicial.',
             ]}
           />

@@ -84,6 +84,7 @@ export const lang_pairs: [string, string][] = [
   ['/pt-br/cursos/resinas/', '/es-ar/carreras/tecnicatura-arte-decoracion-resinas/'],
   ['/pt-br/agenda/', '/es-ar/agenda/'],
   ['/pt-br/interesse/', '/es-ar/interes/'],
+  ['/pt-br/conteudo-gratuito/', '/es-ar/contenido-gratuito/'],
   ['/pt-br/privacidade/', '/es-ar/privacidad/'],
   ['/pt-br/termos/', '/es-ar/terminos/'],
   ['/pt-br/reembolso/', '/es-ar/reembolso/'],

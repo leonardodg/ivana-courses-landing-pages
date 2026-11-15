@@ -55,6 +55,7 @@ export const privacidade: LegalDoc = {
               <><strong>Reserva e compra de cursos (loja):</strong> nome, sobrenome, telefone e e-mail; o CPF é informado diretamente no pagamento. Usamos para confirmar a vaga, emitir comprovantes e certificados e cumprir obrigações fiscais. Base legal: execução de contrato e obrigação legal (art. 7º, V e II).</>,
               <><strong>Pedidos feitos pelo WhatsApp:</strong> o número e as mensagens que você enviar, para atendimento e reserva de vaga. Base legal: procedimentos preliminares a contrato e consentimento.</>,
               <><strong>Registros de acesso:</strong> como qualquer site, os servidores registram IP, data e hora de cada acesso. Guardamos esses registros pelo prazo mínimo exigido pelo Marco Civil da Internet (6 meses, art. 15 da Lei nº 12.965/2014) e só os usamos para segurança e para cumprir ordem judicial.</>,
+              <><strong>Conteúdo gratuito:</strong> o e-mail que você informa para liberar vídeo aulas e apostilas gratuitas. Usamos para liberar o acesso e, se você concordou, enviar novidades dos cursos. Os vídeos são exibidos pelo player do YouTube (modo de privacidade ampliada), que só é carregado depois que você libera o acesso. Base legal: consentimento (art. 7º, I).</>,
               <><strong>Segurança do site:</strong> limitamos o número de envios de formulário por minuto e usamos um campo invisível contra robôs. Base legal: legítimo interesse (art. 7º, IX), sem identificar você.</>,
               <><strong>Estatísticas de visita (somente se você aceitar):</strong> páginas visitadas, tipo de dispositivo e origem aproximada, de forma agregada, pelo Google Analytics 4. Base legal: consentimento.</>,
             ]}
@@ -75,7 +76,7 @@ export const privacidade: LegalDoc = {
               'Cloudflare, que entrega e protege o site (rede de distribuição e segurança) e mede o desempenho das páginas;',
               'Meios de pagamento da loja (Mercado Pago), que tratam os dados de pagamento sob a política deles;',
               'WhatsApp (Meta), quando você fala conosco por lá;',
-              'Google, apenas se você aceitar os cookies de estatísticas;',
+              'Google, apenas se você aceitar os cookies de estatísticas (e o YouTube, quando você assiste a um vídeo do conteúdo gratuito);',
               'Autoridades, quando houver obrigação legal ou ordem judicial.',
             ]}
           />

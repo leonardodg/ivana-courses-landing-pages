@@ -28,6 +28,7 @@ vira `https://courses.ivana.academy/pt-br/cursos/velas/`. Uma página nova é um
 | `/pt-br/apostilas/60-receitas-de-sabonetes/` | Apostila em PDF (Hotmart) |
 | `/pt-br/agenda/` | Agenda de turmas presenciais |
 | `/pt-br/interesse/` | Cadastro de interesse (é o canal de contato). Mesmo componente da versão AR (`pages/InterestApp`, `country="BR"`) |
+| `/pt-br/conteudo-gratuito/` | Conteúdo gratuito (vídeo aulas e apostilas, liberados por e-mail). Mesmo componente da versão AR (`pages/FreeContentApp`, `country="BR"`; itens em `data/free_content.ts`) |
 | `/pt-br/links/` | Links da bio do Instagram |
 | `/pt-br/privacidade/` · `/termos/` · `/reembolso/` · `/lgpd/` | Páginas legais |
 
@@ -43,6 +44,7 @@ vira `https://courses.ivana.academy/pt-br/cursos/velas/`. Uma página nova é um
 | `/es-ar/carreras/profesorado-arte-mix-media/` | Profesorado en arte mix media |
 | `/es-ar/agenda/` | Calendario de la Cohorte 2027 |
 | `/es-ar/interes/` | Interés: dejá tus datos y te avisamos (equivale a `/pt-br/interesse/`; `pages/InterestApp` com `country="AR"`: áreas e carreras em `data/interest_options.ts`) |
+| `/es-ar/contenido-gratuito/` | Contenido gratuito (equivale a `/pt-br/conteudo-gratuito/`; `FreeContentApp` com `country="AR"`) |
 | `/es-ar/links/` | Links da bio do Instagram |
 | `/es-ar/privacidad/` · `/terminos/` · `/reembolso/` · `/derechos/` · `/arrepentimiento/` | Páginas legales |
 
@@ -51,7 +53,7 @@ WhatsApp enquanto a tienda não existe). `/es-ar/carreras/` e `/pt-br/cursos/` (
 seção de carreras/cursos da home.
 
 ### Pares de idioma (`hreflang` e seletor PT | ES)
-`/pt-br/` ↔ `/es-ar/` · `/pt-br/interesse/` ↔ `/es-ar/interes/` · `/pt-br/cursos/velas/` ↔ `/es-ar/carreras/tecnicatura-arte-diseno-velas/` ·
+`/pt-br/` ↔ `/es-ar/` · `/pt-br/interesse/` ↔ `/es-ar/interes/` · `/pt-br/conteudo-gratuito/` ↔ `/es-ar/contenido-gratuito/` · `/pt-br/cursos/velas/` ↔ `/es-ar/carreras/tecnicatura-arte-diseno-velas/` ·
 `/pt-br/cursos/resinas/` ↔ `/es-ar/carreras/tecnicatura-arte-decoracion-resinas/` · páginas legais equivalentes.
 Os demais cursos do Brasil e as demais carreras não são versões um do outro.
 

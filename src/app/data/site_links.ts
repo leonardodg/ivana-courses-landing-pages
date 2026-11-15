@@ -45,6 +45,7 @@ export const site_link_groups: SiteLinkGroup[] = [
       { href: '/pt-br/apostilas/60-receitas-de-sabonetes/', label: { pt: 'Apostila de 60 receitas', es: 'Apostilla de 60 recetas' } },
       { href: company.store, label: { pt: 'Loja (compre seu curso)', es: 'Tienda (compra tu curso)' }, external: true },
       { href: company.platform, label: { pt: 'Plataforma de ensino', es: 'Plataforma de aprendizaje' }, external: true },
+      { href: '/pt-br/conteudo-gratuito/', hrefEs: '/es-ar/contenido-gratuito/', label: { pt: 'Conteúdo gratuito', es: 'Contenido gratuito' } },
       { href: '/pt-br/interesse/', hrefEs: '/es-ar/interes/', label: { pt: 'Registrar interesse', es: 'Registrar interés' } },
     ],
   },

@@ -10,13 +10,14 @@ const toggleLabels = {
   es: { group: 'Formato de las tarjetas', full: 'Completa', compact: 'Lista' },
 };
 
-export default function CardToolbar({ filter, density = true }: { filter?: SegmentFilterProps; density?: boolean }) {
+export default function CardToolbar({ filter, density = true }: { filter?: SegmentFilterProps | SegmentFilterProps[]; density?: boolean }) {
   const { density: current, setDensity } = useDensity();
   const language = usePageLanguage();
-  if (!filter && !density) return null;
+  const filters = filter ? (Array.isArray(filter) ? filter : [filter]) : [];
+  if (filters.length === 0 && !density) return null;
   return (
     <div className="flex flex-wrap items-center justify-end gap-3 mb-6">
-      {filter && <SegmentFilter {...filter} />}
+      {filters.map((f) => <SegmentFilter key={f.label} {...f} />)}
       {density && <DensityToggle value={current} onChange={setDensity} labels={toggleLabels[language]} />}
     </div>
   );

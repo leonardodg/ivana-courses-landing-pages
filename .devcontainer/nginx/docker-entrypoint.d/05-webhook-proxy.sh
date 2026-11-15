@@ -8,7 +8,7 @@
 # Escreve em /tmp (tmpfs) para funcionar com o filesystem do container em modo somente leitura.
 set -eu
 
-OUT=/tmp/webhook-proxy.conf
+OUT="${PROXY_OUT_DIR:-/tmp}/webhook-proxy.conf"
 UPSTREAM="${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact-v2}"
 SECRET="${WEBHOOK_SECRET:-}"
 
@@ -62,3 +62,49 @@ CONF
 # O usuário do Nginx (não-root) precisa ler o arquivo.
 chmod 0644 "$OUT"
 echo "05-webhook-proxy: proxy do formulário configurado (segredo: ${#SECRET} caracteres, não exibido)." >&2
+
+# ── Conteúdo gratuito: /api/free-content → n8n (outro webhook, OUTRO segredo) ──────────────────────────────────────
+# Opcional: sem FREE_CONTENT_WEBHOOK_SECRET a rota responde 503 e o resto do site segue normal.
+FREE_OUT="${PROXY_OUT_DIR:-/tmp}/free-content-proxy.conf"
+FREE_SECRET="${FREE_CONTENT_WEBHOOK_SECRET:-}"
+FREE_UPSTREAM="${N8N_FREE_CONTENT_UPSTREAM:-http://n8n_main:5678/webhook/free-content}"
+if [ -z "$FREE_SECRET" ]; then
+  printf 'return 503;\n' > "$FREE_OUT"
+  chmod 0644 "$FREE_OUT"
+  echo "05-webhook-proxy: FREE_CONTENT_WEBHOOK_SECRET vazio; /api/free-content responderá 503." >&2
+  exit 0
+fi
+case "$FREE_SECRET" in
+  *[!A-Za-z0-9._~+=-]*) echo "05-webhook-proxy: ERRO: FREE_CONTENT_WEBHOOK_SECRET com caracteres inválidos." >&2; exit 1 ;;
+esac
+if [ "${#FREE_SECRET}" -lt 24 ]; then
+  echo "05-webhook-proxy: ERRO: FREE_CONTENT_WEBHOOK_SECRET curto demais (mínimo 24)." >&2
+  exit 1
+fi
+case "$FREE_UPSTREAM" in
+  http://*|https://*) ;;
+  *) echo "05-webhook-proxy: ERRO: N8N_FREE_CONTENT_UPSTREAM deve começar com http:// ou https://." >&2; exit 1 ;;
+esac
+case "$FREE_UPSTREAM" in
+  *[!A-Za-z0-9:/._-]*) echo "05-webhook-proxy: ERRO: N8N_FREE_CONTENT_UPSTREAM com caracteres inválidos." >&2; exit 1 ;;
+esac
+umask 077
+cat > "$FREE_OUT" <<CONF
+resolver 127.0.0.11 valid=10s ipv6=off;
+set \$n8n_free_upstream "$FREE_UPSTREAM";
+
+proxy_http_version 1.1;
+proxy_set_header Connection "";
+proxy_set_header X-Webhook-Secret "$FREE_SECRET";
+proxy_set_header X-Real-IP        \$remote_addr;
+proxy_set_header X-Forwarded-For  \$remote_addr;
+proxy_set_header Cookie           "";
+proxy_set_header Authorization    "";
+proxy_connect_timeout 5s;
+proxy_send_timeout    15s;
+proxy_read_timeout    20s;
+proxy_hide_header X-Powered-By;
+proxy_pass \$n8n_free_upstream;
+CONF
+chmod 0644 "$FREE_OUT"
+echo "05-webhook-proxy: proxy do conteúdo gratuito configurado (segredo: ${#FREE_SECRET} caracteres, não exibido)." >&2
