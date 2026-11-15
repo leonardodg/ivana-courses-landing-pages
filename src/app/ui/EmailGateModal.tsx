@@ -18,6 +18,11 @@ export interface EmailGateText {
   invalid: string;
 }
 
+export interface EmailSentText {
+  title: string;
+  text: string;
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export default function EmailGateModal({
@@ -25,11 +30,14 @@ export default function EmailGateModal({
   language,
   onClose,
   onSubmit,
+  sent,
 }: {
   text: EmailGateText;
   language: Language;
   onClose: () => void;
   onSubmit: (email: string) => Promise<string | null>;
+  /** Quando preenchido, troca o formulário pela confirmação "enviamos por e-mail". */
+  sent?: EmailSentText | null;
 }) {
   const dialogRef = useDialog(onClose);
   const titleId = useId();
@@ -63,8 +71,11 @@ export default function EmailGateModal({
         <button type="button" onClick={onClose} aria-label={text.close} className="absolute top-3 right-3 min-h-11 min-w-11 inline-flex items-center justify-center rounded-full text-gray-600 hover:bg-surface-cream cursor-pointer">
           <X className="w-4 h-4" />
         </button>
-        <h3 id={titleId} className="text-xl md:text-2xl font-serif text-gray-900 leading-snug pr-8">{text.title}</h3>
-        <p className="text-sm text-on-surface-variant mt-2 mb-5">{text.text}</p>
+        <h3 id={titleId} className="text-xl md:text-2xl font-serif text-gray-900 leading-snug pr-8">{sent ? sent.title : text.title}</h3>
+        <p className="text-sm text-on-surface-variant mt-2 mb-5" role={sent ? 'status' : undefined}>{sent ? sent.text : text.text}</p>
+        {sent ? (
+          <button type="button" onClick={onClose} className={`${btnPrimary} w-full`}>{text.close}</button>
+        ) : (
         <form onSubmit={submit} noValidate className="space-y-4">
           <div>
             <label htmlFor={`${titleId}-email`} className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">{text.email}</label>
@@ -89,6 +100,7 @@ export default function EmailGateModal({
             {busy ? text.sending : text.submit}
           </button>
         </form>
+        )}
       </div>
     </div>,
     document.body,

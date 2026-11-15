@@ -3,7 +3,7 @@
 // (mesma barra de ferramentas da home). O conteúdo vive em data/free_content.ts. Clicar no botão do card pede o e-mail
 // uma vez (EmailGateModal); depois o navegador lembra e o vídeo abre num modal / a apostila abre em outra aba.
 import { useMemo, useState } from 'react';
-import { Download, Play } from 'lucide-react';
+import { Mail, Play } from 'lucide-react';
 import SiteNavbar from '../components/SiteNavbar';
 import Footer from '../components/Footer';
 import { Card, CardGrid, EmailGateModal, Section, SectionHeader, VideoModal, btnPrimary } from '../ui';
@@ -33,22 +33,33 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
 
   const [gate, setGate] = useState<FreeItem | null>(null);
   const [playing, setPlaying] = useState<FreeItem | null>(null);
+  const [sent, setSent] = useState(false);
+  const closeGate = () => {
+    setGate(null);
+    setSent(false);
+  };
 
   const open = (item: FreeItem) => {
     trackEvent('free_content_open', { item: item.id, type: item.type, country });
     if (item.type === 'video') setPlaying(item);
-    else if (item.href) window.open(item.href, '_blank', 'noopener,noreferrer');
   };
-  const onCta = (item: FreeItem) => (unlocked ? open(item) : setGate(item));
+  // Vídeo: depois do primeiro e-mail o navegador lembra e abre direto. Apostila/recurso: SEMPRE pede o e-mail,
+  // porque o link vai por e-mail (o n8n envia), o que também confirma que o endereço existe.
+  const onCta = (item: FreeItem) => (unlocked && item.type === 'video' ? open(item) : setGate(item));
 
   const submitEmail = async (email: string): Promise<string | null> => {
     if (!gate) return null;
     const result = await requestFreeAccess(email, country, gate.id);
     if (result === 'rate_limited') return t.limited;
     if (result === 'error') return t.failed;
-    const item = gate;
-    setGate(null);
-    open(item);
+    if (gate.type === 'video') {
+      const item = gate;
+      setGate(null);
+      open(item);
+    } else {
+      trackEvent('free_content_open', { item: gate.id, type: gate.type, country });
+      setSent(true);
+    }
     return null;
   };
 
@@ -74,7 +85,7 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
             ]}
           >
             {shown.map((item) => {
-              const Icon = item.type === 'video' ? Play : Download;
+              const Icon = item.type === 'video' ? Play : Mail;
               return (
                 <Card
                   key={item.id}
@@ -100,7 +111,7 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
       </main>
       <Footer />
 
-      {gate && <EmailGateModal text={{ title: t.gateTitle, text: t.gateText, email: t.email, submit: t.submit, sending: t.sending, close: t.close, invalid: t.invalid }} language={language} onClose={() => setGate(null)} onSubmit={submitEmail} />}
+      {gate && <EmailGateModal sent={sent ? { title: t.sentTitle, text: t.sentText } : null} text={{ title: gate.type === 'video' ? t.gateTitle : t.mailTitle, text: gate.type === 'video' ? t.gateText : t.mailText, email: t.email, submit: t.submit, sending: t.sending, close: t.close, invalid: t.invalid }} language={language} onClose={closeGate} onSubmit={submitEmail} />}
       {playing?.youtubeId && <VideoModal youtubeId={playing.youtubeId} title={playing.title} closeLabel={t.close} onClose={() => setPlaying(null)} />}
     </div>
   );

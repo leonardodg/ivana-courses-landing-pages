@@ -29,6 +29,7 @@ Mesmo desenho do `/api/contact`, com **webhook e segredo próprios** (`FREE_CONT
 sem o segredo a rota responde 503 e o resto do site segue normal. Origin do site, 10 req/min por IP (rajada 5), corpo máx. 4 KB, Cookie/Authorization removidos.
 
 - Corpo enviado: `email`, `country` (BR|AR), `item_id`, `form_source` (`free_content_br|ar`), `consent`, `timestamp`, `cf_turnstile_token`. Resposta esperada: 200 com `{"ok":true}`; 403 (Turnstile) e 429 (limite) são tratados no front.
+- Apostila e modelo editável vão por e-mail (o n8n envia o link do `item_id`; contrato em [CONTEUDO-GRATUITO.md](CONTEUDO-GRATUITO.md)).
 - O n8n deve validar o Turnstile, fazer **upsert por e-mail** (repetir o e-mail não duplica nem revela se já existia: a resposta é sempre a mesma) e gravar na planilha.
 - O navegador guarda só o marcador `ivana:free-access=1` (sem e-mail). É um portão suave de captação: ID do vídeo e link da apostila estão no código público.
 - Dev: `FREE_CONTENT_WEBHOOK_URL` e `FREE_CONTENT_WEBHOOK_SECRET` em `src/.env` (ver `.env.example`). `npm run check:free` valida os dados e o script do proxy (roda no CI).

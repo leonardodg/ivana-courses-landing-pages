@@ -27,7 +27,7 @@ for (const i of free_items) {
   if (!existsSync(join(root, 'public', i.image))) err(`${w}: imagem ausente (${i.image})`);
   if (i.type === 'video') {
     if (!/^[A-Za-z0-9_-]{11}$/.test(i.youtubeId ?? '')) err(`${w}: youtubeId inválido`);
-  } else if (!/^https:\/\//.test(i.href ?? '')) err(`${w}: apostila/recurso precisa de href https`);
+  } else if (i.href || i.youtubeId) err(`${w}: apostila/recurso não leva link no código (o n8n envia por e-mail)`);
 }
 const yt = free_items.filter((i) => i.youtubeId).map((i) => i.youtubeId);
 if (new Set(yt).size !== yt.length) err('youtubeId repetido entre itens');

@@ -1,7 +1,8 @@
 // Conteúdo gratuito (/pt-br/conteudo-gratuito/ e /es-ar/contenido-gratuito/): UMA lista para os dois países.
 // Para publicar ou tirar um conteúdo, edite SÓ este arquivo (e coloque a foto 16:10 em public/images/free/).
-// Vídeo: `youtubeId`. Apostila/recurso: `href` (link de download). Miniaturas dos vídeos ficam no próprio site
-// (nada do YouTube carrega antes de a pessoa informar o e-mail).
+// Vídeo: `youtubeId` (abre no player depois do e-mail). Apostila/recurso: NÃO têm link aqui: o n8n recebe o `item_id`
+// e ENVIA O LINK POR E-MAIL (valida o endereço e mantém o link fora do código público; ver docs/CONTEUDO-GRATUITO.md).
+// Miniaturas dos vídeos ficam no próprio site (nada do YouTube carrega antes do e-mail).
 import type { Language } from '../classes/types';
 
 export type FreeCountry = 'BR' | 'AR';
@@ -17,7 +18,6 @@ export interface FreeItem {
   summary?: string;
   image: string;
   youtubeId?: string;
-  href?: string;
   /** Curso gratuito equivalente na plataforma (Moodle), quando houver. */
   moodleCourseId?: number;
 }
@@ -34,16 +34,16 @@ export const free_categories: Record<FreeCategory, { pt: string; es: string }> =
 
 export const free_types: Record<FreeType, { pt: string; es: string; cta: { pt: string; es: string } }> = {
   video: { pt: 'Vídeo aula', es: 'Video clase', cta: { pt: 'Assistir grátis', es: 'Ver gratis' } },
-  apostila: { pt: 'Apostila PDF', es: 'Apostilla PDF', cta: { pt: 'Baixar grátis', es: 'Descargar gratis' } },
-  recurso: { pt: 'Modelo editável', es: 'Modelo editable', cta: { pt: 'Acessar grátis', es: 'Acceder gratis' } },
+  apostila: { pt: 'Apostila PDF', es: 'Apostilla PDF', cta: { pt: 'Receber por e-mail', es: 'Recibir por e-mail' } },
+  recurso: { pt: 'Modelo editável', es: 'Modelo editable', cta: { pt: 'Receber por e-mail', es: 'Recibir por e-mail' } },
 };
 
 const img = (slug: string) => `/images/free/${slug}.webp`;
 
 export const free_items: FreeItem[] = [
   // ── Brasil ──
-  { id: 'apostila-60-receitas-de-sabonetes', country: 'BR', category: 'saboaria', type: 'apostila', title: 'Apostila com 60 receitas de sabonetes', summary: 'PDF gratuito com 60 receitas para começar na saboaria.', image: '/images/free/apostila-60-receitas.webp', href: '[link somente no n8n]' },
-  { id: 'kit-etiquetas-canva', country: 'BR', category: 'saboaria', type: 'recurso', title: 'Kit de etiquetas editáveis do Canva', summary: 'Modelos prontos para personalizar as etiquetas dos seus sabonetes.', image: '/images/free/kit-etiquetas-canva.webp', href: '[link somente no n8n]' },
+  { id: 'apostila-60-receitas-de-sabonetes', country: 'BR', category: 'saboaria', type: 'apostila', title: 'Apostila com 60 receitas de sabonetes', summary: 'PDF gratuito com 60 receitas para começar na saboaria.', image: '/images/free/apostila-60-receitas.webp' },
+  { id: 'kit-etiquetas-canva', country: 'BR', category: 'saboaria', type: 'recurso', title: 'Kit de etiquetas editáveis do Canva', summary: 'Modelos prontos para personalizar as etiquetas dos seus sabonetes.', image: '/images/free/kit-etiquetas-canva.webp' },
   { id: 'sabonete-aveia-mel', country: 'BR', category: 'saboaria', type: 'video', title: 'Sabonete glicerinado de aveia e mel (efeito favo de mel)', image: img('sabonete-aveia-mel'), youtubeId: 'vcqvo7nGRPk' },
   { id: 'embalar-sabonetes', country: 'BR', category: 'saboaria', type: 'video', title: 'Como embalar sabonetes', image: img('embalar-sabonetes'), youtubeId: 'Zd_Hj0-cDfI' },
   { id: 'velas-que-crescem', country: 'BR', category: 'velas', type: 'video', title: 'Velas que crescem: efeito forno, passo a passo', image: img('velas-que-crescem'), youtubeId: 'mVaB7c9f4ho' },
@@ -77,7 +77,8 @@ export const free_text = {
     gateTitle: 'Libere o conteúdo gratuito', gateText: 'Informe seu e-mail e o acesso é liberado na hora.',
     email: 'Seu e-mail', submit: 'Liberar acesso', sending: 'Enviando…', close: 'Fechar',
     invalid: 'Informe um e-mail válido.', failed: 'Não deu certo agora. Tente novamente em instantes.', limited: 'Muitas tentativas. Aguarde um minuto.',
-    play: 'Vídeo', open: 'Abrir',
+    mailTitle: 'Receba no seu e-mail', mailText: 'Informe seu e-mail e enviamos o link agora mesmo.',
+    sentTitle: 'Enviamos para o seu e-mail', sentText: 'Confira a caixa de entrada e também o spam. Se não chegar em alguns minutos, tente de novo.',
   },
   es: {
     title: 'Contenido gratuito',
@@ -89,6 +90,7 @@ export const free_text = {
     gateTitle: 'Accedé al contenido gratuito', gateText: 'Dejá tu e-mail y el acceso se habilita al instante.',
     email: 'Tu e-mail', submit: 'Habilitar acceso', sending: 'Enviando…', close: 'Cerrar',
     invalid: 'Ingresá un e-mail válido.', failed: 'No se pudo ahora. Intentá de nuevo en unos instantes.', limited: 'Demasiados intentos. Esperá un minuto.',
-    play: 'Video', open: 'Abrir',
+    mailTitle: 'Recibilo en tu e-mail', mailText: 'Dejá tu e-mail y te enviamos el enlace ahora mismo.',
+    sentTitle: 'Te lo enviamos por e-mail', sentText: 'Revisá la bandeja de entrada y también el spam. Si no llega en unos minutos, intentá de nuevo.',
   },
 } satisfies Record<Language, Record<string, string>>;
