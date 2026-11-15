@@ -3,12 +3,12 @@
 // (mesma barra de ferramentas da home). O conteúdo vive em data/free_content.ts. Clicar no botão do card pede o e-mail
 // uma vez (EmailGateModal); depois o navegador lembra e o vídeo abre num modal / a apostila abre em outra aba.
 import { useMemo, useState } from 'react';
-import { Mail, Play } from 'lucide-react';
+import { GraduationCap, Mail, Play } from 'lucide-react';
 import SiteNavbar from '../components/SiteNavbar';
 import Footer from '../components/Footer';
-import { Card, CardGrid, EmailGateModal, Section, SectionHeader, VideoModal, btnPrimary } from '../ui';
+import { Card, CardGrid, EmailGateModal, Section, SectionHeader, VideoModal, btnOutline, btnPrimary } from '../ui';
 import { free_categories, free_items, free_text, free_types, type FreeCategory, type FreeCountry, type FreeItem, type FreeType } from '../data/free_content';
-import { requestFreeAccess, resetFreeAccess, useFreeAccess } from '../lib/freeAccess';
+import { requestFreeAccess, requestMoodleEnroll, resetFreeAccess, useFreeAccess } from '../lib/freeAccess';
 import { useSegmentFilter } from '../hooks/useSegmentFilter';
 import { trackEvent } from '../lib/analytics';
 
@@ -31,7 +31,11 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
 
   const shown = items.filter((i) => (!category || i.category === category) && (!type || i.type === type));
 
-  const [gate, setGate] = useState<FreeItem | null>(null);
+  // gate: o que a pessoa está liberando ('access' = e-mail para vídeo/PDF; 'enroll' = cadastro e matrícula no Moodle)
+  const [gateState, setGateState] = useState<{ item: FreeItem; mode: 'access' | 'enroll' } | null>(null);
+  const gate = gateState?.item ?? null;
+  const enroll = gateState?.mode === 'enroll';
+  const setGate = (item: FreeItem | null, mode: 'access' | 'enroll' = 'access') => setGateState(item ? { item, mode } : null);
   const [playing, setPlaying] = useState<FreeItem | null>(null);
   const [sent, setSent] = useState(false);
   const closeGate = () => {
@@ -47,8 +51,15 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
   // porque o link vai por e-mail (o n8n envia), o que também confirma que o endereço existe.
   const onCta = (item: FreeItem) => (unlocked && item.type === 'video' ? open(item) : setGate(item));
 
-  const submitEmail = async (email: string): Promise<string | null> => {
+  const submitEmail = async ({ email, firstName, lastName }: { email: string; firstName: string; lastName: string }): Promise<string | null> => {
     if (!gate) return null;
+    if (enroll) {
+      const r = await requestMoodleEnroll({ email, firstName, lastName, country, itemId: gate.id });
+      if (r === 'rate_limited') return t.limited;
+      if (r === 'error') return t.failed;
+      setSent(true);
+      return null;
+    }
     const result = await requestFreeAccess(email, country, gate.id);
     if (result === 'rate_limited') return t.limited;
     if (result === 'error') return t.failed;
@@ -97,10 +108,18 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
                   bullets={item.summary ? [item.summary] : undefined}
                   meta={<span>{free_categories[item.category][language]}</span>}
                   cta={
-                    <button type="button" onClick={() => onCta(item)} className={`${btnPrimary} w-full`}>
-                      <Icon className="w-4 h-4" aria-hidden />
-                      {free_types[item.type].cta[language]}
-                    </button>
+                    <div className="space-y-3">
+                      <button type="button" onClick={() => onCta(item)} className={`${btnPrimary} w-full`}>
+                        <Icon className="w-4 h-4" aria-hidden />
+                        {free_types[item.type].cta[language]}
+                      </button>
+                      {item.moodleCourseId && (
+                        <button type="button" onClick={() => setGate(item, 'enroll')} className={`${btnOutline} w-full`}>
+                          <GraduationCap className="w-4 h-4" aria-hidden />
+                          {t.platform}
+                        </button>
+                      )}
+                    </div>
                   }
                 />
               );
@@ -111,7 +130,20 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
       </main>
       <Footer />
 
-      {gate && <EmailGateModal sent={sent ? { title: t.sentTitle, text: t.sentText } : null} text={{ title: gate.type === 'video' ? t.gateTitle : t.mailTitle, text: gate.type === 'video' ? t.gateText : t.mailText, email: t.email, submit: t.submit, sending: t.sending, close: t.close, invalid: t.invalid }} language={language} onClose={closeGate} onSubmit={submitEmail} />}
+      {gate && (
+        <EmailGateModal
+          askName={enroll}
+          sent={sent ? (enroll ? { title: t.enrollSent, text: t.enrollSentText } : { title: t.sentTitle, text: t.sentText }) : null}
+          text={{
+            title: enroll ? t.enrollTitle : gate.type === 'video' ? t.gateTitle : t.mailTitle,
+            text: enroll ? t.enrollText : gate.type === 'video' ? t.gateText : t.mailText,
+            email: t.email, submit: enroll ? t.platform : t.submit, sending: t.sending, close: t.close, invalid: t.invalid, firstName: t.firstName, lastName: t.lastName, invalidName: t.invalidName,
+          }}
+          language={language}
+          onClose={closeGate}
+          onSubmit={submitEmail}
+        />
+      )}
       {playing?.youtubeId && <VideoModal youtubeId={playing.youtubeId} title={playing.title} closeLabel={t.close} onClose={() => setPlaying(null)} />}
     </div>
   );

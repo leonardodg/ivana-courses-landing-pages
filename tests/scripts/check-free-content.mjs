@@ -29,6 +29,7 @@ for (const i of free_items) {
     if (!/^[A-Za-z0-9_-]{11}$/.test(i.youtubeId ?? '')) err(`${w}: youtubeId inválido`);
   } else if (i.href || i.youtubeId) err(`${w}: apostila/recurso não leva link no código (o n8n envia por e-mail)`);
 }
+for (const i of free_items) if (i.moodleCourseId && i.type !== 'video') err(`item "${i.id}": só vídeo pode ter moodleCourseId`);
 const yt = free_items.filter((i) => i.youtubeId).map((i) => i.youtubeId);
 if (new Set(yt).size !== yt.length) err('youtubeId repetido entre itens');
 for (const c of ['BR', 'AR']) if (!free_items.some((i) => i.country === c)) err(`país ${c} sem conteúdo`);
@@ -43,26 +44,36 @@ const run = (env) => {
 };
 const SECRET = 'a'.repeat(32);
 const base = { WEBHOOK_SECRET: SECRET };
-let r = run({ ...base, FREE_CONTENT_WEBHOOK_SECRET: 'curto' });
-if (r.code === 0) err('proxy: aceitou FREE_CONTENT_WEBHOOK_SECRET curto');
-r = run({ ...base, FREE_CONTENT_WEBHOOK_SECRET: 'x'.repeat(30) + ';}' });
-if (r.code === 0) err('proxy: aceitou caracteres que injetariam diretiva no Nginx');
-r = run({ ...base, FREE_CONTENT_WEBHOOK_SECRET: SECRET, N8N_FREE_CONTENT_UPSTREAM: 'ftp://x' });
-if (r.code === 0) err('proxy: aceitou upstream que não é http(s)');
-r = run({ ...base, FREE_CONTENT_WEBHOOK_SECRET: SECRET });
-if (r.code !== 0) err(`proxy: configuração válida falhou: ${r.out}`);
-if (r.out.includes(SECRET)) err('proxy: segredo apareceu na saída do script');
-const gen = join(outDir, 'free-content-proxy.conf');
-if (existsSync(gen)) {
-  const c = readFileSync(gen, 'utf8');
-  if (!c.includes('X-Webhook-Secret') || !c.includes('proxy_pass $n8n_free_upstream')) err('proxy: arquivo gerado incompleto');
-  if (!c.includes('proxy_set_header Cookie           ""')) err('proxy: não removeu o Cookie do cliente');
+let r;
+for (const [route, secretVar, upVar, file, nginxVar] of [
+  ['free-content', 'FREE_CONTENT_WEBHOOK_SECRET', 'N8N_FREE_CONTENT_UPSTREAM', 'free-content-proxy.conf', '$n8n_free_upstream'],
+  ['free-enroll', 'FREE_ENROLL_WEBHOOK_SECRET', 'N8N_FREE_ENROLL_UPSTREAM', 'free-enroll-proxy.conf', '$n8n_enroll_upstream'],
+]) {
+  r = run({ ...base, [secretVar]: 'curto' });
+  if (r.code === 0) err(`proxy ${route}: aceitou segredo curto`);
+  r = run({ ...base, [secretVar]: 'x'.repeat(30) + ';}' });
+  if (r.code === 0) err(`proxy ${route}: aceitou caracteres que injetariam diretiva no Nginx`);
+  r = run({ ...base, [secretVar]: SECRET, [upVar]: 'ftp://x' });
+  if (r.code === 0) err(`proxy ${route}: aceitou upstream que não é http(s)`);
+  r = run({ ...base, [secretVar]: SECRET });
+  if (r.code !== 0) err(`proxy ${route}: configuração válida falhou: ${r.out}`);
+  if (r.out.includes(SECRET)) err(`proxy ${route}: segredo apareceu na saída do script`);
+  const gen = join(outDir, file);
+  if (!existsSync(gen)) err(`proxy ${route}: arquivo não gerado`);
+  else {
+    const c = readFileSync(gen, 'utf8');
+    if (!c.includes('X-Webhook-Secret') || !c.includes(`proxy_pass ${nginxVar}`)) err(`proxy ${route}: arquivo gerado incompleto`);
+    if (!c.includes('proxy_set_header Cookie           ""')) err(`proxy ${route}: não removeu o Cookie do cliente`);
+  }
+  r = run({ ...base });
+  if (r.code !== 0 || !readFileSync(join(outDir, file), 'utf8').includes('return 503')) err(`proxy ${route}: sem segredo deveria responder 503`);
 }
-r = run({ ...base });
-if (r.code !== 0 || !existsSync(gen) || !readFileSync(gen, 'utf8').includes('return 503')) err('proxy: sem segredo deveria responder 503 (e não derrubar o container)');
+// as duas rotas têm segredos diferentes (um vazamento não vale para o outro)
+r = run({ ...base, FREE_CONTENT_WEBHOOK_SECRET: 'c'.repeat(32), FREE_ENROLL_WEBHOOK_SECRET: 'e'.repeat(32) });
+if (readFileSync(join(outDir, 'free-content-proxy.conf'), 'utf8').includes('e'.repeat(32))) err('proxy: segredo da matrícula vazou para a rota de conteúdo');
 
 if (errors.length) {
   console.error(`✗ ${errors.length} problema(s):\n${errors.map((e) => `  - ${e}`).join('\n')}`);
   process.exit(1);
 }
-console.log(`✓ conteúdo gratuito ok: ${free_items.length} itens (${yt.length} vídeos), proxy do Nginx validado.`);
+console.log(`✓ conteúdo gratuito ok: ${free_items.length} itens (${yt.length} vídeos), proxies do Nginx validados.`);

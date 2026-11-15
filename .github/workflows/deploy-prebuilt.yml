@@ -83,7 +83,7 @@ jobs:
 
       - name: Nenhum segredo/URL do webhook no bundle
         run: |
-          if grep -rIlE "X-Webhook-Secret|webhook/contact|webhook/free-content|n8n\.ivana" dist; then
+          if grep -rIlE "X-Webhook-Secret|webhook/contact|webhook/free-content|webhook/free-enroll|n8n\.ivana" dist; then
             echo "ERRO: credencial ou URL do webhook apareceu no dist/." && exit 1
           fi
           echo "Bundle limpo ✔"
@@ -148,12 +148,13 @@ jobs:
           # Só vai para o ambiente do container (docker compose); nunca para o build nem para a imagem.
           WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
           FREE_CONTENT_WEBHOOK_SECRET: ${{ secrets.FREE_CONTENT_WEBHOOK_SECRET }}
+          FREE_ENROLL_WEBHOOK_SECRET: ${{ secrets.FREE_ENROLL_WEBHOOK_SECRET }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_SSH_PORT || 22 }}
-          envs: DEPLOY_TARGET,RELEASE_SHA,WEBHOOK_SECRET,FREE_CONTENT_WEBHOOK_SECRET
+          envs: DEPLOY_TARGET,RELEASE_SHA,WEBHOOK_SECRET,FREE_CONTENT_WEBHOOK_SECRET,FREE_ENROLL_WEBHOOK_SECRET
           script: |
             set -euo pipefail
             REPO_DIR="${{ vars.REPO_PATH || '/home/ubuntu/pages-courses' }}"

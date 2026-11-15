@@ -16,6 +16,9 @@ export interface EmailGateText {
   sending: string;
   close: string;
   invalid: string;
+  invalidName?: string; // erro de nome/sobrenome (só com askName)
+  firstName?: string; // rótulos dos campos de nome (só aparecem com askName)
+  lastName?: string;
 }
 
 export interface EmailSentText {
@@ -31,11 +34,14 @@ export default function EmailGateModal({
   onClose,
   onSubmit,
   sent,
+  askName = false,
 }: {
   text: EmailGateText;
   language: Language;
   onClose: () => void;
-  onSubmit: (email: string) => Promise<string | null>;
+  onSubmit: (data: { email: string; firstName: string; lastName: string }) => Promise<string | null>;
+  /** Pede nome e sobrenome (matrícula na plataforma). */
+  askName?: boolean;
   /** Quando preenchido, troca o formulário pela confirmação "enviamos por e-mail". */
   sent?: EmailSentText | null;
 }) {
@@ -43,6 +49,8 @@ export default function EmailGateModal({
   const titleId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -55,9 +63,15 @@ export default function EmailGateModal({
       inputRef.current?.focus();
       return;
     }
+    const fn = firstName.trim();
+    const ln = lastName.trim();
+    if (askName && (fn.length < 2 || ln.length < 2)) {
+      setError(text.invalidName ?? text.invalid);
+      return;
+    }
     setError(null);
     setBusy(true);
-    const msg = await onSubmit(value);
+    const msg = await onSubmit({ email: value, firstName: fn, lastName: ln });
     setBusy(false);
     if (msg) setError(msg);
   };
@@ -77,6 +91,16 @@ export default function EmailGateModal({
           <button type="button" onClick={onClose} className={`${btnPrimary} w-full`}>{text.close}</button>
         ) : (
         <form onSubmit={submit} noValidate className="space-y-4">
+          {askName && (
+            <div className="grid grid-cols-2 gap-3">
+              {([[text.firstName, firstName, setFirstName, 'given-name'], [text.lastName, lastName, setLastName, 'family-name']] as const).map(([label, val, set, ac]) => (
+                <div key={ac}>
+                  <label htmlFor={`${titleId}-${ac}`} className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">{label}</label>
+                  <input id={`${titleId}-${ac}`} type="text" autoComplete={ac} maxLength={60} value={val} onChange={(e) => set(e.target.value)} className="w-full min-h-11 rounded-lg border border-subtle bg-white px-4 text-sm focus-visible:border-primary" />
+                </div>
+              ))}
+            </div>
+          )}
           <div>
             <label htmlFor={`${titleId}-email`} className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">{text.email}</label>
             <input
@@ -85,7 +109,7 @@ export default function EmailGateModal({
               type="email"
               inputMode="email"
               autoComplete="email"
-              autoFocus
+              autoFocus={!askName}
               maxLength={254}
               value={email}
               onChange={(e) => setEmail(e.target.value)}

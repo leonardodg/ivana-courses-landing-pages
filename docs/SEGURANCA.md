@@ -35,6 +35,9 @@ sem o segredo a rota responde 503 e o resto do site segue normal. Origin do site
 - Dev: `FREE_CONTENT_WEBHOOK_URL` e `FREE_CONTENT_WEBHOOK_SECRET` em `src/.env` (ver `.env.example`). `npm run check:free` valida os dados e o script do proxy (roda no CI).
 - CSP: `frame-src` inclui `https://www.youtube-nocookie.com` (o player só é criado depois do e-mail). A trava do `deploy-prebuilt.yml` também barra `webhook/free-content` no `dist/`.
 
+### Matrícula no Moodle (`/api/free-enroll`)
+Outra rota, outro segredo (`FREE_ENROLL_WEBHOOK_SECRET`, `N8N_FREE_ENROLL_UPSTREAM`), limite de 5 req/min por IP. Cria usuário e matricula pela API do Moodle: ver [MOODLE-INTEGRACAO.md](MOODLE-INTEGRACAO.md).
+
 ## Turnstile (anti-bot)
 
 - Widget carregado só no envio (`src/app/lib/turnstile.ts`); a site key (`VITE_TURNSTILE_SITE_KEY`, variável do ambiente

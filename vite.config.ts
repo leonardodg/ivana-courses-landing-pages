@@ -142,19 +142,24 @@ export default defineConfig(({ mode }) => {
       }
     : undefined;
 
-  // Conteúdo gratuito (dev): mesmo papel do Nginx, com webhook e segredo próprios (FREE_CONTENT_WEBHOOK_URL/SECRET, sem VITE_).
-  const freeUrl = process.env.FREE_CONTENT_WEBHOOK_URL ?? loadedFileEnv.FREE_CONTENT_WEBHOOK_URL ?? "";
-  const freeSecret = process.env.FREE_CONTENT_WEBHOOK_SECRET ?? loadedFileEnv.FREE_CONTENT_WEBHOOK_SECRET ?? "";
-  const devFreeProxy = freeUrl
-    ? {
-        "/api/free-content": {
-          target: new URL(freeUrl).origin,
-          changeOrigin: true,
-          rewrite: () => new URL(freeUrl).pathname,
-          headers: (freeSecret ? { "X-Webhook-Secret": freeSecret } : {}) as Record<string, string>,
-        },
-      }
-    : undefined;
+  // Conteúdo gratuito (dev): mesmo papel do Nginx, um webhook e um segredo por rota (sem VITE_).
+  const extraProxy = (route: string, urlVar: string, secretVar: string) => {
+    const url = process.env[urlVar] ?? loadedFileEnv[urlVar] ?? "";
+    const secret = process.env[secretVar] ?? loadedFileEnv[secretVar] ?? "";
+    if (!url) return {};
+    return {
+      [route]: {
+        target: new URL(url).origin,
+        changeOrigin: true,
+        rewrite: () => new URL(url).pathname,
+        headers: (secret ? { "X-Webhook-Secret": secret } : {}) as Record<string, string>,
+      },
+    };
+  };
+  const devFreeProxy = {
+    ...extraProxy("/api/free-content", "FREE_CONTENT_WEBHOOK_URL", "FREE_CONTENT_WEBHOOK_SECRET"),
+    ...extraProxy("/api/free-enroll", "FREE_ENROLL_WEBHOOK_URL", "FREE_ENROLL_WEBHOOK_SECRET"),
+  };
 
   return {
     plugins: [react(), tailwindcss(), injectJsonLd(), servePublicIndex()],
@@ -251,7 +256,7 @@ export default defineConfig(({ mode }) => {
     open: false, // não abre o browser automaticamente
     hmr: process.env.DISABLE_HMR !== "true",
     watch: process.env.DISABLE_HMR === "true" ? null : {},
-    proxy: devContactProxy || devFreeProxy ? { ...devContactProxy, ...devFreeProxy } : undefined,
+    proxy: devContactProxy || Object.keys(devFreeProxy).length ? { ...devContactProxy, ...devFreeProxy } : undefined,
   },
 
   // REMOVE Preview AND USE NGINX 8088 INSTEAD

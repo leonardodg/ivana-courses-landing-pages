@@ -10,6 +10,7 @@ import { getTurnstileToken } from './turnstile';
 const KEY = 'ivana:free-access';
 const EVENT = 'ivana:free-access';
 const ENDPOINT = '/api/free-content';
+const ENROLL_ENDPOINT = '/api/free-enroll';
 
 const read = (): boolean => {
   try {
@@ -41,7 +42,7 @@ export function resetFreeAccess() {
 
 export type AccessResult = 'ok' | 'rate_limited' | 'error';
 
-export async function requestFreeAccess(email: string, country: 'BR' | 'AR', itemId: string): Promise<AccessResult> {
+async function post(endpoint: string, body: Record<string, string>): Promise<AccessResult> {
   let token: string | null;
   try {
     token = await getTurnstileToken();
@@ -49,31 +50,45 @@ export async function requestFreeAccess(email: string, country: 'BR' | 'AR', ite
     return 'error';
   }
   try {
-    const res = await fetch(ENDPOINT, {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        country,
-        item_id: itemId,
-        form_source: `free_content_${country.toLowerCase()}`,
-        consent: CONSENT_TEXT_VERSION,
-        ...(token ? { cf_turnstile_token: token } : {}),
-        timestamp: new Date().toISOString(),
-      }),
-      signal: AbortSignal.timeout(10_000),
+      body: JSON.stringify({ ...body, ...(token ? { cf_turnstile_token: token } : {}), timestamp: new Date().toISOString() }),
+      signal: AbortSignal.timeout(endpoint === ENROLL_ENDPOINT ? 20_000 : 10_000), // a matrícula cria o usuário no Moodle
     });
     if (res.status === 429) return 'rate_limited';
-    if (!res.ok) return 'error';
-    try {
-      localStorage.setItem(KEY, '1');
-    } catch {
-      /* sem armazenamento: libera só nesta visita (o estado do modal segue aberto no item) */
-    }
-    emit();
-    trackEvent('generate_lead', { form_source: `free_content_${country.toLowerCase()}` });
-    return 'ok';
+    return res.ok ? 'ok' : 'error';
   } catch {
     return 'error';
   }
+}
+
+export async function requestFreeAccess(email: string, country: 'BR' | 'AR', itemId: string): Promise<AccessResult> {
+  const source = `free_content_${country.toLowerCase()}`;
+  const result = await post(ENDPOINT, { email, country, item_id: itemId, form_source: source, consent: CONSENT_TEXT_VERSION });
+  if (result !== 'ok') return result;
+  try {
+    localStorage.setItem(KEY, '1');
+  } catch {
+    /* sem armazenamento: libera só nesta visita */
+  }
+  emit();
+  trackEvent('generate_lead', { form_source: source });
+  return 'ok';
+}
+
+/** Cria o usuário na plataforma e matricula no curso do `item_id` (o n8n decide o curso). Não libera os vídeos por si só. */
+export async function requestMoodleEnroll(p: { email: string; firstName: string; lastName: string; country: 'BR' | 'AR'; itemId: string }): Promise<AccessResult> {
+  const source = `free_enroll_${p.country.toLowerCase()}`;
+  const result = await post(ENROLL_ENDPOINT, {
+    email: p.email,
+    first_name: p.firstName,
+    last_name: p.lastName,
+    country: p.country,
+    item_id: p.itemId,
+    form_source: source,
+    consent: CONSENT_TEXT_VERSION,
+  });
+  if (result === 'ok') trackEvent('generate_lead', { form_source: source });
+  return result;
 }

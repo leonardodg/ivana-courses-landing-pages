@@ -18,7 +18,8 @@ export interface FreeItem {
   summary?: string;
   image: string;
   youtubeId?: string;
-  /** Curso gratuito equivalente na plataforma (Moodle), quando houver. */
+  /** Curso gratuito equivalente na plataforma (Moodle), quando houver: mostra "Fazer na plataforma". O servidor (n8n) é quem
+   *  decide o curso a partir do `item_id`; o navegador nunca manda o id do curso. */
   moodleCourseId?: number;
 }
 
@@ -49,12 +50,12 @@ export const free_items: FreeItem[] = [
   { id: 'velas-que-crescem', country: 'BR', category: 'velas', type: 'video', title: 'Velas que crescem: efeito forno, passo a passo', image: img('velas-que-crescem'), youtubeId: 'mVaB7c9f4ho' },
   { id: 'decoupage-pratos', country: 'BR', category: 'arte', type: 'video', title: 'Decoupage sobre pratos, passo a passo', image: img('decoupage-pratos'), youtubeId: 'wKiLbc2M-eM' },
   // ── Argentina ──
-  { id: 'llavero-ondas', country: 'AR', category: 'macrame', type: 'video', title: 'Llavero ondas en macramé', image: img('llavero-ondas'), youtubeId: 'IFKYTJfyLr0' },
-  { id: 'llavero-diamante', country: 'AR', category: 'macrame', type: 'video', title: 'Llavero punto diamante en macramé', image: img('llavero-diamante'), youtubeId: 'sJWKAkBXhb0' },
-  { id: 'agregar-hilos', country: 'AR', category: 'macrame', type: 'video', title: 'Cómo agregar hilos en macramé', image: img('agregar-hilos'), youtubeId: '-0E-6qvIOgU' },
-  { id: 'posa-vasos', country: 'AR', category: 'macrame', type: 'video', title: 'Posa vasos en macramé', image: img('posa-vasos'), youtubeId: '5ExOgS68Nlk' },
-  { id: 'porta-macetas', country: 'AR', category: 'macrame', type: 'video', title: 'Porta macetas en macramé, paso a paso', image: img('porta-macetas'), youtubeId: 'nCqJsqZfqqw' },
-  { id: 'collar-macrame', country: 'AR', category: 'macrame', type: 'video', title: 'Collar en macramé, paso a paso', image: img('collar-macrame'), youtubeId: '1NQY_nXaBKo' },
+  { id: 'llavero-ondas', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Llavero ondas en macramé', image: img('llavero-ondas'), youtubeId: 'IFKYTJfyLr0' },
+  { id: 'llavero-diamante', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Llavero punto diamante en macramé', image: img('llavero-diamante'), youtubeId: 'sJWKAkBXhb0' },
+  { id: 'agregar-hilos', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Cómo agregar hilos en macramé', image: img('agregar-hilos'), youtubeId: '-0E-6qvIOgU' },
+  { id: 'posa-vasos', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Posa vasos en macramé', image: img('posa-vasos'), youtubeId: '5ExOgS68Nlk' },
+  { id: 'porta-macetas', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Porta macetas en macramé, paso a paso', image: img('porta-macetas'), youtubeId: 'nCqJsqZfqqw' },
+  { id: 'collar-macrame', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Collar en macramé, paso a paso', image: img('collar-macrame'), youtubeId: '1NQY_nXaBKo' },
   { id: 'moldes-silicona', country: 'AR', category: 'resinas', type: 'video', title: 'Cómo hacer moldes de silicona', image: img('moldes-silicona'), youtubeId: 'w8fwIRa7o00' },
   { id: 'lapicera-resina', country: 'AR', category: 'resinas', type: 'video', title: 'Lapicera de resina, paso a paso', image: img('lapicera-resina'), youtubeId: 'rwZ9EKNBKF8' },
   { id: 'maquina-tumbler', country: 'AR', category: 'resinas', type: 'video', title: 'Máquina tumbler para vasos de resina', image: img('maquina-tumbler'), youtubeId: 'DX0boiHI00s' },
@@ -77,6 +78,8 @@ export const free_text = {
     gateTitle: 'Libere o conteúdo gratuito', gateText: 'Informe seu e-mail e o acesso é liberado na hora.',
     email: 'Seu e-mail', submit: 'Liberar acesso', sending: 'Enviando…', close: 'Fechar',
     invalid: 'Informe um e-mail válido.', failed: 'Não deu certo agora. Tente novamente em instantes.', limited: 'Muitas tentativas. Aguarde um minuto.',
+    platform: 'Fazer na plataforma', enrollTitle: 'Faça o curso na plataforma', enrollText: 'Criamos seu acesso gratuito ao curso na plataforma de ensino da Ivana Academy.',
+    invalidName: 'Informe nome e sobrenome.', firstName: 'Nome', lastName: 'Sobrenome', enrollSent: 'Acesso criado', enrollSentText: 'Enviamos um e-mail para você definir a senha e entrar no curso. Confira também o spam.',
     mailTitle: 'Receba no seu e-mail', mailText: 'Informe seu e-mail e enviamos o link agora mesmo.',
     sentTitle: 'Enviamos para o seu e-mail', sentText: 'Confira a caixa de entrada e também o spam. Se não chegar em alguns minutos, tente de novo.',
   },
@@ -90,6 +93,8 @@ export const free_text = {
     gateTitle: 'Accedé al contenido gratuito', gateText: 'Dejá tu e-mail y el acceso se habilita al instante.',
     email: 'Tu e-mail', submit: 'Habilitar acceso', sending: 'Enviando…', close: 'Cerrar',
     invalid: 'Ingresá un e-mail válido.', failed: 'No se pudo ahora. Intentá de nuevo en unos instantes.', limited: 'Demasiados intentos. Esperá un minuto.',
+    platform: 'Hacer en la plataforma', enrollTitle: 'Hacé el curso en la plataforma', enrollText: 'Creamos tu acceso gratuito al curso en la plataforma de aprendizaje de Ivana Academy.',
+    invalidName: 'Ingresá nombre y apellido.', firstName: 'Nombre', lastName: 'Apellido', enrollSent: 'Acceso creado', enrollSentText: 'Te enviamos un e-mail para definir tu contraseña y entrar al curso. Revisá también el spam.',
     mailTitle: 'Recibilo en tu e-mail', mailText: 'Dejá tu e-mail y te enviamos el enlace ahora mismo.',
     sentTitle: 'Te lo enviamos por e-mail', sentText: 'Revisá la bandeja de entrada y también el spam. Si no llega en unos minutos, intentá de nuevo.',
   },
