@@ -38,7 +38,7 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 
 ## Como testar antes de publicar
 
-- **staging** (manual): Actions > "Deploy (build e pré-render no CI)…" > Run workflow > `staging`. Abra pelo túnel SSH e confira. Não toca na produção.
+- **staging** (manual; disparado de uma branch, a VPS usa o compose e o Nginx **dessa branch**, não da `main`): Actions > "Deploy (build e pré-render no CI)…" > Run workflow > `staging`. Abra pelo túnel SSH e confira. Não toca na produção.
 - Push em `main` publica em produção sozinho. Para publicar sem disparar o deploy (ex.: ajuste só de workflow), ponha `[skip ci]` na mensagem do commit.
 
 ## Voltar atrás manualmente
