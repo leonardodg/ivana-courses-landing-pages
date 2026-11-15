@@ -13,27 +13,51 @@ const err = (m) => errors.push(m);
 
 // ── dados ──
 const js = (await transform(readFileSync(join(root, 'src/app/data/free_content.ts'), 'utf8'), { loader: 'ts', format: 'esm' })).code;
-const { free_items, free_categories, free_types, free_text } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
+const { free_courses, free_materials, free_categories, free_text } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
+const slug = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const ids = new Set();
-for (const i of free_items) {
-  const w = `item "${i.id}"`;
-  if (ids.has(i.id)) err(`${w}: id repetido`);
-  ids.add(i.id);
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(i.id)) err(`${w}: id deve ser slug minúsculo com hífen (vira #hash)`);
-  if (!['BR', 'AR'].includes(i.country)) err(`${w}: country inválido`);
-  if (!free_categories[i.category]) err(`${w}: categoria desconhecida "${i.category}"`);
-  if (!free_types[i.type]) err(`${w}: tipo desconhecido "${i.type}"`);
-  if (!i.title?.trim()) err(`${w}: sem título`);
-  if (!existsSync(join(root, 'public', i.image))) err(`${w}: imagem ausente (${i.image})`);
-  if (i.type === 'video') {
-    if (!/^[A-Za-z0-9_-]{11}$/.test(i.youtubeId ?? '')) err(`${w}: youtubeId inválido`);
-  } else if (i.href || i.youtubeId) err(`${w}: apostila/recurso não leva link no código (o n8n envia por e-mail)`);
+const yts = new Set();
+const moodle = new Set();
+const unique = (id, what) => {
+  if (ids.has(id)) err(`${what}: id repetido "${id}" (vira #hash e chave no n8n)`);
+  ids.add(id);
+  if (!slug.test(id)) err(`${what} "${id}": id deve ser slug minúsculo com hífen`);
+};
+for (const c of free_courses) {
+  const w = `curso "${c.id}"`;
+  unique(c.id, w);
+  if (!['BR', 'AR'].includes(c.country)) err(`${w}: country inválido`);
+  if (!free_categories[c.category]) err(`${w}: categoria desconhecida "${c.category}"`);
+  if (!c.title?.trim()) err(`${w}: sem título`);
+  if (!existsSync(join(root, 'public', c.image))) err(`${w}: imagem ausente (${c.image})`);
+  if (!Number.isInteger(c.moodleCourseId) || c.moodleCourseId <= 0) err(`${w}: moodleCourseId inválido`);
+  if (moodle.has(c.moodleCourseId)) err(`${w}: moodleCourseId ${c.moodleCourseId} repetido`);
+  moodle.add(c.moodleCourseId);
+  if (!c.lessons?.length) err(`${w}: sem aulas (a primeira é a aula de amostra)`);
+  for (const l of c.lessons ?? []) {
+    const lw = `${w}, aula "${l.id}"`;
+    unique(l.id, lw);
+    if (!l.title?.trim()) err(`${lw}: sem título`);
+    if (!/^[A-Za-z0-9_-]{11}$/.test(l.youtubeId ?? '')) err(`${lw}: youtubeId inválido`);
+    if (yts.has(l.youtubeId)) err(`${lw}: youtubeId repetido`);
+    yts.add(l.youtubeId);
+  }
 }
-for (const i of free_items) if (i.moodleCourseId && i.type !== 'video') err(`item "${i.id}": só vídeo pode ter moodleCourseId`);
-const yt = free_items.filter((i) => i.youtubeId).map((i) => i.youtubeId);
-if (new Set(yt).size !== yt.length) err('youtubeId repetido entre itens');
-for (const c of ['BR', 'AR']) if (!free_items.some((i) => i.country === c)) err(`país ${c} sem conteúdo`);
-for (const l of ['pt', 'es']) for (const k of Object.keys(free_text.pt)) if (!free_text[l][k]) err(`texto "${k}" vazio em ${l}`);
+for (const m of free_materials) {
+  const w = `material "${m.id}"`;
+  unique(m.id, w);
+  if (!['BR', 'AR'].includes(m.country)) err(`${w}: country inválido`);
+  if (!free_categories[m.category]) err(`${w}: categoria desconhecida`);
+  if (!['apostila', 'recurso'].includes(m.kind)) err(`${w}: kind inválido`);
+  if (!existsSync(join(root, 'public', m.image))) err(`${w}: imagem ausente (${m.image})`);
+  if (m.href || m.link || m.youtubeId) err(`${w}: material não leva link no código (o n8n envia por e-mail)`);
+}
+for (const c of ['BR', 'AR']) if (!free_courses.some((x) => x.country === c)) err(`país ${c} sem curso`);
+for (const k of Object.keys(free_text.pt)) {
+  if (!(k in free_text.es)) err(`texto "${k}" falta em es`);
+  else if (Array.isArray(free_text.pt[k]) && free_text.pt[k].length !== free_text.es[k].length) err(`texto "${k}": tamanhos diferentes em pt e es`);
+}
+const lessons = free_courses.reduce((n, c) => n + c.lessons.length, 0);
 
 // ── proxy do Nginx: segredo só no arquivo gerado, validações de entrada ──
 const script = join(root, '.devcontainer/nginx/docker-entrypoint.d/05-webhook-proxy.sh');
@@ -76,4 +100,4 @@ if (errors.length) {
   console.error(`✗ ${errors.length} problema(s):\n${errors.map((e) => `  - ${e}`).join('\n')}`);
   process.exit(1);
 }
-console.log(`✓ conteúdo gratuito ok: ${free_items.length} itens (${yt.length} vídeos), proxies do Nginx validados.`);
+console.log(`✓ conteúdo gratuito ok: ${free_courses.length} cursos, ${lessons} aulas, ${free_materials.length} materiais, proxies do Nginx validados.`);

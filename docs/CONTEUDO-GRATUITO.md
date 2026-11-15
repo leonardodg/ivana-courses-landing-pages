@@ -3,12 +3,18 @@
 Páginas: `/pt-br/conteudo-gratuito/` e `/es-ar/contenido-gratuito/` (`pages/FreeContentApp`, itens em `data/free_content.ts`).
 Segurança do endpoint `/api/free-content`: ver [SEGURANCA.md](SEGURANCA.md).
 
-## Como cada tipo é entregue
+## Como cada coisa é entregue
 
-| Tipo | No navegador | No n8n |
+A página tem **um card por curso gratuito da plataforma** (`free_courses`) e cards de **material** (`free_materials`).
+
+| Card | Botões | No n8n |
 |---|---|---|
-| Vídeo | e-mail uma vez; o navegador lembra (`ivana:free-access`) e o player abre num modal | só registra o lead |
-| Apostila / modelo editável | **sempre** pede o e-mail; o link NÃO está no código | registra o lead e **envia o link por e-mail** (valida que o endereço existe) |
+| Curso | **Matricular-me grátis** (nome + e-mail) → `/api/free-enroll` com `course` (slug) | `free-enroll`: cria o usuário e matricula no Moodle |
+| Curso | **Ver aula de amostra** (só e-mail; a 1ª aula; o navegador lembra, `ivana:free-access`) → `/api/free-content` com o `item_id` da aula | `free-content`: só registra o lead |
+| Curso | **Ver aulas** (modal) | (só front) lista as aulas e o que a plataforma entrega |
+| Apostila / modelo editável | **sempre** pede o e-mail → `/api/free-content` com o `item_id` do material | `free-content`: registra e **envia o link por e-mail** (o link vive no n8n, não no código) |
+
+Os vídeos continuam públicos no YouTube; o que incentiva a matrícula é o que a plataforma entrega a mais.
 
 ## Requisição (POST /api/free-content)
 `{ email, country: "BR"|"AR", item_id, form_source: "free_content_br"|"free_content_ar", consent, timestamp, cf_turnstile_token }`.
@@ -41,7 +47,7 @@ Novo PDF: acrescente o item em `free_content.ts` (sem link) e a linha correspond
 `free-enroll`: Turnstile → valida (nome, e-mail, `item_id` → curso) → Moodle `core_user_get_users_by_field` → (`core_user_create_users` com `createpassword=1`, se não existir) → `enrol_manual_enrol_users` (papel 5) → upsert + planilha → e-mail de acesso → `{"ok":true}`. Erros: 400 dados inválidos, 403 Turnstile, 500 banco, 502 Moodle.
 Testado com dados simulados (nós de serviço fixados): item inválido (400), usuário novo, usuário existente e exceção do Moodle (502). Falta testar com Postgres, Moodle, planilha e SMTP reais.
 
-**Novo curso/PDF:** acrescente o item em `Validate & Sanitize` (`ITEMS` em `free-content`; `COURSES` e `ITEM_COURSE` em `free-enroll`).
+**Novo curso/aula/PDF:** aula nova = acrescente em `free_courses` (site) e em `ITEMS` do `free-content` (n8n); curso novo = também em `COURSES` do `free-enroll`; PDF novo = `free_materials` (site, sem link) e `ITEMS` com o link (n8n).
 
 ## Desenho original (referência)
 Webhook (Header Auth `X-Webhook-Secret`) → Turnstile Verify → upsert em Postgres (e-mail único; país, `item_id`, consentimento, 1ª e última

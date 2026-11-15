@@ -1,26 +1,39 @@
 // Conteúdo gratuito (/pt-br/conteudo-gratuito/ e /es-ar/contenido-gratuito/): UMA lista para os dois países.
-// Para publicar ou tirar um conteúdo, edite SÓ este arquivo (e coloque a foto 16:10 em public/images/free/).
-// Vídeo: `youtubeId` (abre no player depois do e-mail). Apostila/recurso: NÃO têm link aqui: o n8n recebe o `item_id`
-// e ENVIA O LINK POR E-MAIL (valida o endereço e mantém o link fora do código público; ver docs/CONTEUDO-GRATUITO.md).
-// Miniaturas dos vídeos ficam no próprio site (nada do YouTube carrega antes do e-mail).
+// A página tem um CARD POR CURSO GRATUITO DA PLATAFORMA (Moodle) e cards de MATERIAL (apostila, modelo editável).
+// Curso: botão principal = matrícula na plataforma (nome + e-mail); secundário = aula de amostra (a primeira aula,
+// só com o e-mail, no player da própria página). Os vídeos continuam públicos no YouTube; o que a plataforma entrega a
+// mais está em `included`. Material: sempre por e-mail (o n8n envia o link; ele NÃO está aqui, ver docs/CONTEUDO-GRATUITO.md).
+// Para publicar ou tirar algo, edite SÓ este arquivo (foto 16:10 em public/images/free/).
 import type { Language } from '../classes/types';
 
 export type FreeCountry = 'BR' | 'AR';
-export type FreeType = 'video' | 'apostila' | 'recurso';
+export type FreeKind = 'curso' | 'material';
 export type FreeCategory = 'saboaria' | 'velas' | 'arte' | 'macrame' | 'resinas' | 'textil' | 'mixmedia';
 
-export interface FreeItem {
-  id: string; // vira o #hash do card e a chave nos eventos
-  country: FreeCountry; // país/idioma do conteúdo
+export interface FreeLesson {
+  id: string; // chave da aula de amostra no n8n (free-content) e nos eventos
+  title: string;
+  youtubeId: string;
+}
+
+export interface FreeCourse {
+  id: string; // slug do curso: #hash do card e chave da matrícula no n8n (o id do Moodle vive só no n8n)
+  country: FreeCountry;
   category: FreeCategory;
-  type: FreeType;
-  title: string; // já no idioma do país
-  summary?: string;
+  title: string;
   image: string;
-  youtubeId?: string;
-  /** Curso gratuito equivalente na plataforma (Moodle), quando houver: mostra "Fazer na plataforma". O servidor (n8n) é quem
-   *  decide o curso a partir do `item_id`; o navegador nunca manda o id do curso. */
-  moodleCourseId?: number;
+  moodleCourseId: number; // só para conferência/documentação: o navegador NUNCA manda o id do curso
+  lessons: FreeLesson[]; // em ordem; a primeira é a aula de amostra
+}
+
+export interface FreeMaterial {
+  id: string;
+  country: FreeCountry;
+  category: FreeCategory;
+  kind: 'apostila' | 'recurso';
+  title: string;
+  summary: string;
+  image: string;
 }
 
 export const free_categories: Record<FreeCategory, { pt: string; es: string }> = {
@@ -33,69 +46,133 @@ export const free_categories: Record<FreeCategory, { pt: string; es: string }> =
   mixmedia: { pt: 'Mix media', es: 'Mix media' },
 };
 
-export const free_types: Record<FreeType, { pt: string; es: string; cta: { pt: string; es: string } }> = {
-  video: { pt: 'Vídeo aula', es: 'Video clase', cta: { pt: 'Assistir grátis', es: 'Ver gratis' } },
-  apostila: { pt: 'Apostila PDF', es: 'Apostilla PDF', cta: { pt: 'Receber por e-mail', es: 'Recibir por e-mail' } },
-  recurso: { pt: 'Modelo editável', es: 'Modelo editable', cta: { pt: 'Receber por e-mail', es: 'Recibir por e-mail' } },
+export const free_kinds: Record<FreeKind, { pt: string; es: string }> = {
+  curso: { pt: 'Curso gratuito', es: 'Curso gratuito' },
+  material: { pt: 'Material', es: 'Material' },
 };
 
 const img = (slug: string) => `/images/free/${slug}.webp`;
+const yt = (id: string, title: string, youtubeId: string): FreeLesson => ({ id, title, youtubeId });
 
-export const free_items: FreeItem[] = [
-  // ── Brasil ──
-  { id: 'apostila-60-receitas-de-sabonetes', country: 'BR', category: 'saboaria', type: 'apostila', title: 'Apostila com 60 receitas de sabonetes', summary: 'PDF gratuito com 60 receitas para começar na saboaria.', image: '/images/free/apostila-60-receitas.webp' },
-  { id: 'kit-etiquetas-canva', country: 'BR', category: 'saboaria', type: 'recurso', title: 'Kit de etiquetas editáveis do Canva', summary: 'Modelos prontos para personalizar as etiquetas dos seus sabonetes.', image: '/images/free/kit-etiquetas-canva.webp' },
-  { id: 'sabonete-aveia-mel', country: 'BR', category: 'saboaria', type: 'video', title: 'Sabonete glicerinado de aveia e mel (efeito favo de mel)', image: img('sabonete-aveia-mel'), youtubeId: 'vcqvo7nGRPk' },
-  { id: 'embalar-sabonetes', country: 'BR', category: 'saboaria', type: 'video', title: 'Como embalar sabonetes', image: img('embalar-sabonetes'), youtubeId: 'Zd_Hj0-cDfI' },
-  { id: 'velas-que-crescem', country: 'BR', category: 'velas', type: 'video', title: 'Velas que crescem: efeito forno, passo a passo', image: img('velas-que-crescem'), youtubeId: 'mVaB7c9f4ho' },
-  { id: 'decoupage-pratos', country: 'BR', category: 'arte', type: 'video', title: 'Decoupage sobre pratos, passo a passo', image: img('decoupage-pratos'), youtubeId: 'wKiLbc2M-eM' },
+export const free_courses: FreeCourse[] = [
   // ── Argentina ──
-  { id: 'llavero-ondas', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Llavero ondas en macramé', image: img('llavero-ondas'), youtubeId: 'IFKYTJfyLr0' },
-  { id: 'llavero-diamante', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Llavero punto diamante en macramé', image: img('llavero-diamante'), youtubeId: 'sJWKAkBXhb0' },
-  { id: 'agregar-hilos', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Cómo agregar hilos en macramé', image: img('agregar-hilos'), youtubeId: '-0E-6qvIOgU' },
-  { id: 'posa-vasos', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Posa vasos en macramé', image: img('posa-vasos'), youtubeId: '5ExOgS68Nlk' },
-  { id: 'porta-macetas', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Porta macetas en macramé, paso a paso', image: img('porta-macetas'), youtubeId: 'nCqJsqZfqqw' },
-  { id: 'collar-macrame', country: 'AR', category: 'macrame', type: 'video', moodleCourseId: 45, title: 'Collar en macramé, paso a paso', image: img('collar-macrame'), youtubeId: '1NQY_nXaBKo' },
-  { id: 'moldes-silicona', country: 'AR', category: 'resinas', type: 'video', title: 'Cómo hacer moldes de silicona', image: img('moldes-silicona'), youtubeId: 'w8fwIRa7o00' },
-  { id: 'lapicera-resina', country: 'AR', category: 'resinas', type: 'video', title: 'Lapicera de resina, paso a paso', image: img('lapicera-resina'), youtubeId: 'rwZ9EKNBKF8' },
-  { id: 'maquina-tumbler', country: 'AR', category: 'resinas', type: 'video', title: 'Máquina tumbler para vasos de resina', image: img('maquina-tumbler'), youtubeId: 'DX0boiHI00s' },
-  { id: 'jabonera-resina', country: 'AR', category: 'resinas', type: 'video', title: 'Jabonera de resina y vidrios, con moldes caseros', image: img('jabonera-resina'), youtubeId: '_4K6sQFoVcw' },
-  { id: 'resina-acrilica', country: 'AR', category: 'resinas', type: 'video', title: 'Resina acrílica, paso a paso', image: img('resina-acrilica'), youtubeId: 'op6ByQF4Ur4' },
-  { id: 'funda-almohada', country: 'AR', category: 'textil', type: 'video', title: 'Cosiendo una funda de almohada, paso a paso', image: img('funda-almohada'), youtubeId: 'VfxMpWyiO0Q' },
-  { id: 'delantal', country: 'AR', category: 'textil', type: 'video', title: 'Corte y confección de un delantal', image: img('delantal'), youtubeId: 'LTD3JGi1w0Y' },
-  { id: 'campera-jeans', country: 'AR', category: 'textil', type: 'video', title: 'Modificando mi campera de jeans', image: img('campera-jeans'), youtubeId: 'luKdVjssTDg' },
-  { id: 'foto-montaje', country: 'AR', category: 'mixmedia', type: 'video', title: 'Foto montaje en mix media', image: img('foto-montaje'), youtubeId: 'mDYeej908ok' },
+  {
+    id: 'macrame-ar', country: 'AR', category: 'macrame', title: 'Macramé', image: img('lampara-macrame'), moodleCourseId: 45,
+    lessons: [
+      yt('bandolera-macrame', 'Bandolera en macramé, paso a paso', 'ICCkBzXM9mo'),
+      yt('hombreras-macrame', 'Hombreras en macramé estilosas, paso a paso', 'LkGuBvuvC_c'),
+      yt('lampara-macrame', 'Lámpara de macramé', 'O7w1YImH4w8'),
+      yt('porta-macetas', 'Porta macetas en macramé, paso a paso', 'nCqJsqZfqqw'),
+      yt('vestido-playa-macrame', 'Vestido de playa en macramé', '4gR205bhOBk'),
+      yt('llavero-ondas', 'Llavero ondas en macramé', 'IFKYTJfyLr0'),
+      yt('llavero-diamante', 'Llavero punto diamante en macramé', 'sJWKAkBXhb0'),
+      yt('agregar-hilos', 'Cómo agregar hilos en macramé', '-0E-6qvIOgU'),
+      yt('posa-vasos', 'Posa vasos en macramé', '5ExOgS68Nlk'),
+      yt('collar-macrame', 'Collar en macramé, paso a paso', '1NQY_nXaBKo'),
+    ],
+  },
+  {
+    id: 'resina-ar', country: 'AR', category: 'resinas', title: 'Resina', image: img('maquina-tumbler'), moodleCourseId: 46,
+    lessons: [
+      yt('moldes-silicona', 'Cómo hacer moldes de silicona', 'w8fwIRa7o00'),
+      yt('lapicera-resina', 'Lapicera de resina, paso a paso', 'rwZ9EKNBKF8'),
+      yt('maquina-tumbler', 'Máquina tumbler para vasos de resina', 'DX0boiHI00s'),
+      yt('jabonera-resina', 'Jabonera de resina y vidrios, con moldes caseros', '_4K6sQFoVcw'),
+      yt('resina-acrilica', 'Resina acrílica, paso a paso', 'op6ByQF4Ur4'),
+    ],
+  },
+  {
+    id: 'textil-ar', country: 'AR', category: 'textil', title: 'Tecnicatura textil', image: img('delantal'), moodleCourseId: 47,
+    lessons: [
+      yt('funda-almohada', 'Cosiendo una funda de almohada, paso a paso', 'VfxMpWyiO0Q'),
+      yt('delantal', 'Corte y confección de un delantal', 'LTD3JGi1w0Y'),
+      yt('campera-jeans', 'Modificando mi campera de jeans', 'luKdVjssTDg'),
+    ],
+  },
+  {
+    id: 'mixmedia-ar', country: 'AR', category: 'mixmedia', title: 'Mix media', image: img('foto-montaje'), moodleCourseId: 48,
+    lessons: [yt('foto-montaje', 'Foto montaje en mix media', 'mDYeej908ok')],
+  },
+  // ── Brasil ──
+  {
+    id: 'saboaria-br', country: 'BR', category: 'saboaria', title: 'Saboaria', image: img('sabonete-aveia-mel'), moodleCourseId: 49,
+    lessons: [
+      yt('sabonete-aveia-mel', 'Sabonete glicerinado de aveia e mel (efeito favo de mel)', 'vcqvo7nGRPk'),
+      yt('embalar-sabonetes', 'Como embalar sabonetes', 'Zd_Hj0-cDfI'),
+    ],
+  },
+  {
+    id: 'velas-br', country: 'BR', category: 'velas', title: 'Velas', image: img('velas-que-crescem'), moodleCourseId: 50,
+    lessons: [yt('velas-que-crescem', 'Velas que crescem: efeito forno, passo a passo', 'mVaB7c9f4ho')],
+  },
+  {
+    id: 'arte-br', country: 'BR', category: 'arte', title: 'Artes', image: img('decoupage-pratos'), moodleCourseId: 51,
+    lessons: [yt('decoupage-pratos', 'Decoupage sobre pratos, passo a passo', 'wKiLbc2M-eM')],
+  },
+];
+
+export const free_materials: FreeMaterial[] = [
+  { id: 'apostila-60-receitas-de-sabonetes', country: 'BR', category: 'saboaria', kind: 'apostila', title: 'Apostila com 60 receitas de sabonetes', summary: 'PDF gratuito com 60 receitas para começar na saboaria.', image: img('apostila-60-receitas') },
+  { id: 'kit-etiquetas-canva', country: 'BR', category: 'saboaria', kind: 'recurso', title: 'Kit de etiquetas editáveis do Canva', summary: 'Modelos prontos para personalizar as etiquetas dos seus sabonetes.', image: img('kit-etiquetas-canva') },
 ];
 
 export const free_text = {
   pt: {
     title: 'Conteúdo gratuito',
-    subtitle: 'Vídeo aulas e apostilas de graça. Informe seu e-mail uma vez e libere tudo.',
+    subtitle: 'Cursos gratuitos na plataforma da Ivana Academy, aulas de amostra e materiais para baixar.',
     filterCategory: 'Filtrar por categoria', allCategories: 'Todas as categorias',
-    filterType: 'Filtrar por tipo', allTypes: 'Todos os tipos',
+    filterKind: 'Filtrar por tipo', allKinds: 'Todos os tipos',
     empty: 'Nenhum conteúdo com esses filtros.',
-    unlocked: 'Acesso liberado neste navegador', change: 'Usar outro e-mail',
-    gateTitle: 'Libere o conteúdo gratuito', gateText: 'Informe seu e-mail e o acesso é liberado na hora.',
-    email: 'Seu e-mail', submit: 'Liberar acesso', sending: 'Enviando…', close: 'Fechar',
-    invalid: 'Informe um e-mail válido.', failed: 'Não deu certo agora. Tente novamente em instantes.', limited: 'Muitas tentativas. Aguarde um minuto.',
-    platform: 'Fazer na plataforma', enrollTitle: 'Faça o curso na plataforma', enrollText: 'Criamos seu acesso gratuito ao curso na plataforma de ensino da Ivana Academy.',
-    invalidName: 'Informe nome e sobrenome.', firstName: 'Nome', lastName: 'Sobrenome', enrollSent: 'Acesso criado', enrollSentText: 'Enviamos um e-mail para você definir a senha e entrar no curso. Confira também o spam.',
+    unlocked: 'Aulas de amostra liberadas neste navegador', change: 'Usar outro e-mail',
+    lessons: 'aulas', lesson: 'aula',
+    enroll: 'Matricular-me grátis', preview: 'Ver aula de amostra', viewLessons: 'Ver aulas', closeLessons: 'Fechar',
+    getMaterial: 'Receber por e-mail',
+    included: [
+      'Aulas em ordem, com controle do que você já assistiu',
+      'Atestado de conclusão da Ivana Academy',
+      'Apostilas e PDFs no mesmo lugar',
+      'Questionários, glossário e fórum',
+    ],
+    includedTitle: 'O que você recebe na plataforma',
+    lessonsTitle: 'Aulas do curso', freeHere: 'Aula de amostra: assista aqui sem se matricular',
+    courseIntro: 'Curso gratuito na plataforma de ensino da Ivana Academy. Crie seu acesso e acompanhe seu progresso.',
+    factLessons: 'Aulas', factCert: 'Atestado', factCertValue: 'De conclusão', factPrice: 'Valor', factPriceValue: 'Gratuito',
+    gateTitle: 'Libere a aula de amostra', gateText: 'Informe seu e-mail e a aula abre na hora.',
+    enrollTitle: 'Matricule-se no curso gratuito', enrollText: 'Criamos seu acesso gratuito na plataforma de ensino da Ivana Academy.',
     mailTitle: 'Receba no seu e-mail', mailText: 'Informe seu e-mail e enviamos o link agora mesmo.',
     sentTitle: 'Enviamos para o seu e-mail', sentText: 'Confira a caixa de entrada e também o spam. Se não chegar em alguns minutos, tente de novo.',
+    enrollSent: 'Acesso criado', enrollSentText: 'Enviamos um e-mail para você definir a senha e entrar no curso. Confira também o spam.',
+    invalidName: 'Informe nome e sobrenome.', firstName: 'Nome', lastName: 'Sobrenome',
+    email: 'Seu e-mail', submit: 'Liberar aula', sending: 'Enviando…', close: 'Fechar',
+    invalid: 'Informe um e-mail válido.', failed: 'Não deu certo agora. Tente novamente em instantes.', limited: 'Muitas tentativas. Aguarde um minuto.',
   },
   es: {
     title: 'Contenido gratuito',
-    subtitle: 'Video clases y apostillas gratis. Dejá tu e-mail una vez y accedé a todo.',
+    subtitle: 'Cursos gratuitos en la plataforma de Ivana Academy, clases de muestra y materiales para descargar.',
     filterCategory: 'Filtrar por categoría', allCategories: 'Todas las categorías',
-    filterType: 'Filtrar por tipo', allTypes: 'Todos los tipos',
+    filterKind: 'Filtrar por tipo', allKinds: 'Todos los tipos',
     empty: 'No hay contenido con esos filtros.',
-    unlocked: 'Acceso habilitado en este navegador', change: 'Usar otro e-mail',
-    gateTitle: 'Accedé al contenido gratuito', gateText: 'Dejá tu e-mail y el acceso se habilita al instante.',
-    email: 'Tu e-mail', submit: 'Habilitar acceso', sending: 'Enviando…', close: 'Cerrar',
-    invalid: 'Ingresá un e-mail válido.', failed: 'No se pudo ahora. Intentá de nuevo en unos instantes.', limited: 'Demasiados intentos. Esperá un minuto.',
-    platform: 'Hacer en la plataforma', enrollTitle: 'Hacé el curso en la plataforma', enrollText: 'Creamos tu acceso gratuito al curso en la plataforma de aprendizaje de Ivana Academy.',
-    invalidName: 'Ingresá nombre y apellido.', firstName: 'Nombre', lastName: 'Apellido', enrollSent: 'Acceso creado', enrollSentText: 'Te enviamos un e-mail para definir tu contraseña y entrar al curso. Revisá también el spam.',
+    unlocked: 'Clases de muestra habilitadas en este navegador', change: 'Usar otro e-mail',
+    lessons: 'clases', lesson: 'clase',
+    enroll: 'Inscribirme gratis', preview: 'Ver clase de muestra', viewLessons: 'Ver clases', closeLessons: 'Cerrar',
+    getMaterial: 'Recibir por e-mail',
+    included: [
+      'Clases en orden, con control de lo que ya viste',
+      'Constancia de finalización de Ivana Academy',
+      'Apostillas y PDF en un solo lugar',
+      'Cuestionarios, glosario y foro',
+    ],
+    includedTitle: 'Lo que recibís en la plataforma',
+    lessonsTitle: 'Clases del curso', freeHere: 'Clase de muestra: mirala acá sin inscribirte',
+    courseIntro: 'Curso gratuito en la plataforma de aprendizaje de Ivana Academy. Creá tu acceso y seguí tu progreso.',
+    factLessons: 'Clases', factCert: 'Constancia', factCertValue: 'De finalización', factPrice: 'Valor', factPriceValue: 'Gratis',
+    gateTitle: 'Habilitá la clase de muestra', gateText: 'Dejá tu e-mail y la clase se abre al instante.',
+    enrollTitle: 'Inscribite en el curso gratuito', enrollText: 'Creamos tu acceso gratuito en la plataforma de aprendizaje de Ivana Academy.',
     mailTitle: 'Recibilo en tu e-mail', mailText: 'Dejá tu e-mail y te enviamos el enlace ahora mismo.',
     sentTitle: 'Te lo enviamos por e-mail', sentText: 'Revisá la bandeja de entrada y también el spam. Si no llega en unos minutos, intentá de nuevo.',
+    enrollSent: 'Acceso creado', enrollSentText: 'Te enviamos un e-mail para definir tu contraseña y entrar al curso. Revisá también el spam.',
+    invalidName: 'Ingresá nombre y apellido.', firstName: 'Nombre', lastName: 'Apellido',
+    email: 'Tu e-mail', submit: 'Habilitar clase', sending: 'Enviando…', close: 'Cerrar',
+    invalid: 'Ingresá un e-mail válido.', failed: 'No se pudo ahora. Intentá de nuevo en unos instantes.', limited: 'Demasiados intentos. Esperá un minuto.',
   },
-} satisfies Record<Language, Record<string, string>>;
+} satisfies Record<Language, Record<string, string | string[]>>;

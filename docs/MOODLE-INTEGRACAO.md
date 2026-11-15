@@ -1,21 +1,28 @@
 # Matrícula gratuita no Moodle (cadastro + matrícula via n8n)
 
-Fluxo: card com botão **Fazer na plataforma** (só nos itens com `moodleCourseId` em `data/free_content.ts`) → modal com nome, sobrenome,
+Fluxo: card do curso com botão **Matricular-me grátis** (um card por curso em `free_courses`, `data/free_content.ts`) → modal com nome, sobrenome,
 e-mail e consentimento → `POST /api/free-enroll` (Nginx: Origin, 5 req/min por IP, 4 KB, segredo próprio `FREE_ENROLL_WEBHOOK_SECRET`) →
-webhook `/webhook/free-enroll` no n8n → API do Moodle (`ivana.academy`). **O navegador nunca manda o id do curso**: manda o `item_id` e o
-n8n resolve o curso na tabela abaixo. Assim ninguém matricula em curso fora da lista.
+webhook `/webhook/free-enroll` no n8n → API do Moodle (`ivana.academy`). **O navegador nunca manda o id do curso**: manda a chave (`course`, slug) e o
+n8n resolve o id na tabela abaixo. Assim ninguém matricula em curso fora da lista.
 
 ## Requisição e resposta
-`{ email, first_name, last_name, country: "BR"|"AR", item_id, form_source: "free_enroll_br|ar", consent, timestamp, cf_turnstile_token }`.
+`{ email, first_name, last_name, country: "BR"|"AR", course, form_source: "free_enroll_br|ar", consent, timestamp, cf_turnstile_token }`.
 Responder `200 {"ok":true}` quando o usuário existir/for criado E estiver matriculado; `403` Turnstile; `429` limite. A resposta é a mesma
 para e-mail novo ou já cadastrado (sem enumeração de contas).
 
-## Mapa `item_id` → curso (vive no n8n, não no site)
-| item_id | Curso Moodle | País |
+## Mapa chave do curso → curso do Moodle (vive no n8n, nó "Validate & Sanitize" do `free-enroll`)
+| `course` | Curso Moodle | País |
 |---|---|---|
-| `llavero-ondas`, `llavero-diamante`, `agregar-hilos`, `posa-vasos`, `porta-macetas`, `collar-macrame` | 45 (Macramé Argentina) | AR |
+| `macrame-ar` | 45 Macramé (10 aulas) | AR |
+| `resina-ar` | 46 Resina | AR |
+| `textil-ar` | 47 Tecnicatura textil | AR |
+| `mixmedia-ar` | 48 Mix media | AR |
+| `saboaria-br` | 49 Saboaria | BR |
+| `velas-br` | 50 Velas | BR |
+| `arte-br` | 51 Artes | BR |
 
-Cursos novos (um por categoria e país, como combinado): crie no Moodle, anote o id, acrescente `moodleCourseId` nos itens e a linha no mapa.
+Curso novo: crie no Moodle (matrícula manual ativa), acrescente em `free_courses` (site) e em `COURSES` (n8n). O que o curso entrega: aulas em ordem
+com controle de progresso, atestado de conclusão (não é certificado: certificado é dos cursos pagos), apostilas/PDFs, questionários, glossário, fórum.
 
 ## Moodle: preparar o webservice (uma vez)
 1. Administração do site → Funcionalidades avançadas → **Habilitar serviços web** e protocolo **REST**.

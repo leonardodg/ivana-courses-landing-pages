@@ -77,15 +77,15 @@ export async function requestFreeAccess(email: string, country: 'BR' | 'AR', ite
   return 'ok';
 }
 
-/** Cria o usuário na plataforma e matricula no curso do `item_id` (o n8n decide o curso). Não libera os vídeos por si só. */
-export async function requestMoodleEnroll(p: { email: string; firstName: string; lastName: string; country: 'BR' | 'AR'; itemId: string }): Promise<AccessResult> {
+/** Cria o usuário na plataforma e matricula no curso `course` (slug; o n8n resolve o id do Moodle). Não libera as aulas de amostra. */
+export async function requestMoodleEnroll(p: { email: string; firstName: string; lastName: string; country: 'BR' | 'AR'; course: string }): Promise<AccessResult> {
   const source = `free_enroll_${p.country.toLowerCase()}`;
   const result = await post(ENROLL_ENDPOINT, {
     email: p.email,
     first_name: p.firstName,
     last_name: p.lastName,
     country: p.country,
-    item_id: p.itemId,
+    course: p.course,
     form_source: source,
     consent: CONSENT_TEXT_VERSION,
   });
