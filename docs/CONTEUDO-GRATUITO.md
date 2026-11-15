@@ -38,7 +38,7 @@ Novo PDF: acrescente o item em `free_content.ts` (sem link) e a linha correspond
 
 **Antes de publicar (nesta ordem):**
 1. **Tabela:** o usuário do n8n (`nocouser`) não cria tabelas. Aplique `docs/sql/free_content_leads.sql` como dono do banco; depois execute o workflow "Verificar DB" (deve dar `tabela_existe = true`, `pode_inserir = true`) e arquive-o.
-2. **Credenciais novas** (Credentials > Create): Header Auth `IvanaLP Free Content` e `IvanaLP Free Enroll` (nome do header `X-Webhook-Secret`, valor = `FREE_CONTENT_WEBHOOK_SECRET` e `FREE_ENROLL_WEBHOOK_SECRET`, `openssl rand -hex 32` cada) e Custom Auth `Moodle WS Token (n8n)` com o JSON `{"body":{"wstoken":"<token do webservice>"}}`.
+2. **Credenciais novas** (Credentials > Create): Header Auth `IvanaLP Free Content` e `IvanaLP Free Enroll` (nome do header `X-Webhook-Secret`, valor = `FREE_CONTENT_WEBHOOK_SECRET` e `FREE_ENROLL_WEBHOOK_SECRET`, `openssl rand -hex 32` cada) e Custom Auth `Moodle WS Token (n8n)` com o JSON `{"qs":{"wstoken":"<token do webservice>"}}` (**`qs`, não `body`**: com `body` o n8n descarta os parâmetros do formulário `form-urlencoded` e o Moodle responde `invalidtoken` em XML; verificado em 15/11/2026).
    Os webhooks estão provisoriamente com a credencial `IvanaLP Contact` (o n8n auto-atribui outra se ficar vazio): **troque pela credencial própria** em cada Webhook e escolha a credencial Moodle nos 3 nós "Moodle - ...".
 3. **Planilha:** na planilha "Leads Ivana" crie a aba `Conteudo Gratuito` com o cabeçalho na linha 1: `Data | E-mail | País | Último conteúdo | Tipo | Origem`.
 4. Publique um de cada vez e teste com `curl` pelo Nginx (staging) antes de produção.
@@ -52,3 +52,8 @@ Testado com dados simulados (nós de serviço fixados): item inválido (400), us
 ## Desenho original (referência)
 Webhook (Header Auth `X-Webhook-Secret`) → Turnstile Verify → upsert em Postgres (e-mail único; país, `item_id`, consentimento, 1ª e última
 data) → linha na planilha Google → se o item for apostila/recurso, e-mail com o link (assunto e texto no idioma do `country`) → Respond `{"ok":true}`.
+
+## Achados do teste com serviços reais (15/11/2026)
+- Postgres, planilha e e-mail testados com sucesso no `free-content` (e-mail da apostila aceito pelo Gmail).
+- A credencial SMTP `SMTP account GMAIL (Ivana)` estava recusada pelo Gmail (`535 Username and Password not accepted`): precisou de nova senha de app. Ela também é usada pelo `Contact - Process [ivana]`, então vale conferir se os e-mails do formulário de contato estavam falhando.
+- O `free-enroll` só passa do Moodle depois que a credencial `Moodle WS Token` usar `qs` (ver acima).
