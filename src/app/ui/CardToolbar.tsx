@@ -16,9 +16,13 @@ export default function CardToolbar({ filter, density = true }: { filter?: Segme
   const filters = filter ? (Array.isArray(filter) ? filter : [filter]) : [];
   if (filters.length === 0 && !density) return null;
   return (
-    <div className="flex flex-wrap items-center justify-end gap-3 mb-6">
-      {filters.map((f) => <SegmentFilter key={f.label} {...f} />)}
-      {density && <DensityToggle value={current} onChange={setDensity} labels={toggleLabels[language]} />}
+    <div className="flex flex-col items-stretch gap-3 mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+      {filters.map((f) => <SegmentFilter key={f.label} fullWidth="mobile" {...f} />)}
+      {density && (
+        <div className="flex justify-center sm:block">
+          <DensityToggle value={current} onChange={setDensity} labels={toggleLabels[language]} />
+        </div>
+      )}
     </div>
   );
 }

@@ -81,7 +81,7 @@ export default function EmailGateModal({
       className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} className="relative bg-white rounded-2xl w-full max-w-[460px] shadow-2xl border border-gray-200 animate-slide-up p-6 md:p-8">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} className="relative bg-white rounded-2xl w-full max-w-[460px] max-h-[92dvh] overflow-y-auto shadow-2xl border border-gray-200 animate-slide-up p-6 md:p-8">
         <button type="button" onClick={onClose} aria-label={text.close} className="absolute top-3 right-3 min-h-11 min-w-11 inline-flex items-center justify-center rounded-full text-gray-600 hover:bg-surface-cream cursor-pointer">
           <X className="w-4 h-4" />
         </button>
