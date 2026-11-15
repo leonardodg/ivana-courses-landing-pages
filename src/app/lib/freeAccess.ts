@@ -54,7 +54,7 @@ async function post(endpoint: string, body: Record<string, string>): Promise<Acc
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...body, ...(token ? { cf_turnstile_token: token } : {}), timestamp: new Date().toISOString() }),
-      signal: AbortSignal.timeout(endpoint === ENROLL_ENDPOINT ? 20_000 : 10_000), // a matrícula cria o usuário no Moodle
+      signal: AbortSignal.timeout(endpoint === ENROLL_ENDPOINT ? 45_000 : 10_000), // a matrícula cria o usuário no Moodle (~12 s medidos)
     });
     if (res.status === 429) return 'rate_limited';
     return res.ok ? 'ok' : 'error';

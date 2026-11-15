@@ -67,7 +67,8 @@ echo "05-webhook-proxy: proxy do formulário configurado (segredo: ${#SECRET} ca
 # /api/free-content → webhook do lead (e-mail)        FREE_CONTENT_WEBHOOK_SECRET / N8N_FREE_CONTENT_UPSTREAM
 # /api/free-enroll  → webhook da matrícula no Moodle   FREE_ENROLL_WEBHOOK_SECRET  / N8N_FREE_ENROLL_UPSTREAM
 # Opcionais: sem o segredo a rota responde 503 e o resto do site segue normal.
-gen_extra() { # $1 arquivo  $2 segredo  $3 upstream  $4 nome da variável do segredo  $5 nome da variável do upstream  $6 nome da variável do Nginx
+gen_extra() { # $1 arquivo  $2 segredo  $3 upstream  $4 nome da variável do segredo  $5 nome da variável do upstream  $6 nome da variável do Nginx  $7 timeout de leitura em segundos
+  rt="${7:-20}"
   f="${PROXY_OUT_DIR:-/tmp}/$1"
   if [ -z "$2" ]; then
     printf 'return 503;\n' > "$f"; chmod 0644 "$f"
@@ -92,7 +93,7 @@ proxy_set_header Cookie           "";
 proxy_set_header Authorization    "";
 proxy_connect_timeout 5s;
 proxy_send_timeout    15s;
-proxy_read_timeout    20s;
+proxy_read_timeout    ${rt}s;
 proxy_hide_header X-Powered-By;
 proxy_pass \$$6;
 CONF
@@ -100,4 +101,4 @@ CONF
   echo "05-webhook-proxy: $1 configurado (segredo: ${#2} caracteres, não exibido)." >&2
 }
 gen_extra free-content-proxy.conf "${FREE_CONTENT_WEBHOOK_SECRET:-}" "${N8N_FREE_CONTENT_UPSTREAM:-http://n8n_main:5678/webhook/free-content}" FREE_CONTENT_WEBHOOK_SECRET N8N_FREE_CONTENT_UPSTREAM n8n_free_upstream
-gen_extra free-enroll-proxy.conf "${FREE_ENROLL_WEBHOOK_SECRET:-}" "${N8N_FREE_ENROLL_UPSTREAM:-http://n8n_main:5678/webhook/free-enroll}" FREE_ENROLL_WEBHOOK_SECRET N8N_FREE_ENROLL_UPSTREAM n8n_enroll_upstream
+gen_extra free-enroll-proxy.conf "${FREE_ENROLL_WEBHOOK_SECRET:-}" "${N8N_FREE_ENROLL_UPSTREAM:-http://n8n_main:5678/webhook/free-enroll}" FREE_ENROLL_WEBHOOK_SECRET N8N_FREE_ENROLL_UPSTREAM n8n_enroll_upstream 45
