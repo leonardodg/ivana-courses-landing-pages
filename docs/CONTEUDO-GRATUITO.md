@@ -23,6 +23,26 @@ resposta, exista ou não o e-mail (sem enumeração).
 
 Novo PDF: acrescente o item em `free_content.ts` (sem link) e a linha correspondente no mapa do workflow.
 
-## Workflow sugerido
+## Workflows no n8n (criados em 15/11/2026, NÃO publicados)
+| Workflow | id | Webhook (produção) | Credencial do webhook |
+|---|---|---|---|
+| `Free Content - Receive [ivana]` | `xbAETAOwkMqSbyWO` | `/webhook/free-content` | Header Auth `IvanaLP Free Content` |
+| `Free Enroll - Moodle [ivana]` | `UufldMAP3SUVzYMb` | `/webhook/free-enroll` | Header Auth `IvanaLP Free Enroll` |
+| `Free Content - Verificar DB (one-off)` | `kaD19z39GJdqjn0u` | (schedule; só verifica a tabela) | Postgres existente |
+
+**Antes de publicar (nesta ordem):**
+1. **Tabela:** o usuário do n8n (`nocouser`) não cria tabelas. Aplique `docs/sql/free_content_leads.sql` como dono do banco; depois execute o workflow "Verificar DB" (deve dar `tabela_existe = true`, `pode_inserir = true`) e arquive-o.
+2. **Credenciais novas** (Credentials > Create): Header Auth `IvanaLP Free Content` e `IvanaLP Free Enroll` (nome do header `X-Webhook-Secret`, valor = `FREE_CONTENT_WEBHOOK_SECRET` e `FREE_ENROLL_WEBHOOK_SECRET`, `openssl rand -hex 32` cada) e Custom Auth `Moodle WS Token (n8n)` com o JSON `{"body":{"wstoken":"<token do webservice>"}}`.
+   Os webhooks estão provisoriamente com a credencial `IvanaLP Contact` (o n8n auto-atribui outra se ficar vazio): **troque pela credencial própria** em cada Webhook e escolha a credencial Moodle nos 3 nós "Moodle - ...".
+3. **Planilha:** na planilha "Leads Ivana" crie a aba `Conteudo Gratuito` com o cabeçalho na linha 1: `Data | E-mail | País | Último conteúdo | Tipo | Origem`.
+4. Publique um de cada vez e teste com `curl` pelo Nginx (staging) antes de produção.
+
+**O que cada workflow faz.** `free-content`: Turnstile → valida (e-mail, país, `item_id` no mapa; o link da apostila vive no nó "Validate & Sanitize") → upsert em `public.free_content_leads` → linha na planilha → se for apostila/recurso e o último e-mail tiver mais de 10 min, envia o link → `{"ok":true}`.
+`free-enroll`: Turnstile → valida (nome, e-mail, `item_id` → curso) → Moodle `core_user_get_users_by_field` → (`core_user_create_users` com `createpassword=1`, se não existir) → `enrol_manual_enrol_users` (papel 5) → upsert + planilha → e-mail de acesso → `{"ok":true}`. Erros: 400 dados inválidos, 403 Turnstile, 500 banco, 502 Moodle.
+Testado com dados simulados (nós de serviço fixados): item inválido (400), usuário novo, usuário existente e exceção do Moodle (502). Falta testar com Postgres, Moodle, planilha e SMTP reais.
+
+**Novo curso/PDF:** acrescente o item em `Validate & Sanitize` (`ITEMS` em `free-content`; `COURSES` e `ITEM_COURSE` em `free-enroll`).
+
+## Desenho original (referência)
 Webhook (Header Auth `X-Webhook-Secret`) → Turnstile Verify → upsert em Postgres (e-mail único; país, `item_id`, consentimento, 1ª e última
 data) → linha na planilha Google → se o item for apostila/recurso, e-mail com o link (assunto e texto no idioma do `country`) → Respond `{"ok":true}`.
