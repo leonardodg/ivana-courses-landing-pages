@@ -62,4 +62,5 @@ jobs:
       - name: Verificações (URLs, prévia, sitemap, dist)
         run: |
           npm run check:urls
+          npm run check:free
           node scripts/verify-dist.mjs

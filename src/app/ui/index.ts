@@ -33,3 +33,6 @@ export { default as WhatsAppFab, whatsappHref } from './WhatsAppFab';
 export { default as SegmentFilter } from './SegmentFilter';
 export type { SegmentFilterProps } from './SegmentFilter';
 export { default as CardToolbar } from './CardToolbar';
+export { default as EmailGateModal } from './EmailGateModal';
+export type { EmailGateText, EmailSentText } from './EmailGateModal';
+export { default as VideoModal } from './VideoModal';

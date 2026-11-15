@@ -8,17 +8,18 @@ export interface SegmentFilterProps {
   options: { value: string; label: string }[];
   label: string; // nome do filtro, para leitor de tela: "Filtrar por segmento"
   allLabel: string; // "Todos os segmentos"
-  fullWidth?: boolean; // ocupa a largura toda do contêiner (coluna lateral da agenda, celular)
+  fullWidth?: boolean | 'mobile'; // true: largura toda do contêiner (coluna lateral da agenda); 'mobile': largura toda só no celular
 }
 
 export default function SegmentFilter({ value, onChange, options, label, allLabel, fullWidth = false }: SegmentFilterProps) {
+  const width = fullWidth === 'mobile' ? 'w-full sm:w-auto' : fullWidth ? 'w-full' : '';
   return (
-    <span className={`relative inline-flex ${fullWidth ? 'w-full' : ''}`}>
+    <span className={`relative inline-flex ${width}`}>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label={label}
-        className={`appearance-none min-h-11 rounded-full border border-subtle bg-white pl-5 pr-11 text-xs font-bold font-mono uppercase tracking-wider text-gray-900 hover:border-primary focus-visible:border-primary transition-colors cursor-pointer max-w-full ${fullWidth ? 'w-full' : ''}`}
+        className={`appearance-none min-h-11 rounded-full border border-subtle bg-white pl-5 pr-11 text-xs font-bold font-mono uppercase tracking-wider text-gray-900 hover:border-primary focus-visible:border-primary transition-colors cursor-pointer max-w-full ${width}`}
       >
         <option value="">{allLabel}</option>
         {options.map((o) => (

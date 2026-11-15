@@ -34,11 +34,11 @@ Use o `deploy.yml` só se o novo estiver fora do ar (`gh workflow run deploy.yml
 
 `VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`, `VPS_SSH_PORT` (opcional) e **`WEBHOOK_SECRET`** (segredo do webhook do n8n); variáveis `VITE_TURNSTILE_SITE_KEY`, `VITE_GA_ID`, `VITE_TIENDA_AR_URL`, `REPO_PATH`.
 
-`WEBHOOK_SECRET` **não entra no build**: é enviado por SSH só para o `docker compose` e vive no ambiente do container em execução; o Nginx o acrescenta ao encaminhar `POST /api/contact` ao n8n. Valores `VITE_*` são públicos (vão para o JavaScript). Detalhes, rotação e checklist em [SEGURANCA.md](SEGURANCA.md).
+`FREE_CONTENT_WEBHOOK_SECRET` (opcional, segredo do webhook do conteúdo gratuito; sem ele `/api/free-content` responde 503) segue o mesmo caminho. `WEBHOOK_SECRET` **não entra no build**: é enviado por SSH só para o `docker compose` e vive no ambiente do container em execução; o Nginx o acrescenta ao encaminhar `POST /api/contact` ao n8n. Valores `VITE_*` são públicos (vão para o JavaScript). Detalhes, rotação e checklist em [SEGURANCA.md](SEGURANCA.md).
 
 ## Como testar antes de publicar
 
-- **staging** (manual): Actions > "Deploy (build e pré-render no CI)…" > Run workflow > `staging`. Abra pelo túnel SSH e confira. Não toca na produção.
+- **staging** (manual; disparado de uma branch, a VPS usa o compose e o Nginx **dessa branch**, não da `main`): Actions > "Deploy (build e pré-render no CI)…" > Run workflow > `staging`. Abra pelo túnel SSH e confira. Não toca na produção.
 - Push em `main` publica em produção sozinho. Para publicar sem disparar o deploy (ex.: ajuste só de workflow), ponha `[skip ci]` na mensagem do commit.
 
 ## Voltar atrás manualmente

@@ -26,6 +26,12 @@ services:
       - ENVIRONMENT=production
       - WEBHOOK_SECRET=${WEBHOOK_SECRET:?defina WEBHOOK_SECRET (segredo do webhook do n8n)}
       - N8N_WEBHOOK_UPSTREAM=${N8N_WEBHOOK_UPSTREAM:-http://n8n_main:5678/webhook/contact-v2}
+      # Conteúdo gratuito (opcional): webhook e segredo PRÓPRIOS. Sem o segredo, /api/free-content responde 503.
+      - FREE_CONTENT_WEBHOOK_SECRET=${FREE_CONTENT_WEBHOOK_SECRET:-}
+      - N8N_FREE_CONTENT_UPSTREAM=${N8N_FREE_CONTENT_UPSTREAM:-http://n8n_main:5678/webhook/free-content}
+      # Matrícula no Moodle (opcional): outro webhook, outro segredo.
+      - FREE_ENROLL_WEBHOOK_SECRET=${FREE_ENROLL_WEBHOOK_SECRET:-}
+      - N8N_FREE_ENROLL_UPSTREAM=${N8N_FREE_ENROLL_UPSTREAM:-http://n8n_main:5678/webhook/free-enroll}
     # Logs vão para stdout/stderr (docker logs courses-nginx): o container não grava em disco.
     ports:
       - "${BIND_ADDR:-127.0.0.1:}${HOST_PORT:-8088}:8080"
