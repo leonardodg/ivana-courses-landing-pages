@@ -7,7 +7,7 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// o: { lang: 'pt'|'es', subject, preheader, greeting, paragraphs: [html], button: {label, url}, fallback: bool, reason }
+// o: { lang: 'pt'|'es', subject, preheader, greeting, paragraphs: [html], button: {label, url}, fallback: bool, reason, noSign: bool (sem despedida; avisos internos) }
 function ivanaEmail(o) {
   const es = o.lang === 'es';
   const site = es ? 'https://courses.ivana.academy/es-ar/' : 'https://courses.ivana.academy/pt-br/';
@@ -21,7 +21,7 @@ function ivanaEmail(o) {
   const fallback = o.button && o.fallback
     ? p(`<span style='font-size:13px;color:#514443;'>${es ? 'Si el botón no abre, copiá y pegá esta dirección en el navegador:' : 'Se o botão não abrir, copie e cole este endereço no navegador:'}<br><a href='${o.button.url}' style='color:#805252;word-break:break-all;'>${o.button.url}</a></span>`)
     : '';
-  const sign = p(es ? '¡Buen estudio!<br>Equipo Ivana Academy' : 'Bons estudos!<br>Equipe Ivana Academy');
+  const sign = o.noSign ? '' : p(es ? '¡Buen estudio!<br>Equipo Ivana Academy' : 'Bons estudos!<br>Equipe Ivana Academy');
   const html = `<!DOCTYPE html><html lang='${es ? 'es-AR' : 'pt-BR'}'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>${esc(o.subject)}</title><style>@media only screen and (max-width:620px){.main{width:100% !important}.pad{padding:24px 18px !important}}</style></head>`
     + `<body style='margin:0;padding:0;background:#f7efe4;color:#1c1c1a;font-family:${font};'>`
     + `<div style='display:none;max-height:0;overflow:hidden;opacity:0;color:#f7efe4;'>${esc(o.preheader || '')}</div>`
@@ -37,6 +37,7 @@ function ivanaEmail(o) {
   const strip = (h) => String(h).replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
   const text = [o.greeting, '', (o.paragraphs || []).map(strip).join('\n\n')]
     .concat(o.button ? ['', o.button.label + ': ' + o.button.url] : [])
-    .concat(['', es ? '¡Buen estudio!' : 'Bons estudos!', 'Ivana Academy', '', o.reason || '', site]).join('\n');
+    .concat(o.noSign ? [''] : ['', es ? '¡Buen estudio!' : 'Bons estudos!', 'Ivana Academy', ''])
+    .concat([o.reason || '', site]).join('\n');
   return { html: html, text: text };
 }
