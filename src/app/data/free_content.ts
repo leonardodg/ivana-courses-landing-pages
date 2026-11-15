@@ -69,6 +69,7 @@ export const free_courses: FreeCourse[] = [
       yt('agregar-hilos', 'Cómo agregar hilos en macramé', '-0E-6qvIOgU'),
       yt('posa-vasos', 'Posa vasos en macramé', '5ExOgS68Nlk'),
       yt('collar-macrame', 'Collar en macramé, paso a paso', '1NQY_nXaBKo'),
+      yt('manta-nordica', 'Manta nórdica, paso a paso', 'XFl0a4DtstM'),
     ],
   },
   {

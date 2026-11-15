@@ -13,7 +13,7 @@ para e-mail novo ou já cadastrado (sem enumeração de contas).
 ## Mapa chave do curso → curso do Moodle (vive no n8n, nó "Validate & Sanitize" do `free-enroll`)
 | `course` | Curso Moodle | País |
 |---|---|---|
-| `macrame-ar` | 45 Macramé (10 aulas) | AR |
+| `macrame-ar` | 45 Macramé (11 aulas) | AR |
 | `resina-ar` | 46 Resina | AR |
 | `textil-ar` | 47 Tecnicatura textil | AR |
 | `mixmedia-ar` | 48 Mix media | AR |
