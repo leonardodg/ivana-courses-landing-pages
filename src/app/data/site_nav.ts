@@ -39,6 +39,10 @@ export const nav_brasil: NavGroup[] = [
       { label: { pt: 'Apostila 60 receitas de sabonetes', es: 'Apostilla de 60 recetas de jabones' }, href: '/pt-br/apostilas/60-receitas-de-sabonetes/', icon: 'file' },
     ],
   },
+  {
+    title: { pt: 'Grátis', es: 'Gratis' },
+    items: [{ label: { pt: 'Conteúdo gratuito', es: 'Contenido gratuito (Brasil)' }, href: '/pt-br/conteudo-gratuito/', icon: 'play' }],
+  },
 ];
 
 const CARRERA_ICON: Record<string, NavIconKey> = {
@@ -54,6 +58,7 @@ const CARRERA_ICON: Record<string, NavIconKey> = {
 export const nav_argentina: NavItem[] = [
   { label: { pt: 'Todas as carreras', es: 'Todas las carreras' }, href: '/es-ar/', icon: 'grid' },
   ...carreras_principales.map((c) => ({ label: carreras_ar[c].nombre, href: ar_pages[carreras_ar[c].page].path, icon: CARRERA_ICON[c] })),
+  { label: { pt: 'Conteúdo gratuito (Argentina)', es: 'Contenido gratuito' }, href: '/es-ar/contenido-gratuito/', icon: 'play' },
 ];
 
 /** Agenda ▾: uma por país. */
