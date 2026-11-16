@@ -24,7 +24,7 @@ export const contactBR = {
 export const contactAR = {
   telephone: "+54 9 3757 20-1014",
   whatsapp: "https://wa.me/5493757201014",
-  email: "contacto@ivana.academy",
+  email: "contato@ivana.academy",
   addressLocality: "Buenos Aires",
   addressCountry: "AR",
 };

@@ -63,9 +63,9 @@ async function post(endpoint: string, body: Record<string, string>): Promise<Acc
   }
 }
 
-export async function requestFreeAccess(email: string, country: 'BR' | 'AR', itemId: string): Promise<AccessResult> {
+export async function requestFreeAccess(email: string, country: 'BR' | 'AR', itemId: string, whatsapp = ''): Promise<AccessResult> {
   const source = `free_content_${country.toLowerCase()}`;
-  const result = await post(ENDPOINT, { email, country, item_id: itemId, form_source: source, consent: CONSENT_TEXT_VERSION });
+  const result = await post(ENDPOINT, { email, country, item_id: itemId, form_source: source, consent: CONSENT_TEXT_VERSION, ...(whatsapp ? { whatsapp } : {}) });
   if (result !== 'ok') return result;
   try {
     localStorage.setItem(KEY, '1');
@@ -78,7 +78,7 @@ export async function requestFreeAccess(email: string, country: 'BR' | 'AR', ite
 }
 
 /** Cria o usuário na plataforma e matricula no curso `course` (slug; o n8n resolve o id do Moodle). Não libera as aulas de amostra. */
-export async function requestMoodleEnroll(p: { email: string; firstName: string; lastName: string; country: 'BR' | 'AR'; course: string }): Promise<AccessResult> {
+export async function requestMoodleEnroll(p: { email: string; firstName: string; lastName: string; country: 'BR' | 'AR'; course: string; whatsapp?: string }): Promise<AccessResult> {
   const source = `free_enroll_${p.country.toLowerCase()}`;
   const result = await post(ENROLL_ENDPOINT, {
     email: p.email,
@@ -86,6 +86,7 @@ export async function requestMoodleEnroll(p: { email: string; firstName: string;
     last_name: p.lastName,
     country: p.country,
     course: p.course,
+    ...(p.whatsapp ? { whatsapp: p.whatsapp } : {}),
     form_source: source,
     consent: CONSENT_TEXT_VERSION,
   });

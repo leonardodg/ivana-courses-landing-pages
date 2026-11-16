@@ -14,7 +14,7 @@ export const company = {
   updatedEs: '25 de octubre de 2026',
   // Contato usado nas páginas argentinas (mesmos dados já publicados em /es-ar/carreras/tecnicatura-arte-diseno-velas/)
   ar: {
-    email: 'contacto@ivana.academy',
+    email: 'contato@ivana.academy',
     whatsappLabel: '+54 9 3757 20-1014',
     whatsappUrl: 'https://wa.me/5493757201014',
   },

@@ -64,19 +64,19 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
   // Aula de amostra: depois do primeiro e-mail o navegador lembra e abre direto.
   const onPreview = (course: FreeCourse) => (unlocked ? playPreview(course) : setGate({ mode: 'preview', course }));
 
-  const submit = async ({ email, firstName, lastName }: { email: string; firstName: string; lastName: string }): Promise<string | null> => {
+  const submit = async ({ email, firstName, lastName, whatsapp }: { email: string; firstName: string; lastName: string; whatsapp: string }): Promise<string | null> => {
     if (!gate) return null;
     let result: Awaited<ReturnType<typeof requestFreeAccess>>;
     let itemId: string;
     if ('material' in gate) {
       itemId = gate.material.id;
-      result = await requestFreeAccess(email, country, itemId);
+      result = await requestFreeAccess(email, country, itemId, whatsapp);
     } else if (gate.mode === 'enroll') {
       itemId = gate.course.id;
-      result = await requestMoodleEnroll({ email, firstName, lastName, country, course: itemId });
+      result = await requestMoodleEnroll({ email, firstName, lastName, country, course: itemId, whatsapp });
     } else {
       itemId = gate.course.lessons[0].id;
-      result = await requestFreeAccess(email, country, itemId);
+      result = await requestFreeAccess(email, country, itemId, whatsapp);
     }
     if (result === 'rate_limited') return t.limited;
     if (result === 'error') return t.failed;
@@ -196,6 +196,7 @@ export default function FreeContentApp({ country }: { country: FreeCountry }) {
           text={{
             title: modalTitle, text: modalText, email: t.email, submit: enrolling ? t.enroll : t.submit, sending: t.sending, close: t.close,
             invalid: t.invalid, firstName: t.firstName, lastName: t.lastName, invalidName: t.invalidName,
+            whatsapp: t.whatsapp, whatsappHint: t.whatsappHint, invalidWhatsapp: t.invalidWhatsapp,
           }}
           language={language}
           onClose={closeGate}
