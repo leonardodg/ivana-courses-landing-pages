@@ -39,7 +39,8 @@ Webhook (Header Auth `X-Webhook-Secret`) → Turnstile Verify (mesmo nó do `con
 senão 400) → HTTP `POST https://ivana.academy/webservice/rest/server.php` (corpo `application/x-www-form-urlencoded`, token na credencial, nunca na URL):
 1. `wsfunction=core_user_get_users_by_field`, `field=email`, `values[0]=<email>`.
 2. Se vazio: `wsfunction=core_user_create_users`, `users[0][username]=<email em minúsculas>`, `users[0][email]`, `users[0][firstname]`,
-   `users[0][lastname]`, `users[0][auth]=manual`, `users[0][createpassword]=1` (o Moodle envia o e-mail "defina sua senha"),
+   `users[0][lastname]`, `users[0][auth]=manual`, `users[0][createpassword]=1` (o Moodle envia o e-mail "defina sua senha") **`users[0][lang]`** (`pt_br` para o Brasil, `es_ar` para a Argentina, pelo `country` da requisição; os dois pacotes de idioma precisam estar instalados no Moodle, senão a criação falha com idioma inválido, e hoje estão: `es_ar` é o padrão do site e `pt_br` está instalado; o e-mail de senha do próprio Moodle sai nesse idioma) e **`users[0][mailformat]=1`**
+   (sem ele o core usa só os campos enviados e o e-mail de senha nova sai em **texto puro, sem o layout HTML**; o mesmo vale para qualquer cliente do webservice, como a loja Magento),
    `users[0][lang]=es` (AR) ou `pt_br` (BR). Guardar o `id` devolvido.
 3. `wsfunction=enrol_manual_enrol_users`, `enrolments[0][roleid]=5` (aluno), `enrolments[0][userid]=<id>`, `enrolments[0][courseid]=<mapa>`.
 4. Já existia a conta? Enviar e-mail próprio "você foi matriculado, entre com sua conta" (idioma do `country`).
