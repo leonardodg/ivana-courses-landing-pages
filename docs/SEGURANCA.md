@@ -40,7 +40,7 @@ Outra rota, outro segredo (`FREE_ENROLL_WEBHOOK_SECRET`, `N8N_FREE_ENROLL_UPSTRE
 
 ## Turnstile (anti-bot)
 
-- Widget carregado só no envio (`src/app/lib/turnstile.ts`); a site key (`VITE_TURNSTILE_SITE_KEY`, variável do ambiente
+- Widget carregado no primeiro foco num campo de formulário (`src/app/lib/turnstile.ts`; a verificação roda enquanto a pessoa preenche e o token fica pronto no envio); a site key (`VITE_TURNSTILE_SITE_KEY`, variável do ambiente
   `production` no GitHub) é pública. O hostname do widget no Cloudflare deve ser `courses.ivana.academy`.
 - Quem valida é o **n8n**, no workflow **`Contact - Receive [ivana] v2 (Turnstile)`** (webhook `/webhook/contact-v2`): Webhook (Header
   Auth) → *Turnstile Verify* (`POST challenges.cloudflare.com/turnstile/v0/siteverify`, secret na credencial `Turnstile Secret`,
@@ -54,7 +54,7 @@ Outra rota, outro segredo (`FREE_ENROLL_WEBHOOK_SECRET`, `N8N_FREE_ENROLL_UPSTRE
 - Trocar a chave: editar o JSON da credencial `Turnstile Secret` no n8n. Chaves de teste da Cloudflare (sempre passam):
   site `1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`; só servem com widget/segredo de teste.
 - Efeito colateral aceito: abas abertas antes do deploy rodam o JavaScript antigo (sem token) e levam 403 ao enviar até recarregar.
-- A política de privacidade precisa citar o Cloudflare Turnstile (ele carrega no envio do formulário).
+- A política de privacidade precisa citar o Cloudflare Turnstile (ele carrega quando a pessoa começa a preencher o formulário).
 
 ## Ordem para publicar (importante)
 
