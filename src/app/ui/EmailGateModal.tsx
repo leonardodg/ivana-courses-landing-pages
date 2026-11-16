@@ -19,6 +19,9 @@ export interface EmailGateText {
   invalidName?: string; // erro de nome/sobrenome (só com askName)
   firstName?: string; // rótulos dos campos de nome (só aparecem com askName)
   lastName?: string;
+  whatsapp?: string; // rótulo do campo opcional de WhatsApp (o campo só aparece se houver rótulo)
+  whatsappHint?: string;
+  invalidWhatsapp?: string;
 }
 
 export interface EmailSentText {
@@ -39,7 +42,7 @@ export default function EmailGateModal({
   text: EmailGateText;
   language: Language;
   onClose: () => void;
-  onSubmit: (data: { email: string; firstName: string; lastName: string }) => Promise<string | null>;
+  onSubmit: (data: { email: string; firstName: string; lastName: string; whatsapp: string }) => Promise<string | null>;
   /** Pede nome e sobrenome (matrícula na plataforma). */
   askName?: boolean;
   /** Quando preenchido, troca o formulário pela confirmação "enviamos por e-mail". */
@@ -51,6 +54,7 @@ export default function EmailGateModal({
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -69,9 +73,16 @@ export default function EmailGateModal({
       setError(text.invalidName ?? text.invalid);
       return;
     }
+    // WhatsApp é opcional: vazio passa; preenchido precisa ter 8 a 15 dígitos.
+    const wa = whatsapp.trim();
+    const waDigits = wa.replace(/\D/g, '');
+    if (text.whatsapp && wa && (waDigits.length < 8 || waDigits.length > 15 || !/^[+\d\s().-]+$/.test(wa))) {
+      setError(text.invalidWhatsapp ?? text.invalid);
+      return;
+    }
     setError(null);
     setBusy(true);
-    const msg = await onSubmit({ email: value, firstName: fn, lastName: ln });
+    const msg = await onSubmit({ email: value, firstName: fn, lastName: ln, whatsapp: text.whatsapp ? wa : '' });
     setBusy(false);
     if (msg) setError(msg);
   };
@@ -119,6 +130,13 @@ export default function EmailGateModal({
             />
             {error && <p id={`${titleId}-err`} role="alert" className="text-xs text-error mt-1.5">{error}</p>}
           </div>
+          {text.whatsapp && (
+            <div>
+              <label htmlFor={`${titleId}-wa`} className="block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5 font-mono">{text.whatsapp}</label>
+              <input id={`${titleId}-wa`} type="tel" inputMode="tel" autoComplete="tel" maxLength={25} value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="+55 11 91234-5678" className="w-full min-h-11 rounded-lg border border-subtle bg-white px-4 text-sm focus-visible:border-primary" />
+              {text.whatsappHint && <p className="text-xs text-on-surface-variant mt-1.5">{text.whatsappHint}</p>}
+            </div>
+          )}
           <PrivacyConsent id={`${titleId}-consent`} checked={consent} onChange={setConsent} language={language} />
           <button type="submit" disabled={busy || !consent} className={`${btnPrimary} w-full disabled:opacity-60 disabled:cursor-not-allowed`}>
             {busy ? text.sending : text.submit}

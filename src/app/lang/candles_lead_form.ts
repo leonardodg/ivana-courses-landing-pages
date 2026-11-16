@@ -57,7 +57,7 @@ export const candles_lead_text_es = {
   emailLabel: 'Email',
   locationLabel: 'Talleres',
   contactPhoneDisplay: '+54 9 3757 20-1014',
-  contactEmailDisplay: 'contacto@ivana.academy',
+  contactEmailDisplay: 'contato@ivana.academy',
   contactLocationDisplay: 'Buenos Aires, Argentina',
 
   formName: 'Nombre completo',
