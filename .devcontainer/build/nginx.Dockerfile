@@ -20,7 +20,7 @@
 #  STAGE 1 - node-builder: transpile TypeScript + bundle Vite + Tailwind v4
 # =============================================================================
 # Node fixado (22.23.4 inclui as correções de segurança de out/2026) por digest; o Dependabot propõe atualizações.
-FROM node:22.23.4-alpine@sha256:0e1754758c2df4cfa3e68d59e2e1b7374bb7fd9ea6328eaaacf15cc934af8202 AS node-builder
+FROM node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a AS node-builder
 
 WORKDIR /app
 
