@@ -67,8 +67,13 @@ ENV ENVIRONMENT=development \
 WORKDIR /usr/share/nginx/html
 
 # Timezone
-# Correções de segurança do Alpine publicadas depois do digest da imagem base (ex.: brotli CVE-2026-111497, curl)
-RUN apk upgrade --no-cache
+# Correções de segurança publicadas depois do digest da imagem base (ex.: brotli CVE-2026-111497, curl).
+# O nginx da imagem vem do repositório do nginx.org, que o `apk upgrade` sozinho não consulta: sem o
+# --repository, o nginx ficava preso na versão do digest (Trivy: CVE-2026-121810 e outras, corrigidas na 1.30.7).
+# A chave de assinatura do nginx.org já está na imagem base; assinatura inválida derruba o build.
+RUN . /etc/os-release \
+ && apk upgrade --no-cache --repository "https://nginx.org/packages/alpine/v${VERSION_ID%.*}/main" \
+ && nginx -v
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
