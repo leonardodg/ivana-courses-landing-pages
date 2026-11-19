@@ -161,3 +161,6 @@ n8n_secret.env
 n8n_secrets.env
 *_secret.env
 *_secrets.env
+
+# Chave do feed de turmas do Magento (X-Agenda-Key): nunca commitar
+.devcontainer/secrets/
