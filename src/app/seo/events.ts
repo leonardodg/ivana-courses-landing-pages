@@ -13,7 +13,8 @@ function parsePrice(price: string | null): string | null {
 
 export function eventJsonLd(events: AgendaEvent[]) {
   return events.map((e) => {
-    const soldOut = e.status === "esgotado";
+    const cancelled = e.status === "cancelado";
+    const soldOut = e.status === "esgotado" || cancelled;
     const amount = e.free ? "0" : parsePrice(e.price);
     const url = e.link ?? AGENDA_URL;
     return {
@@ -24,7 +25,7 @@ export function eventJsonLd(events: AgendaEvent[]) {
       startDate: e.start,
       endDate: e.end,
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      eventStatus: "https://schema.org/EventScheduled",
+      eventStatus: cancelled ? "https://schema.org/EventCancelled" : "https://schema.org/EventScheduled",
       inLanguage: "pt-BR",
       url,
       location: {

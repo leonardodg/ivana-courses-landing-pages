@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, CalendarPlus, Clock, ExternalLink, MapPin, MessageCircle } from "lucide-react";
 import Footer from "../components/Footer";
 import SiteNavbar from "../components/SiteNavbar";
-import { AgendaEvent, useAgenda } from "../hooks/useAgenda";
+import { AgendaEvent, isBookable, isCancelled, isSoldOut, useAgenda } from "../hooks/useAgenda";
 import { useDensity } from "../hooks/useDensity";
 import { eventJsonLd } from "../seo/events";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
@@ -47,8 +47,20 @@ function calendarLink(e: AgendaEvent): string | null {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
+// "restam 3 de 12 vagas" quando o Magento informa; senão a capacidade digitada na agenda.
+function seatsText(e: AgendaEvent): string {
+  if (isCancelled(e) || isSoldOut(e)) return "";
+  if (typeof e.seats_remaining === "number") {
+    const total = e.capacity ? ` de ${e.capacity}` : "";
+    return ` · ${e.seats_remaining === 1 ? "resta 1 vaga" : `restam ${e.seats_remaining}${total} vagas`}`;
+  }
+  return e.seats ? ` · ${e.seats} vagas` : "";
+}
+
 function EventItem({ event, featured, density }: { event: AgendaEvent; featured: boolean; density: Density }) {
-  const soldOut = event.status === "esgotado";
+  const cancelled = isCancelled(event);
+  const soldOut = isSoldOut(event);
+  const closed = !isBookable(event);
   const cta = event.link ?? whatsappLink(event);
   const addToCalendar = calendarLink(event);
   const timeLabel = event.time
@@ -58,6 +70,7 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
     { label: countdown(event.date), tone: featured ? "accent" : "neutral" },
     ...(event.free ? [{ label: "Gratuito" }] : []),
     ...(event.status === "ultimas-vagas" ? [{ label: "Últimas vagas", tone: "accent" as const }] : []),
+    ...(cancelled ? [{ label: "Turma cancelada", tone: "alert" as const }] : []),
     ...(soldOut ? [{ label: "Esgotado", tone: "alert" as const }] : []),
   ];
 
@@ -84,7 +97,7 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
           <span>
             <span className="font-semibold text-gray-900">{timeLabel}</span>
             {event.price ? ` · ${event.price}` : ""}
-            {event.seats ? ` · ${event.seats} vagas` : ""}
+            {seatsText(event)}
           </span>
         </>,
         ...(event.venue || event.address || event.city
@@ -109,10 +122,10 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
           : []),
       ]}
       summary={[timeLabel, event.venue || event.city].filter(Boolean).join(" · ")}
-      note={event.note}
-      quickAction={!soldOut && reserve}
+      note={cancelled ? "Esta turma foi cancelada. Veja as outras datas abaixo ou fale com a gente pelo WhatsApp." : event.note}
+      quickAction={!closed && reserve}
       actions={
-        !soldOut && (
+        !closed && (
           <>
             {reserve}
             {addToCalendar && (
@@ -156,7 +169,7 @@ export default function AgendaApp() {
     };
   }, [agenda.status, agenda.events]);
 
-  const nextId = visible[0]?.id;
+  const nextId = visible.find(isBookable)?.id;
   const whatsappGeneral = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
     "Oi! Vim pela agenda do site e quero saber as próximas turmas.",
   )}`;

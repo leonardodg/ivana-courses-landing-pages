@@ -28,6 +28,11 @@ export interface AgendaEvent {
   free: boolean;
   price: string | null;
   seats: string | null;
+  // Feed vindo do Magento (turmas presenciais do Brasil): vagas que restam e capacidade da turma.
+  // `seats` continua sendo a capacidade em texto; quem tem `seats_remaining` mostra "restam N".
+  seats_remaining?: number | null;
+  capacity?: number | null;
+  // "aberto" | "ultimas-vagas" | "esgotado" | "cancelado" (o Magento calcula; o iCloud ainda pode mandar à mão).
   status: string;
   link: string | null;
   note: string | null;
@@ -47,6 +52,11 @@ interface AgendaPayload {
   generated_at: string;
   events: AgendaEvent[];
 }
+
+// Turma cancelada ou esgotada não vende: sem botão de reservar.
+export const isCancelled = (e: AgendaEvent) => e.status === "cancelado";
+export const isSoldOut = (e: AgendaEvent) => e.status === "esgotado";
+export const isBookable = (e: AgendaEvent) => !isCancelled(e) && !isSoldOut(e);
 
 export interface AgendaState {
   status: "loading" | "ready" | "error";
@@ -97,6 +107,8 @@ const MOCK_EVENTS: AgendaEvent[] = import.meta.env.DEV
       mockEvent("m2", "2026-11-07", "9h", "12h30", "Velas Aromáticas e de Moldes", "Balneário Camboriú", "Eventos Elegance", "Rua 3122, nº 481, Balneário Camboriú", { course: "velas-aromaticas-moldes", price: "R$ 380", seats: "10", status: "ultimas-vagas" }),
       mockEvent("m3", "2026-11-13", "14h", "17h", "Aromatizantes e Perfumes", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { course: "aromatizantes-perfumes", note: "Traga avental e um recipiente para levar os produtos." }),
       mockEvent("m4", "2026-11-14", "14h", "17h", "Saboaria e Extratos Naturais", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { course: "saboaria-extratos", status: "esgotado" }),
+      mockEvent("m6", "2026-11-20", "14h", "17h", "Velas Aromáticas e de Moldes", "Rio de Janeiro", "Espaço Moura", "Rua Correa Dutra 149 - Flamengo, Rio de Janeiro", { course: "velas-aromaticas-moldes", status: "cancelado", seats_remaining: 12, capacity: 12 }),
+      mockEvent("m7", "2026-11-21", "9h", "12h30", "Aromatizantes e Perfumes", "Balneário Camboriú", "Eventos Elegance", "Rua 3122, nº 481, Balneário Camboriú", { course: "aromatizantes-perfumes", price: "R$ 330", seats: "10", seats_remaining: 3, capacity: 10 }),
       mockEvent("m5", "2026-12-05", "9h30", "16h30", "Imersão de Velas", "Florianópolis", "", "", { course: "imersao-velas", free: true }),
     ]
   : [];
