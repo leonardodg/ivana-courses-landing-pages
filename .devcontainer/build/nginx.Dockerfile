@@ -69,11 +69,14 @@ WORKDIR /usr/share/nginx/html
 # Timezone
 # Correções de segurança publicadas depois do digest da imagem base (ex.: brotli CVE-2026-111497, curl).
 # O nginx vem do repositório do nginx.org e a imagem base o deixa fixado na versão exata do digest, então o
-# `apk upgrade` não o move (Trivy: CVE-2026-121810 e outras, corrigidas na 1.30.7). Pede-se a versão mínima.
+# `apk upgrade` não o move (Trivy: CVE-2026-121810 e outras, corrigidas na 1.30.7). Pede-se a versão mínima,
+# junto com os módulos da imagem, que também ficam presos à versão do nginx (só sobe, nunca desce).
 # A chave de assinatura do nginx.org já está na imagem base; assinatura inválida derruba o build.
 RUN . /etc/os-release \
  && apk upgrade --no-cache \
- && apk add --no-cache --repository "https://nginx.org/packages/alpine/v${VERSION_ID%.*}/main" "nginx>=1.30.7" \
+ && apk add --no-cache --repository "https://nginx.org/packages/alpine/v${VERSION_ID%.*}/main" \
+      "nginx>=1.30.7" "nginx-module-geoip>=1.30.7" "nginx-module-image-filter>=1.30.7" \
+      "nginx-module-njs>=1.30.7" "nginx-module-xslt>=1.30.7" \
  && nginx -v
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
