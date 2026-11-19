@@ -7,7 +7,7 @@
 // (useAgenda) e mudam sozinhos. Não escreva data à mão aqui.
 
 import { CalendarDays, MapPin, Clock, ArrowRight, CreditCard, Gift, Mail, Users } from 'lucide-react';
-import { useAgenda, AgendaEvent } from '../../hooks/useAgenda';
+import { useAgenda, AgendaEvent, isBookable, isCancelled, isSoldOut } from '../../hooks/useAgenda';
 import {
   PresencialTheme,
   PresencialCourse,
@@ -44,9 +44,14 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
   const l = usePageLanguage();
   const course = presencial_courses[e.course];
   const title = course && l === 'es' ? courseText(course, l).name : e.title;
-  const soldOut = e.status === 'esgotado';
+  const soldOut = isSoldOut(e);
+  const cancelled = isCancelled(e);
   const place = e.venue ? `${e.venue}, ${e.city}` : e.city;
-  const reserve = soldOut ? (
+  const reserve = cancelled ? (
+    <a href={agendaHref(l)} className={btnOutline}>
+      {tr(l, 'Grupo cancelado · Ver otras fechas', 'Turma cancelada · Ver outras datas')}
+    </a>
+  ) : soldOut ? (
     <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className={btnOutline}>
       {tr(l, 'Agotado · Lista de espera', 'Esgotado · Lista de espera')}
     </a>
@@ -62,7 +67,11 @@ function TurmaCard({ e, theme }: { e: AgendaEvent; theme: PresencialTheme }) {
       date={e.date}
       locale={tr(l, 'es-AR', 'pt-BR')}
       density="compact"
-      badges={e.status === 'ultimas-vagas' ? [{ label: tr(l, 'Últimos lugares', 'Últimas vagas'), tone: 'accent' }] : undefined}
+      badges={
+        cancelled ? [{ label: tr(l, 'Grupo cancelado', 'Turma cancelada'), tone: 'alert' }]
+        : soldOut ? [{ label: tr(l, 'Agotado', 'Esgotada'), tone: 'alert' }]
+        : e.status === 'ultimas-vagas' ? [{ label: tr(l, 'Últimos lugares', 'Últimas vagas'), tone: 'accent' }] : undefined
+      }
       title={title}
       ariaTitle={title}
       summary={[e.time && `${e.time}${e.end_time ? ` ${tr(l, 'a', 'às')} ${e.end_time}` : ''}`, place].filter(Boolean).join(' · ')}
@@ -163,13 +172,13 @@ export function CursoCard({ c: base, utm, events, feedError, loading, details }:
   const l = usePageLanguage();
   const c = { ...base, ...courseText(base, l) };
   // Compra só em turma com vagas; esgotada vai para a lista de espera.
-  const open = events.filter(e => e.status !== 'esgotado');
+  const open = events.filter(isBookable);
   const next = open[0];
   // Com turma → loja na próxima turma. Feed fora do ar → página do curso na loja.
   // Sem turma → "Quero ser avisada".
   const cta = next
     ? { href: lojaLink(c, utm, next.id), label: tr(l, 'Reservar mi lugar', 'Garantir minha vaga') }
-    : events.length > 0
+    : events.some(isSoldOut)
       ? { href: WHATSAPP_URL, label: tr(l, 'Agotado · Lista de espera', 'Esgotado · Lista de espera') }
       : feedError && c.naLoja
         ? { href: lojaLink(c, utm), label: tr(l, 'Ver en la tienda', 'Ver na loja') }
@@ -192,10 +201,10 @@ export function CursoCard({ c: base, utm, events, feedError, loading, details }:
           <span className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-primary shrink-0" />{c.duration}
           </span>
-          {events.length > 0 && (
+          {events.some(e => !isCancelled(e)) && (
             <span className="flex items-center gap-1.5">
               <CalendarDays className="w-3.5 h-3.5 text-primary shrink-0" />
-              {events.length === 1 ? tr(l, '1 grupo', '1 turma') : `${events.length} ${tr(l, 'grupos', 'turmas')}`}
+              {events.filter(e => !isCancelled(e)).length === 1 ? tr(l, '1 grupo', '1 turma') : `${events.filter(e => !isCancelled(e)).length} ${tr(l, 'grupos', 'turmas')}`}
             </span>
           )}
         </>
@@ -203,13 +212,14 @@ export function CursoCard({ c: base, utm, events, feedError, loading, details }:
       turmas={{
         items: events.map(e => {
           const [, m, day] = e.date.split('-');
-          const esgotada = e.status === 'esgotado';
+          const esgotada = isSoldOut(e);
+          const cancelada = isCancelled(e);
           return {
             key: e.id,
             day: Number(day),
             month: MESES[l][Number(m) - 1],
-            label: `${e.time} · ${e.city}${esgotada ? tr(l, ' · agotado (lista de espera)', ' · esgotada (lista de espera)') : ''}`,
-            href: esgotada ? WHATSAPP_URL : lojaLink(c, utm, e.id),
+            label: `${e.time} · ${e.city}${cancelada ? tr(l, ' · cancelado', ' · cancelada') : esgotada ? tr(l, ' · agotado (lista de espera)', ' · esgotada (lista de espera)') : ''}`,
+            href: cancelada ? agendaHref(l) : esgotada ? WHATSAPP_URL : lojaLink(c, utm, e.id),
           };
         }),
         moreHref: details?.href ?? '#turmas',
@@ -362,7 +372,7 @@ function useLocaisAtivos() {
   const agenda = useAgenda();
   if (agenda.status === 'error') return LOCAIS;
   const today = todaySP();
-  const cidades = new Set(agenda.events.filter(e => e.date >= today).map(e => e.city));
+  const cidades = new Set(agenda.events.filter(e => e.date >= today && !isCancelled(e)).map(e => e.city));
   return LOCAIS.filter((loc, i) => i === 0 || cidades.has(loc.city));
 }
 
