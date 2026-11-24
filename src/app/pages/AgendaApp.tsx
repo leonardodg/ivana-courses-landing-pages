@@ -8,6 +8,7 @@ import { eventJsonLd } from "../seo/events";
 import { monthTitle, useMonthPager } from "../hooks/useMonthPager";
 import { AgendaLayout, DensityToggle, EventBadge, Density, EventCard, InfoBlocks, SegmentFilter, MonthNav, WhatsAppFab, btnOutline, btnPrimary, nav_icons } from "../ui";
 import { nav_brasil } from "../data/site_nav";
+import { lojaLink, presencial_courses } from "../data/presencial";
 
 const WHATSAPP = "5548991671659";
 const SP = { timeZone: "America/Sao_Paulo" } as const;
@@ -61,7 +62,11 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
   const cancelled = isCancelled(event);
   const soldOut = isSoldOut(event);
   const closed = !isBookable(event);
-  const cta = event.link ?? whatsappLink(event);
+  // Link vem do feed; sem ele, monta a partir do curso (loja + ?turma=id), então novas turmas já saem com o link certo.
+  const course = presencial_courses[event.course];
+  const storeLink = !closed && course?.naLoja ? lojaLink(course, "", event.id, "agenda") : null;
+  const buyLink = event.link ?? storeLink;
+  const cta = buyLink ?? whatsappLink(event);
   const addToCalendar = calendarLink(event);
   const timeLabel = event.time
     ? `${event.time}${event.end_time && event.end_time !== event.time ? ` às ${event.end_time}` : ""}`
@@ -76,7 +81,7 @@ function EventItem({ event, featured, density }: { event: AgendaEvent; featured:
 
   const reserve = (
     <a href={cta} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
-      {event.link ? <ExternalLink className="h-4 w-4" aria-hidden /> : <MessageCircle className="h-4 w-4" aria-hidden />}
+      {buyLink ? <ExternalLink className="h-4 w-4" aria-hidden /> : <MessageCircle className="h-4 w-4" aria-hidden />}
       Quero minha vaga
       <span className="sr-only">: {event.title}, {shortDate(event.date)}</span>
     </a>
