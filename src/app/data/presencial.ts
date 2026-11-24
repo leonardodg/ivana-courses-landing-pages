@@ -93,7 +93,7 @@ export const presencial_courses: Record<string, PresencialCourse> = {
     includes: ["Todos os materiais", "Kit de velas completo para levar", "Café da manhã", "Apostila e material de apoio", "Certificado Ivana Academy"],
     image: '/images/cursos/velas-gel-foto.webp',
     urlLoja: "https://loja.ivana.academy/curso-velas-gel.html",
-    naLoja: false,
+    naLoja: true,
   },
   'resina-pedras': {
     key: 'resina-pedras',
@@ -180,12 +180,18 @@ export const WHATSAPP_URL = 'https://wa.me/5548991671659';
 
 export const brl = (n: number) => `R$ ${n.toLocaleString('pt-BR')}`;
 
-// Link da loja com a turma escolhida: ?turma=<início do id do evento> + UTM da página.
-export function lojaLink(course: PresencialCourse, utm: string, eventId?: string): string {
+// Campanha das turmas vigentes (UTM). Trocar a cada ciclo de turmas, ex.: 'turmas-jan27'.
+export const CAMPANHA_TURMAS = 'turmas-dez26';
+
+// Link da loja com a turma escolhida: ?turma=<início do id do evento> + UTMs.
+// medium: 'pagina-curso' (landing do curso) ou 'agenda' (/agenda). utm_content = tema da página.
+export function lojaLink(course: PresencialCourse, utm: string, eventId?: string, medium: 'pagina-curso' | 'agenda' = 'pagina-curso'): string {
   const params = new URLSearchParams();
   if (eventId) params.set('turma', eventId.slice(0, 8).toUpperCase());
-  params.set('utm_source', 'landing');
-  params.set('utm_campaign', utm);
+  params.set('utm_source', 'site');
+  params.set('utm_medium', medium);
+  params.set('utm_campaign', CAMPANHA_TURMAS);
+  if (utm) params.set('utm_content', utm);
   return `${course.urlLoja}?${params.toString()}`;
 }
 
